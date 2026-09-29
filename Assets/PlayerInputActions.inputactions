@@ -1,0 +1,35 @@
+{
+    "version": 1,
+    "name": "PlayerInputActions",
+    "maps": [
+        {
+            "name": "Mouse & KB",
+            "id": "3083d4c8-ebb3-406b-b53b-8303ae97a466",
+            "actions": [
+                {
+                    "name": "Roll",
+                    "type": "Button",
+                    "id": "aade09fa-3902-483b-9d23-bfc01e434312",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "3bcf2a81-a57f-47ab-a941-3fd39595b6fd",
+                    "path": "<Keyboard>/space",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Roll",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}

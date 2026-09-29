@@ -3,11 +3,13 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Security;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.UIElements;
 using Random = UnityEngine.Random;
 
 public class DiceThrower : MonoBehaviour
 {
+    // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== 
     [Header("Dices")]
     [SerializeField] private List<Dice> _dicesList = new();
     [SerializeField] private Dice _dicePrefab;
@@ -25,17 +27,17 @@ public class DiceThrower : MonoBehaviour
     [SerializeField] private Transform _basePosition;
     [SerializeField] private float _spacing = 2f;
     
-    private bool _isRolling;
+    private bool _isRolling = false;
+    // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== 
 
     private void Awake() => InitDices();
-
-    private void Start()
+    
+    public void OnRoll(InputValue value)
     {
-        StartCoroutine(ThrowDices(_dicesList));
-        Invoke(nameof(CollectDiceValues), 3);
+        if (!_isRolling)
+            StartCoroutine(ThrowDices(_dicesList));
     }
-        
-
+    
     private void InitDices()
     {
         for (int i = 0; i < 5; i++)
@@ -46,20 +48,18 @@ public class DiceThrower : MonoBehaviour
         }
     }
 
-    private Vector3 GetDiceStartingPosition(int i)
-    {
-        var position = _basePosition.position;
-        var offset = Vector3.right * _spacing * (i-2);
-        return (position + offset);
-    }
-
     private IEnumerator ThrowDices(List<Dice> dices)
     {
+        _isRolling = true;
+        
         foreach (var dice in dices)
         {
             Throw(dice);
             yield return new WaitForSeconds(_timeBetweenThrows);
         }
+        yield return StartCoroutine(Co_WaitUntilAllDicesStopped());
+        
+        _isRolling = false;
     }
 
     private void Throw(Dice dice)
@@ -72,14 +72,40 @@ public class DiceThrower : MonoBehaviour
         
         dice.Roll(force, torque);
     }
-
+    
+    // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== 
+    #region Helpers
+    private Vector3 GetDiceStartingPosition(int i)
+    {
+        var position = _basePosition.position;
+        var offset = Vector3.right * _spacing * (i-2);
+        return (position + offset);
+    }
+    
     private List<int> CollectDiceValues()
     {
         var values = new List<int>();
         foreach (var dice in _dicesList)
         {
-            values.Add(dice.GetValue());
+            values.Add(dice.Value);
+            Debug.Log(dice.Value);
         }
         return values;
     }
+    
+    private IEnumerator Co_WaitUntilAllDicesStopped()
+    {
+        yield return new WaitForSeconds(0.2f);
+        yield return new WaitUntil(HaveAllDicesStopped);
+        CollectDiceValues();
+    }
+    
+    private bool HaveAllDicesStopped()
+    {
+        foreach (var dice in _dicesList)
+            if (!dice.IsStopped) return false;
+        
+        return true;
+    }
+    #endregion
 }

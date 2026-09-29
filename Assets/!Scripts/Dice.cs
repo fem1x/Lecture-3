@@ -1,3 +1,5 @@
+using System;
+using System.Collections;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
@@ -15,7 +17,11 @@ public class Dice : MonoBehaviour
     };
     
     private Rigidbody _rb;
-    [SerializeField] private int _value = 0;
+    private Coroutine _stopCoroutine;
+    
+    public int Value { get; private set; } = -1;
+    public bool IsStopped => _rb.isKinematic || (_rb.linearVelocity.sqrMagnitude < 0.01f && _rb.angularVelocity.sqrMagnitude < 0.01f);
+    public event Action<Dice, int> OnStopped;
     // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== 
     
     private void Awake() => _rb = GetComponent<Rigidbody>();
@@ -25,9 +31,23 @@ public class Dice : MonoBehaviour
         _rb.isKinematic = false;
         _rb.AddForce(force, ForceMode.Impulse);
         _rb.AddTorque(torque, ForceMode.Impulse);
+        
+        if (_stopCoroutine != null)
+            StopCoroutine(_stopCoroutine);
+        _stopCoroutine = StartCoroutine(Co_WaitUntilStopped());
+    }
+    
+    private IEnumerator Co_WaitUntilStopped()
+    {
+        yield return new WaitForSeconds(0.2f);
+        yield return new WaitUntil(() => IsStopped);
+
+        UpdateValue();
+        OnStopped?.Invoke(this, Value);
+        _stopCoroutine = null;
     }
 
-    public int GetValue()
+    public void UpdateValue()
     {
         int bestValue = 1;
         float maxDot = -1f;
@@ -42,8 +62,6 @@ public class Dice : MonoBehaviour
                 bestValue = _faces[i].Value;
             }
         }
-        _value = bestValue;
-        Debug.Log(_value);
-        return bestValue;
+        Value = bestValue;
     }
 }
