@@ -15,9 +15,10 @@ public class GameLifetimeScope : LifetimeScope
     [SerializeField] DiceRollConfig _diceRollConfig;
     [SerializeField] DiceSpawnConfig _diceSpawnConfig;
     [SerializeField] CombinationScoreConfig  _combinationScoreConfig;
+    [SerializeField] ResourceConfig  _resourceConfig;
     
     [Header("Scene")]
-    [SerializeField] private DiceManager _diceManager;
+    [SerializeField] private DiceTableController _diceTableController;
     [SerializeField] private DiceSpawnPoint _spawnPoint;
     [SerializeField] private CombinationsPanelView _combinationsPanel;
     [SerializeField] private ScoreView _scoreText;
@@ -34,14 +35,16 @@ public class GameLifetimeScope : LifetimeScope
         builder.RegisterInstance(_diceRollConfig);
         builder.RegisterInstance(_diceSpawnConfig);
         builder.RegisterInstance(_combinationScoreConfig);
+        builder.RegisterInstance(_resourceConfig);
     }
     
     private void RegisterServices(IContainerBuilder builder)
     {
         builder.RegisterComponent(_spawnPoint);
-        builder.RegisterComponent(_diceManager);
+        builder.RegisterComponent(_diceTableController);
         builder.RegisterComponent(_combinationsPanel);
         builder.RegisterComponent(_scoreText);
+        builder.Register<ResourceManager>(Lifetime.Singleton);
         builder.Register<DiceSpawner>(Lifetime.Singleton);
         builder.Register<DiceRoller>(Lifetime.Singleton);
         builder.Register<CombinationEvaluator>(Lifetime.Singleton);

@@ -9,21 +9,25 @@ namespace _Scripts.Managers
     public class Bootstrap : IInitializable
     {
         private readonly DiceSpawner _diceSpawner;
-        private readonly DiceManager _diceManager;
+        private readonly DiceTableController _diceTableController;
         private readonly ScoreManager _scoreManager;
+        private readonly ResourceManager _resourceManager;
 
         [Inject]
-        public Bootstrap(DiceSpawner diceSpawner, DiceManager diceManager, ScoreManager scoreManager)
+        public Bootstrap(DiceSpawner diceSpawner, DiceTableController diceTableController, ScoreManager scoreManager, ResourceManager resourceManager)
         {
             _diceSpawner = diceSpawner;
-            _diceManager = diceManager;
+            _diceTableController = diceTableController;
             _scoreManager = scoreManager;
+            _resourceManager = resourceManager;
         }
         
         public void Initialize()
         {
             var dices = _diceSpawner.SpawnDices();
-            _diceManager.Init(dices);
+            _diceTableController.InitDiceList(dices);
+            _resourceManager.SetInitialCounts();
+            
             
             _scoreManager.SetQuota(1000);
             _scoreManager.ResetScore();
