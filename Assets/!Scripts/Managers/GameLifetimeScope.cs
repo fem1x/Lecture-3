@@ -36,6 +36,7 @@ public class GameLifetimeScope : LifetimeScope
         builder.RegisterComponent(_diceManager);
         builder.Register<DiceSpawner>(Lifetime.Singleton);
         builder.Register<DiceRoller>(Lifetime.Singleton);
+        builder.Register<ScoreCalculator>(Lifetime.Singleton);
         
         builder.RegisterEntryPoint<Bootstrap>();
     }

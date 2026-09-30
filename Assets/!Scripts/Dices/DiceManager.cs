@@ -13,12 +13,14 @@ namespace _Scripts.Dices
         private bool _isFirstRoll = true;
         private List<Dice> _dices;
     
-        private DiceRoller _roller;
+        private DiceRoller _diceRoller;
+        private ScoreCalculator _scoreCalculator;
     
         [Inject]
-        public void Construct(DiceRoller roller)
+        public void Construct(DiceRoller diceRoller, ScoreCalculator scoreCalculator)
         {
-            _roller = roller;
+            _diceRoller = diceRoller;
+            _scoreCalculator = scoreCalculator;;
         }
     
         public void Init(List<Dice> dices)
@@ -29,7 +31,7 @@ namespace _Scripts.Dices
     
         public void OnRoll(InputValue value)
         {
-            if (_roller.IsRolling) return;
+            if (_diceRoller.IsRolling) return;
             ExecuteRollAsync().Forget();
         }
 
@@ -37,14 +39,14 @@ namespace _Scripts.Dices
         {
             if (_isFirstRoll)
             {
-                await _roller.FirstRollAsync(_dices);
+                await _diceRoller.FirstRollAsync(_dices);
                 _isFirstRoll = false;
             }
             else
             {
                 var activeDices = _dices.Where(d => !d.IsLocked).ToList();
                 if (activeDices.Count == 0) return;
-                await _roller.RerollAsync(activeDices);
+                await _diceRoller.RerollAsync(activeDices);
             }
         
             var values = CollectDiceValues();
@@ -55,6 +57,13 @@ namespace _Scripts.Dices
         {
             var values = _dices.Select(d => d.Value).ToList();
             return values;
+        }
+        
+        public async UniTaskVoid OnScoreButtonClicked()
+        {
+            if (_diceRoller.IsRolling) return;
+            var score = _scoreCalculator.EvaluateHand(CollectDiceValues());
+            
         }
     }
 }
