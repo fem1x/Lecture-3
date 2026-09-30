@@ -18,11 +18,21 @@ public class Dice : MonoBehaviour
     
     private Rigidbody _rb;
     private Coroutine _stopCoroutine;
-    
+    private bool _isLocked;
+    public event Action<Dice, int> OnStopped;
+    // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
     public int Value { get; private set; } = -1;
     public bool IsStopped => _rb.isKinematic || (_rb.linearVelocity.sqrMagnitude < 0.01f && _rb.angularVelocity.sqrMagnitude < 0.01f);
-    public event Action<Dice, int> OnStopped;
-    // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== 
+    public bool IsLocked
+    {
+        get => _isLocked;
+        set
+        {
+            _isLocked = value;
+            _rb.isKinematic = value;
+        }
+    }
+    // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
     
     private void Awake() => _rb = GetComponent<Rigidbody>();
     
