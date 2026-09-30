@@ -8,16 +8,19 @@ namespace _Scripts.Managers
     public class Bootstrap : IInitializable
     {
         private readonly DiceSpawner _diceSpawner;
+        private readonly DiceManager _diceManager;
 
         [Inject]
-        public Bootstrap(DiceSpawner diceSpawner)
+        public Bootstrap(DiceSpawner diceSpawner, DiceManager diceManager)
         {
             _diceSpawner = diceSpawner;
+            _diceManager = diceManager;
         }
         
         public void Initialize()
         {
             var dices = _diceSpawner.SpawnDices();
+            _diceManager.Init(dices);
         }
     }
 }

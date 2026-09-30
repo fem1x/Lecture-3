@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace _Scripts
 {
-    [System.Serializable]
+    [Serializable]
     public struct DiceThrowSettings
     {
         public Vector3 Direction;

@@ -12,14 +12,15 @@ public class GameLifetimeScope : LifetimeScope
     [SerializeField] DiceRollConfig _diceRollConfig;
     [SerializeField] DiceSpawnConfig _diceSpawnConfig;
     
-    [Header("Scene Objects")]
+    [Header("Scene")]
+    [SerializeField] private DiceManager _diceManager;
     [SerializeField] private DiceSpawnPoint _spawnPoint;
     
     protected override void Configure(IContainerBuilder builder)
     {
         RegisterConfigs(builder);
         RegisterServices(builder);
-        RegisterClients(builder);
+        //RegisterClients(builder);
     }
     
     private void RegisterConfigs(IContainerBuilder builder)
@@ -31,10 +32,11 @@ public class GameLifetimeScope : LifetimeScope
     private void RegisterServices(IContainerBuilder builder)
     {
         builder.RegisterComponent(_spawnPoint);
+        builder.RegisterComponent(_diceManager);
         builder.Register<DiceSpawner>(Lifetime.Singleton);
         builder.Register<DiceRoller>(Lifetime.Singleton);
         
-        builder.Register<Bootstrap>(Lifetime.Singleton).As<IInitializable>();
+        builder.RegisterEntryPoint<Bootstrap>();
     }
 
     private void RegisterClients(IContainerBuilder builder)
