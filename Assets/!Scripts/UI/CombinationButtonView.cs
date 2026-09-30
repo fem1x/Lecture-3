@@ -27,11 +27,12 @@ namespace _Scripts.UI
         public void Setup(FoundCombination combination, CombinationScoreConfig scoreConfig)
         {
             _combination = combination;
-            int basePoints = scoreConfig.GetData(combination.Type).BasePoints;
-            int multiplier = scoreConfig.GetData(combination.Type).Multiplier;
+            var displayName = scoreConfig.GetData(combination.Type).DisplayName;
+            var basePoints = scoreConfig.GetData(combination.Type).BasePoints;
+            var multiplier = scoreConfig.GetData(combination.Type).Multiplier;
             
-            string valuesString = string.Join(", ", combination.Dices.Select(d => d.Value));   
-            _titleText.text = $"{combination.Type} ({valuesString})";
+            var valuesString = string.Join(", ", combination.Dices.Select(d => d.Value));   
+            _titleText.text = $"{displayName} ({valuesString})";
             _scoreText.text = $"{basePoints} x {multiplier}";
         }
         

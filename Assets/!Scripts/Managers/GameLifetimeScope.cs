@@ -20,6 +20,7 @@ public class GameLifetimeScope : LifetimeScope
     [SerializeField] private DiceManager _diceManager;
     [SerializeField] private DiceSpawnPoint _spawnPoint;
     [SerializeField] private CombinationsPanelView _combinationsPanel;
+    [SerializeField] private ScoreView _scoreText;
     
     protected override void Configure(IContainerBuilder builder)
     {
@@ -40,10 +41,12 @@ public class GameLifetimeScope : LifetimeScope
         builder.RegisterComponent(_spawnPoint);
         builder.RegisterComponent(_diceManager);
         builder.RegisterComponent(_combinationsPanel);
+        builder.RegisterComponent(_scoreText);
         builder.Register<DiceSpawner>(Lifetime.Singleton);
         builder.Register<DiceRoller>(Lifetime.Singleton);
         builder.Register<CombinationEvaluator>(Lifetime.Singleton);
         builder.Register<ScoreCalculator>(Lifetime.Singleton).As<IScoreCalculator>();
+        builder.Register<ScoreManager>(Lifetime.Singleton);
         
         builder.RegisterEntryPoint<Bootstrap>();
     }

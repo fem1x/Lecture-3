@@ -24,6 +24,8 @@ namespace _Scripts.UI
         }
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 
+        private void Awake() => Clear();
+        
         public void DisplayCombinations(IReadOnlyList<FoundCombination> combinations)
         {
             Clear();

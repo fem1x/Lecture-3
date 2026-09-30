@@ -14,58 +14,72 @@ MonoBehaviour:
   m_EditorClassIdentifier: Game::_Scripts.Configs.CombinationScoreConfig
   <Combinations>k__BackingField:
   - CombinationType: 0
+    DisplayName: Highest
     BasePoints: 5
     Multiplier: 1
     DiceRefund: 0
   - CombinationType: 1
+    DisplayName: Duplet
     BasePoints: 10
     Multiplier: 2
     DiceRefund: 0
   - CombinationType: 2
+    DisplayName: Opposites
     BasePoints: 15
     Multiplier: 2
     DiceRefund: 0
   - CombinationType: 3
+    DisplayName: Triad
     BasePoints: 20
     Multiplier: 3
     DiceRefund: 0
   - CombinationType: 4
+    DisplayName: Sequence
     BasePoints: 30
     Multiplier: 4
     DiceRefund: 1
   - CombinationType: 5
+    DisplayName: Cross
     BasePoints: 35
     Multiplier: 4
     DiceRefund: 1
   - CombinationType: 6
+    DisplayName: Balance
     BasePoints: 35
     Multiplier: 5
     DiceRefund: 1
   - CombinationType: 7
+    DisplayName: Mono
     BasePoints: 40
     Multiplier: 5
     DiceRefund: 1
   - CombinationType: 8
+    DisplayName: Quad
     BasePoints: 50
     Multiplier: 7
     DiceRefund: 1
   - CombinationType: 9
+    DisplayName: Mono+
     BasePoints: 45
     Multiplier: 6
     DiceRefund: 2
   - CombinationType: 10
+    DisplayName: Sequence+
     BasePoints: 50
     Multiplier: 7
     DiceRefund: 2
   - CombinationType: 11
+    DisplayName: Overload
     BasePoints: 55
     Multiplier: 7
     DiceRefund: 3
   - CombinationType: 12
+    DisplayName: Underload
     BasePoints: 60
     Multiplier: 9
     DiceRefund: 3
   - CombinationType: 13
+    DisplayName: Singularity
     BasePoints: 100
     Multiplier: 10
     DiceRefund: 4

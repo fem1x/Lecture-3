@@ -6,6 +6,7 @@ namespace _Scripts.Dices
     public struct CombinationData
     {
         public CombinationType CombinationType;
+        public string DisplayName;
         public int BasePoints;
         public int Multiplier;
         public int DiceRefund;
