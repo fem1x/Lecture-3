@@ -13,7 +13,7 @@ namespace _Scripts.Managers
     public class RoundFlowController : MonoBehaviour
     {
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== 
-        public event Action<List<FoundCombination>> OnCombinationsFound;
+        public event Action<IReadOnlyList<FoundCombination>> OnCombinationsFound;
         public event Action OnCombinationsCleared;
         
         private bool _isFirstRoll = true;

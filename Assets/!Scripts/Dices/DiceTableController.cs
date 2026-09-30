@@ -1,8 +1,5 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using _Scripts.Interfaces;
-using _Scripts.Managers;
 using _Scripts.UI;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
@@ -25,17 +22,15 @@ namespace _Scripts.Dices
         
         public bool IsRolling => _diceRoller.IsRolling;
         public IReadOnlyList<Dice> GetAllDices() => _dices;
-        public List<Dice> GetSelectedDices() => _dices.Where(d => d.IsLocked).ToList();
+        public IReadOnlyList<Dice> GetSelectedDices() => _dices.Where(d => d.IsLocked).ToList();
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== 
 
         private void OnEnable() => CombinationButtonView.OnAnyButtonClicked += SelectCombination;
         private void OnDisable() => CombinationButtonView.OnAnyButtonClicked -= SelectCombination;
         
-        public void InitDiceList(List<Dice> dices)
-        {
-            _dices = dices;
-        }
-        
+        public void InitDiceList(List<Dice> dices) => _dices = dices;
+        public void OnRmbClick(InputValue value) => ClearSelection();
+
         public async UniTask FirstThrowAsync()
         {
             await _diceRoller.FirstRollAsync(_dices);
@@ -47,7 +42,6 @@ namespace _Scripts.Dices
             if (activeDices.Count > 0)
                 await _diceRoller.RerollAsync(activeDices);
         }
-        
         
         public void ClearSelection()
         {

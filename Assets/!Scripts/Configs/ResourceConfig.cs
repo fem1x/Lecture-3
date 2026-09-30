@@ -2,7 +2,7 @@
 
 namespace _Scripts.Configs
 {
-    [CreateAssetMenu(fileName = "RoundConfig", menuName = "Configs/RoundConfig")]
+    [CreateAssetMenu(fileName = "ResourceConfig", menuName = "Configs/ResourceConfig")]
     public class ResourceConfig : ScriptableObject
     {
         [field: SerializeField] public int InitialDiceCount { get; private set; } = 15;
