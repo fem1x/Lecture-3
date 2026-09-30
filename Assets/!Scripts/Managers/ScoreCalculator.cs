@@ -16,7 +16,7 @@ public class ScoreCalculator : IScoreCalculator
     }
     // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== 
 
-    public ScoreCalculationResult Calculate(IReadOnlyList<Dice> scoringDice)
+    public ScoreCalculationResult Calculate(List<Dice> scoringDice)
     {
         CombinationType type = _evaluator.Evaluate(scoringDice);
         CombinationData data = _config.GetData(type);
@@ -31,7 +31,7 @@ public class ScoreCalculator : IScoreCalculator
         );
     }
 
-    private int GetDiceValuesPoints(IReadOnlyList<Dice> scoringDice)
+    private int GetDiceValuesPoints(List<Dice> scoringDice)
     {
         int diceValuesPoints = 0;
         if (scoringDice != null)

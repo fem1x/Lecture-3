@@ -45,7 +45,7 @@ namespace _Scripts.Managers
         public bool HasDices => DiceCount > 0;
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
         
-        public void SetInitialCounts()
+        public void ResetForNewLevel()
         {
             DiceCount = _config.InitialDiceCount;
             ResetRerolls();
@@ -65,9 +65,16 @@ namespace _Scripts.Managers
             RerollsCount = _config.RerollsPerRound;
         }
         
-        public void UpdateDiceAfterRound(int spentDice, int refundDice)
+        public void SpendOneDice()
         {
-            DiceCount = Mathf.Max(0, DiceCount - spentDice + refundDice);        
+            if (DiceCount > 0)
+                DiceCount--;
+        }
+
+        public void AddRefundDice(int refundDice)
+        {
+            if (refundDice > 0)
+                DiceCount += refundDice;
         }
     }
 }

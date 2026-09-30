@@ -22,7 +22,6 @@ namespace _Scripts.Dices
         private Rigidbody _rb;
         private DiceView _view;
         private Coroutine _stopCoroutine;
-        public event Action<Dice, int> OnStopped;
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
         public int Value { get; private set; } = -1;
         public bool IsLocked { get; private set; }
@@ -36,7 +35,6 @@ namespace _Scripts.Dices
                        (_rb.linearVelocity.sqrMagnitude < 0.01f && _rb.angularVelocity.sqrMagnitude < 0.01f);
             }
         }
-  
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
     
         private void Awake()
@@ -62,8 +60,18 @@ namespace _Scripts.Dices
             IsLocked = !IsLocked;
             _view.SetLockedVisual(IsLocked);
         }
-        
-        
+
+        public void Reset()
+        {
+            Value = -1;
+            IsLocked = false;
+            _view.ResetVisual();
+            
+            if (_rb.isKinematic) return;
+            _rb.linearVelocity = Vector3.zero;
+            _rb.angularVelocity = Vector3.zero;
+            _rb.isKinematic = true;
+        }
         
         public void Roll(Vector3 force, Vector3 torque)
         {
@@ -82,7 +90,6 @@ namespace _Scripts.Dices
             yield return new WaitUntil(() => IsStopped);
 
             UpdateValue();
-            OnStopped?.Invoke(this, Value);
             _stopCoroutine = null;
         }
 

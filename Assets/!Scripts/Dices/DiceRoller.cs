@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using _Scripts.Configs;
+using _Scripts.Managers;
 using _Scripts.Utility;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
@@ -14,33 +15,35 @@ namespace _Scripts.Dices
     {
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== 
         private readonly DiceRollConfig _config;
+        private readonly ResourceManager _resourceManager;
         
         [Inject]
-        public DiceRoller(DiceRollConfig config)
+        public DiceRoller(DiceRollConfig config, ResourceManager resourceManager)
         {
             _config = config;
+            _resourceManager = resourceManager;
         }
         
         public bool IsRolling { get; private set; }
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== 
         #region Public API
         
-        public async UniTask FirstRollAsync(List<Dice> dices)
+        public async UniTask ThrowAsync(List<Dice> dices)
         {
             if (IsRolling) return;
-            await ExecuteRollAsync(dices, _config.FirstRollSettings);
+            await ExecuteRollAsync(dices, _config.FirstRollSettings, true);
         }
 
         public async UniTask RerollAsync(List<Dice> dices)
         {
             if (IsRolling || dices == null || dices.Count == 0) return;
-            await ExecuteRollAsync(dices, _config.RerollSettings);
+            await ExecuteRollAsync(dices, _config.RerollSettings, false);
         }
         
         #endregion
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== 
         
-        private async UniTask ExecuteRollAsync(List<Dice> dices, DiceThrowSettings settings)
+        private async UniTask ExecuteRollAsync(List<Dice> dices, DiceThrowSettings settings, bool spendDice)
         {
             IsRolling = true;
 
@@ -51,6 +54,9 @@ namespace _Scripts.Dices
                     if (dice == null) continue;
 
                     DiceThrow(dice, settings);
+                    if (spendDice) //DiceCount
+                        _resourceManager.SpendOneDice(); 
+                    
                     if (settings.TimeBetweenThrows > 0f)
                         await UniTask.Delay(TimeSpan.FromSeconds(settings.TimeBetweenThrows));
                 }

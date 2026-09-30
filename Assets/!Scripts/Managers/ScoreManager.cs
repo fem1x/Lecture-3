@@ -11,11 +11,13 @@ namespace _Scripts.Managers
         
         public int CurrentScore {get; private set; }
         public int ScoreQuota {get; private set; }
+        public bool HasEnoughScore => CurrentScore >= ScoreQuota;
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
         
         public void SetQuota(int score)
         {
             ScoreQuota = score;
+            OnScoreChanged?.Invoke(CurrentScore, ScoreQuota);
         }
 
         public void AddScore(int score)
@@ -38,7 +40,5 @@ namespace _Scripts.Managers
             CurrentScore = 0;
             OnScoreChanged?.Invoke(CurrentScore, ScoreQuota);
         }
-        
-        private bool HasEnoughScore => CurrentScore >= ScoreQuota;
     }
 }

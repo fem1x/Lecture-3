@@ -20,7 +20,6 @@ namespace _Scripts.UI
         
         private FoundCombination _combination;
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
-        
         private void OnEnable() => _button.onClick.AddListener(HandleClick);
         private void OnDisable() => _button.onClick.RemoveListener(HandleClick);
 
@@ -30,10 +29,16 @@ namespace _Scripts.UI
             var displayName = scoreConfig.GetData(combination.Type).DisplayName;
             var basePoints = scoreConfig.GetData(combination.Type).BasePoints;
             var multiplier = scoreConfig.GetData(combination.Type).Multiplier;
+            var refund = scoreConfig.GetData(combination.Type).DiceRefund;
             
             var valuesString = string.Join(", ", combination.Dices.Select(d => d.Value));   
             _titleText.text = $"{displayName} ({valuesString})";
-            _scoreText.text = $"{basePoints} x {multiplier}";
+            
+            var scoreString = $"{basePoints} x {multiplier}";
+            if (refund > 0)
+                scoreString += $"   [+ {refund}]";
+                
+            _scoreText.text = scoreString;
         }
         
         private void HandleClick()

@@ -5,6 +5,6 @@ namespace _Scripts.Interfaces
 {
     public interface IScoreCalculator
     {
-        public ScoreCalculationResult Calculate(IReadOnlyList<Dice> scoringDice);
+        public ScoreCalculationResult Calculate(List<Dice> scoringDice);
     }
 }

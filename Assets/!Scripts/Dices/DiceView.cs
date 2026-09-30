@@ -50,6 +50,12 @@ namespace _Scripts.Dices
                 DoDropTween();
             }
         }
+        
+        public void ResetVisual()
+        {
+            _moveTween?.Kill();
+            _outline.enabled = false;
+        }
 
         public void DoLiftUpTween()
         {

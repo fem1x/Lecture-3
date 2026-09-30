@@ -28,14 +28,27 @@ namespace _Scripts.Dices
             var dices = new List<Dice>();
             for (int i = 0; i < count; i++)
             {
-                var startingRotation = _config.RandomizeStartingRotation ? Random.rotation : Quaternion.identity;
-                var startingPosition = GetDiceStartingPosition(i, count);
-                
-                var dice = _resolver.Instantiate(_config.DicePrefab, startingPosition, startingRotation);
+                var dice = _resolver.Instantiate(_config.DicePrefab);
                 dices.Add(dice);
             }
-
             return dices;
+        }
+        
+        public void ResetDicesToSpawn(List<Dice> dices)
+        {
+            int count = dices.Count;
+            for (int i = 0; i < count; i++)
+            {
+                var dice = dices[i];
+                if (dice == null) continue;
+
+                var startingPosition = GetDiceStartingPosition(i, count);
+                var startingRotation = _config.RandomizeStartingRotation ? Random.rotation : Quaternion.identity;
+
+                dice.Reset();
+                dice.transform.position = startingPosition;
+                dice.transform.rotation = startingRotation;
+            }
         }
         
         private Vector3 GetDiceStartingPosition(int i, int totalCount)

@@ -16,9 +16,10 @@ public class GameLifetimeScope : LifetimeScope
     [SerializeField] DiceSpawnConfig _diceSpawnConfig;
     [SerializeField] CombinationScoreConfig  _combinationScoreConfig;
     [SerializeField] ResourceConfig  _resourceConfig;
+    [SerializeField] LevelsListConfig  _levelsListConfig;
     
     [Header("Scene")]
-    [SerializeField] private RoundFlowController _roundFlowController;
+    [SerializeField] private TurnFlowController _turnFlowController;
     [SerializeField] private DiceTableController _diceTableController;
     [SerializeField] private DiceSpawnPoint _spawnPoint;
     [SerializeField] private CombinationsPanelView _combinationsPanel;
@@ -28,7 +29,6 @@ public class GameLifetimeScope : LifetimeScope
     {
         RegisterConfigs(builder);
         RegisterServices(builder);
-        //RegisterClients(builder);
     }
     
     private void RegisterConfigs(IContainerBuilder builder)
@@ -37,6 +37,7 @@ public class GameLifetimeScope : LifetimeScope
         builder.RegisterInstance(_diceSpawnConfig);
         builder.RegisterInstance(_combinationScoreConfig);
         builder.RegisterInstance(_resourceConfig);
+        builder.RegisterInstance(_levelsListConfig);
     }
     
     private void RegisterServices(IContainerBuilder builder)
@@ -44,7 +45,7 @@ public class GameLifetimeScope : LifetimeScope
         //Scene objects
         builder.RegisterComponent(_spawnPoint);
         builder.RegisterComponent(_diceTableController);
-        builder.RegisterComponent(_roundFlowController);
+        builder.RegisterComponent(_turnFlowController);
         builder.RegisterComponent(_combinationsPanel);
         builder.RegisterComponent(_scoreText);
         
@@ -55,11 +56,9 @@ public class GameLifetimeScope : LifetimeScope
         builder.Register<CombinationEvaluator>(Lifetime.Singleton);
         builder.Register<ScoreCalculator>(Lifetime.Singleton).As<IScoreCalculator>();
         builder.Register<ScoreManager>(Lifetime.Singleton);
+        builder.Register<LevelFlowController>(Lifetime.Singleton);
         
+        //Entry Point
         builder.RegisterEntryPoint<Bootstrap>();
-    }
-
-    private void RegisterClients(IContainerBuilder builder)
-    {
     }
 }

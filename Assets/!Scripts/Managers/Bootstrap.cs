@@ -12,25 +12,28 @@ namespace _Scripts.Managers
         private readonly DiceTableController _diceTableController;
         private readonly ScoreManager _scoreManager;
         private readonly ResourceManager _resourceManager;
+        private readonly LevelFlowController _levelFlowController;
 
         [Inject]
-        public Bootstrap(DiceSpawner diceSpawner, DiceTableController diceTableController, ScoreManager scoreManager, ResourceManager resourceManager)
+        public Bootstrap(
+            DiceSpawner diceSpawner, 
+            DiceTableController diceTableController, 
+            ResourceManager resourceManager,
+            LevelFlowController levelFlowController)
         {
             _diceSpawner = diceSpawner;
             _diceTableController = diceTableController;
-            _scoreManager = scoreManager;
             _resourceManager = resourceManager;
+            _levelFlowController = levelFlowController;
         }
         
         public void Initialize()
         {
             var dices = _diceSpawner.SpawnDices();
+            _diceSpawner.ResetDicesToSpawn(dices);
             _diceTableController.InitDiceList(dices);
-            _resourceManager.SetInitialCounts();
             
-            
-            _scoreManager.SetQuota(1000);
-            _scoreManager.ResetScore();
+            _levelFlowController.StartGame();
         }
     }
 }

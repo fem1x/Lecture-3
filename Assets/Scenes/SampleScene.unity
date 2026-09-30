@@ -255,7 +255,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7332853857469701151, guid: 0dd24c35042c3644d9fdb11ea52633a5, type: 3}
   m_PrefabInstance: {fileID: 6459404190822529572}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 1950779561}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: de4a7f2dcc5469546856f184a217773a, type: 3}
@@ -329,7 +329,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 15
+  m_text: 1
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -409,6 +409,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1398320343}
   m_CullTransparentMesh: 1
+--- !u!1 &1437727853 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5082593826032390721, guid: ef5db77786d12194d88cb266471c1bf9, type: 3}
+  m_PrefabInstance: {fileID: 4271278360673963976}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1615098562
 GameObject:
   m_ObjectHideFlags: 0
@@ -420,6 +425,7 @@ GameObject:
   - component: {fileID: 1615098563}
   - component: {fileID: 1615098565}
   - component: {fileID: 1615098564}
+  - component: {fileID: 1615098566}
   m_Layer: 5
   m_Name: (Icon) Rerolls
   m_TagString: Untagged
@@ -485,6 +491,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1615098562}
   m_CullTransparentMesh: 1
+--- !u!114 &1615098566
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1615098562}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9afff473a49946ecb037521a1cd5a513, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Game::_Scripts.UI.RerollsCounterView
+  _text: {fileID: 2143885475}
 --- !u!114 &1623856351 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2453093264133501066, guid: 2f54132be6a220340b1fd142ad8b928b, type: 3}
@@ -507,6 +526,7 @@ GameObject:
   - component: {fileID: 1838812157}
   - component: {fileID: 1838812159}
   - component: {fileID: 1838812158}
+  - component: {fileID: 1838812160}
   m_Layer: 5
   m_Name: (Icon) Dice
   m_TagString: Untagged
@@ -572,6 +592,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1838812156}
   m_CullTransparentMesh: 1
+--- !u!114 &1838812160
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1838812156}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e2aff84a713b481695f8b4ea85d0fc98, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Game::_Scripts.UI.DiceCounterView
+  _text: {fileID: 1398320345}
 --- !u!114 &1847166397 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3168107935477352187, guid: ef5db77786d12194d88cb266471c1bf9, type: 3}
@@ -583,6 +616,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 936410687bfe4475ae1bc0b723da6f02, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Game::_Scripts.UI.CombinationsPanelView
+--- !u!1 &1950779561 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6595746931779263266, guid: 0dd24c35042c3644d9fdb11ea52633a5, type: 3}
+  m_PrefabInstance: {fileID: 6459404190822529572}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1950779564
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1950779561}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c01c7d50a2214afa9dff871a3191fd0d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Game::_Scripts.Managers.RoundFlowController
 --- !u!1 &2143885473
 GameObject:
   m_ObjectHideFlags: 0
@@ -640,7 +690,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 2
+  m_text: 1
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -870,10 +920,26 @@ PrefabInstance:
       propertyPath: m_Name
       value: Canvas
       objectReference: {fileID: 0}
+    - target: {fileID: 5806296979698943959, guid: ef5db77786d12194d88cb266471c1bf9, type: 3}
+      propertyPath: m_text
+      value: "End \nTurn"
+      objectReference: {fileID: 0}
+    - target: {fileID: 6535240716188846655, guid: ef5db77786d12194d88cb266471c1bf9, type: 3}
+      propertyPath: m_Name
+      value: (Button) EndTurn
+      objectReference: {fileID: 0}
     - target: {fileID: 8727366212257878693, guid: ef5db77786d12194d88cb266471c1bf9, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 666883218}
+      objectReference: {fileID: 1950779564}
+    - target: {fileID: 8727366212257878693, guid: ef5db77786d12194d88cb266471c1bf9, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OnScoreButtonClicked
+      objectReference: {fileID: 0}
+    - target: {fileID: 8727366212257878693, guid: ef5db77786d12194d88cb266471c1bf9, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: _Scripts.Managers.RoundFlowController, Game
+      objectReference: {fileID: 0}
     - target: {fileID: 8937226446615717183, guid: ef5db77786d12194d88cb266471c1bf9, type: 3}
       propertyPath: m_Name
       value: (Panel) Left
@@ -1114,6 +1180,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7731980850506434518, guid: f125e16385123e14db1accbcbcb13e0e, type: 3}
+      propertyPath: m_BackGroundColor.b
+      value: 0.092
+      objectReference: {fileID: 0}
+    - target: {fileID: 7731980850506434518, guid: f125e16385123e14db1accbcbcb13e0e, type: 3}
+      propertyPath: m_BackGroundColor.g
+      value: 0.060275864
+      objectReference: {fileID: 0}
+    - target: {fileID: 7731980850506434518, guid: f125e16385123e14db1accbcbcb13e0e, type: 3}
+      propertyPath: m_BackGroundColor.r
+      value: 0.07931034
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1180,9 +1258,33 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 666883218}
     - target: {fileID: 3236853052078990589, guid: 3788b64a117a7fb4dbd391e5010a68c9, type: 3}
+      propertyPath: _resourceConfig
+      value: 
+      objectReference: {fileID: 11400000, guid: d278f98f3d20f274ba1e894b275860a4, type: 2}
+    - target: {fileID: 3236853052078990589, guid: 3788b64a117a7fb4dbd391e5010a68c9, type: 3}
       propertyPath: _combinationsPanel
       value: 
       objectReference: {fileID: 1847166397}
+    - target: {fileID: 3236853052078990589, guid: 3788b64a117a7fb4dbd391e5010a68c9, type: 3}
+      propertyPath: _turnFlowController
+      value: 
+      objectReference: {fileID: 1950779564}
+    - target: {fileID: 3236853052078990589, guid: 3788b64a117a7fb4dbd391e5010a68c9, type: 3}
+      propertyPath: _diceTableController
+      value: 
+      objectReference: {fileID: 666883218}
+    - target: {fileID: 3236853052078990589, guid: 3788b64a117a7fb4dbd391e5010a68c9, type: 3}
+      propertyPath: _roundFlowController
+      value: 
+      objectReference: {fileID: 1950779564}
+    - target: {fileID: 3236853052078990589, guid: 3788b64a117a7fb4dbd391e5010a68c9, type: 3}
+      propertyPath: autoInjectGameObjects.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3236853052078990589, guid: 3788b64a117a7fb4dbd391e5010a68c9, type: 3}
+      propertyPath: 'autoInjectGameObjects.Array.data[0]'
+      value: 
+      objectReference: {fileID: 1437727853}
     - target: {fileID: 8140047140669961184, guid: 3788b64a117a7fb4dbd391e5010a68c9, type: 3}
       propertyPath: m_Name
       value: GameLifetimeScope
@@ -1251,7 +1353,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 6595746931779263266, guid: 0dd24c35042c3644d9fdb11ea52633a5, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1950779564}
   m_SourcePrefab: {fileID: 100100000, guid: 0dd24c35042c3644d9fdb11ea52633a5, type: 3}
 --- !u!1001 &6999513755539012132
 PrefabInstance:

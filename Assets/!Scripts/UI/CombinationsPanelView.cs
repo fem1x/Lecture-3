@@ -17,13 +17,13 @@ namespace _Scripts.UI
         
         private List<CombinationButtonView> _spawnedButtons = new();
         private CombinationScoreConfig _scoreConfig;
-        private RoundFlowController _roundFlowController;
+        private TurnFlowController _turnFlowController;
 
         [Inject]
-        public void Construct(CombinationScoreConfig scoreConfig, RoundFlowController roundFlowController)
+        public void Construct(CombinationScoreConfig scoreConfig, TurnFlowController turnFlowController)
         {
             _scoreConfig = scoreConfig;
-            _roundFlowController = roundFlowController;
+            _turnFlowController = turnFlowController;
             
             if (isActiveAndEnabled)
                 Subscribe();
@@ -33,27 +33,27 @@ namespace _Scripts.UI
         private void Awake() =>  Clear();
         private void OnEnable()
         {
-            if (_roundFlowController != null)
+            if (_turnFlowController != null)
                 Subscribe();
         }
 
         private void OnDisable()
         {
-            if (_roundFlowController != null)
+            if (_turnFlowController != null)
                 Unsubscribe();
         }
 
         private void Subscribe()
         {
             Unsubscribe();
-            _roundFlowController.OnCombinationsCleared += Clear;
-            _roundFlowController.OnCombinationsFound += DisplayCombinations;
+            _turnFlowController.OnCombinationsCleared += Clear;
+            _turnFlowController.OnCombinationsFound += DisplayCombinations;
         }
 
         private void Unsubscribe()
         {
-            _roundFlowController.OnCombinationsCleared -= Clear;
-            _roundFlowController.OnCombinationsFound -= DisplayCombinations;
+            _turnFlowController.OnCombinationsCleared -= Clear;
+            _turnFlowController.OnCombinationsFound -= DisplayCombinations;
         }
         
         public void DisplayCombinations(IReadOnlyList<FoundCombination> combinations)
@@ -65,6 +65,7 @@ namespace _Scripts.UI
                 var combination = combinations[i];
                 var button = Instantiate(_buttonPrefab, _container);
                 
+                button.gameObject.hideFlags = HideFlags.DontSaveInEditor;
                 button.Setup(combination, _scoreConfig);
                 _spawnedButtons.Add(button);
             }

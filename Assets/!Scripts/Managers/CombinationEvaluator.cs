@@ -10,7 +10,7 @@ namespace _Scripts.Managers
     {
         private readonly int[] _frequencies = new int[7];
 
-        public List<FoundCombination> FindAllCombinations(IReadOnlyList<Dice> tableDices)
+        public List<FoundCombination> FindAllCombinations(List<Dice> tableDices)
         {
             var allFound = new List<FoundCombination>();
     
@@ -44,7 +44,7 @@ namespace _Scripts.Managers
         }
         
         
-        public CombinationType Evaluate(IReadOnlyList<Dice> dices)
+        public CombinationType Evaluate(List<Dice> dices)
         {
             int count = dices.Count;
             int valuesSum = ProcessDiceValues(dices);
@@ -86,7 +86,7 @@ namespace _Scripts.Managers
         /// <summary>
         /// Returns total values sum and fills _valueFrequencies array
         /// </summary>
-        private int ProcessDiceValues(IReadOnlyList<Dice> dices)
+        private int ProcessDiceValues(List<Dice> dices)
         {
             Array.Clear(_frequencies, 0, _frequencies.Length);
             
