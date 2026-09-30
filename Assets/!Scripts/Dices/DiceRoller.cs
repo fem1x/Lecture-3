@@ -8,7 +8,7 @@ using UnityEngine;
 using VContainer;
 using Random = UnityEngine.Random;
 
-namespace _Scripts
+namespace _Scripts.Dices
 {
     public class DiceRoller
     {
@@ -44,20 +44,30 @@ namespace _Scripts
         {
             IsRolling = true;
 
-            foreach (var dice in dices)
+            try
             {
-                DiceThrow(dice, settings);
-                if (settings.TimeBetweenThrows > 0f)
-                    await UniTask.Delay(TimeSpan.FromSeconds(settings.TimeBetweenThrows));
+                foreach (var dice in dices)
+                {
+                    if (dice == null) continue;
+
+                    DiceThrow(dice, settings);
+                    if (settings.TimeBetweenThrows > 0f)
+                        await UniTask.Delay(TimeSpan.FromSeconds(settings.TimeBetweenThrows));
+                }
+
+                await UniTask.Delay(TimeSpan.FromSeconds(0.2f));
+                await UniTask.WaitUntil(() => dices.All(d => d == null || d.IsStopped));
+
+                foreach (var dice in dices)
+                {
+                    if (dice != null)
+                        dice.UpdateValue();
+                }
             }
-
-            await UniTask.Delay(TimeSpan.FromSeconds(0.2f));
-            await UniTask.WaitUntil(() => dices.All(d => d.IsStopped));
-
-            foreach (var dice in dices)
-                dice.UpdateValue();
-
-            IsRolling = false;
+            finally
+            {
+                IsRolling = false;
+            }
         }
 
         private void DiceThrow(Dice dice, DiceThrowSettings settings)

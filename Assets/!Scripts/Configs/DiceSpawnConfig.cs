@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using _Scripts.Dices;
+using UnityEngine;
 
 namespace _Scripts.Configs
 {

@@ -14,6 +14,8 @@ GameObject:
   - component: {fileID: 8708407911437218859}
   - component: {fileID: 942700347517117119}
   - component: {fileID: 240958159430448764}
+  - component: {fileID: 102834169898759921}
+  - component: {fileID: 354467324988937150}
   m_Layer: 0
   m_Name: Dice
   m_TagString: Untagged
@@ -154,4 +156,38 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a5d66754bd85774dbe25d422fa42188, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Dice
-  _value: 0
+--- !u!114 &102834169898759921
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 625131958956570791}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 145e28e784d04df2a9f4af426bd772a3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::_Scripts.Dices.DiceView
+  _liftHeight: 0.42
+  _liftTime: 0.4
+  _dropTime: 0.2
+  _liftEase: 27
+  _dropEase: 5
+--- !u!114 &354467324988937150
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 625131958956570791}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Outline
+  outlineMode: 1
+  outlineColor: {r: 0.8862745, g: 0.09803923, b: 0.29075912, a: 1}
+  outlineWidth: 3.5
+  precomputeOutline: 0
+  bakeKeys: []
+  bakeValues: []

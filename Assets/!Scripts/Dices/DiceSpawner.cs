@@ -5,7 +5,7 @@ using UnityEngine;
 using VContainer;
 using VContainer.Unity;
 
-namespace _Scripts
+namespace _Scripts.Dices
 {
     public class DiceSpawner
     {

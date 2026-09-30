@@ -48,7 +48,7 @@ MonoBehaviour:
     TypeName: 
   autoRun: 1
   autoInjectGameObjects: []
-  _diceRollConfig: {fileID: 0}
-  _diceSpawnConfig: {fileID: 0}
+  _diceRollConfig: {fileID: 11400000, guid: e220bccc4aa302a43b21ef615debf82a, type: 2}
+  _diceSpawnConfig: {fileID: 11400000, guid: 2f812427752c7104cb543f0bc69b9673, type: 2}
   _diceManager: {fileID: 0}
   _spawnPoint: {fileID: 0}

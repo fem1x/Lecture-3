@@ -1,5 +1,6 @@
 using _Scripts;
 using _Scripts.Configs;
+using _Scripts.Dices;
 using _Scripts.Managers;
 using _Scripts.Utility;
 using UnityEngine;
