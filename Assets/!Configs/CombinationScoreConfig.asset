@@ -1,0 +1,71 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 774ad588be5247daa5f58da4f8cd74c3, type: 3}
+  m_Name: CombinationScoreConfig
+  m_EditorClassIdentifier: Game::_Scripts.Configs.CombinationScoreConfig
+  <Combinations>k__BackingField:
+  - CombinationType: 0
+    BasePoints: 5
+    Multiplier: 1
+    DiceRefund: 0
+  - CombinationType: 1
+    BasePoints: 10
+    Multiplier: 2
+    DiceRefund: 0
+  - CombinationType: 2
+    BasePoints: 15
+    Multiplier: 2
+    DiceRefund: 0
+  - CombinationType: 3
+    BasePoints: 20
+    Multiplier: 3
+    DiceRefund: 0
+  - CombinationType: 4
+    BasePoints: 30
+    Multiplier: 4
+    DiceRefund: 1
+  - CombinationType: 5
+    BasePoints: 35
+    Multiplier: 4
+    DiceRefund: 1
+  - CombinationType: 6
+    BasePoints: 35
+    Multiplier: 5
+    DiceRefund: 1
+  - CombinationType: 7
+    BasePoints: 40
+    Multiplier: 5
+    DiceRefund: 1
+  - CombinationType: 8
+    BasePoints: 50
+    Multiplier: 7
+    DiceRefund: 1
+  - CombinationType: 9
+    BasePoints: 45
+    Multiplier: 6
+    DiceRefund: 2
+  - CombinationType: 10
+    BasePoints: 50
+    Multiplier: 7
+    DiceRefund: 2
+  - CombinationType: 11
+    BasePoints: 55
+    Multiplier: 7
+    DiceRefund: 3
+  - CombinationType: 12
+    BasePoints: 60
+    Multiplier: 9
+    DiceRefund: 3
+  - CombinationType: 13
+    BasePoints: 100
+    Multiplier: 10
+    DiceRefund: 4

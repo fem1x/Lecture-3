@@ -18,7 +18,7 @@ namespace _Scripts.Dices
         private Outline _outline;
         private Rigidbody _rb;
         private Tween _moveTween;
-        private float _floorY;
+        private float _floorY = -999f;
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== 
 
         private void Awake()
@@ -35,6 +35,9 @@ namespace _Scripts.Dices
 
         public void SetLockedVisual(bool isLocked)
         {
+            if (_floorY == -999f)
+                _floorY = _rb.position.y;
+            
             _outline.enabled = isLocked;
             _moveTween?.Kill();
             if (isLocked)
@@ -50,7 +53,6 @@ namespace _Scripts.Dices
 
         public void DoLiftUpTween()
         {
-            _floorY = _rb.position.y;
             _rb.isKinematic = true;
             _moveTween = _rb.DOMoveY(_floorY + _liftHeight, _liftTime).SetEase(_liftEase);
         }

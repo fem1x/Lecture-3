@@ -27,4 +27,4 @@ MonoBehaviour:
     ForceRandomize: 0.3
     Torque: 12
     TorqueRandomize: 2
-    TimeBetweenThrows: 0.05
+    TimeBetweenThrows: 0

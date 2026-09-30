@@ -27,7 +27,6 @@ namespace _Scripts.Dices
         public int Value { get; private set; } = -1;
         public bool IsLocked { get; private set; }
         public bool IsStopped
-        
         {
             get
             {
@@ -52,11 +51,19 @@ namespace _Scripts.Dices
             ToggleLock();
         }
 
+        public void SetLock(bool isLocked)
+        {
+            if (isLocked == IsLocked) return;
+            ToggleLock();
+        }
+        
         private void ToggleLock()
         {
             IsLocked = !IsLocked;
             _view.SetLockedVisual(IsLocked);
         }
+        
+        
         
         public void Roll(Vector3 force, Vector3 torque)
         {
