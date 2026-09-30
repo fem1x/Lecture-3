@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using _Scripts.Interfaces;
@@ -16,8 +17,21 @@ namespace _Scripts.Dices
         [SerializeField] private int _initialDiceCount = 15;
         [SerializeField] private int _rerollsPerRound = 2;
 
+        public static event Action<int> OnRerollsChanged;
+        public static event Action<int> OnDicesLeftChanged;
+        
         private int _currentDiceCount;
-        private int _rerollsLeft;
+        public int CurrentDiceCount
+        {
+            get => _currentDiceCount;
+            private set
+            {
+                _currentDiceCount = value;
+                OnDicesLeftChanged?.Invoke(_currentDiceCount);
+            }
+        }
+        
+        private int RerollsLeft;
         private bool _isFirstRoll = true;
         private List<Dice> _dices;
     
@@ -46,7 +60,7 @@ namespace _Scripts.Dices
         {
             _dices = dices;
             _currentDiceCount = _initialDiceCount;
-            _rerollsLeft = _rerollsPerRound;
+            RerollsLeft = _rerollsPerRound;
         }
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== 
     
@@ -68,14 +82,14 @@ namespace _Scripts.Dices
                 await _diceRoller.FirstRollAsync(_dices);
                 _isFirstRoll = false;
             }
-            else if (_rerollsLeft > 0)
+            else if (RerollsLeft > 0)
             {
                 _combinationsPanel.Clear();
                 
                 var activeDices = _dices.Where(d => !d.IsLocked).ToList();
                 if (activeDices.Count == 0) return;
                 await _diceRoller.RerollAsync(activeDices);
-                _rerollsLeft--;
+                RerollsLeft--;
             }
             else
             {
