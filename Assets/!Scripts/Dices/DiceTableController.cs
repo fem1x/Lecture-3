@@ -23,6 +23,7 @@ namespace _Scripts.Dices
             _diceRoller = diceRoller;
         }
         
+        public bool IsRolling => _diceRoller.IsRolling;
         public IReadOnlyList<Dice> GetAllDices() => _dices;
         public List<Dice> GetSelectedDices() => _dices.Where(d => d.IsLocked).ToList();
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== 
@@ -47,23 +48,6 @@ namespace _Scripts.Dices
                 await _diceRoller.RerollAsync(activeDices);
         }
         
-        
-        /*public void OnScoreButtonClicked()
-        {
-            if (_diceRoller.IsRolling) return;
-            
-            List<Dice> selectedDices = _dices.Where(d => d.IsLocked).ToList();
-            if (selectedDices.Count == 0)
-            {
-                Debug.LogWarning("Dices aren't selected!");
-                return;
-            }
-           
-            ScoreCalculationResult result = _calculator.Calculate(selectedDices);
-            Debug.Log($"Combination: {result.Type} | Score: ({result.BasePoints} + {result.DicePoints}) * {result.Multiplier} = {result.TotalScore}");
-            _scoreManager.AddScore(result.TotalScore);
-            _resourceManager.UpdateDiceAfterRound(selectedDices.Count, result.DiceRefund);
-        }*/
         
         public void ClearSelection()
         {
