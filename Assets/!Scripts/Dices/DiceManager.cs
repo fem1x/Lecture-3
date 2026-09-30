@@ -52,12 +52,7 @@ public class DiceManager : MonoBehaviour
     
     private List<int> CollectDiceValues()
     {
-        var values = new List<int>();
-        foreach (var dice in _dices)
-        {
-            values.Add(dice.Value);
-            Debug.Log(dice.Value);
-        }
+        var values = _dices.Select(d => d.Value).ToList();
         return values;
     }
 }
