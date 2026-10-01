@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: ResourceConfig
   m_EditorClassIdentifier: Game::_Scripts.Configs.ResourceConfig
   <InitialDiceCount>k__BackingField: 15
-  <RerollsPerRound>k__BackingField: 2
+  <RerollsPerRound>k__BackingField: 4

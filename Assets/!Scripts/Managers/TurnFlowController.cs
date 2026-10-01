@@ -129,7 +129,7 @@ namespace _Scripts.Managers
             }
             
             _diceSpawner.ResetDicesToSpawn(playedDices);
-            _resourceManager.ResetRerolls();
+            //_resourceManager.ResetRerolls();
         }
     }
 }

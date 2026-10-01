@@ -12,4 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc5e17ce9d8344589cb11f55635102ab, type: 3}
   m_Name: LevelsListConfig
   m_EditorClassIdentifier: Game::_Scripts.Configs.LevelsListConfig
-  <LevelsList>k__BackingField: []
+  <LevelsList>k__BackingField:
+  - {fileID: 11400000, guid: 6155a4062222c7d40acbbd02f8489670, type: 2}
+  - {fileID: 11400000, guid: 264d5cb50f6d4ee48bc686be4b638617, type: 2}
+  - {fileID: 11400000, guid: 063709b25ae81e94b9a1107ba1c23192, type: 2}

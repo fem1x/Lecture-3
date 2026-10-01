@@ -1262,6 +1262,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: d278f98f3d20f274ba1e894b275860a4, type: 2}
     - target: {fileID: 3236853052078990589, guid: 3788b64a117a7fb4dbd391e5010a68c9, type: 3}
+      propertyPath: _levelsListConfig
+      value: 
+      objectReference: {fileID: 11400000, guid: 89087b4361fb25c4ca9cedfcd9b8b851, type: 2}
+    - target: {fileID: 3236853052078990589, guid: 3788b64a117a7fb4dbd391e5010a68c9, type: 3}
       propertyPath: _combinationsPanel
       value: 
       objectReference: {fileID: 1847166397}
