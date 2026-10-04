@@ -46,8 +46,7 @@ namespace _Scripts.Dices
                 var startingRotation = _config.RandomizeStartingRotation ? Random.rotation : Quaternion.identity;
 
                 dice.Reset();
-                dice.transform.position = startingPosition;
-                dice.transform.rotation = startingRotation;
+                dice.TeleportTo(startingPosition, startingRotation);
             }
         }
         

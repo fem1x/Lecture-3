@@ -13,18 +13,18 @@ MonoBehaviour:
   m_Name: DiceRollConfig
   m_EditorClassIdentifier: Assembly-CSharp::_Scripts.Configs.DiceRollConfig
   <FirstRollSettings>k__BackingField:
-    Direction: {x: 0, y: 0.65, z: 1}
+    Direction: {x: 0, y: 0.7, z: 1}
     DirectionRandomize: 0
-    Force: 4
+    Force: 4.2
     ForceRandomize: 0.5
-    Torque: 12
-    TorqueRandomize: 2
+    Torque: 1.5
+    TorqueRandomize: 0.3
     TimeBetweenThrows: 0.2
   <RerollSettings>k__BackingField:
     Direction: {x: 0, y: 1, z: 0}
-    DirectionRandomize: 0.1
+    DirectionRandomize: 0.07
     Force: 3.5
     ForceRandomize: 0.3
-    Torque: 12
-    TorqueRandomize: 2
+    Torque: 1.5
+    TorqueRandomize: 0.3
     TimeBetweenThrows: 0

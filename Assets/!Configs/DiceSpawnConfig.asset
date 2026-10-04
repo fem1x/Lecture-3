@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97532b32cbb94e39803284bd685e543f, type: 3}
   m_Name: DiceSpawnConfig
   m_EditorClassIdentifier: Assembly-CSharp::_Scripts.Configs.DiceSpawnConfig
-  <DicePrefab>k__BackingField: {fileID: 240958159430448764, guid: ae1d1ad964e6b914d91a215ee8be0002, type: 3}
+  <DicePrefab>k__BackingField: {fileID: 2395770543784064666, guid: ac39004110e10e94d821986e79bd54ac, type: 3}
   <Spacing>k__BackingField: 0.5
   <RandomizeStartingRotation>k__BackingField: 1

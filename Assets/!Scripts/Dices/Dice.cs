@@ -72,6 +72,12 @@ namespace _Scripts.Dices
             _rb.angularVelocity = Vector3.zero;
             _rb.isKinematic = true;
         }
+
+        public void TeleportTo(Vector3 position, Quaternion rotation)
+        {
+            _rb.position = position;
+            _rb.rotation = rotation;
+        }
         
         public void Roll(Vector3 force, Vector3 torque)
         {
