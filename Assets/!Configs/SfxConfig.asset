@@ -1,0 +1,118 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64e8822d33cd175438749a4efce07ddf, type: 3}
+  m_Name: SfxConfig
+  m_EditorClassIdentifier: Game::_Scripts.Scriptable_Objects.Configs.SfxConfig
+  <SfxObject>k__BackingField: {fileID: 2273233318674079421, guid: b91177306c5ccec42af47d387b1b49fc, type: 3}
+  <GlobalSpatialBlend>k__BackingField: 1
+  <Sounds>k__BackingField:
+  - name: DiceLock
+    layers:
+    - clips:
+      - {fileID: 8300000, guid: 07092b4edd65d7d43a54cc673cde9a9f, type: 3}
+      - {fileID: 8300000, guid: 0461a6202c403e04d8e04085027a5c19, type: 3}
+      - {fileID: 8300000, guid: 0726ae70eee5bf443af91f69b14ea073, type: 3}
+      - {fileID: 8300000, guid: c2098d3d07487154ebb29190cc5e87ce, type: 3}
+      - {fileID: 8300000, guid: 0136a1507b400d54786b413e47295429, type: 3}
+      - {fileID: 8300000, guid: 7a5056951408fa9478a2a3d3ab5412ed, type: 3}
+      - {fileID: 8300000, guid: 144055db469d55244a83fe163e804d67, type: 3}
+      - {fileID: 8300000, guid: 92365a6364894d44588fcae653d21e13, type: 3}
+      - {fileID: 8300000, guid: f19272f97247274468544f0f7c00e8f2, type: 3}
+      - {fileID: 8300000, guid: b89fc26f2fbc3b744948e478b4bc800d, type: 3}
+      volume: 1
+      pitch: 1
+    volume: 0.6
+    pitch: 1
+    pitchRandomize: 0.1
+    is3D: 1
+    useGlobalSpatialBlend: 1
+    customSpatialBlend: 0
+    isLooped: 0
+    audioMixer: {fileID: -9158774617749725478, guid: 1470a324304038b4ab0db292ebdfc379, type: 2}
+    source: {fileID: 0}
+  - name: DiceThrow
+    layers:
+    - clips:
+      - {fileID: 8300000, guid: 398c0636233524044952dd486baaad4e, type: 3}
+      - {fileID: 8300000, guid: b6b8b2a7571a80941bac91514c508c5c, type: 3}
+      - {fileID: 8300000, guid: 1ba732cdec01b04498a9365aee42af51, type: 3}
+      - {fileID: 8300000, guid: c23c60b6d74ef824ca62dfd57e40741d, type: 3}
+      - {fileID: 8300000, guid: 70496cd7f9a089a4bac858b95a98e325, type: 3}
+      - {fileID: 8300000, guid: ffbef6f1e25607d42a5f5c3d8d8d603e, type: 3}
+      - {fileID: 8300000, guid: 85774badd64cd554e940fa493d48cd77, type: 3}
+      - {fileID: 8300000, guid: 8d2196906b87ea5488317faa0311a738, type: 3}
+      - {fileID: 8300000, guid: d19235e2a79b5534f94d4e0bbebb0045, type: 3}
+      - {fileID: 8300000, guid: f19f5e45f4b37b1479f09ddd5e10156e, type: 3}
+      volume: 1
+      pitch: 1
+    volume: 0.6
+    pitch: 1
+    pitchRandomize: 0.1
+    is3D: 1
+    useGlobalSpatialBlend: 1
+    customSpatialBlend: 0
+    isLooped: 0
+    audioMixer: {fileID: -9158774617749725478, guid: 1470a324304038b4ab0db292ebdfc379, type: 2}
+    source: {fileID: 0}
+  - name: DiceHit
+    layers:
+    - clips:
+      - {fileID: 8300000, guid: ea68618a211382f4c980261d7ae64325, type: 3}
+      - {fileID: 8300000, guid: 39f1369f51e7bfa4fa411df42607e151, type: 3}
+      - {fileID: 8300000, guid: 883775514eefa634caf06f2d49efe729, type: 3}
+      - {fileID: 8300000, guid: 75a08d2335e137544b45188db40ab39f, type: 3}
+      - {fileID: 8300000, guid: ede3135e797719648b28400272531459, type: 3}
+      - {fileID: 8300000, guid: d7aae616eeb99c54dadfbf13181c8d2f, type: 3}
+      - {fileID: 8300000, guid: 933ff6cfefb9f8e41b247f0d03b1cf35, type: 3}
+      - {fileID: 8300000, guid: 6ea953bef6c135245a3bcbc7ff702487, type: 3}
+      - {fileID: 8300000, guid: 5150c91831b062841a85e471dabea16d, type: 3}
+      - {fileID: 8300000, guid: 2d4a79fd6c88a5346bc14dd0fd7fa74e, type: 3}
+      - {fileID: 8300000, guid: 0223a439a7eef1e41a6baa0fc8cc551b, type: 3}
+      - {fileID: 8300000, guid: 2e086fdef0dc8c44884cfde53d5c6b22, type: 3}
+      - {fileID: 8300000, guid: 602f9ea3f5632ef4e994b64fd21a742a, type: 3}
+      - {fileID: 8300000, guid: 32e74c21b0a8c5642a763cbeb206854a, type: 3}
+      - {fileID: 8300000, guid: ca469f0281e1d7a4ebc078f62e2ecb79, type: 3}
+      volume: 1
+      pitch: 0.91
+    volume: 1
+    pitch: 1
+    pitchRandomize: 0.05
+    is3D: 1
+    useGlobalSpatialBlend: 1
+    customSpatialBlend: 0
+    isLooped: 0
+    audioMixer: {fileID: -9158774617749725478, guid: 1470a324304038b4ab0db292ebdfc379, type: 2}
+    source: {fileID: 0}
+  - name: Submit
+    layers:
+    - clips:
+      - {fileID: 8300000, guid: be6491a3ede7f1449a9514d4e75b94f5, type: 3}
+      - {fileID: 8300000, guid: 595683cef8c4ff44fbd0430ed6fc3531, type: 3}
+      - {fileID: 8300000, guid: 70511969d6489754e9f7755aa066bb42, type: 3}
+      - {fileID: 8300000, guid: f192a39ee83ae0d438c37b4b5a0f0aca, type: 3}
+      - {fileID: 8300000, guid: ecad1cede1e9c804a942d534fbb8e2f9, type: 3}
+      - {fileID: 8300000, guid: acdd60036e92e504c9a86979f58ccc9b, type: 3}
+      - {fileID: 8300000, guid: 94b57f87faf49f24eba34c7a47e8a994, type: 3}
+      - {fileID: 8300000, guid: c0cd2bddcc0e83843a18138ecfa26951, type: 3}
+      - {fileID: 8300000, guid: 26d9ce67e6ec71445b45af42adaadaaa, type: 3}
+      - {fileID: 8300000, guid: 1006dc6543d3bbc48b0e4092ee8fb578, type: 3}
+      volume: 1
+      pitch: 1
+    volume: 0.4
+    pitch: 0.8
+    pitchRandomize: 0.06
+    is3D: 0
+    useGlobalSpatialBlend: 0
+    customSpatialBlend: 0
+    isLooped: 0
+    audioMixer: {fileID: -9158774617749725478, guid: 1470a324304038b4ab0db292ebdfc379, type: 2}
+    source: {fileID: 0}

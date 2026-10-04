@@ -551,7 +551,10 @@ MonoBehaviour:
     <BaseValue>k__BackingField: 4
     <CurrentValue>k__BackingField: 4
     <Renderer>k__BackingField: {fileID: 6113428230191714263}
-  _maxDurability: 2
+  <MaxDurability>k__BackingField: 2
+  _lockSfx: DiceLock
+  _throwSfx: DiceThrow
+  _hitSfx: DiceHit
 --- !u!114 &210894147978099469
 MonoBehaviour:
   m_ObjectHideFlags: 0

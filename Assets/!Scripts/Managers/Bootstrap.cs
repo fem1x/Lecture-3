@@ -14,23 +14,28 @@ namespace _Scripts.Managers
         private readonly ScoreManager _scoreManager;
         private readonly ResourceManager _resourceManager;
         private readonly LevelFlowController _levelFlowController;
+        private readonly ISfxPlayer _sfxPlayer;
 
         [Inject]
         public Bootstrap(
             DiceSpawner diceSpawner, 
             DiceTableController diceTableController, 
             ResourceManager resourceManager,
-            LevelFlowController levelFlowController)
+            LevelFlowController levelFlowController,
+            ISfxPlayer sfxPlayer)
         {
             _diceSpawner = diceSpawner;
             _diceTableController = diceTableController;
             _resourceManager = resourceManager;
             _levelFlowController = levelFlowController;
+            _sfxPlayer = sfxPlayer;
         }
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
         
         public void Initialize()
         {
+            _sfxPlayer.Initialize();
+            
             var dices = _diceSpawner.SpawnDices();
             _diceSpawner.ResetDicesToSpawn(dices);
             _diceTableController.InitDiceList(dices);

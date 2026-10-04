@@ -3,6 +3,7 @@ using _Scripts.Configs;
 using _Scripts.Dices;
 using _Scripts.Interfaces;
 using _Scripts.Managers;
+using _Scripts.Scriptable_Objects.Configs;
 using _Scripts.UI;
 using _Scripts.Utility;
 using UnityEngine;
@@ -18,6 +19,7 @@ public class GameLifetimeScope : LifetimeScope
     [SerializeField] CombinationScoreConfig  _combinationScoreConfig;
     [SerializeField] ResourceConfig  _resourceConfig;
     [SerializeField] LevelsListConfig  _levelsListConfig;
+    [SerializeField] SfxConfig _sfxConfig;
     
     [Header("Scene")]
     [SerializeField] private TurnFlowController _turnFlowController;
@@ -40,6 +42,7 @@ public class GameLifetimeScope : LifetimeScope
         builder.RegisterInstance(_combinationScoreConfig);
         builder.RegisterInstance(_resourceConfig);
         builder.RegisterInstance(_levelsListConfig);
+        builder.RegisterInstance(_sfxConfig);
     }
     
     private void RegisterServices(IContainerBuilder builder)
@@ -52,6 +55,7 @@ public class GameLifetimeScope : LifetimeScope
         builder.RegisterComponent(_scoreText);
         
         //C# classes
+        builder.Register<SfxPlayer>(Lifetime.Singleton).As<ISfxPlayer>();
         builder.Register<ResourceManager>(Lifetime.Singleton);
         builder.Register<DiceSpawner>(Lifetime.Singleton);
         builder.Register<DiceRoller>(Lifetime.Singleton);

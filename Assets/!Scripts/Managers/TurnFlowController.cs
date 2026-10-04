@@ -16,6 +16,8 @@ namespace _Scripts.Managers
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== 
         public event Action<IReadOnlyList<FoundCombination>> OnCombinationsFound;
         public event Action OnCombinationsCleared;
+
+        [SerializeField] private string _submitSfx;
         
         private DiceTableController _tableController;
         private CombinationEvaluator _evaluator;
@@ -25,6 +27,7 @@ namespace _Scripts.Managers
         private DiceSpawner _diceSpawner;
         private DiceRoller _diceRoller;
         private LevelFlowController  _levelFlowController;
+        private ISfxPlayer _sfxPlayer;
         
         [Inject]
         public void Construct(
@@ -35,7 +38,8 @@ namespace _Scripts.Managers
             ResourceManager resourceManager,
             DiceSpawner diceSpawner,
             DiceRoller  diceRoller,
-            LevelFlowController levelFlowController)
+            LevelFlowController levelFlowController,
+            ISfxPlayer sfxPlayer)
         {
             _tableController = tableController;
             _evaluator = evaluator;
@@ -45,6 +49,7 @@ namespace _Scripts.Managers
             _diceSpawner =  diceSpawner;
             _diceRoller = diceRoller;
             _levelFlowController = levelFlowController;
+            _sfxPlayer = sfxPlayer;
         }
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== 
        
@@ -92,6 +97,7 @@ namespace _Scripts.Managers
             var selectedDices = _tableController.GetSelectedDices();
             if (selectedDices.Count == 0) return;
             
+            _sfxPlayer.Play(_submitSfx); //SFX
             FinishTurn(selectedDices);
             
             if (_scoreManager.HasEnoughScore)

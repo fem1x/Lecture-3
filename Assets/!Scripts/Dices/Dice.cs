@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using VContainer;
 
 namespace _Scripts.Dices
 {
@@ -19,14 +20,26 @@ namespace _Scripts.Dices
             new(4, Vector3.back)
         };
         
+        [Header("Durability")]
         [field: SerializeField] public int MaxDurability { get; private set; } = 2;
-        [field: SerializeField] public int CurrentDurability { get; private set; }
+        public int CurrentDurability { get; private set; }
+        
+        [Header("SFX")]
+        [SerializeField] private string _lockSfx;
+        [SerializeField] private string _throwSfx;
+        [SerializeField] private string _hitSfx;
         
         private Rigidbody _rb;
         private DiceView _view;
         private Coroutine _stopCoroutine;
-        // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
+        private ISfxPlayer _sfxPlayer;
         
+        [Inject]
+        public void Construct(ISfxPlayer sfxPlayer)
+        {
+            _sfxPlayer = sfxPlayer;
+        }
+        // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
         public int Value { get; private set; } = -1;
         public bool IsLocked { get; private set; }
         public bool IsStopped
@@ -64,6 +77,8 @@ namespace _Scripts.Dices
         {
             IsLocked = !IsLocked;
             _view.SetLockedVisual(IsLocked);
+            
+            if(IsLocked) _sfxPlayer.Play(_lockSfx, transform.position); //SFX
         }
 
         public void Reset()
@@ -89,6 +104,8 @@ namespace _Scripts.Dices
             _rb.isKinematic = false;
             _rb.AddForce(force, ForceMode.Impulse);
             _rb.AddTorque(torque, ForceMode.Impulse);
+            
+            _sfxPlayer.Play(_throwSfx, transform.position); //SFX
         }
         
         #region Face Values
@@ -135,6 +152,15 @@ namespace _Scripts.Dices
                 }
             }
             Value = bestFace.CurrentValue;
+        }
+
+        private void OnCollisionEnter(Collision collision)
+        {
+            Vector3 contactPoint = collision.contacts.Length > 0 
+                ? collision.contacts[0].point 
+                : transform.position;
+            
+            _sfxPlayer.Play(_hitSfx, contactPoint);
         }
     }
 }
