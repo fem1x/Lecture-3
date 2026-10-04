@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
 using _Scripts.Configs;
 using _Scripts.Dices;
+using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 using VContainer;
 using VContainer.Unity;
 
