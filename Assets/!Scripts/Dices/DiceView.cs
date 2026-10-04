@@ -8,6 +8,9 @@ namespace _Scripts.Dices
     public class DiceView : MonoBehaviour
     {
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== 
+        [Header("Faces")] 
+        [SerializeField] private Sprite[] _faceSprites;
+        
         [Header("LiftUp Animation")]
         [SerializeField] private float _liftHeight = 1.2f;
         [SerializeField] private float _liftTime = 0.25f;
@@ -28,9 +31,12 @@ namespace _Scripts.Dices
             _outline.enabled = false;
         }
         
-        private void OnDestroy()
+        private void OnDestroy() => _moveTween?.Kill();
+
+        public void UpdateFaceRenderers(DiceFace[] faces)
         {
-            _moveTween?.Kill();
+            foreach (var face in faces)
+                face.Renderer.sprite = _faceSprites[face.CurrentValue];
         }
 
         public void SetLockedVisual(bool isLocked)
@@ -57,13 +63,13 @@ namespace _Scripts.Dices
             _outline.enabled = false;
         }
 
-        public void DoLiftUpTween()
+        private void DoLiftUpTween()
         {
             _rb.isKinematic = true;
             _moveTween = _rb.DOMoveY(_floorY + _liftHeight, _liftTime).SetEase(_liftEase);
         }
         
-        public void DoDropTween()
+        private void DoDropTween()
         {
             _moveTween = _rb.DOMoveY(_floorY, _dropTime).SetEase(_dropEase)
                 .OnComplete(() =>

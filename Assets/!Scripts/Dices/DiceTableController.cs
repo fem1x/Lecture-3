@@ -50,11 +50,18 @@ namespace _Scripts.Dices
                 if (dice != null) dice.SetLock(false);
         }
         
-        public void SelectCombination(FoundCombination selected)
+        private void SelectCombination(FoundCombination selected)
         {
             ClearSelection();
             foreach (var dice in selected.Dices)
                 if (dice != null) dice.SetLock(true);
+        }
+        
+        public void DegradePlayedDices(List<Dice> dices, int amount = 1)
+        {
+            if (dices == null) return;
+            foreach (var dice in dices)
+                dice.TakeHit(amount);
         }
     }
 }

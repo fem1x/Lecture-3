@@ -9,16 +9,21 @@ namespace _Scripts.Dices
     public class Dice : MonoBehaviour, IPointerClickHandler
     {
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== 
-        private readonly (int Value, Vector3 Direction)[] _faces = 
+        [SerializeField] 
+        private DiceFace[] _faces = 
         {
-            (1, Vector3.up),
-            (6, Vector3.down),
-            (5, Vector3.right),
-            (2, Vector3.left),
-            (3, Vector3.forward),
-            (4, Vector3.back)
+            new(1, Vector3.up),
+            new(6, Vector3.down),
+            new(5, Vector3.right),
+            new(2, Vector3.left),
+            new(3, Vector3.forward),
+            new(4, Vector3.back)
         };
-    
+        
+        [Header("Durability")]
+        [SerializeField] private int _maxDurability = 2;
+        
+        private int _currentDurability;
         private Rigidbody _rb;
         private DiceView _view;
         private Coroutine _stopCoroutine;
@@ -41,6 +46,7 @@ namespace _Scripts.Dices
         {
             _rb = GetComponent<Rigidbody>();
             _view = GetComponent<DiceView>();
+            _currentDurability = _maxDurability;
         }
 
         public void OnPointerClick(PointerEventData eventData)
@@ -84,24 +90,39 @@ namespace _Scripts.Dices
             _rb.isKinematic = false;
             _rb.AddForce(force, ForceMode.Impulse);
             _rb.AddTorque(torque, ForceMode.Impulse);
+        }
         
-            if (_stopCoroutine != null)
-                StopCoroutine(_stopCoroutine);
-            _stopCoroutine = StartCoroutine(Co_WaitUntilStopped());
-        }
-    
-        private IEnumerator Co_WaitUntilStopped()
+        #region Face Values
+        public void TakeHit(int amount = 1)
         {
-            yield return new WaitForSeconds(0.2f);
-            yield return new WaitUntil(() => IsStopped);
+            _currentDurability -= amount;
 
-            UpdateValue();
-            _stopCoroutine = null;
+            if (_currentDurability <= 0)
+            {
+                ReduceAllValues(1);
+                _currentDurability = _maxDurability;
+            }
         }
+
+        public void ReduceAllValues(int amount = 1)
+        {
+            foreach (var face in _faces)
+                face.ReduceValue(amount);
+            
+            UpdateValue();
+            _view.UpdateFaceRenderers(_faces);
+        }
+
+        public void ResetAllValues()
+        {
+            foreach (var face in _faces)
+                face.Reset();
+        }
+        #endregion
 
         public void UpdateValue()
         {
-            int bestValue = 1;
+            DiceFace bestFace = null;
             float maxDot = -1f;
 
             for (int i = 0; i < _faces.Length; i++)
@@ -111,10 +132,12 @@ namespace _Scripts.Dices
                 if (dot > maxDot)
                 {
                     maxDot = dot;
-                    bestValue = _faces[i].Value;
+                    bestFace = _faces[i];
                 }
             }
-            Value = bestValue;
+            Value = bestFace.CurrentValue;
+            
+            Debug.Log($"[{gameObject.name}] Top face Direction: {bestFace.Direction}, Value: {Value}");
         }
     }
 }

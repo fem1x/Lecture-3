@@ -107,6 +107,8 @@ namespace _Scripts.Managers
             var result = _calculator.Calculate(playedDices);
             _scoreManager.AddScore(result.TotalScore);
 
+            _tableController.DegradePlayedDices(playedDices, 1);
+            
             _resourceManager.AddRefundDice(result.DiceRefund);
 
             OnCombinationsCleared?.Invoke();
@@ -129,7 +131,6 @@ namespace _Scripts.Managers
             }
             
             _diceSpawner.ResetDicesToSpawn(playedDices);
-            //_resourceManager.ResetRerolls();
         }
     }
 }
