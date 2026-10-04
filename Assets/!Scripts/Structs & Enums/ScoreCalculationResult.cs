@@ -2,21 +2,17 @@
 {
     public struct ScoreCalculationResult
     {
-        public readonly CombinationType Type;
-        public readonly int BasePoints;
-        public readonly int DicePoints;
-        public readonly int Multiplier;
-        public readonly int DiceRefund;
+        public readonly CombinationData Data;
+        private readonly int _dicePoints;
+        private readonly int _diceMultiplier;
         
-        public int TotalScore => (BasePoints + DicePoints) * Multiplier;
+        public int TotalScore => (Data.BasePoints + _dicePoints) * (Data.Multiplier + _diceMultiplier);
 
-        public ScoreCalculationResult(CombinationType type, int basePoints, int dicePoints, int multiplier, int diceRefund)
+        public ScoreCalculationResult(CombinationData data, int dicePoints, int diceMultiplier)
         {
-            Type = type;
-            BasePoints = basePoints;
-            DicePoints = dicePoints;
-            Multiplier = multiplier;
-            DiceRefund = diceRefund;
+            Data = data;
+            _dicePoints = dicePoints;
+            _diceMultiplier = diceMultiplier;
         }
     }
 }

@@ -114,7 +114,7 @@ namespace _Scripts.Managers
 
             _tableController.DegradePlayedDices(playedDices, 1);
             
-            _resourceManager.AddRefundDice(result.DiceRefund);
+            _resourceManager.AddRefundDice(result.Data.DiceRefund);
 
             OnCombinationsCleared?.Invoke();
         }

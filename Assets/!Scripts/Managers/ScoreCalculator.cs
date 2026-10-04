@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using _Scripts.Configs;
 using _Scripts.Dices;
 using _Scripts.Interfaces;
@@ -16,19 +17,14 @@ public class ScoreCalculator : IScoreCalculator
     }
     // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== 
 
-    public ScoreCalculationResult Calculate(List<Dice> scoringDice)
+    public ScoreCalculationResult Calculate(List<Dice> selectedDices)
     {
-        CombinationType type = _evaluator.Evaluate(scoringDice);
+        CombinationType type = _evaluator.Evaluate(selectedDices);
         CombinationData data = _config.GetData(type);
-        int dicePoints = GetDiceValuesPoints(scoringDice);
-        
-        return new ScoreCalculationResult(
-            type, 
-            data.BasePoints, 
-            dicePoints, 
-            data.Multiplier, 
-            data.DiceRefund
-        );
+    
+        int dicePoints = selectedDices.Sum(d => d.Value);
+
+        return new ScoreCalculationResult(data, dicePoints, 0);
     }
 
     private int GetDiceValuesPoints(List<Dice> scoringDice)

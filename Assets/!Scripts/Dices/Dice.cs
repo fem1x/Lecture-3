@@ -10,6 +10,8 @@ namespace _Scripts.Dices
     public class Dice : MonoBehaviour, IPointerClickHandler
     {
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== 
+        public static event Action OnAnyDiceSelectionChanged;
+        
         [field: SerializeField] public DiceFace[] Faces { get; private set; } = 
         {
             new(1, Vector3.up),
@@ -79,6 +81,8 @@ namespace _Scripts.Dices
             _view.SetLockedVisual(IsLocked);
             
             if(IsLocked) _sfxPlayer.Play(_lockSfx, transform.position); //SFX
+            
+            OnAnyDiceSelectionChanged?.Invoke();
         }
 
         public void Reset()
