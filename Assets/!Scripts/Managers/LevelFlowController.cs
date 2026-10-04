@@ -64,8 +64,9 @@ namespace _Scripts.Managers
             var allDices = _tableController.GetAllDices();
             _tableController.ClearSelection();
             _diceSpawner.ResetDicesToSpawn(allDices);
+            _tableController.ActivateAllDices(allDices);
             _tableController.SetPendingDices(allDices);
-
+            
             OnLevelStarted?.Invoke(_currentLevelIndex + 1, currentLevel.ScoreQuota);
         }
         

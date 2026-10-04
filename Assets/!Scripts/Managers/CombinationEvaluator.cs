@@ -46,9 +46,11 @@ namespace _Scripts.Managers
         
         public CombinationType Evaluate(List<Dice> dices)
         {
-            int count = dices.Count;
-            int valuesSum = ProcessDiceValues(dices);
+            var validDices = dices.Where(d => d != null && d.Value > 0).ToList();
+            var count = validDices.Count;
+            var valuesSum = ProcessDiceValues(validDices);
 
+            if (count == 0) return CombinationType.HighestDice;
             switch (count)
             {
                 case 5:
@@ -90,10 +92,10 @@ namespace _Scripts.Managers
         {
             Array.Clear(_frequencies, 0, _frequencies.Length);
             
-            int sum = 0;
+            var sum = 0;
             for (int i = 0; i < dices.Count; i++)
             {
-                int val = dices[i].Value;
+                var val = dices[i].Value;
                 if (val >= 1 && val <= 6)
                 {
                     _frequencies[val]++;
@@ -119,8 +121,8 @@ namespace _Scripts.Managers
 
         private bool IsMonochrome()
         {
-            int evenCount = _frequencies[2] + _frequencies[4] + _frequencies[6];
-            int oddCount = _frequencies[1] + _frequencies[3] + _frequencies[5];
+            var evenCount = _frequencies[2] + _frequencies[4] + _frequencies[6];
+            var oddCount = _frequencies[1] + _frequencies[3] + _frequencies[5];
             return evenCount == 0 ||  oddCount == 0;
         }
 

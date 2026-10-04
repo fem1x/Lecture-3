@@ -69,5 +69,11 @@ namespace _Scripts.Dices
             
             OnDicesStateChanged?.Invoke(dices);
         }
+
+        public void ActivateAllDices(List<Dice> dices)
+        {
+            foreach (var dice in dices)
+                dice.gameObject.SetActive(true);
+        }
     }
 }

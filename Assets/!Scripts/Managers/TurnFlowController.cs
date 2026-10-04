@@ -17,10 +17,13 @@ namespace _Scripts.Managers
         public event Action<IReadOnlyList<FoundCombination>> OnCombinationsFound;
         public event Action OnCombinationsCleared;
 
+        [Header("SFX")]
         [SerializeField] private string _submitSfx;
         
+        private bool _isScoring;
+        
+        #region DI
         private DiceTableController _tableController;
-        private CombinationEvaluator _evaluator;
         private IScoreCalculator _calculator;
         private ScoreManager _scoreManager;
         private ResourceManager _resourceManager;
@@ -28,21 +31,21 @@ namespace _Scripts.Managers
         private DiceRoller _diceRoller;
         private LevelFlowController  _levelFlowController;
         private ISfxPlayer _sfxPlayer;
+        private ScoreSequenceController _scoreSequenceController;
         
         [Inject]
         public void Construct(
             DiceTableController tableController,
-            CombinationEvaluator evaluator,
             IScoreCalculator calculator,
             ScoreManager scoreManager,
             ResourceManager resourceManager,
             DiceSpawner diceSpawner,
             DiceRoller  diceRoller,
             LevelFlowController levelFlowController,
-            ISfxPlayer sfxPlayer)
+            ISfxPlayer sfxPlayer,
+            ScoreSequenceController scoreSequenceController)
         {
             _tableController = tableController;
-            _evaluator = evaluator;
             _calculator = calculator;
             _scoreManager = scoreManager;
             _resourceManager = resourceManager;
@@ -50,12 +53,14 @@ namespace _Scripts.Managers
             _diceRoller = diceRoller;
             _levelFlowController = levelFlowController;
             _sfxPlayer = sfxPlayer;
+            _scoreSequenceController = scoreSequenceController;
         }
+        #endregion
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== 
        
         public void OnRoll(InputValue inputValue)
         {
-            if (_diceRoller.IsRolling) return;
+            if (_diceRoller.IsRolling || _isScoring) return;
             ExecuteRollAsync().Forget();
         }
         
@@ -91,32 +96,39 @@ namespace _Scripts.Managers
         
         public void OnScoreButtonClicked()
         {
-            if (_diceRoller.IsRolling) return;
+            if (_diceRoller.IsRolling || _isScoring) return;
             
             var selectedDices = _tableController.GetSelectedDices();
             if (selectedDices.Count == 0) return;
             
             _sfxPlayer.Play(_submitSfx); //SFX
-            FinishTurn(selectedDices);
             
-            if (_scoreManager.HasEnoughScore)
+            ExecuteScoreFlowAsync(selectedDices).Forget();
+        }
+
+        private async UniTaskVoid ExecuteScoreFlowAsync(List<Dice> selectedDices)
+        {
+            _isScoring = true;
+            
+            var result = _calculator.Calculate(selectedDices);
+            await _scoreSequenceController.PlaySequenceAsync(selectedDices, result);
+            FinishTurn(selectedDices, result);
+            
+            _isScoring = false;
+
+            if (_scoreManager.HasEnoughScore) 
                 return;
             
             PrepareNextTurn(selectedDices);
-            
             _levelFlowController.CheckDefeatCondition();
         }
 
-        private void FinishTurn(List<Dice> playedDices)
+        private void FinishTurn(List<Dice> playedDices, ScoreCalculationResult result)
         {
-            var result = _calculator.Calculate(playedDices);
-            _scoreManager.AddScore(result.TotalScore);
-
             _tableController.DegradePlayedDices(playedDices, 1);
-            
             _resourceManager.AddRefundDice(result.Data.DiceRefund);
 
-            OnCombinationsCleared?.Invoke();
+            //OnCombinationsCleared?.Invoke();
         }
 
         private void PrepareNextTurn(List<Dice> playedDices)
@@ -127,15 +139,19 @@ namespace _Scripts.Managers
             if (countToReturn > 0)
             {
                 var dicesToReturn = playedDices.Take(countToReturn).ToList();
-        
                 _tableController.SetPendingDices(dicesToReturn);
+                _diceSpawner.ResetDicesToSpawn(dicesToReturn);
+                
+                var eliminatedDices = playedDices.Skip(countToReturn).ToList();
+                foreach (var extraDice in eliminatedDices)
+                    extraDice.gameObject.SetActive(false);
             }
             else
             {
                 _tableController.SetPendingDices(new List<Dice>()); //0 dices left
+                foreach (var dice in playedDices)
+                    dice.gameObject.SetActive(false);
             }
-            
-            _diceSpawner.ResetDicesToSpawn(playedDices);
         }
     }
 }

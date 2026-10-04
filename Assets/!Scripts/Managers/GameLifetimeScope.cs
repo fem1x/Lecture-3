@@ -27,6 +27,7 @@ public class GameLifetimeScope : LifetimeScope
     [SerializeField] private DiceSpawnPoint _spawnPoint;
     [SerializeField] private CombinationsPanelView _combinationsPanel;
     [SerializeField] private ScoreView _scoreText;
+    [SerializeField] private ScoreSequenceController _scoreSequenceController;
     // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
     
     protected override void Configure(IContainerBuilder builder)
@@ -53,6 +54,7 @@ public class GameLifetimeScope : LifetimeScope
         builder.RegisterComponent(_turnFlowController);
         builder.RegisterComponent(_combinationsPanel);
         builder.RegisterComponent(_scoreText);
+        builder.RegisterComponent(_scoreSequenceController);
         
         //C# classes
         builder.Register<SfxPlayer>(Lifetime.Singleton).As<ISfxPlayer>();
