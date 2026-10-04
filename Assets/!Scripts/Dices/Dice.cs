@@ -9,8 +9,7 @@ namespace _Scripts.Dices
     public class Dice : MonoBehaviour, IPointerClickHandler
     {
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== 
-        [SerializeField] 
-        private DiceFace[] _faces = 
+        [field: SerializeField] public DiceFace[] Faces { get; private set; } = 
         {
             new(1, Vector3.up),
             new(6, Vector3.down),
@@ -20,14 +19,14 @@ namespace _Scripts.Dices
             new(4, Vector3.back)
         };
         
-        [Header("Durability")]
-        [SerializeField] private int _maxDurability = 2;
+        [field: SerializeField] public int MaxDurability { get; private set; } = 2;
+        [field: SerializeField] public int CurrentDurability { get; private set; }
         
-        private int _currentDurability;
         private Rigidbody _rb;
         private DiceView _view;
         private Coroutine _stopCoroutine;
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
+        
         public int Value { get; private set; } = -1;
         public bool IsLocked { get; private set; }
         public bool IsStopped
@@ -46,7 +45,7 @@ namespace _Scripts.Dices
         {
             _rb = GetComponent<Rigidbody>();
             _view = GetComponent<DiceView>();
-            _currentDurability = _maxDurability;
+            CurrentDurability = MaxDurability;
         }
 
         public void OnPointerClick(PointerEventData eventData)
@@ -95,27 +94,27 @@ namespace _Scripts.Dices
         #region Face Values
         public void TakeHit(int amount = 1)
         {
-            _currentDurability -= amount;
+            CurrentDurability -= amount;
 
-            if (_currentDurability <= 0)
+            if (CurrentDurability <= 0)
             {
                 ReduceAllValues(1);
-                _currentDurability = _maxDurability;
+                CurrentDurability = MaxDurability;
             }
         }
 
         public void ReduceAllValues(int amount = 1)
         {
-            foreach (var face in _faces)
+            foreach (var face in Faces)
                 face.ReduceValue(amount);
             
             UpdateValue();
-            _view.UpdateFaceRenderers(_faces);
+            _view.UpdateFaceRenderers(Faces);
         }
 
         public void ResetAllValues()
         {
-            foreach (var face in _faces)
+            foreach (var face in Faces)
                 face.Reset();
         }
         #endregion
@@ -125,19 +124,17 @@ namespace _Scripts.Dices
             DiceFace bestFace = null;
             float maxDot = -1f;
 
-            for (int i = 0; i < _faces.Length; i++)
+            for (int i = 0; i < Faces.Length; i++)
             {
-                Vector3 worldDirection = transform.TransformDirection(_faces[i].Direction);
+                Vector3 worldDirection = transform.TransformDirection(Faces[i].Direction);
                 float dot = Vector3.Dot(worldDirection, Vector3.up);
                 if (dot > maxDot)
                 {
                     maxDot = dot;
-                    bestFace = _faces[i];
+                    bestFace = Faces[i];
                 }
             }
             Value = bestFace.CurrentValue;
-            
-            Debug.Log($"[{gameObject.name}] Top face Direction: {bestFace.Direction}, Value: {Value}");
         }
     }
 }

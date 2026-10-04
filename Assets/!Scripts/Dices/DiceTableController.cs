@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using _Scripts.UI;
@@ -9,9 +10,11 @@ namespace _Scripts.Dices
     public class DiceTableController : MonoBehaviour
     {
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
+        public event Action<List<Dice>> OnDicesStateChanged;
+        
         private List<Dice> _allDices = new();
         private List<Dice> _pendingDicesToThrow = new();
-
+        // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== 
         public bool HasPendingDices => _pendingDicesToThrow.Count > 0;
         public bool HasUnlockedDices => GetUnlockedDices().Count > 0;
         
@@ -20,6 +23,7 @@ namespace _Scripts.Dices
         public List<Dice> GetUnlockedDices() => _allDices.Where(d => !d.IsLocked).ToList();
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== 
 
+        private void Start() => OnDicesStateChanged?.Invoke(_allDices);
         private void OnEnable() => CombinationButtonView.OnAnyButtonClicked += SelectCombination;
         private void OnDisable() => CombinationButtonView.OnAnyButtonClicked -= SelectCombination;
         public void OnRmbClick(InputValue value) => ClearSelection();
@@ -62,6 +66,8 @@ namespace _Scripts.Dices
             if (dices == null) return;
             foreach (var dice in dices)
                 dice.TakeHit(amount);
+            
+            OnDicesStateChanged?.Invoke(dices);
         }
     }
 }

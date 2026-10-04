@@ -8,6 +8,7 @@ namespace _Scripts.Managers
 {
     public class Bootstrap : IInitializable
     {
+        // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
         private readonly DiceSpawner _diceSpawner;
         private readonly DiceTableController _diceTableController;
         private readonly ScoreManager _scoreManager;
@@ -26,6 +27,7 @@ namespace _Scripts.Managers
             _resourceManager = resourceManager;
             _levelFlowController = levelFlowController;
         }
+        // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
         
         public void Initialize()
         {

@@ -11,6 +11,7 @@ using VContainer.Unity;
 
 public class GameLifetimeScope : LifetimeScope
 {
+    // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
     [Header("Configs")]
     [SerializeField] DiceRollConfig _diceRollConfig;
     [SerializeField] DiceSpawnConfig _diceSpawnConfig;
@@ -24,6 +25,7 @@ public class GameLifetimeScope : LifetimeScope
     [SerializeField] private DiceSpawnPoint _spawnPoint;
     [SerializeField] private CombinationsPanelView _combinationsPanel;
     [SerializeField] private ScoreView _scoreText;
+    // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
     
     protected override void Configure(IContainerBuilder builder)
     {
