@@ -34,7 +34,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 117.49713, y: -8.40033}
+  m_AnchoredPosition: {x: 69.399414, y: -2.689148}
   m_SizeDelta: {x: 41.1085, y: 41.1085}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &231918019643822845
@@ -109,7 +109,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 27.308533, y: -53.494637}
+  m_AnchoredPosition: {x: -20.789185, y: -47.783455}
   m_SizeDelta: {x: 41.1085, y: 41.1085}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7222618178316335389
@@ -186,7 +186,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 172.56258, y: -8.400299}
+  m_AnchoredPosition: {x: 47.7, y: -52.1}
   m_SizeDelta: {x: 79.7171, y: 79.7171}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &233379872795276560
@@ -242,6 +242,8 @@ GameObject:
   m_Component:
   - component: {fileID: 3358637937649445506}
   - component: {fileID: 1358630699037678543}
+  - component: {fileID: 6252869928793510548}
+  - component: {fileID: 2809586670201472379}
   m_Layer: 5
   m_Name: DiceNet
   m_TagString: Untagged
@@ -302,6 +304,44 @@ MonoBehaviour:
   - {fileID: 159158417, guid: dbc0cc68fa7c2044c83c51ee4d2f198d, type: 3}
   - {fileID: -1733069916, guid: dbc0cc68fa7c2044c83c51ee4d2f198d, type: 3}
   _durabilityView: {fileID: 8623460984114271499}
+--- !u!222 &6252869928793510548
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2202111171776066226}
+  m_CullTransparentMesh: 1
+--- !u!114 &2809586670201472379
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2202111171776066226}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
+  m_Material: {fileID: 0}
+  m_Color: {r: 0, g: 0, b: 0, a: 0.4509804}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+  m_Type: 1
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
 --- !u!1 &2607788598360914443
 GameObject:
   m_ObjectHideFlags: 0
@@ -336,7 +376,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 27.308533, y: 36.693966}
+  m_AnchoredPosition: {x: -20.789185, y: 42.405148}
   m_SizeDelta: {x: 41.1085, y: 41.1085}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6597013278566773871
@@ -411,7 +451,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -17.785751, y: -8.40033}
+  m_AnchoredPosition: {x: -65.88347, y: -2.689148}
   m_SizeDelta: {x: 41.1085, y: 41.1085}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3688408702963820307
@@ -561,7 +601,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 72.40288, y: -8.40033}
+  m_AnchoredPosition: {x: 24.30516, y: -2.689148}
   m_SizeDelta: {x: 41.1085, y: 41.1085}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1407331060476368508
@@ -636,7 +676,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 27.308533, y: -8.40033}
+  m_AnchoredPosition: {x: -20.789185, y: -2.689148}
   m_SizeDelta: {x: 41.1085, y: 41.1085}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8456067038650059073

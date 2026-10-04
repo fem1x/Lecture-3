@@ -86,8 +86,7 @@ namespace _Scripts.Managers
                 .Where(d => d != null && d.Value > 0)
                 .ToList();
             
-            List<FoundCombination> foundCombs = _evaluator.FindAllCombinations(activeRolledDices);
-            OnCombinationsFound?.Invoke(foundCombs);
+            OnCombinationsCleared?.Invoke();
         }
         
         public void OnScoreButtonClicked()
