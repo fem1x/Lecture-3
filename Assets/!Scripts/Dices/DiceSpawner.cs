@@ -28,7 +28,9 @@ namespace _Scripts.Dices
             var dices = new List<Dice>();
             for (int i = 0; i < count; i++)
             {
-                var dice = _diceFactory.Create(i);
+                var spawnPos = GetDiceStartingPosition(i, count);
+                var spawnRot = _config.RandomizeStartingRotation ? Random.rotation : Quaternion.identity;
+                var dice = _diceFactory.Create(i, spawnPos, spawnRot);
                 dices.Add(dice);
             }
             return dices;
@@ -42,11 +44,11 @@ namespace _Scripts.Dices
                 var dice = dices[i];
                 if (dice == null) continue;
 
-                var startingPosition = GetDiceStartingPosition(i, count);
-                var startingRotation = _config.RandomizeStartingRotation ? Random.rotation : Quaternion.identity;
+                var pos = GetDiceStartingPosition(i, count);
+                var rot = _config.RandomizeStartingRotation ? Random.rotation : Quaternion.identity;
 
                 dice.PrepareForRoll();
-                dice.TeleportTo(startingPosition, startingRotation);
+                dice.TeleportTo(pos, rot);
             }
         }
         

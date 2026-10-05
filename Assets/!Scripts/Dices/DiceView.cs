@@ -41,8 +41,8 @@ namespace _Scripts.Dices
             _data.OnLockChanged += SetLockedVisual;
             _data.OnDataChanged += UpdateFaces;
             
+            _outline.enabled = _data.IsLocked;
             UpdateFaces();
-            SetLockedVisual(_data.IsLocked);
         }
         
         private void OnDestroy()
@@ -67,18 +67,19 @@ namespace _Scripts.Dices
 
         public void SetLockedVisual(bool isLocked)
         {
-            if (_floorY == -999f)
-                _floorY = _rb.position.y;
-            
             _outline.enabled = isLocked;
+            bool isAnimating = _moveTween != null && _moveTween.IsActive();
             _moveTween?.Kill();
+            
             if (isLocked)
             {
+                if (!isAnimating || _floorY == -999f)
+                    _floorY = _rb.position.y;
                 DoLiftUpTween();
             }
-
             else
             {
+                if (_floorY == -999f) return;
                 DoDropTween();
             }
         }
@@ -87,6 +88,7 @@ namespace _Scripts.Dices
         {
             _moveTween?.Kill();
             _outline.enabled = false;
+            _floorY = -999f;
         }
 
         private void DoLiftUpTween()
@@ -97,11 +99,10 @@ namespace _Scripts.Dices
         
         private void DoDropTween()
         {
-            _moveTween = _rb.DOMoveY(_floorY, _dropTime).SetEase(_dropEase)
-                .OnComplete(() =>
-                {
-                    _rb.isKinematic = false;
-                });
+            _rb.isKinematic = false;
+            _rb.linearVelocity = Vector3.zero;
+            _rb.angularVelocity = Vector3.zero;
+            _floorY = -999f;
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using _Scripts.Configs;
 using _Scripts.Dices;
+using UnityEngine;
 using VContainer;
 using VContainer.Unity;
 
@@ -24,9 +25,9 @@ namespace _Scripts.Managers
         }
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== 
 
-        public Dice Create(int id)
+        public Dice Create(int id, Vector3 position, Quaternion rotation)
         {
-            var dice = _resolver.Instantiate(_spawnConfig.DicePrefab);
+            var dice = _resolver.Instantiate(_spawnConfig.DicePrefab, position, rotation);
             var data = new DiceData(id, _diceDataConfig);
             dice.Init(data);
 
