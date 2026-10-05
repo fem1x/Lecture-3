@@ -106,6 +106,9 @@ namespace _Scripts.Dices
 
         public void TeleportTo(Vector3 position, Quaternion rotation)
         {
+            transform.position = position;
+            transform.rotation = rotation;
+            
             _rb.position = position;
             _rb.rotation = rotation;
         }

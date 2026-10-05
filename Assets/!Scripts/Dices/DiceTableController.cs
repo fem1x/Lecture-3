@@ -88,5 +88,19 @@ namespace _Scripts.Dices
             foreach (var dice in dices)
                 dice.gameObject.SetActive(true);
         }
+        
+        public void DeactivateAllDices()
+        {
+            ClearSelection();
+            
+            if (_allDices != null)
+            {
+                foreach (var dice in _allDices)
+                {
+                    if (dice != null)
+                        dice.gameObject.SetActive(false);
+                }
+            }
+        }
     }
 }

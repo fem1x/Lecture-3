@@ -6,6 +6,7 @@ namespace _Scripts.Dices
     [Serializable]
     public class DiceFace
     {
+        // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
         [field: SerializeField] public Vector3 Direction { get; private set; }
         [field: SerializeField] public int BaseValue { get; private set; }
         [field: SerializeField] public int CurrentValue { get; private set; }
@@ -17,6 +18,7 @@ namespace _Scripts.Dices
             CurrentValue = baseValue;
             Direction = direction;
         } 
+        // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
         
         public void ReduceValue(int amount = 1)
         {

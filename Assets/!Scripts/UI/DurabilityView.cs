@@ -5,10 +5,12 @@ namespace _Scripts.UI
 {
     public class DurabilityView : MonoBehaviour
     {
+        // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
         [SerializeField] private Image[] _pointImages;
 
         [SerializeField] private Color _activeColor;
         [SerializeField] private Color _inactiveColor;
+        // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
         
         public void SetDurability(int current, int max)
         {

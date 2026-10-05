@@ -108,7 +108,7 @@ MonoBehaviour:
       volume: 1
       pitch: 1
     volume: 0.4
-    pitch: 1
+    pitch: 0.55
     pitchRandomize: 0.06
     is3D: 0
     useGlobalSpatialBlend: 0

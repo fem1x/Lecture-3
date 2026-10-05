@@ -51,8 +51,7 @@ public class LevelCompletedView : MonoBehaviour
             .SetUpdate(true)
             .OnComplete(() =>
             {
-                gameObject.SetActive(false);
-                _levelFlowController.StartNextLevel();
+                _levelFlowController.TryStartNextLevel();
             });
     }
 

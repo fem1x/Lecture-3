@@ -48,12 +48,16 @@ namespace _Scripts.Managers
             StartCurrentLevel();
         }
         
-        public void StartNextLevel()
+        public bool TryStartNextLevel()
         {
             if (_currentLevelIndex < _levelsConfig.LevelsList.Count)
+            {
                 StartCurrentLevel();
-            else
-                OnGameWon?.Invoke();
+                return true;
+            }
+
+            OnGameWon?.Invoke();
+            return false;
         } 
         
         private void StartCurrentLevel()
@@ -73,8 +77,8 @@ namespace _Scripts.Managers
 
             var allDices = _tableController.AllDices;
             _tableController.ClearSelection();
-            _diceSpawner.ResetDicesToSpawn(allDices);
             _tableController.ActivateAllDices(allDices);
+            _diceSpawner.ResetDicesToSpawn(allDices);
             _tableController.SetPendingDices(allDices);
             
             OnLevelStarted?.Invoke(_currentLevelIndex + 1, currentLevel.ScoreQuota);

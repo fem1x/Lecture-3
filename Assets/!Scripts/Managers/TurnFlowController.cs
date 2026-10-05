@@ -112,13 +112,16 @@ namespace _Scripts.Managers
             
             var result = _calculator.Calculate(selectedDices);
             await _scoreSequenceController.PlaySequenceAsync(selectedDices, result);
+            _tableController.DegradePlayedDices(selectedDices, 1);
             
             _isScoring = false;
 
-            if (_scoreManager.HasEnoughScore) 
+            if (_scoreManager.HasEnoughScore)
+            {
+                _tableController.DeactivateAllDices();
                 return;
+            }
             
-            _tableController.DegradePlayedDices(selectedDices, 1);
             _resourceManager.AddRefundDice(result.Data.DiceRefund);
             PrepareNextTurn(selectedDices);
             _levelFlowController.CheckDefeatCondition();
