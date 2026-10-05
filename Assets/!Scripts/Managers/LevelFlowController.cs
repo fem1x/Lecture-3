@@ -6,7 +6,7 @@ using VContainer.Unity;
 
 namespace _Scripts.Managers
 {
-    public class LevelFlowController
+    public class LevelFlowController : IDisposable
     {
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
         public event Action<int, int> OnLevelStarted; //levelIndex, quota
@@ -40,11 +40,21 @@ namespace _Scripts.Managers
         private int _currentLevelIndex = 0;
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 
+        public void Dispose() => _scoreManager.OnQuotaReached -= HandleQuotaReached;
+        
         public void StartGame()
         {
             _currentLevelIndex = 0;
             StartCurrentLevel();
         }
+        
+        public void StartNextLevel()
+        {
+            if (_currentLevelIndex < _levelsConfig.LevelsList.Count)
+                StartCurrentLevel();
+            else
+                OnGameWon?.Invoke();
+        } 
         
         private void StartCurrentLevel()
         {
@@ -82,12 +92,6 @@ namespace _Scripts.Managers
         {
             _currentLevelIndex++;
             OnLevelCompleted?.Invoke();
-
-            if (_currentLevelIndex < _levelsConfig.LevelsList.Count)
-                StartCurrentLevel();
-            
-            else
-                OnGameWon?.Invoke();
         }
     }
 }
