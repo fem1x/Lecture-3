@@ -76,6 +76,7 @@ public class GameLifetimeScope : LifetimeScope
         builder.Register<ScoreManager>(Lifetime.Singleton);
         builder.Register<LevelFlowController>(Lifetime.Singleton);
         builder.Register<RepairTokensManager>(Lifetime.Singleton);
+        builder.Register<DiceFactory>(Lifetime.Singleton);
         
         //Entry Point
         builder.RegisterEntryPoint<Bootstrap>();

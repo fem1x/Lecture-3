@@ -25,21 +25,9 @@ namespace _Scripts.UI
         private IReadOnlyDiceData _data;
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 
-        private void Awake()
-        {
-            _faceImages = new[]
-            {
-                _upImage,
-                _downImage,
-                _rightImage,
-                _leftImage,
-                _forwardImage,
-                _backImage
-            };
-        }
-
         public void Bind(IReadOnlyDiceData data)
         {
+            InitFacesArray();
             _data = data;
             _data.OnDataChanged += Refresh;
             Refresh();
@@ -54,6 +42,19 @@ namespace _Scripts.UI
             }
 
             _durabilityView.SetDurability(_data.CurrentDurability, _data.MaxDurability);
+        }
+
+        private void InitFacesArray()
+        {
+            _faceImages = new[]
+            {
+                _upImage,
+                _downImage,
+                _rightImage,
+                _leftImage,
+                _forwardImage,
+                _backImage
+            };
         }
     }
 }
