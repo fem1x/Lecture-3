@@ -943,7 +943,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0}
+  m_Color: {r: 0, g: 0, b: 0, a: 0.6}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -7296,10 +7296,10 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 9021029181510133401}
-  - {fileID: 5890303346556395032}
-  - {fileID: 1842739925226802270}
-  - {fileID: 6231711996100720619}
-  - {fileID: 98872687890562895}
+  - {fileID: 2203303356690883747}
+  - {fileID: 5446863293164138899}
+  - {fileID: 1271494522350336913}
+  - {fileID: 7097991650832454653}
   m_Father: {fileID: 8971640953311960382}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
@@ -7328,7 +7328,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 0.3529412, g: 0.23529413, b: 0.43921572, a: 0.0627451}
+  m_Color: {r: 0.3529412, g: 0.23529413, b: 0.43921572, a: 0.07058824}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -7385,10 +7385,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Game::_Scripts.UI.DiceStatePanelView
   _diceStateViews:
   - {fileID: 8137738276999449387}
-  - {fileID: 6656496486076330922}
-  - {fileID: 1462708720167035372}
-  - {fileID: 6603775607373388377}
-  - {fileID: 901119914239759101}
+  - {fileID: 1390938681916950801}
+  - {fileID: 5064590974149680161}
+  - {fileID: 2052355474484172323}
+  - {fileID: 8025148637190323791}
 --- !u!1 &8937226446615717183
 GameObject:
   m_ObjectHideFlags: 0
@@ -8146,6 +8146,135 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 3978345065327748477, guid: 86dc1cdadf3ed6c4e80a98bb15cbd092, type: 3}
   m_PrefabInstance: {fileID: 2149355619463596662}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &2778908205802200812
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 8541449471210441122}
+    m_Modifications:
+    - target: {fileID: 3978345065327748477, guid: 86dc1cdadf3ed6c4e80a98bb15cbd092, type: 3}
+      propertyPath: m_Pivot.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3978345065327748477, guid: 86dc1cdadf3ed6c4e80a98bb15cbd092, type: 3}
+      propertyPath: m_Pivot.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3978345065327748477, guid: 86dc1cdadf3ed6c4e80a98bb15cbd092, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3978345065327748477, guid: 86dc1cdadf3ed6c4e80a98bb15cbd092, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3978345065327748477, guid: 86dc1cdadf3ed6c4e80a98bb15cbd092, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3978345065327748477, guid: 86dc1cdadf3ed6c4e80a98bb15cbd092, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3978345065327748477, guid: 86dc1cdadf3ed6c4e80a98bb15cbd092, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 115
+      objectReference: {fileID: 0}
+    - target: {fileID: 3978345065327748477, guid: 86dc1cdadf3ed6c4e80a98bb15cbd092, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 115
+      objectReference: {fileID: 0}
+    - target: {fileID: 3978345065327748477, guid: 86dc1cdadf3ed6c4e80a98bb15cbd092, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3978345065327748477, guid: 86dc1cdadf3ed6c4e80a98bb15cbd092, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3978345065327748477, guid: 86dc1cdadf3ed6c4e80a98bb15cbd092, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3978345065327748477, guid: 86dc1cdadf3ed6c4e80a98bb15cbd092, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3978345065327748477, guid: 86dc1cdadf3ed6c4e80a98bb15cbd092, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3978345065327748477, guid: 86dc1cdadf3ed6c4e80a98bb15cbd092, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3978345065327748477, guid: 86dc1cdadf3ed6c4e80a98bb15cbd092, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3978345065327748477, guid: 86dc1cdadf3ed6c4e80a98bb15cbd092, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3978345065327748477, guid: 86dc1cdadf3ed6c4e80a98bb15cbd092, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3978345065327748477, guid: 86dc1cdadf3ed6c4e80a98bb15cbd092, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3978345065327748477, guid: 86dc1cdadf3ed6c4e80a98bb15cbd092, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3978345065327748477, guid: 86dc1cdadf3ed6c4e80a98bb15cbd092, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4245702733014173903, guid: 86dc1cdadf3ed6c4e80a98bb15cbd092, type: 3}
+      propertyPath: _damagedTextColor.b
+      value: 0.5529412
+      objectReference: {fileID: 0}
+    - target: {fileID: 4245702733014173903, guid: 86dc1cdadf3ed6c4e80a98bb15cbd092, type: 3}
+      propertyPath: _damagedTextColor.g
+      value: 0.69803923
+      objectReference: {fileID: 0}
+    - target: {fileID: 4245702733014173903, guid: 86dc1cdadf3ed6c4e80a98bb15cbd092, type: 3}
+      propertyPath: _damagedTextColor.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4245702733014173903, guid: 86dc1cdadf3ed6c4e80a98bb15cbd092, type: 3}
+      propertyPath: _hideUndamagedIndicator
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9013700237388054691, guid: 86dc1cdadf3ed6c4e80a98bb15cbd092, type: 3}
+      propertyPath: m_Name
+      value: (Panel) DiceState (3)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 86dc1cdadf3ed6c4e80a98bb15cbd092, type: 3}
+--- !u!224 &1271494522350336913 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 3978345065327748477, guid: 86dc1cdadf3ed6c4e80a98bb15cbd092, type: 3}
+  m_PrefabInstance: {fileID: 2778908205802200812}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2052355474484172323 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4245702733014173903, guid: 86dc1cdadf3ed6c4e80a98bb15cbd092, type: 3}
+  m_PrefabInstance: {fileID: 2778908205802200812}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4cb0f9a55a904d2ebfe645a2fd141953, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Game::_Scripts.UI.DiceStateView
 --- !u!1001 &2981476311185997767
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8283,7 +8412,7 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 3978345065327748477, guid: 86dc1cdadf3ed6c4e80a98bb15cbd092, type: 3}
   m_PrefabInstance: {fileID: 2981476311185997767}
   m_PrefabAsset: {fileID: 0}
---- !u!1001 &3361745741786327331
+--- !u!1001 &3001191173092377054
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -8372,121 +8501,16 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4245702733014173903, guid: 86dc1cdadf3ed6c4e80a98bb15cbd092, type: 3}
-      propertyPath: _hideUndamagedIndicator
+      propertyPath: _damagedTextColor.b
+      value: 0.5529412
+      objectReference: {fileID: 0}
+    - target: {fileID: 4245702733014173903, guid: 86dc1cdadf3ed6c4e80a98bb15cbd092, type: 3}
+      propertyPath: _damagedTextColor.g
+      value: 0.69803923
+      objectReference: {fileID: 0}
+    - target: {fileID: 4245702733014173903, guid: 86dc1cdadf3ed6c4e80a98bb15cbd092, type: 3}
+      propertyPath: _damagedTextColor.r
       value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 9013700237388054691, guid: 86dc1cdadf3ed6c4e80a98bb15cbd092, type: 3}
-      propertyPath: m_Name
-      value: (Panel) DiceState (2)
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 86dc1cdadf3ed6c4e80a98bb15cbd092, type: 3}
---- !u!114 &1462708720167035372 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4245702733014173903, guid: 86dc1cdadf3ed6c4e80a98bb15cbd092, type: 3}
-  m_PrefabInstance: {fileID: 3361745741786327331}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4cb0f9a55a904d2ebfe645a2fd141953, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Game::_Scripts.UI.DiceStateView
---- !u!224 &1842739925226802270 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 3978345065327748477, guid: 86dc1cdadf3ed6c4e80a98bb15cbd092, type: 3}
-  m_PrefabInstance: {fileID: 3361745741786327331}
-  m_PrefabAsset: {fileID: 0}
---- !u!1001 &3921139861032901170
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 8541449471210441122}
-    m_Modifications:
-    - target: {fileID: 3978345065327748477, guid: 86dc1cdadf3ed6c4e80a98bb15cbd092, type: 3}
-      propertyPath: m_Pivot.x
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 3978345065327748477, guid: 86dc1cdadf3ed6c4e80a98bb15cbd092, type: 3}
-      propertyPath: m_Pivot.y
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 3978345065327748477, guid: 86dc1cdadf3ed6c4e80a98bb15cbd092, type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3978345065327748477, guid: 86dc1cdadf3ed6c4e80a98bb15cbd092, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3978345065327748477, guid: 86dc1cdadf3ed6c4e80a98bb15cbd092, type: 3}
-      propertyPath: m_AnchorMin.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3978345065327748477, guid: 86dc1cdadf3ed6c4e80a98bb15cbd092, type: 3}
-      propertyPath: m_AnchorMin.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3978345065327748477, guid: 86dc1cdadf3ed6c4e80a98bb15cbd092, type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 115
-      objectReference: {fileID: 0}
-    - target: {fileID: 3978345065327748477, guid: 86dc1cdadf3ed6c4e80a98bb15cbd092, type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 115
-      objectReference: {fileID: 0}
-    - target: {fileID: 3978345065327748477, guid: 86dc1cdadf3ed6c4e80a98bb15cbd092, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3978345065327748477, guid: 86dc1cdadf3ed6c4e80a98bb15cbd092, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3978345065327748477, guid: 86dc1cdadf3ed6c4e80a98bb15cbd092, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3978345065327748477, guid: 86dc1cdadf3ed6c4e80a98bb15cbd092, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3978345065327748477, guid: 86dc1cdadf3ed6c4e80a98bb15cbd092, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3978345065327748477, guid: 86dc1cdadf3ed6c4e80a98bb15cbd092, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3978345065327748477, guid: 86dc1cdadf3ed6c4e80a98bb15cbd092, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3978345065327748477, guid: 86dc1cdadf3ed6c4e80a98bb15cbd092, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3978345065327748477, guid: 86dc1cdadf3ed6c4e80a98bb15cbd092, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3978345065327748477, guid: 86dc1cdadf3ed6c4e80a98bb15cbd092, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3978345065327748477, guid: 86dc1cdadf3ed6c4e80a98bb15cbd092, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3978345065327748477, guid: 86dc1cdadf3ed6c4e80a98bb15cbd092, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4245702733014173903, guid: 86dc1cdadf3ed6c4e80a98bb15cbd092, type: 3}
       propertyPath: _hideUndamagedIndicator
@@ -8494,22 +8518,17 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9013700237388054691, guid: 86dc1cdadf3ed6c4e80a98bb15cbd092, type: 3}
       propertyPath: m_Name
-      value: (Panel) DiceState (4)
+      value: (Panel) DiceState (1)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 86dc1cdadf3ed6c4e80a98bb15cbd092, type: 3}
---- !u!224 &98872687890562895 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 3978345065327748477, guid: 86dc1cdadf3ed6c4e80a98bb15cbd092, type: 3}
-  m_PrefabInstance: {fileID: 3921139861032901170}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &901119914239759101 stripped
+--- !u!114 &1390938681916950801 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4245702733014173903, guid: 86dc1cdadf3ed6c4e80a98bb15cbd092, type: 3}
-  m_PrefabInstance: {fileID: 3921139861032901170}
+  m_PrefabInstance: {fileID: 3001191173092377054}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
@@ -8517,6 +8536,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4cb0f9a55a904d2ebfe645a2fd141953, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Game::_Scripts.UI.DiceStateView
+--- !u!224 &2203303356690883747 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 3978345065327748477, guid: 86dc1cdadf3ed6c4e80a98bb15cbd092, type: 3}
+  m_PrefabInstance: {fileID: 3001191173092377054}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &5333609947119862756
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8783,7 +8807,7 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 3978345065327748477, guid: 86dc1cdadf3ed6c4e80a98bb15cbd092, type: 3}
   m_PrefabInstance: {fileID: 5709305906078185811}
   m_PrefabAsset: {fileID: 0}
---- !u!1001 &7011707460479505046
+--- !u!1001 &6175783152830084736
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -8872,27 +8896,39 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4245702733014173903, guid: 86dc1cdadf3ed6c4e80a98bb15cbd092, type: 3}
+      propertyPath: _damagedTextColor.b
+      value: 0.5529412
+      objectReference: {fileID: 0}
+    - target: {fileID: 4245702733014173903, guid: 86dc1cdadf3ed6c4e80a98bb15cbd092, type: 3}
+      propertyPath: _damagedTextColor.g
+      value: 0.69803923
+      objectReference: {fileID: 0}
+    - target: {fileID: 4245702733014173903, guid: 86dc1cdadf3ed6c4e80a98bb15cbd092, type: 3}
+      propertyPath: _damagedTextColor.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4245702733014173903, guid: 86dc1cdadf3ed6c4e80a98bb15cbd092, type: 3}
       propertyPath: _hideUndamagedIndicator
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 9013700237388054691, guid: 86dc1cdadf3ed6c4e80a98bb15cbd092, type: 3}
       propertyPath: m_Name
-      value: (Panel) DiceState (3)
+      value: (Panel) DiceState (4)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 86dc1cdadf3ed6c4e80a98bb15cbd092, type: 3}
---- !u!224 &6231711996100720619 stripped
+--- !u!224 &7097991650832454653 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3978345065327748477, guid: 86dc1cdadf3ed6c4e80a98bb15cbd092, type: 3}
-  m_PrefabInstance: {fileID: 7011707460479505046}
+  m_PrefabInstance: {fileID: 6175783152830084736}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &6603775607373388377 stripped
+--- !u!114 &8025148637190323791 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4245702733014173903, guid: 86dc1cdadf3ed6c4e80a98bb15cbd092, type: 3}
-  m_PrefabInstance: {fileID: 7011707460479505046}
+  m_PrefabInstance: {fileID: 6175783152830084736}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
@@ -8900,7 +8936,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4cb0f9a55a904d2ebfe645a2fd141953, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Game::_Scripts.UI.DiceStateView
---- !u!1001 &7389110034052954981
+--- !u!1001 &8980967708927481070
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -8989,27 +9025,34 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4245702733014173903, guid: 86dc1cdadf3ed6c4e80a98bb15cbd092, type: 3}
+      propertyPath: _damagedTextColor.b
+      value: 0.5529412
+      objectReference: {fileID: 0}
+    - target: {fileID: 4245702733014173903, guid: 86dc1cdadf3ed6c4e80a98bb15cbd092, type: 3}
+      propertyPath: _damagedTextColor.g
+      value: 0.69803923
+      objectReference: {fileID: 0}
+    - target: {fileID: 4245702733014173903, guid: 86dc1cdadf3ed6c4e80a98bb15cbd092, type: 3}
+      propertyPath: _damagedTextColor.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4245702733014173903, guid: 86dc1cdadf3ed6c4e80a98bb15cbd092, type: 3}
       propertyPath: _hideUndamagedIndicator
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 9013700237388054691, guid: 86dc1cdadf3ed6c4e80a98bb15cbd092, type: 3}
       propertyPath: m_Name
-      value: (Panel) DiceState (1)
+      value: (Panel) DiceState (2)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 86dc1cdadf3ed6c4e80a98bb15cbd092, type: 3}
---- !u!224 &5890303346556395032 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 3978345065327748477, guid: 86dc1cdadf3ed6c4e80a98bb15cbd092, type: 3}
-  m_PrefabInstance: {fileID: 7389110034052954981}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &6656496486076330922 stripped
+--- !u!114 &5064590974149680161 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4245702733014173903, guid: 86dc1cdadf3ed6c4e80a98bb15cbd092, type: 3}
-  m_PrefabInstance: {fileID: 7389110034052954981}
+  m_PrefabInstance: {fileID: 8980967708927481070}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
@@ -9017,3 +9060,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4cb0f9a55a904d2ebfe645a2fd141953, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Game::_Scripts.UI.DiceStateView
+--- !u!224 &5446863293164138899 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 3978345065327748477, guid: 86dc1cdadf3ed6c4e80a98bb15cbd092, type: 3}
+  m_PrefabInstance: {fileID: 8980967708927481070}
+  m_PrefabAsset: {fileID: 0}

@@ -27,6 +27,11 @@ namespace _Scripts.UI
         [Space] 
         [SerializeField] private bool _hideUndamagedIndicator = true;
         
+        [Header("Border")]
+        [SerializeField] private Image _border;
+        [SerializeField] private Color _selectedBorderColor;
+        private Color _defaultBorderColor;
+        
         [Header("Durability")]
         [SerializeField] DurabilityView _durabilityView;
         
@@ -36,14 +41,21 @@ namespace _Scripts.UI
         public void Bind(IReadOnlyDiceData data)
         {
             _data = data;
-            _data.OnDataChanged += Refresh;
+            _data.OnDataChanged += RefreshAll;
+            _data.OnLockChanged += RefreshBorder;
             
-            Refresh();
+            _defaultBorderColor = _border.color;
+            RefreshAll();
         }
         
-        private void OnDestroy() => _data.OnDataChanged -= Refresh;
+        private void OnDestroy()
+        {
+            if (_data == null) return;
+            _data.OnDataChanged -= RefreshAll;
+            _data.OnLockChanged -= RefreshBorder;
+        }
 
-        private void Refresh()
+        private void RefreshAll()
         {
             RefreshDamage();
             RefreshDiceFace();
@@ -52,6 +64,11 @@ namespace _Scripts.UI
                 RefreshDurability();
         }
 
+        private void RefreshBorder(bool isLocked)
+        {
+            _border.color = isLocked ? _selectedBorderColor : _defaultBorderColor;
+        }
+        
         private void RefreshDamage()
         {
             if (_hideUndamagedIndicator)
