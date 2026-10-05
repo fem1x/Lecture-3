@@ -14,12 +14,13 @@ public class GameLifetimeScope : LifetimeScope
 {
     // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
     [Header("Configs")]
-    [SerializeField] DiceRollConfig _diceRollConfig;
-    [SerializeField] DiceSpawnConfig _diceSpawnConfig;
-    [SerializeField] CombinationScoreConfig  _combinationScoreConfig;
-    [SerializeField] ResourceConfig  _resourceConfig;
-    [SerializeField] LevelsListConfig  _levelsListConfig;
-    [SerializeField] SfxConfig _sfxConfig;
+    [SerializeField] private DiceRollConfig _diceRollConfig;
+    [SerializeField] private DiceSpawnConfig _diceSpawnConfig;
+    [SerializeField] private CombinationScoreConfig  _combinationScoreConfig;
+    [SerializeField] private ResourceConfig  _resourceConfig;
+    [SerializeField] private LevelsListConfig  _levelsListConfig;
+    [SerializeField] private SfxConfig _sfxConfig;
+    [SerializeField] private AudioFilterConfig _audioFilterConfig;
     
     [Header("Scene")]
     [SerializeField] private Camera _mainCamera;
@@ -44,6 +45,7 @@ public class GameLifetimeScope : LifetimeScope
         builder.RegisterInstance(_resourceConfig);
         builder.RegisterInstance(_levelsListConfig);
         builder.RegisterInstance(_sfxConfig);
+        builder.RegisterInstance(_audioFilterConfig);
     }
     
     private void RegisterServices(IContainerBuilder builder)
@@ -58,6 +60,7 @@ public class GameLifetimeScope : LifetimeScope
         
         //C# classes
         builder.Register<SfxPlayer>(Lifetime.Singleton).As<ISfxPlayer>();
+        builder.Register<AudioFilterController>(Lifetime.Singleton);
         builder.Register<CameraShaker>(Lifetime.Singleton).AsSelf().AsImplementedInterfaces();
         builder.Register<ResourceManager>(Lifetime.Singleton);
         builder.Register<DiceSpawner>(Lifetime.Singleton);

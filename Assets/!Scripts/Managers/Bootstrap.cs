@@ -14,7 +14,6 @@ namespace _Scripts.Managers
         private readonly DiceSpawner _diceSpawner;
         private readonly DiceTableController _diceTableController;
         private readonly ScoreManager _scoreManager;
-        private readonly ResourceManager _resourceManager;
         private readonly LevelFlowController _levelFlowController;
         private readonly ISfxPlayer _sfxPlayer;
 
@@ -28,7 +27,6 @@ namespace _Scripts.Managers
         {
             _diceSpawner = diceSpawner;
             _diceTableController = diceTableController;
-            _resourceManager = resourceManager;
             _levelFlowController = levelFlowController;
             _sfxPlayer = sfxPlayer;
         }
