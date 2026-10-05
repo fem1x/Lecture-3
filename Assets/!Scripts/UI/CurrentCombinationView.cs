@@ -1,4 +1,5 @@
-﻿using _Scripts.Dices;
+﻿using System.Collections.Generic;
+using _Scripts.Dices;
 using _Scripts.Interfaces;
 using TMPro;
 using UnityEngine;
@@ -19,6 +20,9 @@ namespace _Scripts.UI
         [Space]
         [SerializeField] private string _placeholderCombinationText = "Select Dice";
 
+        private List<Dice> _dices;
+        
+        #region DI
         private DiceTableController _diceTableController;
         private IScoreCalculator _scoreCalculator;
 
@@ -28,13 +32,28 @@ namespace _Scripts.UI
             _diceTableController = diceTableController;
             _scoreCalculator = scoreCalculator;
         }
+        #endregion
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== 
 
-        private void OnEnable() => Dice.OnAnyDiceSelectionChanged += HandleSelectionChanged;
-        private void OnDisable() => Dice.OnAnyDiceSelectionChanged -= HandleSelectionChanged;
         private void Start() => SetEmpty();
         
-        private void HandleSelectionChanged()
+        public void Init(List<Dice> dices)
+        {
+            _dices = dices;
+            
+            foreach (var dice in _dices)
+                dice.Data.OnLockChanged += HandleSelectionChanged;
+
+            SetEmpty();
+        }
+
+        private void OnDestroy()
+        {
+            foreach (var dice in _dices)
+                dice.Data.OnLockChanged -= HandleSelectionChanged;
+        }
+        
+        private void HandleSelectionChanged(bool _)
         {
             var selectedDices = _diceTableController.GetSelectedDices();
 

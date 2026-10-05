@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using _Scripts.Configs;
 using _Scripts.Dices;
+using _Scripts.UI;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using VContainer;
@@ -16,6 +17,8 @@ namespace _Scripts.Managers
         private readonly ScoreManager _scoreManager;
         private readonly LevelFlowController _levelFlowController;
         private readonly ISfxPlayer _sfxPlayer;
+        private readonly DiceNetPanelView _diceNetPanelView;
+        private readonly CurrentCombinationView _currentCombinationView;
 
         [Inject]
         public Bootstrap(
@@ -23,12 +26,16 @@ namespace _Scripts.Managers
             DiceTableController diceTableController, 
             ResourceManager resourceManager,
             LevelFlowController levelFlowController,
-            ISfxPlayer sfxPlayer)
+            ISfxPlayer sfxPlayer,
+            DiceNetPanelView diceNetPanelView,
+            CurrentCombinationView currentCombinationView)
         {
             _diceSpawner = diceSpawner;
             _diceTableController = diceTableController;
             _levelFlowController = levelFlowController;
             _sfxPlayer = sfxPlayer;
+            _diceNetPanelView = diceNetPanelView;
+            _currentCombinationView = currentCombinationView;
         }
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
         
@@ -39,6 +46,8 @@ namespace _Scripts.Managers
             var dices = _diceSpawner.SpawnDices();
             _diceSpawner.ResetDicesToSpawn(dices);
             _diceTableController.InitDiceList(dices);
+            _diceNetPanelView.InitNetViews(dices);
+            _currentCombinationView.Init(dices);
             
             _levelFlowController.StartGame();
         }

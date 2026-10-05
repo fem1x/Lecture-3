@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using _Scripts.Configs;
+using _Scripts.Managers;
 using _Scripts.Utility;
 using UnityEngine;
 using VContainer;
-using VContainer.Unity;
 
 namespace _Scripts.Dices
 {
@@ -11,15 +11,15 @@ namespace _Scripts.Dices
     {
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== 
         private readonly DiceSpawnConfig _config;
-        private readonly IObjectResolver _resolver;
         private readonly Vector3 _spawnPoint;
+        private readonly DiceFactory _diceFactory;
         
         [Inject]
-        public DiceSpawner(DiceSpawnConfig config, DiceSpawnPoint spawnPoint, IObjectResolver resolver)
+        public DiceSpawner(DiceSpawnConfig config, DiceSpawnPoint spawnPoint, DiceFactory diceFactory)
         {
             _config = config;
             _spawnPoint = spawnPoint.transform.position;
-            _resolver = resolver;
+            _diceFactory = diceFactory;
         }
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== 
         
@@ -28,7 +28,7 @@ namespace _Scripts.Dices
             var dices = new List<Dice>();
             for (int i = 0; i < count; i++)
             {
-                var dice = _resolver.Instantiate(_config.DicePrefab);
+                var dice = _diceFactory.Create(i);
                 dices.Add(dice);
             }
             return dices;
@@ -36,8 +36,6 @@ namespace _Scripts.Dices
         
         public void ResetDicesToSpawn(List<Dice> dices)
         {
-            if (dices == null) return;
-            
             int count = dices.Count;
             for (int i = 0; i < count; i++)
             {
@@ -47,7 +45,7 @@ namespace _Scripts.Dices
                 var startingPosition = GetDiceStartingPosition(i, count);
                 var startingRotation = _config.RandomizeStartingRotation ? Random.rotation : Quaternion.identity;
 
-                dice.Reset();
+                dice.PrepareForRoll();
                 dice.TeleportTo(startingPosition, startingRotation);
             }
         }

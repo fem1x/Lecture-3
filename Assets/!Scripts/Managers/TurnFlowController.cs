@@ -88,7 +88,7 @@ namespace _Scripts.Managers
             }
 
             var activeRolledDices = _tableController.AllDices
-                .Where(d => d != null && d.Value > 0)
+                .Where(d => d != null && d.Data.RolledValue > 0)
                 .ToList();
             
             OnCombinationsCleared?.Invoke();

@@ -31,7 +31,7 @@ namespace _Scripts.UI
             var multiplier = scoreConfig.GetData(combination.Type).Multiplier;
             var refund = scoreConfig.GetData(combination.Type).DiceRefund;
             
-            var valuesString = string.Join(", ", combination.Dices.Select(d => d.Value));   
+            var valuesString = string.Join(", ", combination.Dices.Select(d => d.Data.RolledValue));   
             _titleText.text = $"{displayName} ({valuesString})";
             
             var scoreString = $"{basePoints} x {multiplier}";

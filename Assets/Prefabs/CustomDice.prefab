@@ -526,32 +526,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a5d66754bd85774dbe25d422fa42188, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Dice
-  <Faces>k__BackingField:
-  - <Direction>k__BackingField: {x: 0, y: 1, z: 0}
-    <BaseValue>k__BackingField: 1
-    <CurrentValue>k__BackingField: 1
-    <Renderer>k__BackingField: {fileID: 5119903277250528177}
-  - <Direction>k__BackingField: {x: 0, y: -1, z: 0}
-    <BaseValue>k__BackingField: 6
-    <CurrentValue>k__BackingField: 6
-    <Renderer>k__BackingField: {fileID: 3274285020349134079}
-  - <Direction>k__BackingField: {x: 1, y: 0, z: 0}
-    <BaseValue>k__BackingField: 5
-    <CurrentValue>k__BackingField: 5
-    <Renderer>k__BackingField: {fileID: 6964256586429188013}
-  - <Direction>k__BackingField: {x: -1, y: 0, z: 0}
-    <BaseValue>k__BackingField: 2
-    <CurrentValue>k__BackingField: 2
-    <Renderer>k__BackingField: {fileID: 6693348409397306938}
-  - <Direction>k__BackingField: {x: 0, y: 0, z: 1}
-    <BaseValue>k__BackingField: 3
-    <CurrentValue>k__BackingField: 3
-    <Renderer>k__BackingField: {fileID: 4559998018997187339}
-  - <Direction>k__BackingField: {x: 0, y: 0, z: -1}
-    <BaseValue>k__BackingField: 4
-    <CurrentValue>k__BackingField: 4
-    <Renderer>k__BackingField: {fileID: 6113428230191714263}
-  <MaxDurability>k__BackingField: 2
   _rollShake: {fileID: 11400000, guid: da72b317bc7a4054e95c10871aebca44, type: 2}
   _lockSfx: DiceLock
   _throwSfx: DiceThrow
@@ -568,6 +542,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 145e28e784d04df2a9f4af426bd772a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::_Scripts.Dices.DiceView
+  _faceRenderers:
+  - {fileID: 5119903277250528177}
+  - {fileID: 3274285020349134079}
+  - {fileID: 6964256586429188013}
+  - {fileID: 6693348409397306938}
+  - {fileID: 4559998018997187339}
+  - {fileID: 6113428230191714263}
   _faceSprites:
   - {fileID: 1635203978, guid: dbc0cc68fa7c2044c83c51ee4d2f198d, type: 3}
   - {fileID: -787239318, guid: dbc0cc68fa7c2044c83c51ee4d2f198d, type: 3}

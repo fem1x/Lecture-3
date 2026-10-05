@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using _Scripts.Dices;
+using _Scripts.Interfaces;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -21,6 +22,7 @@ namespace _Scripts.UI
         [SerializeField] private DurabilityView _durabilityView;
         
         private Image[] _faceImages;
+        private IReadOnlyDiceData _data;
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 
         private void Awake()
@@ -35,15 +37,23 @@ namespace _Scripts.UI
                 _backImage
             };
         }
-        
-        public void UpdateView(DiceFace[] faces, int currentDurability, int maxDurability)
+
+        public void Bind(IReadOnlyDiceData data)
         {
-            for (int i = 0; i < faces.Length; i++)
+            _data = data;
+            _data.OnDataChanged += Refresh;
+            Refresh();
+        }
+        
+        private void Refresh()
+        {
+            for (int i = 0; i < _faceImages.Length; i++)
             {
-                _faceImages[i].sprite = _faceSprites[faces[i].CurrentValue];
+                int val = _data.GetFaceValue(i);
+                _faceImages[i].sprite = _faceSprites[val];
             }
-            
-            _durabilityView.SetDurability(currentDurability, maxDurability);
+
+            _durabilityView.SetDurability(_data.CurrentDurability, _data.MaxDurability);
         }
     }
 }

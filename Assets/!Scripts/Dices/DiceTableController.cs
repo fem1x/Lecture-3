@@ -10,8 +10,6 @@ namespace _Scripts.Dices
     public class DiceTableController : MonoBehaviour
     {
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
-        public event Action<List<Dice>> OnDicesStateChanged;
-        
         private List<Dice> _allDices = new();
         private List<Dice> _pendingDicesToThrow = new();
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== 
@@ -19,12 +17,10 @@ namespace _Scripts.Dices
         public bool HasUnlockedDices => GetUnlockedDices().Count > 0;
         public List<Dice> AllDices => _allDices;
         public List<Dice> PendingDices => _pendingDicesToThrow;
-        
-        public List<Dice> GetSelectedDices() => _allDices.Where(d => d.IsLocked).ToList();
-        public List<Dice> GetUnlockedDices() => _allDices.Where(d => !d.IsLocked).ToList();
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== 
-
-        private void Start() => OnDicesStateChanged?.Invoke(_allDices);
+        public List<Dice> GetSelectedDices() => _allDices.Where(d => d.Data.IsLocked).ToList();
+        public List<Dice> GetUnlockedDices() => _allDices.Where(d => !d.Data.IsLocked).ToList();
+        // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== 
         private void OnEnable() => CombinationButtonView.OnAnyButtonClicked += SelectCombination;
         private void OnDisable() => CombinationButtonView.OnAnyButtonClicked -= SelectCombination;
         public void OnRmbClick(InputValue value) => ClearSelection();
@@ -61,14 +57,14 @@ namespace _Scripts.Dices
         public void ClearSelection()
         {
             foreach (var dice in _allDices)
-                if (dice != null) dice.SetLock(false);
+                if (dice != null) dice.Data.SetLock(false);
         }
         
         private void SelectCombination(FoundCombination selected)
         {
             ClearSelection();
             foreach (var dice in selected.Dices)
-                if (dice != null) dice.SetLock(true);
+                if (dice != null) dice.Data.SetLock(true);
         }
         
         public void DegradePlayedDices(List<Dice> dices, int amount = 1)
@@ -77,10 +73,8 @@ namespace _Scripts.Dices
             foreach (var dice in dices)
             {
                 if (dice != null)
-                    dice.TakeHit(amount);
+                    dice.Data.TakeDamage(amount);
             }
-            
-            OnDicesStateChanged?.Invoke(dices);
         }
 
         public void ActivateAllDices(List<Dice> dices)

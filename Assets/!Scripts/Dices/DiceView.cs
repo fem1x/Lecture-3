@@ -1,4 +1,5 @@
 ﻿using System;
+using _Scripts.Interfaces;
 using DG.Tweening;
 using UnityEngine;
 
@@ -19,7 +20,7 @@ namespace _Scripts.Dices
         [SerializeField] private Ease _liftEase = Ease.OutBack;
         [SerializeField] private Ease _dropEase = Ease.InQuad;
         
-        private DiceData _data;
+        private IReadOnlyDiceData _data;
 
         private Outline _outline;
         private Rigidbody _rb;
@@ -34,7 +35,7 @@ namespace _Scripts.Dices
             _outline.enabled = false;
         }
 
-        public void Init(DiceData data)
+        public void Bind(IReadOnlyDiceData data)
         {
             _data = data;
             _data.OnLockChanged += SetLockedVisual;

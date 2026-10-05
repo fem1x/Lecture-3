@@ -12,6 +12,7 @@ namespace _Scripts.Dices
     public class Dice : MonoBehaviour, IPointerClickHandler
     {
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== 
+        public DiceData Data { get; private set; }
         
         [Header("Camera Shake")]
         [SerializeField] private CameraShakePreset _rollShake;
@@ -21,7 +22,6 @@ namespace _Scripts.Dices
         [SerializeField] private string _throwSfx;
         [SerializeField] private string _hitSfx;
         
-        private DiceData _data;
         private Rigidbody _rb;
         private DiceView _view;
         
@@ -57,16 +57,16 @@ namespace _Scripts.Dices
 
         public void Init(DiceData data)
         {
-            _data = data;
-            _view.Init(data);
+            Data = data;
+            _view.Bind(data);
         }
 
         public void OnPointerClick(PointerEventData eventData)
         {
             if (!IsStopped) return;
-            _data.ToggleLock();
+            Data.ToggleLock();
             
-            if (_data.IsLocked)
+            if (Data.IsLocked)
                 _sfxPlayer.Play(_lockSfx, transform.position);
         }
 
@@ -77,6 +77,16 @@ namespace _Scripts.Dices
             
             _rb.position = position;
             _rb.rotation = rotation;
+        }
+        
+        public void PrepareForRoll()
+        {
+            Data?.RoundReset();
+            _view.ResetVisual();
+    
+            _rb.linearVelocity = Vector3.zero;
+            _rb.angularVelocity = Vector3.zero;
+            _rb.isKinematic = true;
         }
         
         public void Roll(Vector3 force, Vector3 torque)
@@ -97,7 +107,7 @@ namespace _Scripts.Dices
 
             for (int i = 0; i < 6; i++)
             {
-                var worldDirection = transform.TransformDirection(_data.GetFaceDirection(i));
+                var worldDirection = transform.TransformDirection(Data.GetFaceDirection(i));
                 var dot = Vector3.Dot(worldDirection, Vector3.up);
                 
                 if (dot > maxDot)
@@ -109,7 +119,7 @@ namespace _Scripts.Dices
 
             if (bestFaceIndex >= 0)
             {
-                _data.SetValue(_data.GetFaceValue(bestFaceIndex));
+                Data.SetValue(Data.GetFaceValue(bestFaceIndex));
             }
         }
 

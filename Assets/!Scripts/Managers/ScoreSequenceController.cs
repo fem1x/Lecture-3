@@ -65,7 +65,7 @@ namespace _Scripts.Managers
             for (int i = 0; i < dices.Count; i++)
             {
                 var dice = dices[i];
-                if (dice.Value <= 0) continue;
+                if (dice.Data.RolledValue <= 0) continue;
                 
                 await UniTask.Delay(TimeSpan.FromSeconds(_delayPerDice));
                 
@@ -74,7 +74,7 @@ namespace _Scripts.Managers
                 scoredDiceCount++;
                 
                 var fromPoints = currentPoints;
-                currentPoints += dice.Value;
+                currentPoints += dice.Data.RolledValue;
                 
                 await DoTextValueTween(_pointsText, fromPoints, currentPoints, _pointsAddDuration);
             }

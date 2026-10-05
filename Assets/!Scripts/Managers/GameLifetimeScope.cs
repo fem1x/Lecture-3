@@ -21,6 +21,7 @@ public class GameLifetimeScope : LifetimeScope
     [SerializeField] private LevelsListConfig  _levelsListConfig;
     [SerializeField] private SfxConfig _sfxConfig;
     [SerializeField] private AudioFilterConfig _audioFilterConfig;
+    [SerializeField] private DiceDataConfig _diceDataConfig;
     
     [Header("Scene")]
     [SerializeField] private Camera _mainCamera;
@@ -29,6 +30,8 @@ public class GameLifetimeScope : LifetimeScope
     [SerializeField] private DiceSpawnPoint _spawnPoint;
     [SerializeField] private CombinationsPanelView _combinationsPanel;
     [SerializeField] private ScoreSequenceController _scoreSequenceController;
+    [SerializeField] private DiceNetPanelView _diceNetPanelView;
+    [SerializeField] private CurrentCombinationView _currentCombinationView;
     // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
     
     protected override void Configure(IContainerBuilder builder)
@@ -46,6 +49,7 @@ public class GameLifetimeScope : LifetimeScope
         builder.RegisterInstance(_levelsListConfig);
         builder.RegisterInstance(_sfxConfig);
         builder.RegisterInstance(_audioFilterConfig);
+        builder.RegisterInstance(_diceDataConfig);
     }
     
     private void RegisterServices(IContainerBuilder builder)
@@ -57,6 +61,8 @@ public class GameLifetimeScope : LifetimeScope
         builder.RegisterComponent(_turnFlowController);
         builder.RegisterComponent(_combinationsPanel);
         builder.RegisterComponent(_scoreSequenceController);
+        builder.RegisterComponent(_diceNetPanelView);
+        builder.RegisterComponent(_currentCombinationView);
         
         //C# classes
         builder.Register<SfxPlayer>(Lifetime.Singleton).As<ISfxPlayer>();

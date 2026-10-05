@@ -31,14 +31,17 @@ namespace _Scripts.Managers
             //HighestDice
             if (tableDices.Count > 0)
             {
-                var bestDice = tableDices.OrderByDescending(d => d.Value).First();
+                var bestDice = tableDices.OrderByDescending(d => d.Data.RolledValue).First();
                 allFound.Add(new FoundCombination(CombinationType.HighestDice, new List<Dice> { bestDice }));
             }
 
             //Best of each type
             return allFound
                 .GroupBy(combo => combo.Type)
-                .Select(group => group.OrderByDescending(c => c.Dices.Sum(d => d.Value)).First())
+                .Select(group 
+                    => group.OrderByDescending(c 
+                        => c.Dices.Sum(d 
+                            => d.Data.RolledValue)).First())
                 .OrderByDescending(c => c.Type)
                 .ToList();
         }
@@ -46,7 +49,7 @@ namespace _Scripts.Managers
         
         public CombinationType Evaluate(List<Dice> dices)
         {
-            var validDices = dices.Where(d => d != null && d.Value > 0).ToList();
+            var validDices = dices.Where(d => d != null && d.Data.RolledValue > 0).ToList();
             var count = validDices.Count;
             var valuesSum = ProcessDiceValues(validDices);
 
@@ -95,7 +98,7 @@ namespace _Scripts.Managers
             var sum = 0;
             for (int i = 0; i < dices.Count; i++)
             {
-                var val = dices[i].Value;
+                var val = dices[i].Data.RolledValue;
                 if (val >= 1 && val <= 6)
                 {
                     _frequencies[val]++;

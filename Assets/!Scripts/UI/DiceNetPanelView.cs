@@ -7,27 +7,13 @@ namespace _Scripts.UI
 {
     public class DiceNetPanelView : MonoBehaviour
     {
-        // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
         [SerializeField] private List<DiceNetView> _diceNetViews;
-        
-        private DiceTableController  _diceTableController;
 
-        [Inject]
-        public void Construct(DiceTableController diceTableController)
+        public void InitNetViews(List<Dice> dices)
         {
-            _diceTableController = diceTableController;
-        }
-        // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
-
-        private void OnEnable() => _diceTableController.OnDicesStateChanged += RefreshAll;
-        private void OnDisable() => _diceTableController.OnDicesStateChanged -= RefreshAll;
-        
-        private void RefreshAll(List<Dice> tableDices)
-        {
-            for (int i = 0; i < _diceNetViews.Count && i < tableDices.Count; i++)
+            for (int i = 0; i < _diceNetViews.Count && i < dices.Count; i++)
             {
-                var dice = tableDices[i];
-                _diceNetViews[i].UpdateView(dice.Faces, dice.CurrentDurability, dice.MaxDurability);
+                _diceNetViews[i].Bind(dices[i].Data);
             }
         }
     }

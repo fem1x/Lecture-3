@@ -1,19 +1,16 @@
 ﻿using System;
 using _Scripts.Configs;
+using _Scripts.Interfaces;
 using UnityEngine;
 
 namespace _Scripts.Dices
 {
-    public class DiceData
+    public class DiceData : IReadOnlyDiceData
     {
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
-        public event Action OnDataChanged;
-        public event Action<bool> OnLockChanged;
-        public event Action<int> OnValueChanged;
-        
-        private readonly DiceDataConfig _config;
-        
         public int Id { get; }
+        private readonly DiceDataConfig _config;
+
         public DiceData(int id, DiceDataConfig config)
         {
             Id = id;
@@ -21,7 +18,11 @@ namespace _Scripts.Dices
             ResetToDefault();
         }
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
-        public int CurrentValue { get; private set; } = -1;
+        public event Action OnDataChanged;
+        public event Action<bool> OnLockChanged;
+        public event Action<int> OnValueChanged;
+        // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
+        public int RolledValue { get; private set; } = -1;
         public bool IsLocked { get; private set; }
 
         public int MaxDurability => _config.MaxDurability;
@@ -41,8 +42,8 @@ namespace _Scripts.Dices
         
         public void SetValue(int value)
         {
-            if (CurrentValue == value) return;
-            CurrentValue = value;
+            if (RolledValue == value) return;
+            RolledValue = value;
             OnValueChanged?.Invoke(value);
         }
 

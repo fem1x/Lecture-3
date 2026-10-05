@@ -22,7 +22,7 @@ public class ScoreCalculator : IScoreCalculator
         CombinationType type = _evaluator.Evaluate(selectedDices);
         CombinationData data = _config.GetData(type);
     
-        int dicePoints = selectedDices.Sum(d => d.Value);
+        int dicePoints = selectedDices.Sum(d => d.Data.RolledValue);
 
         return new ScoreCalculationResult(data, dicePoints, 0);
     }
@@ -32,7 +32,7 @@ public class ScoreCalculator : IScoreCalculator
         int diceValuesPoints = 0;
         if (scoringDice != null)
             for (int i = 0; i < scoringDice.Count; i++)
-                diceValuesPoints += scoringDice[i].Value;
+                diceValuesPoints += scoringDice[i].Data.RolledValue;
         
         return diceValuesPoints;
     }
