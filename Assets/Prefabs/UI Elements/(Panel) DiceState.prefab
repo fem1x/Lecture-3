@@ -532,6 +532,7 @@ GameObject:
   - component: {fileID: 3978345065327748477}
   - component: {fileID: 7577547318848649598}
   - component: {fileID: 1777604423668417000}
+  - component: {fileID: 4245702733014173903}
   m_Layer: 5
   m_Name: (Panel) DiceState
   m_TagString: Untagged
@@ -598,3 +599,33 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 15
+--- !u!114 &4245702733014173903
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9013700237388054691}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4cb0f9a55a904d2ebfe645a2fd141953, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Game::_Scripts.UI.DiceStateView
+  _diceImage: {fileID: 214671664991932621}
+  _unrolledSprite: {fileID: 1973030140, guid: dbc0cc68fa7c2044c83c51ee4d2f198d, type: 3}
+  _diceSprites:
+  - {fileID: 1635203978, guid: dbc0cc68fa7c2044c83c51ee4d2f198d, type: 3}
+  - {fileID: -787239318, guid: dbc0cc68fa7c2044c83c51ee4d2f198d, type: 3}
+  - {fileID: 689887676, guid: dbc0cc68fa7c2044c83c51ee4d2f198d, type: 3}
+  - {fileID: 146642170, guid: dbc0cc68fa7c2044c83c51ee4d2f198d, type: 3}
+  - {fileID: 1222986584, guid: dbc0cc68fa7c2044c83c51ee4d2f198d, type: 3}
+  - {fileID: 159158417, guid: dbc0cc68fa7c2044c83c51ee4d2f198d, type: 3}
+  - {fileID: -1733069916, guid: dbc0cc68fa7c2044c83c51ee4d2f198d, type: 3}
+  _damageText: {fileID: 3646530546435840578}
+  _damageIndicator: {fileID: 1919525163747094268}
+  _damagedIndicatorColor: {r: 0.50980395, g: 0.10980393, b: 0.20784315, a: 1}
+  _damagedTextColor: {r: 0.65882355, g: 0.36078432, b: 0.3254902, a: 1}
+  _notDamagedIndicatorColor: {r: 0.3529412, g: 0.23529413, b: 0.43921572, a: 1}
+  _notDamagedTextColor: {r: 0.8235295, g: 0.6901961, b: 0.92549026, a: 1}
+  _hideUndamagedIndicator: 1
+  _durabilityView: {fileID: 0}

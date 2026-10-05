@@ -44,7 +44,9 @@ namespace _Scripts.Dices
         {
             if (RolledValue == value) return;
             RolledValue = value;
+            
             OnValueChanged?.Invoke(value);
+            OnDataChanged?.Invoke();
         }
 
         public void SetLock(bool value)

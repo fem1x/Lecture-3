@@ -11,14 +11,21 @@ namespace _Scripts.UI
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
         [Header("Dice Face")] 
         [SerializeField] private Image _diceImage;
+        [Space]
         [SerializeField] private Sprite _unrolledSprite;
         [SerializeField] private List<Sprite> _diceSprites;
         
         [Header("Damage Level")]
         [SerializeField] private TMP_Text _damageText;
-        [SerializeField] private Image _damageImage;
-        [SerializeField] private Color _damagedColor;
-        [SerializeField] private Color _notDamagedColor;
+        [SerializeField] private Image _damageIndicator;
+        [Space]
+        [SerializeField] private Color _damagedIndicatorColor;
+        [SerializeField] private Color _damagedTextColor;
+        [Space(0.5f)]
+        [SerializeField] private Color _notDamagedIndicatorColor;
+        [SerializeField] private Color _notDamagedTextColor;
+        [Space] 
+        [SerializeField] private bool _hideUndamagedIndicator = true;
         
         [Header("Durability")]
         [SerializeField] DurabilityView _durabilityView;
@@ -40,20 +47,30 @@ namespace _Scripts.UI
         {
             RefreshDamage();
             RefreshDiceFace();
-            RefreshDurability();
+            
+            if(_durabilityView != null)
+                RefreshDurability();
         }
 
         private void RefreshDamage()
         {
+            if (_hideUndamagedIndicator)
+            {
+                _damageIndicator.gameObject.SetActive(_data.IsDamaged);
+                if (!_data.IsDamaged) return;
+            }
+            
             if (_data.IsDamaged)
             {
                 _damageText.text = $"-{_data.DamageLevel.ToString()}";
-                _damageImage.color = _damagedColor;
+                _damageText.color = _damagedTextColor;
+                _damageIndicator.color = _damagedIndicatorColor;
             }
             else
             {
                 _damageText.text = "OK";
-                _damageImage.color = _notDamagedColor;
+                _damageText.color = _notDamagedTextColor;
+                _damageIndicator.color = _notDamagedIndicatorColor;
             }
         }
 

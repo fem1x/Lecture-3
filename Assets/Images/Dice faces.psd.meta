@@ -250,6 +250,28 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+    - serializedVersion: 2
+      name: Dice faces_7
+      rect:
+        serializedVersion: 2
+        x: 7168
+        y: 0
+        width: 1024
+        height: 1024
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2f782bb13c5c8ec468097ef2b271dc37
+      internalID: 1973030140
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     customData: 
     physicsShape: []
@@ -273,6 +295,7 @@ TextureImporter:
       Dice faces_4: 1222986584
       Dice faces_5: 159158417
       Dice faces_6: -1733069916
+      Dice faces_7: 1973030140
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -30,7 +30,6 @@ public class GameLifetimeScope : LifetimeScope
     [SerializeField] private DiceSpawnPoint _spawnPoint;
     [SerializeField] private CombinationsPanelView _combinationsPanel;
     [SerializeField] private ScoreSequenceController _scoreSequenceController;
-    [SerializeField] private DiceNetPanelView _diceNetPanelView;
     [SerializeField] private CurrentCombinationView _currentCombinationView;
     [SerializeField] private DiceStatePanelView _diceStatePanelView;
     // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
@@ -62,7 +61,6 @@ public class GameLifetimeScope : LifetimeScope
         builder.RegisterComponent(_turnFlowController);
         builder.RegisterComponent(_combinationsPanel);
         builder.RegisterComponent(_scoreSequenceController);
-        builder.RegisterComponent(_diceNetPanelView);
         builder.RegisterComponent(_currentCombinationView);
         builder.RegisterComponent(_diceStatePanelView);
         

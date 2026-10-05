@@ -3180,8 +3180,6 @@ GameObject:
   - component: {fileID: 4445605767249168228}
   - component: {fileID: 8249275867424931133}
   - component: {fileID: 6207211038622066570}
-  - component: {fileID: 4766370524617844881}
-  - component: {fileID: 6260176595564675027}
   m_Layer: 5
   m_Name: (Panel) Resources
   m_TagString: Untagged
@@ -3248,47 +3246,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 15
---- !u!114 &4766370524617844881
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4102288802805966413}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 78efb0dd46524b0e9b08ea4cc16fe9c9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Game::_Scripts.UI.CurrentCombinationView
-  _combinationNameText: {fileID: 0}
-  _pointsText: {fileID: 0}
-  _multText: {fileID: 0}
-  _submitButton: {fileID: 0}
-  _placeholderCombinationText: Select Dice
---- !u!114 &6260176595564675027
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4102288802805966413}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 62f7d6f3e69e469e99fcb9732738405d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Game::_Scripts.Managers.ScoreSequenceController
-  _pointsText: {fileID: 0}
-  _multText: {fileID: 0}
-  _delayPerDice: 0.36
-  _delayBeforeMult: 0.6
-  _delayAfterMult: 0.6
-  _pointsMultDuration: 1
-  _pointsAddDuration: 0.15
-  _diceScoreShake: {fileID: 11400000, guid: 73afdda3bc6cc7a4aaa047831433a669, type: 2}
-  _multTriggerShake: {fileID: 11400000, guid: 503aaaff3a5fac344b73a17f2df35bf2, type: 2}
-  _addPointsSfx: AddPoints
-  _triggerMultSfx: TriggerMult
-  _addScoreSfx: AddScore
 --- !u!1 &4137456682915307987
 GameObject:
   m_ObjectHideFlags: 0
@@ -4014,9 +3971,9 @@ RectTransform:
   - {fileID: 7212197057425964096}
   - {fileID: 5557628047883179970}
   - {fileID: 2453700011438116718}
-  - {fileID: 1687509680728226550}
   - {fileID: 4966867623760193499}
   - {fileID: 8541449471210441122}
+  - {fileID: 1687509680728226550}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -6691,7 +6648,6 @@ GameObject:
   - component: {fileID: 2935598426787722795}
   - component: {fileID: 7852277831491122982}
   - component: {fileID: 7346787201194568563}
-  - component: {fileID: 9001900541858541221}
   m_Layer: 5
   m_Name: (Panel) Modifiers
   m_TagString: Untagged
@@ -6757,21 +6713,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 15
---- !u!114 &9001900541858541221
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8571958487481386803}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b88e01d09ea24eed8fd4673dbc63b452, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Game::_Scripts.UI.ScoreView
-  _scoreText: {fileID: 0}
-  _quotaText: {fileID: 0}
-  _scoreTweenTime: 0.63
 --- !u!1 &8613999821736037599
 GameObject:
   m_ObjectHideFlags: 0
@@ -7334,6 +7275,7 @@ GameObject:
   - component: {fileID: 8511653475751307736}
   - component: {fileID: 7912035084691983039}
   - component: {fileID: 1435458171611806822}
+  - component: {fileID: 6877429123141375216}
   m_Layer: 5
   m_Name: (Panel) DiceUI
   m_TagString: Untagged
@@ -7429,6 +7371,24 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!114 &6877429123141375216
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8899799963100084398}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e6e265c5fa44b93b274ab686d8a69ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Game::_Scripts.UI.DiceStatePanelView
+  _diceStateViews:
+  - {fileID: 8137738276999449387}
+  - {fileID: 6656496486076330922}
+  - {fileID: 1462708720167035372}
+  - {fileID: 6603775607373388377}
+  - {fileID: 901119914239759101}
 --- !u!1 &8937226446615717183
 GameObject:
   m_ObjectHideFlags: 0
@@ -8411,6 +8371,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4245702733014173903, guid: 86dc1cdadf3ed6c4e80a98bb15cbd092, type: 3}
+      propertyPath: _hideUndamagedIndicator
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 9013700237388054691, guid: 86dc1cdadf3ed6c4e80a98bb15cbd092, type: 3}
       propertyPath: m_Name
       value: (Panel) DiceState (2)
@@ -8420,6 +8384,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 86dc1cdadf3ed6c4e80a98bb15cbd092, type: 3}
+--- !u!114 &1462708720167035372 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4245702733014173903, guid: 86dc1cdadf3ed6c4e80a98bb15cbd092, type: 3}
+  m_PrefabInstance: {fileID: 3361745741786327331}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4cb0f9a55a904d2ebfe645a2fd141953, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Game::_Scripts.UI.DiceStateView
 --- !u!224 &1842739925226802270 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3978345065327748477, guid: 86dc1cdadf3ed6c4e80a98bb15cbd092, type: 3}
@@ -8513,6 +8488,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4245702733014173903, guid: 86dc1cdadf3ed6c4e80a98bb15cbd092, type: 3}
+      propertyPath: _hideUndamagedIndicator
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 9013700237388054691, guid: 86dc1cdadf3ed6c4e80a98bb15cbd092, type: 3}
       propertyPath: m_Name
       value: (Panel) DiceState (4)
@@ -8527,6 +8506,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 3978345065327748477, guid: 86dc1cdadf3ed6c4e80a98bb15cbd092, type: 3}
   m_PrefabInstance: {fileID: 3921139861032901170}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &901119914239759101 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4245702733014173903, guid: 86dc1cdadf3ed6c4e80a98bb15cbd092, type: 3}
+  m_PrefabInstance: {fileID: 3921139861032901170}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4cb0f9a55a904d2ebfe645a2fd141953, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Game::_Scripts.UI.DiceStateView
 --- !u!1001 &5333609947119862756
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8615,6 +8605,22 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4245702733014173903, guid: 86dc1cdadf3ed6c4e80a98bb15cbd092, type: 3}
+      propertyPath: _damagedTextColor.b
+      value: 0.5529412
+      objectReference: {fileID: 0}
+    - target: {fileID: 4245702733014173903, guid: 86dc1cdadf3ed6c4e80a98bb15cbd092, type: 3}
+      propertyPath: _damagedTextColor.g
+      value: 0.69803923
+      objectReference: {fileID: 0}
+    - target: {fileID: 4245702733014173903, guid: 86dc1cdadf3ed6c4e80a98bb15cbd092, type: 3}
+      propertyPath: _damagedTextColor.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4245702733014173903, guid: 86dc1cdadf3ed6c4e80a98bb15cbd092, type: 3}
+      propertyPath: _hideUndamagedIndicator
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 9013700237388054691, guid: 86dc1cdadf3ed6c4e80a98bb15cbd092, type: 3}
       propertyPath: m_Name
       value: (Panel) DiceState
@@ -8624,6 +8630,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 86dc1cdadf3ed6c4e80a98bb15cbd092, type: 3}
+--- !u!114 &8137738276999449387 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4245702733014173903, guid: 86dc1cdadf3ed6c4e80a98bb15cbd092, type: 3}
+  m_PrefabInstance: {fileID: 5333609947119862756}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4cb0f9a55a904d2ebfe645a2fd141953, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Game::_Scripts.UI.DiceStateView
 --- !u!224 &9021029181510133401 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3978345065327748477, guid: 86dc1cdadf3ed6c4e80a98bb15cbd092, type: 3}
@@ -8854,6 +8871,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4245702733014173903, guid: 86dc1cdadf3ed6c4e80a98bb15cbd092, type: 3}
+      propertyPath: _hideUndamagedIndicator
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 9013700237388054691, guid: 86dc1cdadf3ed6c4e80a98bb15cbd092, type: 3}
       propertyPath: m_Name
       value: (Panel) DiceState (3)
@@ -8868,6 +8889,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 3978345065327748477, guid: 86dc1cdadf3ed6c4e80a98bb15cbd092, type: 3}
   m_PrefabInstance: {fileID: 7011707460479505046}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &6603775607373388377 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4245702733014173903, guid: 86dc1cdadf3ed6c4e80a98bb15cbd092, type: 3}
+  m_PrefabInstance: {fileID: 7011707460479505046}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4cb0f9a55a904d2ebfe645a2fd141953, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Game::_Scripts.UI.DiceStateView
 --- !u!1001 &7389110034052954981
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8956,6 +8988,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4245702733014173903, guid: 86dc1cdadf3ed6c4e80a98bb15cbd092, type: 3}
+      propertyPath: _hideUndamagedIndicator
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 9013700237388054691, guid: 86dc1cdadf3ed6c4e80a98bb15cbd092, type: 3}
       propertyPath: m_Name
       value: (Panel) DiceState (1)
@@ -8970,3 +9006,14 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 3978345065327748477, guid: 86dc1cdadf3ed6c4e80a98bb15cbd092, type: 3}
   m_PrefabInstance: {fileID: 7389110034052954981}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &6656496486076330922 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4245702733014173903, guid: 86dc1cdadf3ed6c4e80a98bb15cbd092, type: 3}
+  m_PrefabInstance: {fileID: 7389110034052954981}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4cb0f9a55a904d2ebfe645a2fd141953, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Game::_Scripts.UI.DiceStateView
