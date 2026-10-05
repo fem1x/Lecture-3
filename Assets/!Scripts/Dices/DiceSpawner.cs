@@ -36,6 +36,8 @@ namespace _Scripts.Dices
         
         public void ResetDicesToSpawn(List<Dice> dices)
         {
+            if (dices == null) return;
+            
             int count = dices.Count;
             for (int i = 0; i < count; i++)
             {

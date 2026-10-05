@@ -1,4 +1,7 @@
 using System.Collections.Generic;
+using Cysharp.Threading.Tasks;
+using DG.Tweening;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -51,6 +54,25 @@ namespace _Scripts.Utility
         public static bool IsInLayerMask(int layer, LayerMask layerMask)
         {
             return (layerMask.value & (1 << layer)) != 0;
+        }
+        
+        public static Tween DoTextValueTween(TMP_Text text, int fromValue, int toValue, float duration)
+        {
+            text.DOKill();
+            var displayedValue = fromValue;
+    
+            return DOTween.To(
+                    () => displayedValue,
+                    x =>
+                    {
+                        displayedValue = x;
+                        text.text = x.ToString();
+                    },
+                    toValue,
+                    duration
+                )
+                .SetTarget(text)
+                .SetEase(Ease.OutQuad);
         }
     }
 }

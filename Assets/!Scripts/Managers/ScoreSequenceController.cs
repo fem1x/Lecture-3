@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using _Scripts.Dices;
+using _Scripts.Utility;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using TMPro;
@@ -20,6 +21,9 @@ namespace _Scripts.Managers
         [SerializeField] private float _delayPerDice = 0.22f;
         [SerializeField] private float _delayBeforeMult = 0.25f;
         [SerializeField] private float _delayAfterMult = 0.35f;
+        [Space(0.5f)]
+        [SerializeField] private float _pointsMultDuration = 0.5f;
+        [SerializeField] private float _pointsAddDuration = 0.15f;
         
         [Header("SFX")]
         [SerializeField] private string _addPointsSfx = "AddPoints";
@@ -38,9 +42,9 @@ namespace _Scripts.Managers
 
         public async UniTask PlaySequenceAsync(List<Dice> dices, ScoreCalculationResult scoreResult)
         {
-            await AddPointsAsync(dices, scoreResult.Data.BasePoints);
+            var currentPoints = await AddPointsAsync(dices, scoreResult.Data.BasePoints);
             await UniTask.Delay(TimeSpan.FromSeconds(_delayBeforeMult));
-            TriggerMult(scoreResult.TotalScore);
+            await TriggerMultAsync(currentPoints, scoreResult.Data.Multiplier);
             await UniTask.Delay(TimeSpan.FromSeconds(_delayAfterMult));
             ApplyFinalScore(scoreResult.TotalScore);
         }
@@ -52,23 +56,25 @@ namespace _Scripts.Managers
             {
                 var dice = dices[i];
                 if (dice.Value <= 0) continue;
-                
-                currentPoints += dice.Value;
-                _pointsText.text = currentPoints.ToString();
-                
                 PlayPointsAddFx(dice);
+                
+                var fromPoints = currentPoints;
+                currentPoints += dice.Value;
+                
+                await DoTextValueTween(_pointsText, fromPoints, currentPoints, _pointsAddDuration);
                 await UniTask.Delay(TimeSpan.FromSeconds(_delayPerDice));
             }
             return currentPoints;
         }
 
-        private void TriggerMult(int totalPoints)
+        private async UniTask TriggerMultAsync(int currentPoints, int multiplier)
         {
-            _pointsText.text = totalPoints.ToString();
-            
             PlayMultTriggerFx();
+            var toPoints = currentPoints * multiplier;
             
-            _multText.text = "1";
+            await UniTask.WhenAll(
+                DoTextValueTween(_pointsText, currentPoints, toPoints, _pointsMultDuration),
+                DoTextValueTween(_multText, multiplier, 1, _pointsMultDuration));
         }
         
         private void PlayPointsAddFx(Dice dice)
@@ -80,21 +86,40 @@ namespace _Scripts.Managers
 
         private void PlayMultTriggerFx()
         {
-            DoScalePopTween(_multText.transform);
-            DoScalePopTween(_pointsText.transform, 3f);
+            DoScalePopTween(_multText.transform, outTime: _pointsMultDuration);
+            DoScalePopTween(_pointsText.transform, 3f, outTime: _pointsMultDuration);
             _sfxPlayer?.Play(_triggerMultSfx);
         }
 
-        private void DoScalePopTween(Transform target, float scaleMult = 1.5f)
+        private void DoScalePopTween(Transform target, float scaleMult = 1.5f, float inTime = 0.07f, float outTime = 0.35f)
         {
             target.DOKill(true);
             var startingScale = target.localScale;
             
             DOTween.Sequence()
-                .Append(target.transform.DOScale(startingScale * scaleMult, 0.05f).SetEase(Ease.OutQuad))
-                .Append(target.transform.DOScale(startingScale, 0.3f).SetEase(Ease.InQuad));
+                .Append(target.transform.DOScale(startingScale * scaleMult, inTime).SetEase(Ease.OutQuad))
+                .Append(target.transform.DOScale(startingScale, outTime).SetEase(Ease.InQuad));
         }
+        
+        public static async UniTask DoTextValueTween(TMP_Text text, int fromValue, int toValue, float duration)
+        {
+            var displayedValue = fromValue;
+            await DOTween.To(
+                    () => displayedValue,
+                    x =>
+                    {
+                        displayedValue = x;
+                        text.text = x.ToString();
+                    },
+                    toValue,
+                    duration
+                )
+                .SetEase(Ease.OutQuad)
+                .ToUniTask();
 
+            text.text = toValue.ToString();
+        }
+        
         private void ApplyFinalScore(int totalScore)
         {
             _scoreManager.AddScore(totalScore);

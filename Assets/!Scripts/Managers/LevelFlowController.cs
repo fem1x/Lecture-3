@@ -56,12 +56,12 @@ namespace _Scripts.Managers
 
             var currentLevel = _levelsConfig.LevelsList[_currentLevelIndex];
             
-            _scoreManager.SetQuota(currentLevel.ScoreQuota);
             _scoreManager.ResetScore();
+            _scoreManager.SetQuota(currentLevel.ScoreQuota);
 
             _resourceManager.ResetForNewLevel();
 
-            var allDices = _tableController.GetAllDices();
+            var allDices = _tableController.AllDices;
             _tableController.ClearSelection();
             _diceSpawner.ResetDicesToSpawn(allDices);
             _tableController.ActivateAllDices(allDices);

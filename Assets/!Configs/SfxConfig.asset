@@ -116,3 +116,65 @@ MonoBehaviour:
     isLooped: 0
     audioMixer: {fileID: -9158774617749725478, guid: 1470a324304038b4ab0db292ebdfc379, type: 2}
     source: {fileID: 0}
+  - name: AddPoints
+    layers:
+    - clips:
+      - {fileID: 8300000, guid: 1c7bb0dc699cd8842a1ce50f251684c1, type: 3}
+      - {fileID: 8300000, guid: dae96c01c72be5b4586f76fe72826c63, type: 3}
+      - {fileID: 8300000, guid: e531293fa0e1aa4499fcad7a6be62971, type: 3}
+      - {fileID: 8300000, guid: 47c7ae43465a5de429092edc59605ea1, type: 3}
+      - {fileID: 8300000, guid: 7d0a4c6ddce864c44848911dad6fa171, type: 3}
+      volume: 1
+      pitch: 1
+    volume: 0.7
+    pitch: 0.1
+    pitchRandomize: 0
+    is3D: 1
+    useGlobalSpatialBlend: 1
+    customSpatialBlend: 0
+    isLooped: 0
+    audioMixer: {fileID: -9158774617749725478, guid: 1470a324304038b4ab0db292ebdfc379, type: 2}
+    source: {fileID: 0}
+  - name: TriggerMult
+    layers:
+    - clips:
+      - {fileID: 8300000, guid: 50ac76582fcabac49a641685cf8829f2, type: 3}
+      - {fileID: 8300000, guid: 54c88696d04fee14880e89b9cffbfcd6, type: 3}
+      - {fileID: 8300000, guid: 6afe90dbdb6751a44a54c991f234394e, type: 3}
+      - {fileID: 8300000, guid: ecaafc042ece103438175382e8d6bfe3, type: 3}
+      - {fileID: 8300000, guid: a0131d267d3cbf84285b859c90a391ce, type: 3}
+      - {fileID: 8300000, guid: 5ba3abdbb0059e441b4cf8416fbf31ad, type: 3}
+      - {fileID: 8300000, guid: cfd94441c244bb64b9e9719a51d26e2f, type: 3}
+      - {fileID: 8300000, guid: 70d62ede45df28a49ac39a2268d45cce, type: 3}
+      - {fileID: 8300000, guid: bc7d1aa5b0b3d894a96f8d4516256271, type: 3}
+      - {fileID: 8300000, guid: ee396b086dda8df4f8c6fca9d456fa3b, type: 3}
+      volume: 1
+      pitch: 1
+    volume: 0.4
+    pitch: 1
+    pitchRandomize: 0.1
+    is3D: 0
+    useGlobalSpatialBlend: 0
+    customSpatialBlend: 0
+    isLooped: 0
+    audioMixer: {fileID: -9158774617749725478, guid: 1470a324304038b4ab0db292ebdfc379, type: 2}
+    source: {fileID: 0}
+  - name: AddScore
+    layers:
+    - clips:
+      - {fileID: 8300000, guid: f2173f99f6362a8478dd5c0d60385240, type: 3}
+      - {fileID: 8300000, guid: 82972f5e01cd82043b09a82c582f1c07, type: 3}
+      - {fileID: 8300000, guid: dfd987e9af2904644b1640da5585b6cc, type: 3}
+      - {fileID: 8300000, guid: b923fa64779d3674fbe31e717e990518, type: 3}
+      - {fileID: 8300000, guid: 0ecf688c9c88dab439b37fcb89c0aded, type: 3}
+      volume: 1
+      pitch: 1
+    volume: 0.4
+    pitch: 1
+    pitchRandomize: 0.1
+    is3D: 0
+    useGlobalSpatialBlend: 0
+    customSpatialBlend: 0
+    isLooped: 0
+    audioMixer: {fileID: -9158774617749725478, guid: 1470a324304038b4ab0db292ebdfc379, type: 2}
+    source: {fileID: 0}

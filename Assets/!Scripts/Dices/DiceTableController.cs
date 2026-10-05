@@ -17,8 +17,9 @@ namespace _Scripts.Dices
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== 
         public bool HasPendingDices => _pendingDicesToThrow.Count > 0;
         public bool HasUnlockedDices => GetUnlockedDices().Count > 0;
+        public List<Dice> AllDices => _allDices;
+        public List<Dice> PendingDices => _pendingDicesToThrow;
         
-        public List<Dice> GetAllDices() => _allDices;
         public List<Dice> GetSelectedDices() => _allDices.Where(d => d.IsLocked).ToList();
         public List<Dice> GetUnlockedDices() => _allDices.Where(d => !d.IsLocked).ToList();
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== 
@@ -39,6 +40,15 @@ namespace _Scripts.Dices
             _pendingDicesToThrow.Clear();
             if (dices != null)
                 _pendingDicesToThrow.AddRange(dices);
+        }
+
+        public void AddPendingDices(List<Dice> dices)
+        {
+            foreach (var dice in dices)
+            {
+                if (dice != null && !_pendingDicesToThrow.Contains(dice))
+                    _pendingDicesToThrow.Add(dice);
+            }
         }
         
         public List<Dice> ExtractPendingDices()
@@ -65,7 +75,10 @@ namespace _Scripts.Dices
         {
             if (dices == null) return;
             foreach (var dice in dices)
-                dice.TakeHit(amount);
+            {
+                if (dice != null)
+                    dice.TakeHit(amount);
+            }
             
             OnDicesStateChanged?.Invoke(dices);
         }

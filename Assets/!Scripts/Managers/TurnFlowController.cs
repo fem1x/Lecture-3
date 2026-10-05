@@ -87,7 +87,7 @@ namespace _Scripts.Managers
                 await _diceRoller.RerollAsync(_tableController.GetUnlockedDices());
             }
 
-            var activeRolledDices = _tableController.GetAllDices()
+            var activeRolledDices = _tableController.AllDices
                 .Where(d => d != null && d.Value > 0)
                 .ToList();
             
@@ -112,23 +112,16 @@ namespace _Scripts.Managers
             
             var result = _calculator.Calculate(selectedDices);
             await _scoreSequenceController.PlaySequenceAsync(selectedDices, result);
-            FinishTurn(selectedDices, result);
             
             _isScoring = false;
 
             if (_scoreManager.HasEnoughScore) 
                 return;
             
+            _tableController.DegradePlayedDices(selectedDices, 1);
+            _resourceManager.AddRefundDice(result.Data.DiceRefund);
             PrepareNextTurn(selectedDices);
             _levelFlowController.CheckDefeatCondition();
-        }
-
-        private void FinishTurn(List<Dice> playedDices, ScoreCalculationResult result)
-        {
-            _tableController.DegradePlayedDices(playedDices, 1);
-            _resourceManager.AddRefundDice(result.Data.DiceRefund);
-
-            //OnCombinationsCleared?.Invoke();
         }
 
         private void PrepareNextTurn(List<Dice> playedDices)
@@ -139,8 +132,8 @@ namespace _Scripts.Managers
             if (countToReturn > 0)
             {
                 var dicesToReturn = playedDices.Take(countToReturn).ToList();
-                _tableController.SetPendingDices(dicesToReturn);
-                _diceSpawner.ResetDicesToSpawn(dicesToReturn);
+                _tableController.AddPendingDices(dicesToReturn);
+                _diceSpawner.ResetDicesToSpawn(_tableController.PendingDices);
                 
                 var eliminatedDices = playedDices.Skip(countToReturn).ToList();
                 foreach (var extraDice in eliminatedDices)
@@ -148,7 +141,6 @@ namespace _Scripts.Managers
             }
             else
             {
-                _tableController.SetPendingDices(new List<Dice>()); //0 dices left
                 foreach (var dice in playedDices)
                     dice.gameObject.SetActive(false);
             }
