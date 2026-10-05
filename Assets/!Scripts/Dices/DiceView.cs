@@ -9,6 +9,7 @@ namespace _Scripts.Dices
     {
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== 
         [Header("Faces")] 
+        [SerializeField] private SpriteRenderer[] _faceRenderers;
         [SerializeField] private Sprite[] _faceSprites;
         
         [Header("LiftUp Animation")]
@@ -18,6 +19,8 @@ namespace _Scripts.Dices
         [SerializeField] private Ease _liftEase = Ease.OutBack;
         [SerializeField] private Ease _dropEase = Ease.InQuad;
         
+        private DiceData _data;
+
         private Outline _outline;
         private Rigidbody _rb;
         private Tween _moveTween;
@@ -30,13 +33,35 @@ namespace _Scripts.Dices
             _outline = GetComponent<Outline>();
             _outline.enabled = false;
         }
-        
-        private void OnDestroy() => _moveTween?.Kill();
 
-        public void UpdateFaceRenderers(DiceFace[] faces)
+        public void Init(DiceData data)
         {
-            foreach (var face in faces)
-                face.Renderer.sprite = _faceSprites[face.CurrentValue];
+            _data = data;
+            _data.OnLockChanged += SetLockedVisual;
+            _data.OnDataChanged += UpdateFaces;
+            
+            UpdateFaces();
+            SetLockedVisual(_data.IsLocked);
+        }
+        
+        private void OnDestroy()
+        {
+            _moveTween?.Kill();
+            
+            if (_data == null) return;
+            _data.OnLockChanged -= SetLockedVisual;
+            _data.OnDataChanged -= UpdateFaces;
+        }
+        
+        public void UpdateFaces()
+        {
+            if (_data == null) return;
+
+            for (int i = 0; i < _faceRenderers.Length; i++)
+            {
+                int value = _data.GetFaceValue(i);
+                _faceRenderers[i].sprite = _faceSprites[value];
+            }
         }
 
         public void SetLockedVisual(bool isLocked)

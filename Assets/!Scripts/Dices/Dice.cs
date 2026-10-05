@@ -12,21 +12,6 @@ namespace _Scripts.Dices
     public class Dice : MonoBehaviour, IPointerClickHandler
     {
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== 
-        public static event Action OnAnyDiceSelectionChanged;
-        
-        [field: SerializeField] public DiceFace[] Faces { get; private set; } = 
-        {
-            new(1, Vector3.up),
-            new(6, Vector3.down),
-            new(5, Vector3.right),
-            new(2, Vector3.left),
-            new(3, Vector3.forward),
-            new(4, Vector3.back)
-        };
-        
-        [Header("Durability")]
-        [field: SerializeField] public int MaxDurability { get; private set; } = 2;
-        public int CurrentDurability { get; private set; }
         
         [Header("Camera Shake")]
         [SerializeField] private CameraShakePreset _rollShake;
@@ -36,9 +21,11 @@ namespace _Scripts.Dices
         [SerializeField] private string _throwSfx;
         [SerializeField] private string _hitSfx;
         
+        private DiceData _data;
         private Rigidbody _rb;
         private DiceView _view;
-        private Coroutine _stopCoroutine;
+        
+        #region DI
         private ISfxPlayer _sfxPlayer;
         private CameraShaker _cameraShaker;
         
@@ -48,9 +35,8 @@ namespace _Scripts.Dices
             _sfxPlayer = sfxPlayer;
             _cameraShaker = cameraShaker;
         }
+        #endregion
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
-        public int Value { get; private set; } = -1;
-        public bool IsLocked { get; private set; }
         public bool IsStopped
         {
             get
@@ -67,41 +53,21 @@ namespace _Scripts.Dices
         {
             _rb = GetComponent<Rigidbody>();
             _view = GetComponent<DiceView>();
-            CurrentDurability = MaxDurability;
+        }
+
+        public void Init(DiceData data)
+        {
+            _data = data;
+            _view.Init(data);
         }
 
         public void OnPointerClick(PointerEventData eventData)
         {
             if (!IsStopped) return;
-            ToggleLock();
-        }
-
-        public void SetLock(bool isLocked)
-        {
-            if (isLocked == IsLocked) return;
-            ToggleLock();
-        }
-        
-        private void ToggleLock()
-        {
-            IsLocked = !IsLocked;
-            _view.SetLockedVisual(IsLocked);
+            _data.ToggleLock();
             
-            if(IsLocked) _sfxPlayer.Play(_lockSfx, transform.position); //SFX
-            
-            OnAnyDiceSelectionChanged?.Invoke();
-        }
-
-        public void Reset()
-        {
-            Value = -1;
-            IsLocked = false;
-            _view.ResetVisual();
-            
-            if (_rb.isKinematic) return;
-            _rb.linearVelocity = Vector3.zero;
-            _rb.angularVelocity = Vector3.zero;
-            _rb.isKinematic = true;
+            if (_data.IsLocked)
+                _sfxPlayer.Play(_lockSfx, transform.position);
         }
 
         public void TeleportTo(Vector3 position, Quaternion rotation)
@@ -123,61 +89,28 @@ namespace _Scripts.Dices
             _sfxPlayer.Play(_throwSfx, transform.position); 
             _cameraShaker.Shake(_rollShake);
         }
-        
-        #region Face Values
-        public void TakeHit(int amount = 1)
-        {
-            CurrentDurability -= amount;
-
-            if (CurrentDurability <= 0)
-            {
-                ReduceAllValues(1);
-                CurrentDurability = MaxDurability;
-            }
-        }
-
-        private void ReduceAllValues(int amount = 1)
-        {
-            foreach (var face in Faces)
-                face.ReduceValue(amount);
-            
-            UpdateValue();
-            _view.UpdateFaceRenderers(Faces);
-        }
-        
-        public void Repair(int amount = 1)
-        {
-            foreach (var face in Faces)
-                face.IncreaseValue(amount);
-
-            CurrentDurability = MaxDurability;
-            UpdateValue();
-            _view.UpdateFaceRenderers(Faces);
-        }
-
-        public void ResetAllValues()
-        {
-            foreach (var face in Faces)
-                face.Reset();
-        }
-        #endregion
 
         public void UpdateValue()
         {
-            DiceFace bestFace = null;
-            float maxDot = -1f;
+            var bestFaceIndex = -1;
+            var maxDot = -1f;
 
-            for (int i = 0; i < Faces.Length; i++)
+            for (int i = 0; i < 6; i++)
             {
-                Vector3 worldDirection = transform.TransformDirection(Faces[i].Direction);
-                float dot = Vector3.Dot(worldDirection, Vector3.up);
+                var worldDirection = transform.TransformDirection(_data.GetFaceDirection(i));
+                var dot = Vector3.Dot(worldDirection, Vector3.up);
+                
                 if (dot > maxDot)
                 {
                     maxDot = dot;
-                    bestFace = Faces[i];
+                    bestFaceIndex = i;
                 }
             }
-            Value = bestFace.CurrentValue;
+
+            if (bestFaceIndex >= 0)
+            {
+                _data.SetValue(_data.GetFaceValue(bestFaceIndex));
+            }
         }
 
         private void OnCollisionEnter(Collision collision)
