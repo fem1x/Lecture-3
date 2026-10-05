@@ -270,7 +270,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7332853857469701151, guid: 0dd24c35042c3644d9fdb11ea52633a5, type: 3}
   m_PrefabInstance: {fileID: 6459404190822529572}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1950779561}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: de4a7f2dcc5469546856f184a217773a, type: 3}
@@ -429,36 +429,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 936410687bfe4475ae1bc0b723da6f02, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Game::_Scripts.UI.CombinationsPanelView
---- !u!1 &1950779561 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6595746931779263266, guid: 0dd24c35042c3644d9fdb11ea52633a5, type: 3}
+--- !u!114 &1950779564 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6168002809383655841, guid: 0dd24c35042c3644d9fdb11ea52633a5, type: 3}
   m_PrefabInstance: {fileID: 6459404190822529572}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1950779564
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1950779561}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c01c7d50a2214afa9dff871a3191fd0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Game::_Scripts.Managers.RoundFlowController
-  _submitSfx: Submit
---- !u!114 &1950779567
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1950779561}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5753707187a08e645bc58c300ebb1f7a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: '::'
 --- !u!1001 &1682329959264441802
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1216,14 +1197,6 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3236853052078990589, guid: 3788b64a117a7fb4dbd391e5010a68c9, type: 3}
-      propertyPath: _scoreText
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 3236853052078990589, guid: 3788b64a117a7fb4dbd391e5010a68c9, type: 3}
-      propertyPath: _sfxConfig
-      value: 
-      objectReference: {fileID: 11400000, guid: 8a3d2ca175b89c442a91e1e5ff2f1243, type: 2}
-    - target: {fileID: 3236853052078990589, guid: 3788b64a117a7fb4dbd391e5010a68c9, type: 3}
       propertyPath: _mainCamera
       value: 
       objectReference: {fileID: 330585545}
@@ -1231,18 +1204,6 @@ PrefabInstance:
       propertyPath: _spawnPoint
       value: 
       objectReference: {fileID: 1623856351}
-    - target: {fileID: 3236853052078990589, guid: 3788b64a117a7fb4dbd391e5010a68c9, type: 3}
-      propertyPath: _diceManager
-      value: 
-      objectReference: {fileID: 666883218}
-    - target: {fileID: 3236853052078990589, guid: 3788b64a117a7fb4dbd391e5010a68c9, type: 3}
-      propertyPath: _resourceConfig
-      value: 
-      objectReference: {fileID: 11400000, guid: d278f98f3d20f274ba1e894b275860a4, type: 2}
-    - target: {fileID: 3236853052078990589, guid: 3788b64a117a7fb4dbd391e5010a68c9, type: 3}
-      propertyPath: _levelsListConfig
-      value: 
-      objectReference: {fileID: 11400000, guid: 89087b4361fb25c4ca9cedfcd9b8b851, type: 2}
     - target: {fileID: 3236853052078990589, guid: 3788b64a117a7fb4dbd391e5010a68c9, type: 3}
       propertyPath: _combinationsPanel
       value: 
@@ -1256,17 +1217,9 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 666883218}
     - target: {fileID: 3236853052078990589, guid: 3788b64a117a7fb4dbd391e5010a68c9, type: 3}
-      propertyPath: _roundFlowController
-      value: 
-      objectReference: {fileID: 1950779564}
-    - target: {fileID: 3236853052078990589, guid: 3788b64a117a7fb4dbd391e5010a68c9, type: 3}
       propertyPath: _scoreSequenceController
       value: 
       objectReference: {fileID: 1210550386}
-    - target: {fileID: 3236853052078990589, guid: 3788b64a117a7fb4dbd391e5010a68c9, type: 3}
-      propertyPath: autoInjectGameObjects.Array.size
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 3236853052078990589, guid: 3788b64a117a7fb4dbd391e5010a68c9, type: 3}
       propertyPath: 'autoInjectGameObjects.Array.data[0]'
       value: 
@@ -1339,13 +1292,7 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 6595746931779263266, guid: 0dd24c35042c3644d9fdb11ea52633a5, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1950779564}
-    - targetCorrespondingSourceObject: {fileID: 6595746931779263266, guid: 0dd24c35042c3644d9fdb11ea52633a5, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1950779567}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0dd24c35042c3644d9fdb11ea52633a5, type: 3}
 --- !u!1001 &6999513755539012132
 PrefabInstance:

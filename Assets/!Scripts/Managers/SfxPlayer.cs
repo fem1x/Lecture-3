@@ -53,7 +53,7 @@ namespace _Scripts.Managers
     /// <summary>
     /// Use for 3D sounds with random pitch
     /// </summary>
-    public void Play(string name, Vector3 spawnPos)
+    public void Play(string name, Vector3 spawnPos, float pitchMultiplier = 1f)
     {
         if (string.IsNullOrEmpty(name)) return;
         if (!_soundLookup.TryGetValue(name, out Sound s))        
@@ -67,14 +67,15 @@ namespace _Scripts.Managers
             return;
         }
 
-        float finalPitch = s.pitch + Random.Range(-s.pitchRandomize, s.pitchRandomize);
+        float randomOffset = Random.Range(-s.pitchRandomize, s.pitchRandomize);
+        float finalPitch = (s.pitch + randomOffset) * pitchMultiplier;
         PlayLayers(s, spawnPos, finalPitch);
     }
 
     /// <summary>
     /// Use for 2D sounds
     /// </summary>
-    public void Play(string name)
+    public void Play(string name, float pitchMultiplier = 1f)
     {
         if (string.IsNullOrEmpty(name)) return;
         if (!_soundLookup.TryGetValue(name, out Sound s))        
@@ -85,7 +86,8 @@ namespace _Scripts.Managers
         if (s.customSpatialBlend > 0 && s.useGlobalSpatialBlend)
             Debug.LogException(new Exception("2D sounds should have SpatialBlend = 0"));
 
-        float finalPitch = s.pitch + Random.Range(-s.pitchRandomize, s.pitchRandomize);
+        float randomOffset = Random.Range(-s.pitchRandomize, s.pitchRandomize);
+        float finalPitch = (s.pitch + randomOffset) * pitchMultiplier;
         Play2DLayers(s, finalPitch);
     }
 
@@ -158,9 +160,8 @@ namespace _Scripts.Managers
         source.clip = clip;
         source.volume = s.volume * layer.volume;
 
-        float pitchRatio = layer.pitch / s.pitch;
-        source.pitch = Mathf.Clamp(baseRandomPitch * pitchRatio, 0.1f, 3f);
-
+        source.pitch = Mathf.Clamp(baseRandomPitch * layer.pitch, 0.1f, 3f);
+        
         source.spatialBlend = GetSpatialBlend(s);
         source.loop = s.isLooped;
         source.outputAudioMixerGroup = s.audioMixer;

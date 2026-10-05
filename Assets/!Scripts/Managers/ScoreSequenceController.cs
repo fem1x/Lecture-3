@@ -60,17 +60,23 @@ namespace _Scripts.Managers
         private async UniTask<int> AddPointsAsync(List<Dice> dices, int basePoints)
         {
             var currentPoints = basePoints;
+            var scoredDiceCount = 0;
+            
             for (int i = 0; i < dices.Count; i++)
             {
                 var dice = dices[i];
                 if (dice.Value <= 0) continue;
-                PlayPointsAddFx(dice);
+                
+                await UniTask.Delay(TimeSpan.FromSeconds(_delayPerDice));
+                
+                var pitchMult =  1f + (0.11f * scoredDiceCount);
+                PlayPointsAddFx(dice, pitchMult);
+                scoredDiceCount++;
                 
                 var fromPoints = currentPoints;
                 currentPoints += dice.Value;
                 
                 await DoTextValueTween(_pointsText, fromPoints, currentPoints, _pointsAddDuration);
-                await UniTask.Delay(TimeSpan.FromSeconds(_delayPerDice));
             }
             return currentPoints;
         }
@@ -85,12 +91,12 @@ namespace _Scripts.Managers
                 DoTextValueTween(_multText, multiplier, 1, _pointsMultDuration));
         }
         
-        private void PlayPointsAddFx(Dice dice)
+        private void PlayPointsAddFx(Dice dice, float pitchMult)
         {
             DoScalePopTween(dice.transform);
             DoScalePopTween(_pointsText.transform, 1.8f);
             _cameraShaker.Shake(_diceScoreShake);
-            _sfxPlayer?.Play(_addPointsSfx, dice.transform.position);
+            _sfxPlayer?.Play(_addPointsSfx, dice.transform.position, pitchMult);
         }
 
         private void PlayMultTriggerFx()

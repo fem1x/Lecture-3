@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b248db9848b907d4fb433e7ccb39a338, type: 3}
   m_Name: AudioFilterConfig
   m_EditorClassIdentifier: Game::_Scripts.Scriptable_Objects.Configs.AudioFilterConfig
-  OnOffFilterAmount: {x: 0.2, y: 1}
-  <TransitionDuration>k__BackingField: 1
+  OnOffFilterAmount: {x: 0.06896552, y: 1}
+  <TransitionDuration>k__BackingField: 0.36
   <ParameterName>k__BackingField: Filter
-  <AudioMixer>k__BackingField: {fileID: 0}
+  <AudioMixer>k__BackingField: {fileID: 24100000, guid: 1470a324304038b4ab0db292ebdfc379, type: 2}
