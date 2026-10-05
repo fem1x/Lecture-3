@@ -19,6 +19,7 @@ namespace _Scripts.Managers
         private readonly ISfxPlayer _sfxPlayer;
         private readonly DiceNetPanelView _diceNetPanelView;
         private readonly CurrentCombinationView _currentCombinationView;
+        private readonly DiceStatePanelView _diceStatePanelView;
 
         [Inject]
         public Bootstrap(
@@ -28,7 +29,8 @@ namespace _Scripts.Managers
             LevelFlowController levelFlowController,
             ISfxPlayer sfxPlayer,
             DiceNetPanelView diceNetPanelView,
-            CurrentCombinationView currentCombinationView)
+            CurrentCombinationView currentCombinationView,
+            DiceStatePanelView diceStatePanelView)
         {
             _diceSpawner = diceSpawner;
             _diceTableController = diceTableController;
@@ -36,6 +38,7 @@ namespace _Scripts.Managers
             _sfxPlayer = sfxPlayer;
             _diceNetPanelView = diceNetPanelView;
             _currentCombinationView = currentCombinationView;
+            _diceStatePanelView = diceStatePanelView;
         }
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
         
@@ -47,6 +50,7 @@ namespace _Scripts.Managers
             _diceSpawner.ResetDicesToSpawn(dices);
             _diceTableController.InitDiceList(dices);
             _diceNetPanelView.InitNetViews(dices);
+            _diceStatePanelView.InitDiceStateViews(dices);
             _currentCombinationView.Init(dices);
             
             _levelFlowController.StartGame();

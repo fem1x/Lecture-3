@@ -11,7 +11,7 @@ namespace _Scripts.UI
 
         public void InitNetViews(List<Dice> dices)
         {
-            for (int i = 0; i < _diceNetViews.Count && i < dices.Count; i++)
+            for (int i = 0; i < _diceNetViews.Count; i++)
             {
                 _diceNetViews[i].Bind(dices[i].Data);
             }

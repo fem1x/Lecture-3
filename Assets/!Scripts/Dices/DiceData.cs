@@ -40,7 +40,7 @@ namespace _Scripts.Dices
         }
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
         
-        public void SetValue(int value)
+        public void SetRolledValue(int value)
         {
             if (RolledValue == value) return;
             RolledValue = value;
@@ -79,7 +79,7 @@ namespace _Scripts.Dices
 
         public void RoundReset()
         {
-            SetValue(-1);
+            SetRolledValue(-1);
             SetLock(false);
         }
         

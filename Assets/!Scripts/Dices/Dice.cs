@@ -74,18 +74,22 @@ namespace _Scripts.Dices
         {
             transform.position = position;
             transform.rotation = rotation;
-            
-            _rb.position = position;
-            _rb.rotation = rotation;
+
+            _rb.MovePosition(position);
+            _rb.MoveRotation(rotation);
         }
         
         public void PrepareForRoll()
         {
             Data?.RoundReset();
             _view.ResetVisual();
-    
-            _rb.linearVelocity = Vector3.zero;
-            _rb.angularVelocity = Vector3.zero;
+            
+            if (!_rb.isKinematic)
+            {
+                _rb.linearVelocity = Vector3.zero;
+                _rb.angularVelocity = Vector3.zero;
+            }
+            
             _rb.isKinematic = true;
         }
         
@@ -119,7 +123,7 @@ namespace _Scripts.Dices
 
             if (bestFaceIndex >= 0)
             {
-                Data.SetValue(Data.GetFaceValue(bestFaceIndex));
+                Data.SetRolledValue(Data.GetFaceValue(bestFaceIndex));
             }
         }
 

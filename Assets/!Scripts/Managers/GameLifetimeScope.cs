@@ -32,6 +32,7 @@ public class GameLifetimeScope : LifetimeScope
     [SerializeField] private ScoreSequenceController _scoreSequenceController;
     [SerializeField] private DiceNetPanelView _diceNetPanelView;
     [SerializeField] private CurrentCombinationView _currentCombinationView;
+    [SerializeField] private DiceStatePanelView _diceStatePanelView;
     // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
     
     protected override void Configure(IContainerBuilder builder)
@@ -63,6 +64,7 @@ public class GameLifetimeScope : LifetimeScope
         builder.RegisterComponent(_scoreSequenceController);
         builder.RegisterComponent(_diceNetPanelView);
         builder.RegisterComponent(_currentCombinationView);
+        builder.RegisterComponent(_diceStatePanelView);
         
         //C# classes
         builder.Register<SfxPlayer>(Lifetime.Singleton).As<ISfxPlayer>();
