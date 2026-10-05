@@ -144,6 +144,16 @@ namespace _Scripts.Dices
             UpdateValue();
             _view.UpdateFaceRenderers(Faces);
         }
+        
+        public void Repair(int amount = 1)
+        {
+            foreach (var face in Faces)
+                face.IncreaseValue(amount);
+
+            CurrentDurability = MaxDurability;
+            UpdateValue();
+            _view.UpdateFaceRenderers(Faces);
+        }
 
         public void ResetAllValues()
         {

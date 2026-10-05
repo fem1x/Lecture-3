@@ -24,6 +24,11 @@ namespace _Scripts.Dices
         {
             CurrentValue = Mathf.Max(0, CurrentValue - amount);
         }
+        
+        public void IncreaseValue(int amount = 1)
+        {
+            CurrentValue = Mathf.Min(BaseValue, CurrentValue + amount);
+        }
 
         public void Reset()
         {
