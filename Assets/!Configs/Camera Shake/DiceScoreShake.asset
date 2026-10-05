@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7fbedbffe81c4337a2cf2e45c42f5bf0, type: 3}
+  m_Name: DiceScoreShake
+  m_EditorClassIdentifier: Game::_Scripts.Configs.CameraShakePreset
+  <Duration>k__BackingField: 0.16
+  <Strength>k__BackingField: 0.04
+  <Vibrato>k__BackingField: 15
+  <Randomness>k__BackingField: 90
+  <EnableRotationShake>k__BackingField: 0
+  <RotStrength>k__BackingField: 0.2
+  <RotVibrato>k__BackingField: 8

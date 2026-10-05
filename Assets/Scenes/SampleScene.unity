@@ -950,6 +950,26 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9081301751334483646, guid: ef5db77786d12194d88cb266471c1bf9, type: 3}
+      propertyPath: _camera
+      value: 
+      objectReference: {fileID: 330585545}
+    - target: {fileID: 9081301751334483646, guid: ef5db77786d12194d88cb266471c1bf9, type: 3}
+      propertyPath: _diceScoreShake
+      value: 
+      objectReference: {fileID: 11400000, guid: 73afdda3bc6cc7a4aaa047831433a669, type: 2}
+    - target: {fileID: 9081301751334483646, guid: ef5db77786d12194d88cb266471c1bf9, type: 3}
+      propertyPath: _multTriggerShake
+      value: 
+      objectReference: {fileID: 11400000, guid: 503aaaff3a5fac344b73a17f2df35bf2, type: 2}
+    - target: {fileID: 9081301751334483646, guid: ef5db77786d12194d88cb266471c1bf9, type: 3}
+      propertyPath: _diceShakeStrength
+      value: 0.04
+      objectReference: {fileID: 0}
+    - target: {fileID: 9081301751334483646, guid: ef5db77786d12194d88cb266471c1bf9, type: 3}
+      propertyPath: _multShakeStrength
+      value: 0.04
+      objectReference: {fileID: 0}
     - target: {fileID: 9118674176950862616, guid: ef5db77786d12194d88cb266471c1bf9, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -1084,7 +1104,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 648376912522322308, guid: f125e16385123e14db1accbcbcb13e0e, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.21
+      value: 0.27
       objectReference: {fileID: 0}
     - target: {fileID: 648376912522322308, guid: f125e16385123e14db1accbcbcb13e0e, type: 3}
       propertyPath: m_LocalPosition.y
@@ -1092,7 +1112,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 648376912522322308, guid: f125e16385123e14db1accbcbcb13e0e, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -2.63
+      value: -2.75
       objectReference: {fileID: 0}
     - target: {fileID: 648376912522322308, guid: f125e16385123e14db1accbcbcb13e0e, type: 3}
       propertyPath: m_LocalRotation.w
@@ -1203,6 +1223,10 @@ PrefabInstance:
       propertyPath: _sfxConfig
       value: 
       objectReference: {fileID: 11400000, guid: 8a3d2ca175b89c442a91e1e5ff2f1243, type: 2}
+    - target: {fileID: 3236853052078990589, guid: 3788b64a117a7fb4dbd391e5010a68c9, type: 3}
+      propertyPath: _mainCamera
+      value: 
+      objectReference: {fileID: 330585545}
     - target: {fileID: 3236853052078990589, guid: 3788b64a117a7fb4dbd391e5010a68c9, type: 3}
       propertyPath: _spawnPoint
       value: 

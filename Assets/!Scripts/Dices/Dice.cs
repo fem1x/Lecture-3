@@ -1,5 +1,7 @@
 using System;
 using System.Collections;
+using _Scripts.Configs;
+using _Scripts.Managers;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using VContainer;
@@ -26,6 +28,9 @@ namespace _Scripts.Dices
         [field: SerializeField] public int MaxDurability { get; private set; } = 2;
         public int CurrentDurability { get; private set; }
         
+        [Header("Camera Shake")]
+        [SerializeField] private CameraShakePreset _rollShake;
+        
         [Header("SFX")]
         [SerializeField] private string _lockSfx;
         [SerializeField] private string _throwSfx;
@@ -35,11 +40,13 @@ namespace _Scripts.Dices
         private DiceView _view;
         private Coroutine _stopCoroutine;
         private ISfxPlayer _sfxPlayer;
+        private CameraShaker _cameraShaker;
         
         [Inject]
-        public void Construct(ISfxPlayer sfxPlayer)
+        public void Construct(ISfxPlayer sfxPlayer, CameraShaker cameraShaker)
         {
             _sfxPlayer = sfxPlayer;
+            _cameraShaker = cameraShaker;
         }
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
         public int Value { get; private set; } = -1;
@@ -109,7 +116,9 @@ namespace _Scripts.Dices
             _rb.AddForce(force, ForceMode.Impulse);
             _rb.AddTorque(torque, ForceMode.Impulse);
             
-            _sfxPlayer.Play(_throwSfx, transform.position); //SFX
+            //FX
+            _sfxPlayer.Play(_throwSfx, transform.position); 
+            _cameraShaker.Shake(_rollShake);
         }
         
         #region Face Values
@@ -124,7 +133,7 @@ namespace _Scripts.Dices
             }
         }
 
-        public void ReduceAllValues(int amount = 1)
+        private void ReduceAllValues(int amount = 1)
         {
             foreach (var face in Faces)
                 face.ReduceValue(amount);
@@ -160,7 +169,7 @@ namespace _Scripts.Dices
 
         private void OnCollisionEnter(Collision collision)
         {
-            Vector3 contactPoint = collision.contacts.Length > 0 
+            var contactPoint = collision.contacts.Length > 0 
                 ? collision.contacts[0].point 
                 : transform.position;
             

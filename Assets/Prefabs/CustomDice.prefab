@@ -552,6 +552,7 @@ MonoBehaviour:
     <CurrentValue>k__BackingField: 4
     <Renderer>k__BackingField: {fileID: 6113428230191714263}
   <MaxDurability>k__BackingField: 2
+  _rollShake: {fileID: 11400000, guid: da72b317bc7a4054e95c10871aebca44, type: 2}
   _lockSfx: DiceLock
   _throwSfx: DiceThrow
   _hitSfx: DiceHit

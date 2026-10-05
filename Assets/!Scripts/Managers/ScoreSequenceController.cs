@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using _Scripts.Configs;
 using _Scripts.Dices;
 using _Scripts.Utility;
 using Cysharp.Threading.Tasks;
@@ -25,21 +26,28 @@ namespace _Scripts.Managers
         [SerializeField] private float _pointsMultDuration = 0.5f;
         [SerializeField] private float _pointsAddDuration = 0.15f;
         
+        [Header("Camera & Shake")]
+        [SerializeField] private CameraShakePreset _diceScoreShake;
+        [SerializeField] private CameraShakePreset _multTriggerShake;
+        
         [Header("SFX")]
         [SerializeField] private string _addPointsSfx = "AddPoints";
         [SerializeField] private string _triggerMultSfx = "TriggerMult";
         [SerializeField] private string _addScoreSfx = "AddScore";
         
+        private Vector3 _originalCamPos;
         private ISfxPlayer _sfxPlayer;
         private ScoreManager _scoreManager;
+        private CameraShaker _cameraShaker;
         [Inject]
-        public void Construct(ISfxPlayer sfxPlayer, ScoreManager  scoreManager)
+        public void Construct(ISfxPlayer sfxPlayer, ScoreManager  scoreManager, CameraShaker cameraShaker)
         {
             _sfxPlayer = sfxPlayer;
             _scoreManager = scoreManager;
+            _cameraShaker = cameraShaker;
         }
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
-
+        
         public async UniTask PlaySequenceAsync(List<Dice> dices, ScoreCalculationResult scoreResult)
         {
             var currentPoints = await AddPointsAsync(dices, scoreResult.Data.BasePoints);
@@ -81,14 +89,22 @@ namespace _Scripts.Managers
         {
             DoScalePopTween(dice.transform);
             DoScalePopTween(_pointsText.transform, 1.8f);
+            _cameraShaker.Shake(_diceScoreShake);
             _sfxPlayer?.Play(_addPointsSfx, dice.transform.position);
         }
 
         private void PlayMultTriggerFx()
         {
-            DoScalePopTween(_multText.transform, outTime: _pointsMultDuration);
+            DoScalePopTween(_multText.transform, 3f, outTime: _pointsMultDuration);
             DoScalePopTween(_pointsText.transform, 3f, outTime: _pointsMultDuration);
+            _cameraShaker.Shake(_multTriggerShake);
             _sfxPlayer?.Play(_triggerMultSfx);
+        }
+                
+        private void ApplyFinalScore(int totalScore)
+        {
+            _scoreManager.AddScore(totalScore);
+            _sfxPlayer?.Play(_addScoreSfx);
         }
 
         private void DoScalePopTween(Transform target, float scaleMult = 1.5f, float inTime = 0.07f, float outTime = 0.35f)
@@ -118,12 +134,6 @@ namespace _Scripts.Managers
                 .ToUniTask();
 
             text.text = toValue.ToString();
-        }
-        
-        private void ApplyFinalScore(int totalScore)
-        {
-            _scoreManager.AddScore(totalScore);
-            _sfxPlayer?.Play(_addScoreSfx);
         }
     }
 }

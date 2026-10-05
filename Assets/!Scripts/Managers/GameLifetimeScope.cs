@@ -22,6 +22,7 @@ public class GameLifetimeScope : LifetimeScope
     [SerializeField] SfxConfig _sfxConfig;
     
     [Header("Scene")]
+    [SerializeField] private Camera _mainCamera;
     [SerializeField] private TurnFlowController _turnFlowController;
     [SerializeField] private DiceTableController _diceTableController;
     [SerializeField] private DiceSpawnPoint _spawnPoint;
@@ -48,6 +49,7 @@ public class GameLifetimeScope : LifetimeScope
     private void RegisterServices(IContainerBuilder builder)
     {
         //Scene objects
+        builder.RegisterComponent(_mainCamera);
         builder.RegisterComponent(_spawnPoint);
         builder.RegisterComponent(_diceTableController);
         builder.RegisterComponent(_turnFlowController);
@@ -56,6 +58,7 @@ public class GameLifetimeScope : LifetimeScope
         
         //C# classes
         builder.Register<SfxPlayer>(Lifetime.Singleton).As<ISfxPlayer>();
+        builder.Register<CameraShaker>(Lifetime.Singleton).AsSelf().AsImplementedInterfaces();
         builder.Register<ResourceManager>(Lifetime.Singleton);
         builder.Register<DiceSpawner>(Lifetime.Singleton);
         builder.Register<DiceRoller>(Lifetime.Singleton);
