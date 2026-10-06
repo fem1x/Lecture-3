@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.UI;
 using VContainer;
 
@@ -7,7 +8,7 @@ namespace _Scripts.UI
     public class CombinationsInfoView : MonoBehaviour
     {
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
-        [SerializeField] private Button _button;
+        [SerializeField] private List<Button> _buttons;
         [SerializeField] private GameObject _infoPanel;
         
         private AudioFilterController _audioFilterController;
@@ -19,12 +20,21 @@ namespace _Scripts.UI
         }
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
         
-        private void OnEnable() => _button.onClick.AddListener(HandleClick);
-        private void OnDisable() => _button.onClick.RemoveListener(HandleClick);
+        private void OnEnable()
+        {
+            foreach (var button in _buttons)
+                button.onClick.AddListener(HandleClick);
+        }
+
+        private void OnDisable()
+        {
+            foreach (var button in _buttons)
+                button.onClick.RemoveListener(HandleClick);
+        }  
         
         private void HandleClick()
         {
-            bool isActive = _infoPanel.activeSelf;
+            var isActive = _infoPanel.activeSelf;
             _infoPanel.SetActive(!isActive);
             
             _audioFilterController.ToggleFilter(!isActive);
