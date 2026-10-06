@@ -30,7 +30,7 @@ MonoBehaviour:
       - {fileID: 8300000, guid: b89fc26f2fbc3b744948e478b4bc800d, type: 3}
       volume: 1
       pitch: 1
-    volume: 0.6
+    volume: 0.7
     pitch: 1
     pitchRandomize: 0.1
     is3D: 1
@@ -54,7 +54,7 @@ MonoBehaviour:
       - {fileID: 8300000, guid: f19f5e45f4b37b1479f09ddd5e10156e, type: 3}
       volume: 1
       pitch: 1
-    volume: 0.7
+    volume: 0.75
     pitch: 1
     pitchRandomize: 0.1
     is3D: 1
@@ -107,7 +107,7 @@ MonoBehaviour:
       - {fileID: 8300000, guid: 1006dc6543d3bbc48b0e4092ee8fb578, type: 3}
       volume: 1
       pitch: 1
-    volume: 0.4
+    volume: 0.34
     pitch: 0.55
     pitchRandomize: 0.06
     is3D: 0
@@ -159,6 +159,21 @@ MonoBehaviour:
     isLooped: 0
     audioMixer: {fileID: -9158774617749725478, guid: 1470a324304038b4ab0db292ebdfc379, type: 2}
     source: {fileID: 0}
+  - name: Repair
+    layers:
+    - clips:
+      - {fileID: 8300000, guid: c96e8018bc26a6a4ea38803bfe7c1d2e, type: 3}
+      volume: 1
+      pitch: 1
+    volume: 1
+    pitch: 0.82
+    pitchRandomize: 0.12
+    is3D: 0
+    useGlobalSpatialBlend: 0
+    customSpatialBlend: 0
+    isLooped: 0
+    audioMixer: {fileID: -9158774617749725478, guid: 1470a324304038b4ab0db292ebdfc379, type: 2}
+    source: {fileID: 0}
   - name: AddScore
     layers:
     - clips:
@@ -170,6 +185,21 @@ MonoBehaviour:
       volume: 1
       pitch: 1
     volume: 0.3
+    pitch: 1
+    pitchRandomize: 0.1
+    is3D: 0
+    useGlobalSpatialBlend: 0
+    customSpatialBlend: 0
+    isLooped: 0
+    audioMixer: {fileID: -9158774617749725478, guid: 1470a324304038b4ab0db292ebdfc379, type: 2}
+    source: {fileID: 0}
+  - name: DiceFaceFlip
+    layers:
+    - clips:
+      - {fileID: 8300000, guid: 41022e6d0c6027846a487f41503e71fa, type: 3}
+      volume: 1
+      pitch: 1
+    volume: 0.4
     pitch: 1
     pitchRandomize: 0.1
     is3D: 0

@@ -4,6 +4,7 @@ using DG.Tweening;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using VContainer;
 
 namespace _Scripts.UI
 {
@@ -46,6 +47,13 @@ namespace _Scripts.UI
         [SerializeField] private DiceRepairView _repairView;
         
         private IReadOnlyDiceData _data;
+        private ISfxPlayer _sfxPlayer;
+
+        [Inject]
+        public void Construct(ISfxPlayer sfxPlayer)
+        {
+            _sfxPlayer = sfxPlayer;
+        }
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
         public void SetRepairMode(bool enable) => _repairView.SetRepairMode(enable);
         
@@ -114,7 +122,8 @@ namespace _Scripts.UI
         {
             if (oldValue == newValue) return;
             _flipTween?.Kill();
-
+            _sfxPlayer.Play("DiceFaceFlip");
+            
             var nextSprite = GetFaceSprite(newValue);
             var halfTime = _flipDuration * 0.5f;
 
