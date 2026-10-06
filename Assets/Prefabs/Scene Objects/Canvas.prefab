@@ -518,8 +518,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 54.3
-  m_fontSizeBase: 54.3
+  m_fontSize: 48
+  m_fontSizeBase: 48
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -866,9 +866,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1687509680728226550}
   - component: {fileID: 8454157392821586241}
-  - component: {fileID: 2022914212036398524}
   - component: {fileID: 4186806446606389984}
   - component: {fileID: 3125383744641823782}
+  - component: {fileID: 2022914212036398524}
   m_Layer: 5
   m_Name: (Group) LevelCompleted
   m_TagString: Untagged
@@ -904,28 +904,10 @@ CanvasGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 840940749852178367}
   m_Enabled: 1
-  m_Alpha: 1
+  m_Alpha: 0
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
---- !u!114 &2022914212036398524
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 840940749852178367}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b89988641b82e744ea137157d6ad36f7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: '::'
-  _nextLevelButton: {fileID: 8983426972828261233}
-  _windowRect: {fileID: 4840268356636953240}
-  _diceSlotRect: {fileID: 8099652095551078412}
-  _animationDuration: 0.8
-  _hiddenOffsetY: -1000
-  _ease: 27
 --- !u!222 &4186806446606389984
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -964,6 +946,25 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &2022914212036398524
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 840940749852178367}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b89988641b82e744ea137157d6ad36f7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
+  _nextLevelButton: {fileID: 8983426972828261233}
+  _windowRect: {fileID: 4840268356636953240}
+  _diceSlotRect: {fileID: 8099652095551078412}
+  _animationDuration: 1.35
+  _hiddenOffsetY: -1000
+  _ease: 19
+  _buttonFadeDuration: 0.3
 --- !u!1 &1002073715224627077
 GameObject:
   m_ObjectHideFlags: 0
@@ -4565,8 +4566,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 54.3
-  m_fontSizeBase: 54.3
+  m_fontSize: 48
+  m_fontSizeBase: 48
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -6068,7 +6069,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 133.81, y: 100}
+  m_SizeDelta: {x: 160.78, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7242038489021686296
 CanvasRenderer:
@@ -6125,8 +6126,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 54.3
-  m_fontSizeBase: 54.3
+  m_fontSize: 48
+  m_fontSizeBase: 48
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18

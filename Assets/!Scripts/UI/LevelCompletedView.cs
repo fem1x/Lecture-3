@@ -1,6 +1,8 @@
 using System;
+using System.Threading;
 using _Scripts.Managers;
 using _Scripts.UI;
+using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
@@ -19,6 +21,8 @@ public class LevelCompletedView : MonoBehaviour
     [SerializeField] private float _animationDuration = 0.35f;
     [SerializeField] private float _hiddenOffsetY = -1000f;
     [SerializeField] private Ease _ease = Ease.OutBack;
+    [Space]
+    [SerializeField] private float  _buttonFadeDuration = 0.5f;
     
     private CanvasGroup _canvasGroup;
     private float _windowShownY;
@@ -28,11 +32,13 @@ public class LevelCompletedView : MonoBehaviour
     #region DI
     private LevelFlowController _levelFlowController;
     private RectTransform _dicePanelRect;
+    private DiceStatePanelView _dicePanelView;
     
     [Inject]
     public void Construct(LevelFlowController levelFlowController, DiceStatePanelView dicePanelView)
     {
         _levelFlowController = levelFlowController;
+        _dicePanelView = dicePanelView;
         _dicePanelRect = dicePanelView.GetComponent<RectTransform>();
     }
     #endregion
@@ -51,48 +57,79 @@ public class LevelCompletedView : MonoBehaviour
 
     private void OnEnable()
     {
-        _levelFlowController.OnLevelCompleted += Show;
-        _nextLevelButton.onClick.AddListener(Hide);
+        _levelFlowController.OnLevelCompleted += HandleLevelCompleted;
+        _nextLevelButton.onClick.AddListener(HandleNextLevelClicked);
     }
 
     private void OnDisable()
     {
-        _levelFlowController.OnLevelCompleted -= Show;
-        _nextLevelButton.onClick.RemoveListener(Hide);
-        transform.DOKill();
+        _levelFlowController.OnLevelCompleted -= HandleLevelCompleted;
+        _nextLevelButton.onClick.RemoveListener(HandleNextLevelClicked);
     }
     
-    private void Show()
+    private void HandleLevelCompleted() => ShowAsync().Forget();
+    private void HandleNextLevelClicked() => HideAsync().Forget();
+    
+    #region Async Methods
+    private async UniTaskVoid ShowAsync()
     {
+        var ct = destroyCancellationToken;
+
         ToggleInteractable(true);
         SetWindowHiddenPosition();
-        AnimateShow();
+
+        await AnimateShowAsync(ct);
+
+        _dicePanelView.SetRepairMode(true);
     }
-    
-    private void Hide()
+
+    private async UniTaskVoid HideAsync()
     {
+        var ct = destroyCancellationToken;
+
         ToggleInteractable(false);
-        AnimateHide();
+        _dicePanelView.SetRepairMode(false);
+
+        await UniTask.Delay(TimeSpan.FromSeconds(_buttonFadeDuration), cancellationToken: ct);
+
+        await AnimateHideAsync(ct);
+
+        _levelFlowController.TryStartNextLevel();
     }
+
+    private async UniTask AnimateShowAsync(CancellationToken ct)
+    {
+        transform.DOKill();
+        
+        await DOTween.Sequence()
+            .SetTarget(transform)
+            .SetUpdate(true)
+            .Join(_canvasGroup.DOFade(1f, _animationDuration * 0.6f).SetEase(_ease))
+            .Join(_windowRect.DOAnchorPosY(_windowShownY, _animationDuration).SetEase(_ease))
+            .Join(_dicePanelRect.DOMove(_dicePanelSlotPos, _animationDuration).SetEase(_ease))
+            .WithCancellation(ct);
+    }
+
+    private async UniTask AnimateHideAsync(CancellationToken ct)
+    {
+        transform.DOKill();
+
+        await DOTween.Sequence()
+            .SetTarget(transform)
+            .SetUpdate(true)
+            .Join(_canvasGroup.DOFade(0f, _animationDuration * 0.6f).SetEase(_ease))
+            .Join(_windowRect.DOAnchorPosY(_windowShownY + _hiddenOffsetY, _animationDuration).SetEase(_ease))
+            .Join(_dicePanelRect.DOMove(_dicePanelDefaultPos, _animationDuration).SetEase(_ease))
+            .WithCancellation(ct);
+    }
+    #endregion
 
     private void HideInstant()
     {
+        _dicePanelView.SetRepairMode(false);
         ToggleInteractable(false);
         SetWindowHiddenPosition();
         _canvasGroup.alpha = 0f;
-    }
-    
-    private void Animate(float targetAlpha, float targetWindowY, Vector3 diceTargetPos, Action onComplete = null)
-    {
-        transform.DOKill();
-
-        DOTween.Sequence()
-            .SetTarget(transform)
-            .SetUpdate(true)
-            .Join(_canvasGroup.DOFade(targetAlpha, _animationDuration * 0.6f).SetEase(_ease))
-            .Join(_windowRect.DOAnchorPosY(targetWindowY, _animationDuration).SetEase(_ease))
-            .Join(_dicePanelRect.DOMove(diceTargetPos, _animationDuration).SetEase(_ease))
-            .OnComplete(() => onComplete?.Invoke());
     }
     
     private void SetWindowHiddenPosition()
@@ -107,8 +144,4 @@ public class LevelCompletedView : MonoBehaviour
         _canvasGroup.blocksRaycasts = active;
         _canvasGroup.interactable = active;
     }
-    
-    private void AnimateShow() => Animate(1f, _windowShownY, _dicePanelSlotPos);
-    private void AnimateHide() => Animate(0f, _windowShownY + _hiddenOffsetY, _dicePanelDefaultPos, 
-        () => _levelFlowController.TryStartNextLevel());
 }

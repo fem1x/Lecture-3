@@ -698,6 +698,9 @@ MonoBehaviour:
   - {fileID: 1222986584, guid: dbc0cc68fa7c2044c83c51ee4d2f198d, type: 3}
   - {fileID: 159158417, guid: dbc0cc68fa7c2044c83c51ee4d2f198d, type: 3}
   - {fileID: -1733069916, guid: dbc0cc68fa7c2044c83c51ee4d2f198d, type: 3}
+  _flipDuration: 0.4
+  _flipEaseIn: 5
+  _flipEaseOut: 27
   _damageText: {fileID: 3646530546435840578}
   _damageIndicator: {fileID: 1919525163747094268}
   _damagedIndicatorColor: {r: 0.50980395, g: 0.10980393, b: 0.20784315, a: 1}
@@ -708,6 +711,7 @@ MonoBehaviour:
   _border: {fileID: 1777604423668417000}
   _selectedBorderColor: {r: 0.50980395, g: 0.10980393, b: 0.20784315, a: 0.6}
   _durabilityView: {fileID: 0}
+  _repairView: {fileID: 473179247197109620}
 --- !u!114 &473179247197109620
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -721,6 +725,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Game::_Scripts.UI.DiceRepairView
   _repairButton: {fileID: 8747934290158801192}
+  _canvasGroup: {fileID: 4989069791772186937}
+  _fadeInDuration: 0.35
+  _fadeOutDuration: 0.15
+  _easeIn: 6
+  _easeOut: 5
 --- !u!1 &9127133691794699000
 GameObject:
   m_ObjectHideFlags: 0
@@ -733,13 +742,14 @@ GameObject:
   - component: {fileID: 1931516707964758629}
   - component: {fileID: 1767864277286431261}
   - component: {fileID: 8747934290158801192}
+  - component: {fileID: 4989069791772186937}
   m_Layer: 5
   m_Name: Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1637956229566809827
 RectTransform:
   m_ObjectHideFlags: 0
@@ -842,3 +852,15 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!225 &4989069791772186937
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9127133691794699000}
+  m_Enabled: 1
+  m_Alpha: 0
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0

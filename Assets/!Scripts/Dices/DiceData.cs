@@ -20,7 +20,7 @@ namespace _Scripts.Dices
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
         public event Action OnDataChanged;
         public event Action<bool> OnLockChanged;
-        public event Action<int> OnValueChanged;
+        public event Action<int, int> OnValueChanged; //oldVal, newVal
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
         public int RolledValue { get; private set; } = -1;
         public bool IsLocked { get; private set; }
@@ -43,9 +43,11 @@ namespace _Scripts.Dices
         public void SetRolledValue(int value)
         {
             if (RolledValue == value) return;
+            
+            var oldValue =  RolledValue;
             RolledValue = value;
             
-            OnValueChanged?.Invoke(value);
+            OnValueChanged?.Invoke(oldValue, value);
             OnDataChanged?.Invoke();
         }
 

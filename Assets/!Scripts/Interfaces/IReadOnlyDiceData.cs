@@ -16,7 +16,7 @@ namespace _Scripts.Interfaces
     
         event Action OnDataChanged;
         event Action<bool> OnLockChanged;
-        event Action<int> OnValueChanged;
+        event Action<int, int> OnValueChanged;
 
         Vector3 GetFaceDirection(int index);
         int GetFaceValue(int index);

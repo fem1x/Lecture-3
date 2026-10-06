@@ -10,10 +10,14 @@ namespace _Scripts.UI
 
         public void InitDiceStateViews(List<Dice> dices)
         {
-            for (int i = 0; i < _diceStateViews.Count; i++)
-            {
+            for (int i = 0; i < dices.Count; i++)
                 _diceStateViews[i].Bind(dices[i].Data);
-            }
+        }
+        
+        public void SetRepairMode(bool enable)
+        {
+            for (int i = 0; i < _diceStateViews.Count; i++)
+                _diceStateViews[i].SetRepairMode(enable);
         }
     }
 }
