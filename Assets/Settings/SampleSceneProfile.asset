@@ -26,16 +26,16 @@ MonoBehaviour:
     m_OverrideState: 1
     m_Value: 0.369
   clamp:
-    m_OverrideState: 0
+    m_OverrideState: 1
     m_Value: 65472
   tint:
-    m_OverrideState: 0
+    m_OverrideState: 1
     m_Value: {r: 1, g: 1, b: 1, a: 1}
   highQualityFiltering:
-    m_OverrideState: 0
+    m_OverrideState: 1
     m_Value: 1
   filter:
-    m_OverrideState: 0
+    m_OverrideState: 1
     m_Value: 0
   downscale:
     m_OverrideState: 0
@@ -44,11 +44,11 @@ MonoBehaviour:
     m_OverrideState: 0
     m_Value: 6
   dirtTexture:
-    m_OverrideState: 0
+    m_OverrideState: 1
     m_Value: {fileID: 0}
     dimension: 1
   dirtIntensity:
-    m_OverrideState: 0
+    m_OverrideState: 1
     m_Value: 14.13
 --- !u!114 &-3357603926938260329
 MonoBehaviour:
@@ -96,6 +96,32 @@ MonoBehaviour:
   - {fileID: -3357603926938260329}
   - {fileID: 7340475007441901409}
   - {fileID: 8911148491004218129}
+  - {fileID: 3790924895618315581}
+--- !u!114 &3790924895618315581
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8cb07a0ad9a92ce46ad64cdec6d8a9ef, type: 3}
+  m_Name: PSXPixelizationVolume
+  m_EditorClassIdentifier: Assembly-CSharp::PSXPixelizationVolume
+  active: 0
+  enabled:
+    m_OverrideState: 1
+    m_Value: 1
+  targetHeight:
+    m_OverrideState: 1
+    m_Value: 1065
+  referenceHeight:
+    m_OverrideState: 0
+    m_Value: 480
+  colorDepth:
+    m_OverrideState: 1
+    m_Value: 9
 --- !u!114 &7340475007441901409
 MonoBehaviour:
   m_ObjectHideFlags: 3
