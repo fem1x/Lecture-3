@@ -22,6 +22,7 @@ public class GameLifetimeScope : LifetimeScope
     [SerializeField] private SfxConfig _sfxConfig;
     [SerializeField] private AudioFilterConfig _audioFilterConfig;
     [SerializeField] private DiceDataConfig _diceDataConfig;
+    [SerializeField] private TokenRewardConfig _tokenRewardConfig;
     
     [Header("Scene")]
     [SerializeField] private Camera _mainCamera;
@@ -50,6 +51,7 @@ public class GameLifetimeScope : LifetimeScope
         builder.RegisterInstance(_sfxConfig);
         builder.RegisterInstance(_audioFilterConfig);
         builder.RegisterInstance(_diceDataConfig);
+        builder.RegisterInstance(_tokenRewardConfig);
     }
     
     private void RegisterServices(IContainerBuilder builder)
@@ -77,6 +79,8 @@ public class GameLifetimeScope : LifetimeScope
         builder.Register<LevelFlowController>(Lifetime.Singleton);
         builder.Register<RepairTokensManager>(Lifetime.Singleton);
         builder.Register<DiceFactory>(Lifetime.Singleton);
+        builder.Register<RewardCalculator>(Lifetime.Singleton);
+        builder.Register<DiceRepairService>(Lifetime.Singleton);
         
         //Entry Point
         builder.RegisterEntryPoint<Bootstrap>();

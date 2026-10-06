@@ -18,6 +18,7 @@ namespace _Scripts.Dices
         public List<Dice> AllDices => _allDices;
         public List<Dice> PendingDices => _pendingDicesToThrow;
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== 
+        public Dice GetDiceById(int id) => _allDices.Find(d => d.Data.Id == id);
         public List<Dice> GetSelectedDices() => _allDices.Where(d => d.Data.IsLocked).ToList();
         public List<Dice> GetUnlockedDices() => _allDices.Where(d => !d.Data.IsLocked).ToList();
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== 

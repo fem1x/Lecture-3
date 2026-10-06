@@ -1,5 +1,6 @@
 using System;
 using System.Threading;
+using _Scripts.Dices;
 using _Scripts.Managers;
 using _Scripts.UI;
 using Cysharp.Threading.Tasks;
@@ -12,6 +13,9 @@ using VContainer;
 public class LevelCompletedView : MonoBehaviour
 {
     // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
+    [Header("View Components")]
+    [SerializeField] private TokenRewardsView _tokenRewardView;
+    
     [Header("UI Elements")]
     [SerializeField] private Button _nextLevelButton;
     [SerializeField] private RectTransform _windowRect;
@@ -67,7 +71,12 @@ public class LevelCompletedView : MonoBehaviour
         _nextLevelButton.onClick.RemoveListener(HandleNextLevelClicked);
     }
     
-    private void HandleLevelCompleted() => ShowAsync().Forget();
+    private void HandleLevelCompleted(TokenRewardData tokenRewardData)
+    {
+        _tokenRewardView.Setup(tokenRewardData);
+        ShowAsync().Forget();
+    }
+
     private void HandleNextLevelClicked() => HideAsync().Forget();
     
     #region Async Methods

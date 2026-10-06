@@ -1,0 +1,39 @@
+﻿using _Scripts.Dices;
+using _Scripts.Interfaces;
+using VContainer;
+
+namespace _Scripts.Managers
+{
+    public class DiceRepairService
+    {
+        // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
+        private const int RepairCost = 1;
+        
+        private readonly RepairTokensManager _tokensManager;
+        private readonly DiceTableController _tableController;
+        
+        [Inject]
+        public DiceRepairService(RepairTokensManager tokensManager, DiceTableController tableController)
+        {
+            _tokensManager = tokensManager;
+            _tableController = tableController;
+        }
+        // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
+        
+        public bool CanRepair(IReadOnlyDiceData dice) => dice.IsDamaged && _tokensManager.CurrentTokens >= RepairCost;
+
+        public bool TryRepair(IReadOnlyDiceData dice)
+        {
+            if (!CanRepair(dice)) 
+                return false;
+
+            if (!_tokensManager.TrySpendTokens(RepairCost)) 
+                return false;
+
+            var targetDice = _tableController.GetDiceById(dice.Id);
+            targetDice.Data.Repair();
+
+            return true;
+        }
+    }
+}

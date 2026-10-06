@@ -10,6 +10,7 @@ namespace _Scripts.UI
     public class DiceRepairView : MonoBehaviour
     {
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
+        [Header("Button")]
         [SerializeField] private Button _repairButton;
         [SerializeField] private CanvasGroup _canvasGroup;
         
@@ -22,6 +23,13 @@ namespace _Scripts.UI
         private Tween _fadeTween;
         private bool _repairModeEnabled;
         private IReadOnlyDiceData _data;
+        private DiceRepairService _repairService;
+
+        [Inject]
+        public void Construct(DiceRepairService repairService)
+        {
+            _repairService = repairService;
+        }
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
         
         private void Awake()
@@ -89,7 +97,7 @@ namespace _Scripts.UI
         
         private void OnRepairClicked()
         {
-            Debug.Log("OnRepairClicked");
+            _repairService.TryRepair(_data);
         }
     }
 }

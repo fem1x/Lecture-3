@@ -16,9 +16,7 @@ namespace _Scripts.Dices
         [Header("LiftUp Animation")]
         [SerializeField] private float _liftHeight = 1.2f;
         [SerializeField] private float _liftTime = 0.25f;
-        [SerializeField] private float _dropTime = 0.25f;
         [SerializeField] private Ease _liftEase = Ease.OutBack;
-        [SerializeField] private Ease _dropEase = Ease.InQuad;
         
         private IReadOnlyDiceData _data;
 
