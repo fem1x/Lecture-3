@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 6339257985846928375}
   - component: {fileID: 2747412535313291137}
   - component: {fileID: 6034356491941001058}
-  - component: {fileID: 7362415894939190668}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -155,48 +154,3 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 4294967295
   m_MaxRayIntersections: 0
---- !u!114 &7362415894939190668
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 137004927949487285}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 86832f84a0cf34eb9b89129d49b7a15e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::BrewedInk.CRT.CRTCameraBehaviour
-  startConfig: {fileID: 11400000, guid: cc1fa106315fc44d0a167ce7d166cb64, type: 2}
-  crtRenderSettings: {fileID: 11400000, guid: 2d929546960894d169f1999a321e4ff4, type: 2}
-  _runtimeMaterial: {fileID: 0}
-  data:
-    pixelationAmount: 0
-    maxColorChannels:
-      red: 0
-      green: 0
-      blue: 0
-      greyScale: 1
-    dithering4: 0
-    dithering8: 0
-    vignette: 0.1
-    innerCurve: 20
-    monitorCurve: 0.1
-    monitorInnerSize:
-      width: 0
-      height: 0
-    monitorOutterSize:
-      width: 0.1
-      height: 0.1
-    zoom: 1.25
-    monitorRoundness: 0.2
-    monitorTexture: {fileID: 0}
-    monitorColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
-    innerMonitorDarkness: 0.6
-    innerMonitorShine: 0.1
-    colorScans:
-      greenChannelMultiplier: 0.1
-      redBlueChannelMultiplier: 0.15
-      sizeMultiplier: 2
-    innerMonitorShineRadius: -0.087
-    innerMonitorShineCurve: 10

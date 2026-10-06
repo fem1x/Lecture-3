@@ -247,7 +247,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Five of a kind
+  m_text: Description
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 6cb24a902fe7ce046bdfdc9be2cc3fbf, type: 2}
   m_sharedMaterial: {fileID: -7087541939783082960, guid: 6cb24a902fe7ce046bdfdc9be2cc3fbf, type: 2}
@@ -405,6 +405,7 @@ GameObject:
   - component: {fileID: 8430069303479839931}
   - component: {fileID: 4256274525818252596}
   - component: {fileID: 1667117718460708657}
+  - component: {fileID: 6548197973692428822}
   m_Layer: 5
   m_Name: (Panel) ComboInfo
   m_TagString: Untagged
@@ -431,8 +432,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0.000030517578, y: -131.20526}
-  m_SizeDelta: {x: -267.2, y: 227.2001}
+  m_AnchoredPosition: {x: 0, y: -131.20526}
+  m_SizeDelta: {x: -1589, y: 227.2001}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!222 &4256274525818252596
 CanvasRenderer:
@@ -472,6 +473,31 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 15
+--- !u!114 &6548197973692428822
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1659124761256484609}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d8fb974936340489da73880e2f33281, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Game::_Scripts.UI.CombinationDisplayInfoView
+  _combinationType: 13
+  _titleText: {fileID: 4483459938983022935}
+  _descriptionText: {fileID: 8147525963426283630}
+  _pointsText: {fileID: 4340283239940222873}
+  _multiplierText: {fileID: 9204074649052702950}
+  _diceSlots:
+  - {fileID: 205907042079886233}
+  - {fileID: 483563734421707797}
+  - {fileID: 2749039537064832013}
+  - {fileID: 1099406360417112456}
+  - {fileID: 5664132809042906005}
+  _diceAtlasConfig: {fileID: 11400000, guid: d803b0c485b066b43bf56523d798cbf3, type: 2}
+  _switchInterval: 1.6
 --- !u!1 &2366237892278699202
 GameObject:
   m_ObjectHideFlags: 0
@@ -750,7 +776,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Singularity
+  m_text: Name
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 6cb24a902fe7ce046bdfdc9be2cc3fbf, type: 2}
   m_sharedMaterial: {fileID: -7087541939783082960, guid: 6cb24a902fe7ce046bdfdc9be2cc3fbf, type: 2}
@@ -994,8 +1020,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 47.27867, y: 0}
-  m_SizeDelta: {x: 62.0041, y: 31.1704}
+  m_AnchoredPosition: {x: 49.875717, y: 0}
+  m_SizeDelta: {x: 65.41, y: 31.1704}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2121407725052538843
 CanvasRenderer:
@@ -1025,7 +1051,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
+  m_Sprite: {fileID: 21300000, guid: d2a579dbfe8beb646825de0311157521, type: 3}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1034,7 +1060,7 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
+  m_PixelsPerUnitMultiplier: 18
 --- !u!1 &5241878815276384428
 GameObject:
   m_ObjectHideFlags: 0
@@ -1070,8 +1096,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -47.2787, y: 0}
-  m_SizeDelta: {x: 62.0041, y: 31.1704}
+  m_AnchoredPosition: {x: -49.875748, y: 0}
+  m_SizeDelta: {x: 65.41, y: 31.1704}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4491387725586806704
 CanvasRenderer:
@@ -1101,7 +1127,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
+  m_Sprite: {fileID: 21300000, guid: d2a579dbfe8beb646825de0311157521, type: 3}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1110,7 +1136,7 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
+  m_PixelsPerUnitMultiplier: 18
 --- !u!1 &7181590737282267225
 GameObject:
   m_ObjectHideFlags: 0

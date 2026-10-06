@@ -23,6 +23,7 @@ public class GameLifetimeScope : LifetimeScope
     [SerializeField] private AudioFilterConfig _audioFilterConfig;
     [SerializeField] private DiceDataConfig _diceDataConfig;
     [SerializeField] private TokenRewardConfig _tokenRewardConfig;
+    [SerializeField] private CombinationDisplayInfoConfig _combinationDisplayInfoConfig;
     
     [Header("Scene")]
     [SerializeField] private Camera _mainCamera;
@@ -52,6 +53,7 @@ public class GameLifetimeScope : LifetimeScope
         builder.RegisterInstance(_audioFilterConfig);
         builder.RegisterInstance(_diceDataConfig);
         builder.RegisterInstance(_tokenRewardConfig);
+        builder.RegisterInstance(_combinationDisplayInfoConfig);
     }
     
     private void RegisterServices(IContainerBuilder builder)
