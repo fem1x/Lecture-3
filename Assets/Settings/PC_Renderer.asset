@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c5299d9da47f20448bc46cdec13a445, type: 3}
   m_Name: PSXPixelizationFeature
   m_EditorClassIdentifier: Assembly-CSharp::PSXPixelizationFeature
-  m_Active: 1
+  m_Active: 0
   shader: {fileID: 4800000, guid: c0f199466155a6f40922c1e0ac53a436, type: 3}
 --- !u!114 &11400000
 MonoBehaviour:

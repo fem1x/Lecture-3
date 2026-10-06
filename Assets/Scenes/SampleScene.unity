@@ -2192,6 +2192,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6829353468534605691, guid: ef5db77786d12194d88cb266471c1bf9, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -44.600098
+      objectReference: {fileID: 0}
     - target: {fileID: 6865218201150877973, guid: ef5db77786d12194d88cb266471c1bf9, type: 3}
       propertyPath: m_AnchorMax.y
       value: 1
@@ -3165,6 +3169,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6321381378202643802, guid: 2a33b02142ef7bd4fb018e49fc83bc3c, type: 3}
+      propertyPath: priority
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6321381378202643802, guid: 2a33b02142ef7bd4fb018e49fc83bc3c, type: 3}
+      propertyPath: sharedProfile
+      value: 
+      objectReference: {fileID: 11400000, guid: 10fc4df2da32a41aaa32d77bc913491c, type: 2}
     - target: {fileID: 6337980910089055406, guid: 2a33b02142ef7bd4fb018e49fc83bc3c, type: 3}
       propertyPath: m_Name
       value: Global Volume
