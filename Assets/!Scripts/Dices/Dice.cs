@@ -126,7 +126,7 @@ namespace _Scripts.Dices
                 Data.SetRolledValue(Data.GetFaceValue(bestFaceIndex));
             }
         }
-
+        
         private void OnCollisionEnter(Collision collision)
         {
             var contactPoint = collision.contacts.Length > 0 

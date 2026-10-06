@@ -557,11 +557,11 @@ MonoBehaviour:
   - {fileID: 1222986584, guid: dbc0cc68fa7c2044c83c51ee4d2f198d, type: 3}
   - {fileID: 159158417, guid: dbc0cc68fa7c2044c83c51ee4d2f198d, type: 3}
   - {fileID: -1733069916, guid: dbc0cc68fa7c2044c83c51ee4d2f198d, type: 3}
-  _liftHeight: 0.42
+  _liftHeight: 0.4
   _liftTime: 0.4
-  _dropTime: 0.2
-  _liftEase: 27
-  _dropEase: 5
+  _dropTime: 0.6
+  _liftEase: 18
+  _dropEase: 30
 --- !u!114 &4167485140798006902
 MonoBehaviour:
   m_ObjectHideFlags: 0

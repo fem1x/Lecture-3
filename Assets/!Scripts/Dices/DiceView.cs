@@ -16,7 +16,9 @@ namespace _Scripts.Dices
         [Header("LiftUp Animation")]
         [SerializeField] private float _liftHeight = 1.2f;
         [SerializeField] private float _liftTime = 0.25f;
+        [SerializeField] private float _dropTime = 0.4f;
         [SerializeField] private Ease _liftEase = Ease.OutBack;
+        [SerializeField] private Ease _dropEase = Ease.OutBack;
         
         private IReadOnlyDiceData _data;
 
@@ -97,10 +99,20 @@ namespace _Scripts.Dices
         
         private void DoDropTween()
         {
-            _rb.isKinematic = false;
-            _rb.linearVelocity = Vector3.zero;
-            _rb.angularVelocity = Vector3.zero;
-            _floorY = -999f;
+            if (_floorY == -999f)
+            {
+                _rb.isKinematic = false;
+                return;
+            }
+
+            _moveTween = transform.DOMoveY(_floorY, _dropTime).SetEase(_dropEase)
+                .OnComplete(() =>
+                {
+                    _rb.isKinematic = false;
+                    _rb.linearVelocity = Vector3.zero;
+                    _rb.angularVelocity = Vector3.zero;
+                    _floorY = -999f;
+                });
         }
     }
 }
