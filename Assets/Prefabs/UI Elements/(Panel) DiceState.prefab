@@ -703,8 +703,8 @@ MonoBehaviour:
   _flipEaseOut: 27
   _damageText: {fileID: 3646530546435840578}
   _damageIndicator: {fileID: 1919525163747094268}
-  _damagedIndicatorColor: {r: 0.50980395, g: 0.10980393, b: 0.20784315, a: 1}
-  _damagedTextColor: {r: 0.65882355, g: 0.36078432, b: 0.3254902, a: 1}
+  _damagedIndicatorColor: {r: 0.3529412, g: 0.23529413, b: 0.43921572, a: 1}
+  _damagedTextColor: {r: 0.8235295, g: 0.6901961, b: 0.92549026, a: 1}
   _notDamagedIndicatorColor: {r: 0.3529412, g: 0.23529413, b: 0.43921572, a: 1}
   _notDamagedTextColor: {r: 0.8235295, g: 0.6901961, b: 0.92549026, a: 1}
   _hideUndamagedIndicator: 1

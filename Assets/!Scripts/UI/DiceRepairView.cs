@@ -34,10 +34,10 @@ namespace _Scripts.UI
         {
             _data = data;
             
-            _data.OnDataChanged += RefreshButtonState;
+            _data.OnDataChanged += RefreshState;
             _repairButton.onClick.AddListener(OnRepairClicked);
-            
-            RefreshButtonState();
+
+            RefreshStateInstant();
         }
 
         private void OnDestroy()
@@ -46,30 +46,43 @@ namespace _Scripts.UI
             _repairButton.onClick.RemoveListener(OnRepairClicked);
             
             if (_data == null) return;
-            _data.OnDataChanged -= RefreshButtonState;
+            _data.OnDataChanged -= RefreshState;
         }
         
         public void SetRepairMode(bool enable)
         {
             _repairModeEnabled = enable;
-            _canvasGroup.blocksRaycasts = enable;
-            DoFadeTween(enable);
-            RefreshButtonState();
+            RefreshState();
         }
         
-        private void RefreshButtonState()
+        private void RefreshState()
         {
             if (_data == null) return;
-            
-            var canRepair = _repairModeEnabled && _data.IsDamaged;
-            _repairButton.interactable = canRepair;
+
+            var shouldShow = _repairModeEnabled && _data.IsDamaged;
+
+            _canvasGroup.blocksRaycasts = shouldShow;
+            _repairButton.interactable = shouldShow;
+
+            DoFadeTween(shouldShow);
+        }
+        
+        private void RefreshStateInstant()
+        {
+            if (_data == null) return;
+
+            var shouldShow = _repairModeEnabled && _data.IsDamaged;
+            _canvasGroup.blocksRaycasts = shouldShow;
+            _repairButton.interactable = shouldShow;
+            _canvasGroup.alpha = shouldShow ? 1f : 0f;
         }
 
-        private void DoFadeTween(bool enable)
+        private void DoFadeTween(bool show)
         {
-            var duration =  enable ? _fadeInDuration : _fadeOutDuration;
-            var ease = enable ? _easeIn : _easeOut;
-            var targetAlpha = enable ? 1f : 0f;
+            var targetAlpha = show ? 1f : 0f;
+            var duration = show ? _fadeInDuration : _fadeOutDuration;
+            var ease = show ? _easeIn : _easeOut;
+
             _fadeTween?.Kill();
             _fadeTween = _canvasGroup.DOFade(targetAlpha, duration).SetEase(ease);
         }
