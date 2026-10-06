@@ -75,9 +75,7 @@ namespace _Scripts.UI
         private void RefreshAll()
         {
             RefreshDamage();
-            
-            if(_durabilityView != null)
-                RefreshDurability();
+            RefreshDurability();
         }
 
         private void RefreshBorder(bool isLocked)

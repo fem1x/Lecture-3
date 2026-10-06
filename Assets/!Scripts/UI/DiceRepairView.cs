@@ -67,7 +67,7 @@ namespace _Scripts.UI
         {
             if (_data == null) return;
 
-            var shouldShow = _repairModeEnabled && _data.IsDamaged;
+            var shouldShow = _repairModeEnabled && (_data.IsDamaged || _data.CurrentDurability < _data.MaxDurability);
 
             _canvasGroup.blocksRaycasts = shouldShow;
             _repairButton.interactable = shouldShow;

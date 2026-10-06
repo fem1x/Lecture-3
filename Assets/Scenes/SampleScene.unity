@@ -119,27 +119,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1 &98613311 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4404551446044221145, guid: ef5db77786d12194d88cb266471c1bf9, type: 3}
-  m_PrefabInstance: {fileID: 4271278360673963976}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &98613315
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 98613311}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4c71edbe2bf145b6b598e3aa404d51d8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Game::_Scripts.UI.TokenRewardsView
-  _totalTokensText: {fileID: 1610034022}
-  _levelTokensText: {fileID: 2049527575}
-  _throwsTokensText: {fileID: 1921884209}
-  _rerollsTokensText: {fileID: 1191535207}
 --- !u!1001 &154796023
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -277,24 +256,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de4a7f2dcc5469546856f184a217773a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DiceRoller
---- !u!1 &916628795 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5778626375705521203, guid: ef5db77786d12194d88cb266471c1bf9, type: 3}
-  m_PrefabInstance: {fileID: 4271278360673963976}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &916628799
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 916628795}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d8ae49fe88e34dcba665d89aa860b5c4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Game::_Scripts.UI.DiceRepairPanelView
-  _tokensText: {fileID: 2046819668}
 --- !u!1 &1016076069
 GameObject:
   m_ObjectHideFlags: 0
@@ -368,17 +329,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1191535207 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6128467020769937903, guid: ef5db77786d12194d88cb266471c1bf9, type: 3}
-  m_PrefabInstance: {fileID: 4271278360673963976}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
 --- !u!114 &1210550386 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 9081301751334483646, guid: ef5db77786d12194d88cb266471c1bf9, type: 3}
@@ -437,17 +387,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1610034022 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 842958843862932143, guid: ef5db77786d12194d88cb266471c1bf9, type: 3}
-  m_PrefabInstance: {fileID: 4271278360673963976}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
 --- !u!114 &1623856351 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2453093264133501066, guid: 2f54132be6a220340b1fd142ad8b928b, type: 3}
@@ -470,17 +409,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 936410687bfe4475ae1bc0b723da6f02, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Game::_Scripts.UI.CombinationsPanelView
---- !u!114 &1921884209 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2806475306344266598, guid: ef5db77786d12194d88cb266471c1bf9, type: 3}
-  m_PrefabInstance: {fileID: 4271278360673963976}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
 --- !u!114 &1950779564 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6168002809383655841, guid: 0dd24c35042c3644d9fdb11ea52633a5, type: 3}
@@ -492,28 +420,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c01c7d50a2214afa9dff871a3191fd0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Game::_Scripts.Managers.RoundFlowController
---- !u!114 &2046819668 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4260294070743936137, guid: ef5db77786d12194d88cb266471c1bf9, type: 3}
-  m_PrefabInstance: {fileID: 4271278360673963976}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
---- !u!114 &2049527575 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5779130396741386372, guid: ef5db77786d12194d88cb266471c1bf9, type: 3}
-  m_PrefabInstance: {fileID: 4271278360673963976}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
 --- !u!1001 &1682329959264441802
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -757,42 +663,6 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1390938681916950801, guid: ef5db77786d12194d88cb266471c1bf9, type: 3}
-      propertyPath: _damagedTextColor.b
-      value: 0.92549026
-      objectReference: {fileID: 0}
-    - target: {fileID: 1390938681916950801, guid: ef5db77786d12194d88cb266471c1bf9, type: 3}
-      propertyPath: _damagedTextColor.g
-      value: 0.6901961
-      objectReference: {fileID: 0}
-    - target: {fileID: 1390938681916950801, guid: ef5db77786d12194d88cb266471c1bf9, type: 3}
-      propertyPath: _damagedTextColor.r
-      value: 0.8235295
-      objectReference: {fileID: 0}
-    - target: {fileID: 2022914212036398524, guid: ef5db77786d12194d88cb266471c1bf9, type: 3}
-      propertyPath: _tokenRewardView
-      value: 
-      objectReference: {fileID: 98613315}
-    - target: {fileID: 2022914212036398524, guid: ef5db77786d12194d88cb266471c1bf9, type: 3}
-      propertyPath: _buttonFadeDuration
-      value: 0.19
-      objectReference: {fileID: 0}
-    - target: {fileID: 2022914212036398524, guid: ef5db77786d12194d88cb266471c1bf9, type: 3}
-      propertyPath: _diceRepairPanelView
-      value: 
-      objectReference: {fileID: 916628799}
-    - target: {fileID: 2052355474484172323, guid: ef5db77786d12194d88cb266471c1bf9, type: 3}
-      propertyPath: _damagedTextColor.b
-      value: 0.92549026
-      objectReference: {fileID: 0}
-    - target: {fileID: 2052355474484172323, guid: ef5db77786d12194d88cb266471c1bf9, type: 3}
-      propertyPath: _damagedTextColor.g
-      value: 0.6901961
-      objectReference: {fileID: 0}
-    - target: {fileID: 2052355474484172323, guid: ef5db77786d12194d88cb266471c1bf9, type: 3}
-      propertyPath: _damagedTextColor.r
-      value: 0.8235295
-      objectReference: {fileID: 0}
     - target: {fileID: 2203303356690883747, guid: ef5db77786d12194d88cb266471c1bf9, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -808,10 +678,6 @@ PrefabInstance:
     - target: {fileID: 2203303356690883747, guid: ef5db77786d12194d88cb266471c1bf9, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2212219870920782391, guid: ef5db77786d12194d88cb266471c1bf9, type: 3}
-      propertyPath: m_text
-      value: '- Rerolls:'
       objectReference: {fileID: 0}
     - target: {fileID: 3116011503775825972, guid: ef5db77786d12194d88cb266471c1bf9, type: 3}
       propertyPath: m_AnchorMax.y
@@ -860,22 +726,6 @@ PrefabInstance:
     - target: {fileID: 3232709419886374647, guid: ef5db77786d12194d88cb266471c1bf9, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3455516593379574946, guid: ef5db77786d12194d88cb266471c1bf9, type: 3}
-      propertyPath: m_text
-      value: '- Throws:'
-      objectReference: {fileID: 0}
-    - target: {fileID: 5064590974149680161, guid: ef5db77786d12194d88cb266471c1bf9, type: 3}
-      propertyPath: _damagedTextColor.b
-      value: 0.92549026
-      objectReference: {fileID: 0}
-    - target: {fileID: 5064590974149680161, guid: ef5db77786d12194d88cb266471c1bf9, type: 3}
-      propertyPath: _damagedTextColor.g
-      value: 0.6901961
-      objectReference: {fileID: 0}
-    - target: {fileID: 5064590974149680161, guid: ef5db77786d12194d88cb266471c1bf9, type: 3}
-      propertyPath: _damagedTextColor.r
-      value: 0.8235295
       objectReference: {fileID: 0}
     - target: {fileID: 5082593826032390721, guid: ef5db77786d12194d88cb266471c1bf9, type: 3}
       propertyPath: m_Name
@@ -929,33 +779,9 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8025148637190323791, guid: ef5db77786d12194d88cb266471c1bf9, type: 3}
-      propertyPath: _damagedTextColor.b
-      value: 0.92549026
-      objectReference: {fileID: 0}
-    - target: {fileID: 8025148637190323791, guid: ef5db77786d12194d88cb266471c1bf9, type: 3}
-      propertyPath: _damagedTextColor.g
-      value: 0.6901961
-      objectReference: {fileID: 0}
-    - target: {fileID: 8025148637190323791, guid: ef5db77786d12194d88cb266471c1bf9, type: 3}
-      propertyPath: _damagedTextColor.r
-      value: 0.8235295
-      objectReference: {fileID: 0}
-    - target: {fileID: 8137738276999449387, guid: ef5db77786d12194d88cb266471c1bf9, type: 3}
-      propertyPath: _damagedTextColor.b
-      value: 0.92549026
-      objectReference: {fileID: 0}
-    - target: {fileID: 8137738276999449387, guid: ef5db77786d12194d88cb266471c1bf9, type: 3}
-      propertyPath: _damagedTextColor.g
-      value: 0.6901961
-      objectReference: {fileID: 0}
-    - target: {fileID: 8137738276999449387, guid: ef5db77786d12194d88cb266471c1bf9, type: 3}
-      propertyPath: _damagedTextColor.r
-      value: 0.8235295
-      objectReference: {fileID: 0}
     - target: {fileID: 8454157392821586241, guid: ef5db77786d12194d88cb266471c1bf9, type: 3}
       propertyPath: m_Alpha
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8536209048646900500, guid: ef5db77786d12194d88cb266471c1bf9, type: 3}
       propertyPath: m_AnchorMax.y
@@ -1078,16 +904,9 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects:
-    - {fileID: 5051579515730129403, guid: ef5db77786d12194d88cb266471c1bf9, type: 3}
+    m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 4404551446044221145, guid: ef5db77786d12194d88cb266471c1bf9, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 98613315}
-    - targetCorrespondingSourceObject: {fileID: 5778626375705521203, guid: ef5db77786d12194d88cb266471c1bf9, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 916628799}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ef5db77786d12194d88cb266471c1bf9, type: 3}
 --- !u!1001 &5008784099979687408
 PrefabInstance:

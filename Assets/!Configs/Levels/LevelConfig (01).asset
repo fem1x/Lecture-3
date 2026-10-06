@@ -13,3 +13,4 @@ MonoBehaviour:
   m_Name: LevelConfig (01)
   m_EditorClassIdentifier: Game::_Scripts.Configs.LevelConfig
   <ScoreQuota>k__BackingField: 750
+  <TokensReward>k__BackingField: 1

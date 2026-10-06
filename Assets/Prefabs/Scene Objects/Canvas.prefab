@@ -884,7 +884,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   _tokenRewardView: {fileID: 3250978014520610404}
-  _diceRepairPanelView: {fileID: 2036275524936501807}
   _nextLevelButton: {fileID: 8983426972828261233}
   _windowRect: {fileID: 4840268356636953240}
   _diceSlotRect: {fileID: 8099652095551078412}
@@ -6813,22 +6812,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4245702733014173903, guid: 86dc1cdadf3ed6c4e80a98bb15cbd092, type: 3}
-      propertyPath: _damagedTextColor.b
-      value: 0.92549026
-      objectReference: {fileID: 0}
-    - target: {fileID: 4245702733014173903, guid: 86dc1cdadf3ed6c4e80a98bb15cbd092, type: 3}
-      propertyPath: _damagedTextColor.g
-      value: 0.6901961
-      objectReference: {fileID: 0}
-    - target: {fileID: 4245702733014173903, guid: 86dc1cdadf3ed6c4e80a98bb15cbd092, type: 3}
-      propertyPath: _damagedTextColor.r
-      value: 0.8235295
-      objectReference: {fileID: 0}
-    - target: {fileID: 4245702733014173903, guid: 86dc1cdadf3ed6c4e80a98bb15cbd092, type: 3}
-      propertyPath: _hideUndamagedIndicator
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 9013700237388054691, guid: 86dc1cdadf3ed6c4e80a98bb15cbd092, type: 3}
       propertyPath: m_Name
       value: (Panel) DiceState (3)
@@ -6941,22 +6924,6 @@ PrefabInstance:
     - target: {fileID: 3978345065327748477, guid: 86dc1cdadf3ed6c4e80a98bb15cbd092, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4245702733014173903, guid: 86dc1cdadf3ed6c4e80a98bb15cbd092, type: 3}
-      propertyPath: _damagedTextColor.b
-      value: 0.92549026
-      objectReference: {fileID: 0}
-    - target: {fileID: 4245702733014173903, guid: 86dc1cdadf3ed6c4e80a98bb15cbd092, type: 3}
-      propertyPath: _damagedTextColor.g
-      value: 0.6901961
-      objectReference: {fileID: 0}
-    - target: {fileID: 4245702733014173903, guid: 86dc1cdadf3ed6c4e80a98bb15cbd092, type: 3}
-      propertyPath: _damagedTextColor.r
-      value: 0.8235295
-      objectReference: {fileID: 0}
-    - target: {fileID: 4245702733014173903, guid: 86dc1cdadf3ed6c4e80a98bb15cbd092, type: 3}
-      propertyPath: _hideUndamagedIndicator
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 9013700237388054691, guid: 86dc1cdadf3ed6c4e80a98bb15cbd092, type: 3}
       propertyPath: m_Name
@@ -7071,22 +7038,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4245702733014173903, guid: 86dc1cdadf3ed6c4e80a98bb15cbd092, type: 3}
-      propertyPath: _damagedTextColor.b
-      value: 0.92549026
-      objectReference: {fileID: 0}
-    - target: {fileID: 4245702733014173903, guid: 86dc1cdadf3ed6c4e80a98bb15cbd092, type: 3}
-      propertyPath: _damagedTextColor.g
-      value: 0.6901961
-      objectReference: {fileID: 0}
-    - target: {fileID: 4245702733014173903, guid: 86dc1cdadf3ed6c4e80a98bb15cbd092, type: 3}
-      propertyPath: _damagedTextColor.r
-      value: 0.8235295
-      objectReference: {fileID: 0}
-    - target: {fileID: 4245702733014173903, guid: 86dc1cdadf3ed6c4e80a98bb15cbd092, type: 3}
-      propertyPath: _hideUndamagedIndicator
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 9013700237388054691, guid: 86dc1cdadf3ed6c4e80a98bb15cbd092, type: 3}
       propertyPath: m_Name
       value: (Panel) DiceState
@@ -7200,22 +7151,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4245702733014173903, guid: 86dc1cdadf3ed6c4e80a98bb15cbd092, type: 3}
-      propertyPath: _damagedTextColor.b
-      value: 0.92549026
-      objectReference: {fileID: 0}
-    - target: {fileID: 4245702733014173903, guid: 86dc1cdadf3ed6c4e80a98bb15cbd092, type: 3}
-      propertyPath: _damagedTextColor.g
-      value: 0.6901961
-      objectReference: {fileID: 0}
-    - target: {fileID: 4245702733014173903, guid: 86dc1cdadf3ed6c4e80a98bb15cbd092, type: 3}
-      propertyPath: _damagedTextColor.r
-      value: 0.8235295
-      objectReference: {fileID: 0}
-    - target: {fileID: 4245702733014173903, guid: 86dc1cdadf3ed6c4e80a98bb15cbd092, type: 3}
-      propertyPath: _hideUndamagedIndicator
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 9013700237388054691, guid: 86dc1cdadf3ed6c4e80a98bb15cbd092, type: 3}
       propertyPath: m_Name
       value: (Panel) DiceState (4)
@@ -7328,22 +7263,6 @@ PrefabInstance:
     - target: {fileID: 3978345065327748477, guid: 86dc1cdadf3ed6c4e80a98bb15cbd092, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4245702733014173903, guid: 86dc1cdadf3ed6c4e80a98bb15cbd092, type: 3}
-      propertyPath: _damagedTextColor.b
-      value: 0.92549026
-      objectReference: {fileID: 0}
-    - target: {fileID: 4245702733014173903, guid: 86dc1cdadf3ed6c4e80a98bb15cbd092, type: 3}
-      propertyPath: _damagedTextColor.g
-      value: 0.6901961
-      objectReference: {fileID: 0}
-    - target: {fileID: 4245702733014173903, guid: 86dc1cdadf3ed6c4e80a98bb15cbd092, type: 3}
-      propertyPath: _damagedTextColor.r
-      value: 0.8235295
-      objectReference: {fileID: 0}
-    - target: {fileID: 4245702733014173903, guid: 86dc1cdadf3ed6c4e80a98bb15cbd092, type: 3}
-      propertyPath: _hideUndamagedIndicator
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 9013700237388054691, guid: 86dc1cdadf3ed6c4e80a98bb15cbd092, type: 3}
       propertyPath: m_Name
