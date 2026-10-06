@@ -1,1 +1,1 @@
-Билд: https://drive.google.com/drive/folders/1k4mOS1T7zoRLqGRH_IiETEU0nURC9iX8?usp=sharing
+Билд: https://drive.google.com/file/d/1N2djMw4DTAbUPuWj-bqoS2xfoBlxS_Ef/view?usp=sharing
