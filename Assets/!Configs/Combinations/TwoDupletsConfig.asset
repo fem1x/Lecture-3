@@ -1,0 +1,38 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2eecb481ef504d6386ffe034b4ed7202, type: 3}
+  m_Name: TwoDupletsConfig
+  m_EditorClassIdentifier: Game::_Scripts.Combinations.CombinationConfig
+  <Id>k__BackingField: two_duplets
+  <Priority>k__BackingField: 50
+  <DisplayName>k__BackingField: Two Duplets
+  <Description>k__BackingField: Two pairs
+  <Icon>k__BackingField: {fileID: 0}
+  <Patterns>k__BackingField:
+  - Values: 01000000010000000200000002000000
+  - Values: 02000000020000000300000003000000
+  - Values: 03000000030000000400000004000000
+  - Values: 04000000040000000500000005000000
+  - Values: 05000000050000000600000006000000
+  - Values: 01000000010000000600000006000000
+  <BasePoints>k__BackingField: 30
+  <Multiplier>k__BackingField: 4
+  <DiceRefund>k__BackingField: 1
+  <Rule>k__BackingField:
+    rid: 420518290836684889
+  references:
+    version: 2
+    RefIds:
+    - rid: 420518290836684889
+      type: {class: TwoDupletsRule, ns: _Scripts.Combinations.Rules, asm: Game}
+      data:
+        <RequiredDiceCount>k__BackingField: 0

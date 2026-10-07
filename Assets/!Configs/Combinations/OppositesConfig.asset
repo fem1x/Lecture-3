@@ -1,0 +1,40 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2eecb481ef504d6386ffe034b4ed7202, type: 3}
+  m_Name: OppositesConfig
+  m_EditorClassIdentifier: Game::_Scripts.Combinations.CombinationConfig
+  <Id>k__BackingField: opposites
+  <Priority>k__BackingField: 30
+  <DisplayName>k__BackingField: Opposites
+  <Description>k__BackingField: 2 dice sum to 7
+  <Icon>k__BackingField: {fileID: 0}
+  <Patterns>k__BackingField:
+  - Values: 0100000006000000
+  - Values: 0200000005000000
+  - Values: 0300000004000000
+  - Values: 0400000003000000
+  - Values: 0500000002000000
+  - Values: 0600000001000000
+  <BasePoints>k__BackingField: 25
+  <Multiplier>k__BackingField: 2
+  <DiceRefund>k__BackingField: 0
+  <Rule>k__BackingField:
+    rid: 420518290836684887
+  references:
+    version: 2
+    RefIds:
+    - rid: 420518290836684887
+      type: {class: SumRule, ns: _Scripts.Combinations.Rules, asm: Game}
+      data:
+        <RequiredDiceCount>k__BackingField: 0
+        <Comparison>k__BackingField: 2
+        <RequiredSum>k__BackingField: 7

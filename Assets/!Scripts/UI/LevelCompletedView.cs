@@ -23,15 +23,13 @@ public class LevelCompletedView : MonoBehaviour
     
     [Header("Animation")]
     [SerializeField] private float _animationDuration = 0.35f;
-    [SerializeField] private float _hiddenOffsetY = -1000f;
     [SerializeField] private Ease _ease = Ease.OutBack;
     [Space]
-    [SerializeField] private float  _buttonFadeDuration = 0.5f;
+    [SerializeField] private float _buttonFadeDuration = 0.5f;
     
     private CanvasGroup _canvasGroup;
     private float _windowShownY;
     private Vector3 _dicePanelDefaultPos;
-    private Vector3 _dicePanelSlotPos;
     
     #region DI
     private LevelFlowController _levelFlowController;
@@ -52,11 +50,18 @@ public class LevelCompletedView : MonoBehaviour
     {
         _canvasGroup = GetComponent<CanvasGroup>();
         _windowShownY = _windowRect.anchoredPosition.y;
-        
+    }
+
+    private void Start()
+    {
         _dicePanelDefaultPos = _dicePanelRect.position;
-        _dicePanelSlotPos = _diceSlotRect.position;
-        
         HideInstant();
+    }
+
+    private float GetHiddenOffsetY()
+    {
+        float windowHeight = _windowRect.rect.height > 0 ? _windowRect.rect.height : 1200f;
+        return -(windowHeight * 1.5f);
     }
 
     private void OnEnable()
@@ -109,25 +114,34 @@ public class LevelCompletedView : MonoBehaviour
     private async UniTask AnimateShowAsync(CancellationToken ct)
     {
         transform.DOKill();
+        _dicePanelRect.DOKill();
+
+        _windowRect.anchoredPosition = new Vector2(_windowRect.anchoredPosition.x, _windowShownY);
+        Canvas.ForceUpdateCanvases();
+        var targetSlotPos = _diceSlotRect.position;
+        SetWindowHiddenPosition();
         
         await DOTween.Sequence()
             .SetTarget(transform)
             .SetUpdate(true)
             .Join(_canvasGroup.DOFade(1f, _animationDuration * 0.6f).SetEase(_ease))
             .Join(_windowRect.DOAnchorPosY(_windowShownY, _animationDuration).SetEase(_ease))
-            .Join(_dicePanelRect.DOMove(_dicePanelSlotPos, _animationDuration).SetEase(_ease))
+            .Join(_dicePanelRect.DOMove(targetSlotPos, _animationDuration).SetEase(_ease))
             .WithCancellation(ct);
     }
 
     private async UniTask AnimateHideAsync(CancellationToken ct)
     {
         transform.DOKill();
+        _dicePanelRect.DOKill();
+
+        var targetHideY = _windowShownY + GetHiddenOffsetY();
 
         await DOTween.Sequence()
             .SetTarget(transform)
             .SetUpdate(true)
             .Join(_canvasGroup.DOFade(0f, _animationDuration * 0.6f).SetEase(_ease))
-            .Join(_windowRect.DOAnchorPosY(_windowShownY + _hiddenOffsetY, _animationDuration).SetEase(_ease))
+            .Join(_windowRect.DOAnchorPosY(targetHideY, _animationDuration).SetEase(_ease))
             .Join(_dicePanelRect.DOMove(_dicePanelDefaultPos, _animationDuration).SetEase(_ease))
             .WithCancellation(ct);
     }
@@ -143,7 +157,7 @@ public class LevelCompletedView : MonoBehaviour
     
     private void SetWindowHiddenPosition()
     {
-        var pos = new Vector2(_windowRect.anchoredPosition.x, _windowShownY + _hiddenOffsetY);
+        var pos = new Vector2(_windowRect.anchoredPosition.x, _windowShownY + GetHiddenOffsetY());
         _windowRect.anchoredPosition = pos;
     }
     

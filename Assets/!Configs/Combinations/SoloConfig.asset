@@ -1,0 +1,39 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2eecb481ef504d6386ffe034b4ed7202, type: 3}
+  m_Name: SoloConfig
+  m_EditorClassIdentifier: Game::_Scripts.Combinations.CombinationConfig
+  <Id>k__BackingField: solo
+  <Priority>k__BackingField: 10
+  <DisplayName>k__BackingField: Solo
+  <Description>k__BackingField: Any single dice
+  <Icon>k__BackingField: {fileID: 0}
+  <Patterns>k__BackingField:
+  - Values: 01000000
+  - Values: 02000000
+  - Values: 03000000
+  - Values: 04000000
+  - Values: 05000000
+  - Values: 06000000
+  <BasePoints>k__BackingField: 10
+  <Multiplier>k__BackingField: 1
+  <DiceRefund>k__BackingField: 0
+  <Rule>k__BackingField:
+    rid: 420518290836684885
+  references:
+    version: 2
+    RefIds:
+    - rid: 420518290836684885
+      type: {class: FrequencyRule, ns: _Scripts.Interfaces, asm: Game}
+      data:
+        <RequiredDiceCount>k__BackingField: 0
+        <RequiredFrequency>k__BackingField: 1

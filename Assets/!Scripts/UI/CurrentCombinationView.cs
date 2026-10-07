@@ -49,6 +49,7 @@ namespace _Scripts.UI
 
         private void OnDestroy()
         {
+            if (_dices == null) return;
             foreach (var dice in _dices)
                 dice.Data.OnLockChanged -= HandleSelectionChanged;
         }
@@ -62,9 +63,15 @@ namespace _Scripts.UI
                 SetEmpty();
                 return;
             }
+
+            var combination = _scoreCalculator.Calculate(selectedDices).Combination;
+            if (combination == null)
+            {
+                SetEmpty();
+                return;
+            }
             
-            var result = _scoreCalculator.Calculate(selectedDices);
-            SetCombination(result.Data.DisplayName, result.Data.BasePoints, result.Data.Multiplier);
+            SetCombination(combination.DisplayName, combination.BasePoints, combination.Multiplier);
         }
         
         private void SetEmpty()

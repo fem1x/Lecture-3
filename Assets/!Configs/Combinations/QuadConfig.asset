@@ -1,0 +1,39 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2eecb481ef504d6386ffe034b4ed7202, type: 3}
+  m_Name: QuadConfig
+  m_EditorClassIdentifier: Game::_Scripts.Combinations.CombinationConfig
+  <Id>k__BackingField: quad
+  <Priority>k__BackingField: 60
+  <DisplayName>k__BackingField: Quad
+  <Description>k__BackingField: 4 matching dice
+  <Icon>k__BackingField: {fileID: 0}
+  <Patterns>k__BackingField:
+  - Values: 01000000010000000100000001000000
+  - Values: 02000000020000000200000002000000
+  - Values: 03000000030000000300000003000000
+  - Values: 04000000040000000400000004000000
+  - Values: 05000000050000000500000005000000
+  - Values: 06000000060000000600000006000000
+  <BasePoints>k__BackingField: 55
+  <Multiplier>k__BackingField: 7
+  <DiceRefund>k__BackingField: 1
+  <Rule>k__BackingField:
+    rid: 420518290836684890
+  references:
+    version: 2
+    RefIds:
+    - rid: 420518290836684890
+      type: {class: FrequencyRule, ns: _Scripts.Interfaces, asm: Game}
+      data:
+        <RequiredDiceCount>k__BackingField: 0
+        <RequiredFrequency>k__BackingField: 4

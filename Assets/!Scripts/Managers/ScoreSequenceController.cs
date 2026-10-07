@@ -50,9 +50,9 @@ namespace _Scripts.Managers
         
         public async UniTask PlaySequenceAsync(List<Dice> dices, ScoreCalculationResult scoreResult)
         {
-            var currentPoints = await AddPointsAsync(dices, scoreResult.Data.BasePoints);
+            var currentPoints = await AddPointsAsync(dices, scoreResult.Combination.BasePoints);
             await UniTask.Delay(TimeSpan.FromSeconds(_delayBeforeMult));
-            await TriggerMultAsync(currentPoints, scoreResult.Data.Multiplier);
+            await TriggerMultAsync(currentPoints, scoreResult.Combination.Multiplier);
             await UniTask.Delay(TimeSpan.FromSeconds(_delayAfterMult));
             ApplyFinalScore(scoreResult.TotalScore);
         }
@@ -123,7 +123,7 @@ namespace _Scripts.Managers
                 .Append(target.transform.DOScale(startingScale, outTime).SetEase(Ease.InQuad));
         }
         
-        public static async UniTask DoTextValueTween(TMP_Text text, int fromValue, int toValue, float duration)
+        private async UniTask DoTextValueTween(TMP_Text text, int fromValue, int toValue, float duration)
         {
             var displayedValue = fromValue;
             await DOTween.To(

@@ -1,16 +1,18 @@
-﻿namespace _Scripts.Dices
+﻿using _Scripts.Combinations;
+
+namespace _Scripts.Dices
 {
     public struct ScoreCalculationResult
     {
-        public readonly CombinationData Data;
+        public CombinationConfig Combination { get; }
         private readonly int _dicePoints;
         private readonly int _diceMultiplier;
         
-        public int TotalScore => (Data.BasePoints + _dicePoints) * (Data.Multiplier + _diceMultiplier);
+        public int TotalScore => (Combination.BasePoints + _dicePoints) * (Combination.Multiplier + _diceMultiplier);
 
-        public ScoreCalculationResult(CombinationData data, int dicePoints, int diceMultiplier)
+        public ScoreCalculationResult(CombinationConfig combination, int dicePoints, int diceMultiplier)
         {
-            Data = data;
+            Combination = combination;
             _dicePoints = dicePoints;
             _diceMultiplier = diceMultiplier;
         }

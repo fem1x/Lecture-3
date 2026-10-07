@@ -1,17 +1,16 @@
-﻿using _Scripts.Configs;
-using _Scripts.Dices;
+﻿using _Scripts.Combinations;
+using _Scripts.Configs;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using VContainer;
 
 namespace _Scripts.UI
 {
     public class CombinationDisplayInfoView : MonoBehaviour
     {
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
-        [Header("Combination")]
-        [SerializeField] private CombinationType _combinationType;
+        [Header("Config")]
+        [SerializeField] private CombinationConfig _config;
         
         [Header("UI Texts")]
         [SerializeField] private TMP_Text _titleText;
@@ -24,35 +23,28 @@ namespace _Scripts.UI
         [SerializeField] private DiceAtlasConfig _diceAtlasConfig;
         
         [Header("Switch Animation")]
-        [SerializeField] private float _switchInterval = 2.0f;
+        [SerializeField] private float _switchInterval = 1.5f;
         
-        private DicePatternExample[] _patterns;
         private int _currentPatternIndex;
-        private CombinationScoreConfig _scoreConfig;
-        private CombinationDisplayInfoConfig _displayInfoConfig;
-        
-        [Inject]
-        public void Construct(CombinationScoreConfig scoreConfig, CombinationDisplayInfoConfig displayInfoConfig)
-        {
-            _scoreConfig = scoreConfig;
-            _displayInfoConfig = displayInfoConfig;
-        }
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
         
-        private void Start() => Setup();
+        private void Start()
+        {
+            if (_config != null)
+                Setup(_config);
+        }
+
         private void OnDisable() => CancelInvoke(nameof(NextPattern));
         
-        public void Setup()
+        public void Setup(CombinationConfig config)
         {
-            //Score x Mult
-            var scoreData = _scoreConfig.GetData(_combinationType);
-            _titleText.text = scoreData.DisplayName;
-            _pointsText.text = scoreData.BasePoints.ToString();
-            _multiplierText.text = scoreData.Multiplier.ToString();
+            _config = config;
+            if (_config == null) return;
 
-            var displayInfo = _displayInfoConfig.GetDisplayInfo(_combinationType);
-            _descriptionText.text = displayInfo.Description;
-            _patterns = displayInfo.Patterns;
+            _titleText.text = _config.DisplayName;
+            _descriptionText.text = _config.Description;
+            _pointsText.text = _config.BasePoints.ToString();
+            _multiplierText.text = _config.Multiplier.ToString();
 
             RestartPatternLoop();
         }
@@ -62,25 +54,26 @@ namespace _Scripts.UI
             CancelInvoke(nameof(NextPattern));
 
             _currentPatternIndex = 0;
-            ApplyPattern(_patterns[0]);
+            ApplyPattern(_config.Patterns[0]);
 
             InvokeRepeating(nameof(NextPattern), _switchInterval, _switchInterval);
         }
 
         private void NextPattern()
         {
-            _currentPatternIndex = (_currentPatternIndex + 1) % _patterns.Length;
-            ApplyPattern(_patterns[_currentPatternIndex]);
+            if (_config.Patterns == null || _config.Patterns.Length == 0) return;
+
+            _currentPatternIndex = (_currentPatternIndex + 1) % _config.Patterns.Length;
+            ApplyPattern(_config.Patterns[_currentPatternIndex]);
         }
         
         private void ApplyPattern(DicePatternExample pattern)
         {
             for (int i = 0; i < _diceSlots.Length; i++)
             {
-                if (i < pattern.Values.Length)
+                if (pattern.Values != null && i < pattern.Values.Length)
                 {
                     _diceSlots[i].gameObject.SetActive(true);
-                    
                     var faceVal = pattern.Values[i];
                     _diceSlots[i].sprite = _diceAtlasConfig.GetSprite(faceVal);
                 }

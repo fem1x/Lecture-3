@@ -22,8 +22,6 @@ namespace _Scripts.Dices
         public List<Dice> GetSelectedDices() => _allDices.Where(d => d.Data.IsLocked).ToList();
         public List<Dice> GetUnlockedDices() => _allDices.Where(d => !d.Data.IsLocked).ToList();
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== 
-        private void OnEnable() => CombinationButtonView.OnAnyButtonClicked += SelectCombination;
-        private void OnDisable() => CombinationButtonView.OnAnyButtonClicked -= SelectCombination;
         public void OnRmbClick(InputValue value) => ClearSelection();
         
         public void InitDiceList(List<Dice> dices)
@@ -59,13 +57,6 @@ namespace _Scripts.Dices
         {
             foreach (var dice in _allDices)
                 if (dice != null) dice.Data.SetLock(false);
-        }
-        
-        private void SelectCombination(FoundCombination selected)
-        {
-            ClearSelection();
-            foreach (var dice in selected.Dices)
-                if (dice != null) dice.Data.SetLock(true);
         }
         
         public void DegradePlayedDices(List<Dice> dices, int amount = 1)

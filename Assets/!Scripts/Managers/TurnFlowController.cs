@@ -14,9 +14,6 @@ namespace _Scripts.Managers
     public class TurnFlowController : MonoBehaviour
     {
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== 
-        public event Action<IReadOnlyList<FoundCombination>> OnCombinationsFound;
-        public event Action OnCombinationsCleared;
-
         [Header("SFX")]
         [SerializeField] private string _submitSfx;
         
@@ -68,8 +65,6 @@ namespace _Scripts.Managers
         {
             if (_tableController.HasPendingDices)
             {
-                OnCombinationsCleared?.Invoke();
-
                 var dicesToThrow = _tableController.ExtractPendingDices();
                 await _diceRoller.ThrowAsync(dicesToThrow);
             }
@@ -83,7 +78,6 @@ namespace _Scripts.Managers
 
                 if (!_resourceManager.TryUseReroll()) return;
 
-                OnCombinationsCleared?.Invoke();
                 await _diceRoller.RerollAsync(_tableController.GetUnlockedDices());
             }
 
@@ -91,7 +85,6 @@ namespace _Scripts.Managers
                 .Where(d => d != null && d.Data.RolledValue > 0)
                 .ToList();
             
-            OnCombinationsCleared?.Invoke();
         }
         
         public void OnScoreButtonClicked()
@@ -122,7 +115,7 @@ namespace _Scripts.Managers
                 return;
             }
             
-            _resourceManager.AddRefundDice(result.Data.DiceRefund);
+            _resourceManager.AddRefundDice(result.Combination.DiceRefund);
             PrepareNextTurn(selectedDices);
             _levelFlowController.CheckDefeatCondition();
         }

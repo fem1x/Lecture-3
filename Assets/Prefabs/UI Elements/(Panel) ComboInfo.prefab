@@ -497,7 +497,7 @@ MonoBehaviour:
   - {fileID: 1099406360417112456}
   - {fileID: 5664132809042906005}
   _diceAtlasConfig: {fileID: 11400000, guid: d803b0c485b066b43bf56523d798cbf3, type: 2}
-  _switchInterval: 1.6
+  _switchInterval: 1.5
 --- !u!1 &2366237892278699202
 GameObject:
   m_ObjectHideFlags: 0

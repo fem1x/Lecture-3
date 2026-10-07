@@ -1,4 +1,5 @@
 using _Scripts;
+using _Scripts.Combinations;
 using _Scripts.Configs;
 using _Scripts.Dices;
 using _Scripts.Interfaces;
@@ -16,21 +17,19 @@ public class GameLifetimeScope : LifetimeScope
     [Header("Configs")]
     [SerializeField] private DiceRollConfig _diceRollConfig;
     [SerializeField] private DiceSpawnConfig _diceSpawnConfig;
-    [SerializeField] private CombinationScoreConfig  _combinationScoreConfig;
     [SerializeField] private ResourceConfig  _resourceConfig;
     [SerializeField] private LevelsListConfig  _levelsListConfig;
     [SerializeField] private SfxConfig _sfxConfig;
     [SerializeField] private AudioFilterConfig _audioFilterConfig;
     [SerializeField] private DiceDataConfig _diceDataConfig;
     [SerializeField] private TokenRewardConfig _tokenRewardConfig;
-    [SerializeField] private CombinationDisplayInfoConfig _combinationDisplayInfoConfig;
+    [SerializeField] private InitialCombinationsConfig _initialCombinationsConfig;
     
     [Header("Scene")]
     [SerializeField] private Camera _mainCamera;
     [SerializeField] private TurnFlowController _turnFlowController;
     [SerializeField] private DiceTableController _diceTableController;
     [SerializeField] private DiceSpawnPoint _spawnPoint;
-    [SerializeField] private CombinationsPanelView _combinationsPanel;
     [SerializeField] private ScoreSequenceController _scoreSequenceController;
     [SerializeField] private CurrentCombinationView _currentCombinationView;
     [SerializeField] private DiceStatePanelView _diceStatePanelView;
@@ -46,14 +45,13 @@ public class GameLifetimeScope : LifetimeScope
     {
         builder.RegisterInstance(_diceRollConfig);
         builder.RegisterInstance(_diceSpawnConfig);
-        builder.RegisterInstance(_combinationScoreConfig);
         builder.RegisterInstance(_resourceConfig);
         builder.RegisterInstance(_levelsListConfig);
         builder.RegisterInstance(_sfxConfig);
         builder.RegisterInstance(_audioFilterConfig);
         builder.RegisterInstance(_diceDataConfig);
         builder.RegisterInstance(_tokenRewardConfig);
-        builder.RegisterInstance(_combinationDisplayInfoConfig);
+        builder.RegisterInstance(_initialCombinationsConfig);
     }
     
     private void RegisterServices(IContainerBuilder builder)
@@ -63,7 +61,6 @@ public class GameLifetimeScope : LifetimeScope
         builder.RegisterComponent(_spawnPoint);
         builder.RegisterComponent(_diceTableController);
         builder.RegisterComponent(_turnFlowController);
-        builder.RegisterComponent(_combinationsPanel);
         builder.RegisterComponent(_scoreSequenceController);
         builder.RegisterComponent(_currentCombinationView);
         builder.RegisterComponent(_diceStatePanelView);
@@ -83,6 +80,7 @@ public class GameLifetimeScope : LifetimeScope
         builder.Register<DiceFactory>(Lifetime.Singleton);
         builder.Register<RewardCalculator>(Lifetime.Singleton);
         builder.Register<DiceRepairService>(Lifetime.Singleton);
+        builder.Register<ActiveCombinationsService>(Lifetime.Singleton);
         
         //Entry Point
         builder.RegisterEntryPoint<Bootstrap>();
