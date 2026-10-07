@@ -35,4 +35,4 @@ MonoBehaviour:
     - rid: 420518290836684891
       type: {class: MonoRule, ns: _Scripts.Combinations.Rules, asm: Game}
       data:
-        <RequiredDiceCount>k__BackingField: 0
+        <RequiredDiceCount>k__BackingField: 5

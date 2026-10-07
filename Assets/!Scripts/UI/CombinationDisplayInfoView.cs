@@ -9,31 +9,24 @@ namespace _Scripts.UI
     public class CombinationDisplayInfoView : MonoBehaviour
     {
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
-        [Header("Config")]
-        [SerializeField] private CombinationConfig _config;
-        
         [Header("UI Texts")]
         [SerializeField] private TMP_Text _titleText;
         [SerializeField] private TMP_Text _descriptionText;
         [SerializeField] private TMP_Text _pointsText;
         [SerializeField] private TMP_Text _multiplierText;
+        [SerializeField] private TMP_Text _diceRefundText;
         
         [Header("Dice Display")]
         [SerializeField] private Image[] _diceSlots;
         [SerializeField] private DiceAtlasConfig _diceAtlasConfig;
         
         [Header("Switch Animation")]
-        [SerializeField] private float _switchInterval = 1.5f;
+        [SerializeField] private float _switchInterval = 2.0f;
         
+        private CombinationConfig _config;
         private int _currentPatternIndex;
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
         
-        private void Start()
-        {
-            if (_config != null)
-                Setup(_config);
-        }
-
         private void OnDisable() => CancelInvoke(nameof(NextPattern));
         
         public void Setup(CombinationConfig config)
@@ -45,6 +38,14 @@ namespace _Scripts.UI
             _descriptionText.text = _config.Description;
             _pointsText.text = _config.BasePoints.ToString();
             _multiplierText.text = _config.Multiplier.ToString();
+
+            if (_diceRefundText != null)
+            {
+                var hasRefund = _config.DiceRefund > 0;
+                _diceRefundText.gameObject.SetActive(hasRefund);
+                if (hasRefund)
+                    _diceRefundText.text = $"+{_config.DiceRefund}";
+            }
 
             RestartPatternLoop();
         }
@@ -74,8 +75,7 @@ namespace _Scripts.UI
                 if (pattern.Values != null && i < pattern.Values.Length)
                 {
                     _diceSlots[i].gameObject.SetActive(true);
-                    var faceVal = pattern.Values[i];
-                    _diceSlots[i].sprite = _diceAtlasConfig.GetSprite(faceVal);
+                    _diceSlots[i].sprite = _diceAtlasConfig.GetSprite(pattern.Values[i]);
                 }
                 else
                 {

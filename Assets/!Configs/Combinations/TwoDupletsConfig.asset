@@ -15,7 +15,7 @@ MonoBehaviour:
   <Id>k__BackingField: two_duplets
   <Priority>k__BackingField: 50
   <DisplayName>k__BackingField: Two Duplets
-  <Description>k__BackingField: Two pairs
+  <Description>k__BackingField: 2 pairs of matching dice
   <Icon>k__BackingField: {fileID: 0}
   <Patterns>k__BackingField:
   - Values: 01000000010000000200000002000000
@@ -35,4 +35,4 @@ MonoBehaviour:
     - rid: 420518290836684889
       type: {class: TwoDupletsRule, ns: _Scripts.Combinations.Rules, asm: Game}
       data:
-        <RequiredDiceCount>k__BackingField: 0
+        <RequiredDiceCount>k__BackingField: 4

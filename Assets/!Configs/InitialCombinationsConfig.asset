@@ -12,4 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d33589ca6e504e67aab4ba6076f888e5, type: 3}
   m_Name: InitialCombinationsConfig
   m_EditorClassIdentifier: Game::_Scripts.Configs.InitialCombinationsConfig
-  <DefaultCombinations>k__BackingField: []
+  <DefaultCombinations>k__BackingField:
+  - {fileID: 11400000, guid: a77e59beab449f94699290a1b558cbbf, type: 2}
+  - {fileID: 11400000, guid: c34de529ab1c5e34b9f0c6ba2ab4be36, type: 2}
+  - {fileID: 11400000, guid: 0182dcb8b237f4240a93269089258913, type: 2}
+  - {fileID: 11400000, guid: c411e179aabe9d049a1993b571da917e, type: 2}
+  - {fileID: 11400000, guid: ebd806ff95b1efb4f88896ae57bc6df0, type: 2}
+  - {fileID: 11400000, guid: 5e57d47d57bdc69429c7f0d84945c16d, type: 2}
+  - {fileID: 11400000, guid: f7ea4d3351647684b9ae9cb7e416065a, type: 2}
+  - {fileID: 11400000, guid: 88b954c8df89af74a89a5647e0a635b1, type: 2}
+  - {fileID: 11400000, guid: 8eed484c7f81a6e4f855d91d784641a4, type: 2}
+  - {fileID: 11400000, guid: 8cd2e59b978f5b244bafbc177800d6c5, type: 2}
+  - {fileID: 11400000, guid: cb732c66defe1ae459d991737a6f2bbe, type: 2}

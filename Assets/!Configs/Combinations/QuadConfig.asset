@@ -35,5 +35,5 @@ MonoBehaviour:
     - rid: 420518290836684890
       type: {class: FrequencyRule, ns: _Scripts.Interfaces, asm: Game}
       data:
-        <RequiredDiceCount>k__BackingField: 0
+        <RequiredDiceCount>k__BackingField: 4
         <RequiredFrequency>k__BackingField: 4
