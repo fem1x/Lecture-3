@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac036459cb9045088ebe8c584eea5c9b, type: 3}
   m_Name: SixesBonusCharmConfig
   m_EditorClassIdentifier: Game::_Scripts.Charms.SixesBonusCharmConfig
-  <Id>k__BackingField: 
-  <Title>k__BackingField: 
-  <Description>k__BackingField: 
+  <Id>k__BackingField: 1
+  <Title>k__BackingField: Sixes Bonus
+  <Description>k__BackingField: no
   <Icon>k__BackingField: {fileID: 0}
   <TargetValue>k__BackingField: 6
   <BonusPoints>k__BackingField: 25

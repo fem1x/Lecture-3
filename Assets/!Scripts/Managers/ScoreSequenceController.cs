@@ -106,9 +106,11 @@ namespace _Scripts.Managers
         {
             await UniTask.Delay(TimeSpan.FromSeconds(_delayPerStep));
             PlayStepFx(step.SourceTransform);
-            await UniTask.WhenAll(
-                AddPointsAsync(step.BonusPoints),
-                AddMultAsync(step.BonusMultiplier));
+            if (step.BonusPoints > 0)
+                await AddPointsAsync(step.BonusPoints);
+
+            if (step.BonusMultiplier > 0)
+                await AddMultAsync(step.BonusMultiplier);
         }
 
         private async UniTask MultiplyStepAsync(ScoreStep step)
@@ -151,11 +153,14 @@ namespace _Scripts.Managers
             _currentMult = 1;
         }
         
-        private void ResetState(ScoreSequencePlan scoreResult)
+        private void ResetState(ScoreSequencePlan sequencePlan)
         {
-            _currentPoints = 0;
-            _currentMult = 0;
+            _currentPoints = sequencePlan.Combination.BasePoints;
+            _currentMult = sequencePlan.Combination.Multiplier;
             _fxStepIndex = 0;
+
+            _pointsText.text = _currentPoints.ToString();
+            _multText.text = _currentMult.ToString();
         }
         
         #region FX Methods

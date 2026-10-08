@@ -28,8 +28,8 @@ public class ScoreCalculator : IScoreCalculator
             return default;
 
         var steps = new List<ScoreStep>();
-        var totalPoints = 0;
-        var totalMultiplier = 0;
+        var totalPoints = combination.BasePoints;
+        var totalMultiplier = combination.Multiplier;
 
         // 1. OnDiceScored
         foreach (var dice in selectedDices)
@@ -47,9 +47,7 @@ public class ScoreCalculator : IScoreCalculator
         }
         
         // 2. OnCombinationScored
-        totalPoints += combination.BasePoints;
-        totalMultiplier = combination.Multiplier;
-        steps.Add(new(ScoreStepType.CombinationBase, combination.BasePoints, combination.Multiplier));
+        steps.Add(new(ScoreStepType.CombinationBase, 0, 0));    
         
         //Charms
         var combContext = new CombinationScoreContext(combination);
