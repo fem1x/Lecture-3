@@ -6,10 +6,12 @@ namespace _Scripts.Structs___Enums.Contexts
 {
     public class CombinationScoreContext
     {
+        //In:
         public CombinationConfig Combination { get; }
         public IReadOnlyList<Dice> SelectedDices { get; }
 
-        public int BonusBasePoints { get; set; }
+        //Out:
+        public int BonusPoints { get; set; }
         public int BonusMultiplier { get; set; }
 
         public CombinationScoreContext(CombinationConfig combination, IReadOnlyList<Dice> selectedDices)

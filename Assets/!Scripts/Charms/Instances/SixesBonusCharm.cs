@@ -1,5 +1,4 @@
-﻿using _Scripts.Combinations;
-using _Scripts.Dices;
+﻿using _Scripts.Structs___Enums.Contexts;
 
 namespace _Scripts.Charms
 {
@@ -13,12 +12,12 @@ namespace _Scripts.Charms
         }
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 
-        public override void OnDiceScored(Dice dice, CombinationConfig combination)
+        public override void OnDiceScored(DiceScoreContext context)
         {
-            if (dice.Data.RolledValue != _config.TargetValue)
+            if (context.Dice.Data.RolledValue != _config.TargetValue)
                 return;
-
             
+            context.AddTrigger(View, _config.BonusPoints, _config.BonusMultiplier);
         }
     }
 }
