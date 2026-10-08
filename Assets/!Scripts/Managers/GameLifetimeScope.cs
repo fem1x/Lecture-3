@@ -1,4 +1,5 @@
 using _Scripts;
+using _Scripts.Charms;
 using _Scripts.Combinations;
 using _Scripts.Configs;
 using _Scripts.Dices;
@@ -81,6 +82,7 @@ public class GameLifetimeScope : LifetimeScope
         builder.Register<RewardCalculator>(Lifetime.Singleton);
         builder.Register<DiceRepairService>(Lifetime.Singleton);
         builder.Register<ActiveCombinationsService>(Lifetime.Singleton);
+        builder.Register<CharmsService>(Lifetime.Singleton);
         
         //Entry Point
         builder.RegisterEntryPoint<Bootstrap>();

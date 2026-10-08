@@ -1,20 +1,31 @@
-﻿using _Scripts.Combinations;
+﻿using System.Collections.Generic;
+using _Scripts.Combinations;
+using _Scripts.Structs___Enums.Contexts;
 
 namespace _Scripts.Dices
 {
     public struct ScoreCalculationResult
     {
         public CombinationConfig Combination { get; }
-        private readonly int _dicePoints;
-        private readonly int _diceMultiplier;
+        public IReadOnlyList<DiceScoreContext> DiceContexts { get; }
         
-        public int TotalScore => (Combination.BasePoints + _dicePoints) * (Combination.Multiplier + _diceMultiplier);
+        public int BonusPoints { get; }
+        public int BonusMultiplier { get; }
+        
+        public int TotalPoints => Combination.BasePoints + BonusPoints;
+        public int TotalMultiplier => Combination.Multiplier + BonusMultiplier;
+        public int TotalScore => TotalPoints * TotalMultiplier;
 
-        public ScoreCalculationResult(CombinationConfig combination, int dicePoints, int diceMultiplier)
+        public ScoreCalculationResult(
+            CombinationConfig combination, 
+            int bonusPoints, 
+            int bonusMultiplier, 
+            IReadOnlyList<DiceScoreContext> diceContexts)
         {
             Combination = combination;
-            _dicePoints = dicePoints;
-            _diceMultiplier = diceMultiplier;
+            BonusPoints = bonusPoints;
+            BonusMultiplier = bonusMultiplier;
+            DiceContexts = diceContexts;
         }
     }
 }

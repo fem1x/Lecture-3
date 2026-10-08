@@ -1,37 +1,54 @@
 using System.Collections.Generic;
+using _Scripts.Charms;
 using _Scripts.Combinations;
 using _Scripts.Dices;
 using _Scripts.Interfaces;
 using _Scripts.Managers;
+using _Scripts.Structs___Enums.Contexts;
+using VContainer;
 
 public class ScoreCalculator : IScoreCalculator
 {
     // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== 
     private readonly CombinationEvaluator _evaluator;
-    public ScoreCalculator(CombinationEvaluator evaluator)
+    private readonly CharmsService _charmsService;
+    
+    [Inject]
+    public ScoreCalculator(CombinationEvaluator evaluator, CharmsService charmsService)
     {
         _evaluator = evaluator;
+        _charmsService = charmsService;
     }
     // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== 
 
     public ScoreCalculationResult Calculate(List<Dice> selectedDices)
     {
-        CombinationConfig config = _evaluator.Evaluate(selectedDices);
-        if (config == null)
+        var combinationConfig = _evaluator.Evaluate(selectedDices);
+        if (combinationConfig == null)
             return default;
 
-        int dicePoints = GetDiceValuesPoints(selectedDices);
+        var totalBonusPoints = 0;
+        var totalBonusMultiplier = 0;
+        var diceContexts = new List<DiceScoreContext>(selectedDices.Count);
 
-        return new ScoreCalculationResult(config, dicePoints, 0);
-    }
+        foreach (var dice in selectedDices)
+        {
+            var context = new DiceScoreContext(dice, combinationConfig);
 
-    private int GetDiceValuesPoints(List<Dice> scoringDice)
-    {
-        int sum = 0;
-        if (scoringDice != null)
-            for (int i = 0; i < scoringDice.Count; i++)
-                sum += scoringDice[i].Data.RolledValue;
+            totalBonusPoints += context.BaseDicePoints;
+
+            //Charms
+            foreach (var charm in _charmsService.ActiveCharms)
+                charm.OnDiceScored(context);
+
+            foreach (var trigger in context.Triggers)
+            {
+                totalBonusPoints += trigger.BonusPoints;
+                totalBonusMultiplier += trigger.BonusMultiplier;
+            }
+            diceContexts.Add(context);
+        }
         
-        return sum;
+        return new ScoreCalculationResult(combinationConfig, totalBonusPoints, totalBonusMultiplier, diceContexts);
     }
 }

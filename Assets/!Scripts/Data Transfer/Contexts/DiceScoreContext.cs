@@ -12,12 +12,14 @@ namespace _Scripts.Structs___Enums.Contexts
         public CombinationConfig Combination { get; }
 
         //Out:
+        public int BaseDicePoints { get; }
         public List<CharmTriggerResult> Triggers { get; } = new();
 
         public DiceScoreContext(Dice dice, CombinationConfig combination)
         {
             Dice = dice;
             Combination = combination;
+            BaseDicePoints = dice.Data.RolledValue;
         }
         
         public void AddTrigger(CharmView view, int points, int multiplier)
