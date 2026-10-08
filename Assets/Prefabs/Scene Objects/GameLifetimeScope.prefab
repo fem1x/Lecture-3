@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1683052077038424958}
   - component: {fileID: 3236853052078990589}
+  - component: {fileID: 7850155873470499417}
   m_Layer: 0
   m_Name: GameLifetimeScope
   m_TagString: Untagged
@@ -49,16 +50,34 @@ MonoBehaviour:
   autoRun: 1
   autoInjectGameObjects:
   - {fileID: 0}
+  - {fileID: 8140047140669961184}
   _diceRollConfig: {fileID: 11400000, guid: e220bccc4aa302a43b21ef615debf82a, type: 2}
   _diceSpawnConfig: {fileID: 11400000, guid: 2f812427752c7104cb543f0bc69b9673, type: 2}
-  _combinationScoreConfig: {fileID: 11400000, guid: 805626c634a286a44a2a3aee11c46ffd, type: 2}
   _resourceConfig: {fileID: 11400000, guid: d278f98f3d20f274ba1e894b275860a4, type: 2}
   _levelsListConfig: {fileID: 11400000, guid: 89087b4361fb25c4ca9cedfcd9b8b851, type: 2}
   _sfxConfig: {fileID: 11400000, guid: 8a3d2ca175b89c442a91e1e5ff2f1243, type: 2}
   _audioFilterConfig: {fileID: 11400000, guid: 294f9b812e89f0447acfa8b6ef94a9c4, type: 2}
+  _diceDataConfig: {fileID: 11400000, guid: 93460bbf828499645b858b5e17fb916c, type: 2}
+  _tokenRewardConfig: {fileID: 11400000, guid: d4b4a581114c7884da82c78e976842b2, type: 2}
+  _initialCombinationsConfig: {fileID: 11400000, guid: e0b645fcf4fa20d49a6bafb702242dca, type: 2}
   _mainCamera: {fileID: 0}
   _turnFlowController: {fileID: 0}
   _diceTableController: {fileID: 0}
   _spawnPoint: {fileID: 0}
-  _combinationsPanel: {fileID: 0}
   _scoreSequenceController: {fileID: 0}
+  _currentCombinationView: {fileID: 0}
+  _diceStatePanelView: {fileID: 0}
+--- !u!114 &7850155873470499417
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8140047140669961184}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a83a36cc53b455eaa51853c955395f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Game::ScoreCalculationTest
+  _testCharmConfig: {fileID: 11400000, guid: 1b53bab462c47d1418976dbd7adef680, type: 2}
+  _testDices: []

@@ -1,21 +1,21 @@
 ﻿using System.Collections.Generic;
 using _Scripts.Charms;
-using _Scripts.Combinations;
-using _Scripts.Dices;
 
 namespace _Scripts.Structs___Enums.Contexts
 {
-    public class CombinationScoreContext
+    public class FinalizeScoreContext
     {
         //In:
-        public CombinationConfig Combination { get; }
+        public int CurrentPoints { get; }
+        public int CurrentMultiplier { get; }
         
         //Out:
         public List<CharmTriggerResult> Triggers { get; } = new();
-
-        public CombinationScoreContext(CombinationConfig combination)
+        
+        public FinalizeScoreContext(int currentPoints, int currentMultiplier)
         {
-            Combination = combination;
+            CurrentPoints = currentPoints;
+            CurrentMultiplier = currentMultiplier;
         }
         
         public void AddTrigger(CharmView view, int points, int multiplier)

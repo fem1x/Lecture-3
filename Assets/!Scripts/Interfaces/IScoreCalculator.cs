@@ -6,6 +6,6 @@ namespace _Scripts.Interfaces
 {
     public interface IScoreCalculator
     {
-        public ScoreCalculationResult Calculate(List<Dice> selectedDices);
+        public ScoreSequencePlan Calculate(List<Dice> selectedDices);
     }
 }

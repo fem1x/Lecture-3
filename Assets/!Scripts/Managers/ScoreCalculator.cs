@@ -21,34 +21,65 @@ public class ScoreCalculator : IScoreCalculator
     }
     // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== 
 
-    public ScoreCalculationResult Calculate(List<Dice> selectedDices)
+    public ScoreSequencePlan Calculate(List<Dice> selectedDices)
     {
-        var combinationConfig = _evaluator.Evaluate(selectedDices);
-        if (combinationConfig == null)
+        var combination = _evaluator.Evaluate(selectedDices);
+        if (combination == null)
             return default;
 
-        var totalBonusPoints = 0;
-        var totalBonusMultiplier = 0;
-        var diceContexts = new List<DiceScoreContext>(selectedDices.Count);
+        var steps = new List<ScoreStep>();
+        var totalPoints = 0;
+        var totalMultiplier = 0;
 
+        // 1. OnDiceScored
         foreach (var dice in selectedDices)
         {
-            var context = new DiceScoreContext(dice, combinationConfig);
-
-            totalBonusPoints += context.BaseDicePoints;
-
+            var diceValue = dice.Data.RolledValue;
+            totalPoints += diceValue;
+            steps.Add(new(ScoreStepType.DiceScored, diceValue, sourceTransform: dice.transform));
+            
             //Charms
+            var context = new DiceScoreContext(dice, combination);
             foreach (var charm in _charmsService.ActiveCharms)
-                charm.OnDiceScored(context);
-
-            foreach (var trigger in context.Triggers)
-            {
-                totalBonusPoints += trigger.BonusPoints;
-                totalBonusMultiplier += trigger.BonusMultiplier;
-            }
-            diceContexts.Add(context);
+                charm.OnDiceScored(context); 
+            
+            AddTriggers(context.Triggers, steps, ref totalPoints, ref totalMultiplier);
         }
         
-        return new ScoreCalculationResult(combinationConfig, totalBonusPoints, totalBonusMultiplier, diceContexts);
+        // 2. OnCombinationScored
+        totalPoints += combination.BasePoints;
+        totalMultiplier = combination.Multiplier;
+        steps.Add(new(ScoreStepType.CombinationBase, combination.BasePoints, combination.Multiplier));
+        
+        //Charms
+        var combContext = new CombinationScoreContext(combination);
+        foreach (var charm in _charmsService.ActiveCharms)
+            charm.OnCombinationScored(combContext);
+        
+        AddTriggers(combContext.Triggers, steps, ref totalPoints, ref totalMultiplier);
+        
+        // 3. OnFinalizeScore
+        //Charms
+        var finalContext = new FinalizeScoreContext(totalPoints, totalMultiplier);
+        foreach (var charm in _charmsService.ActiveCharms)
+            charm.OnFinalizeScore(finalContext);
+        
+        AddTriggers(finalContext.Triggers, steps, ref totalPoints, ref totalMultiplier);
+        
+        // 4. Multiply to final score
+        steps.Add(new(ScoreStepType.Multiply));
+        
+        return new ScoreSequencePlan(combination, totalPoints, totalMultiplier, steps);
+    }
+    
+    private void AddTriggers(List<CharmTriggerResult> triggers, List<ScoreStep> steps, ref int points, ref int mult)
+    {
+        for (var i = 0; i < triggers.Count; i++)
+        {
+            var t = triggers[i];
+            points += t.BonusPoints;
+            mult += t.BonusMultiplier;
+            steps.Add(new(ScoreStepType.CharmTrigger, t.BonusPoints, t.BonusMultiplier, t.View?.transform, t.View));
+        }
     }
 }

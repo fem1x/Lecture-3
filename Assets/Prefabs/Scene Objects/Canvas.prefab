@@ -3496,7 +3496,7 @@ MonoBehaviour:
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
   m_charWidthMaxAdj: 0
-  m_TextWrappingMode: 1
+  m_TextWrappingMode: 0
   m_wordWrappingRatios: 0.4
   m_overflowMode: 0
   m_linkedTextComponent: {fileID: 0}
@@ -4660,7 +4660,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Game::_Scripts.Managers.ScoreSequenceController
   _pointsText: {fileID: 4260171715948403159}
   _multText: {fileID: 6220326529064425507}
-  _delayPerDice: 0.36
+  _delayPerStep: 0.22
   _delayBeforeMult: 0.6
   _delayAfterMult: 0.6
   _pointsMultDuration: 1
@@ -5263,7 +5263,7 @@ MonoBehaviour:
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
   m_charWidthMaxAdj: 0
-  m_TextWrappingMode: 1
+  m_TextWrappingMode: 0
   m_wordWrappingRatios: 0.4
   m_overflowMode: 0
   m_linkedTextComponent: {fileID: 0}

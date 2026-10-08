@@ -103,8 +103,8 @@ namespace _Scripts.Managers
         {
             _isScoring = true;
             
-            var result = _calculator.Calculate(selectedDices);
-            await _scoreSequenceController.PlaySequenceAsync(selectedDices, result);
+            var scoreSequence = _calculator.Calculate(selectedDices);
+            await _scoreSequenceController.PlaySequenceAsync(scoreSequence);
             _tableController.DegradePlayedDices(selectedDices, 1);
             
             _isScoring = false;
@@ -115,7 +115,7 @@ namespace _Scripts.Managers
                 return;
             }
             
-            _resourceManager.AddRefundDice(result.Combination.DiceRefund);
+            _resourceManager.AddRefundDice(scoreSequence.Combination.DiceRefund);
             PrepareNextTurn(selectedDices);
             _levelFlowController.CheckDefeatCondition();
         }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using _Scripts.Configs;
 using _Scripts.Dices;
+using _Scripts.Structs___Enums.Contexts;
 using _Scripts.Utility;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
@@ -19,7 +20,7 @@ namespace _Scripts.Managers
         [SerializeField] private TMP_Text _multText;
         
         [Header("Timings")]
-        [SerializeField] private float _delayPerDice = 0.22f;
+        [SerializeField] private float _delayPerStep = 0.22f;
         [SerializeField] private float _delayBeforeMult = 0.25f;
         [SerializeField] private float _delayAfterMult = 0.35f;
         [Space(0.5f)]
@@ -35,7 +36,10 @@ namespace _Scripts.Managers
         [SerializeField] private string _triggerMultSfx = "TriggerMult";
         [SerializeField] private string _addScoreSfx = "AddScore";
         
-        private Vector3 _originalCamPos;
+        private int _currentPoints;
+        private int _currentMult;
+        private int _fxStepIndex;
+        
         private ISfxPlayer _sfxPlayer;
         private ScoreManager _scoreManager;
         private CameraShaker _cameraShaker;
@@ -48,55 +52,129 @@ namespace _Scripts.Managers
         }
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
         
-        public async UniTask PlaySequenceAsync(List<Dice> dices, ScoreCalculationResult scoreResult)
+        public async UniTask PlaySequenceAsync(ScoreSequencePlan sequencePlan)
         {
-            var currentPoints = await AddPointsAsync(dices, scoreResult.Combination.BasePoints);
-            await UniTask.Delay(TimeSpan.FromSeconds(_delayBeforeMult));
-            await TriggerMultAsync(currentPoints, scoreResult.Combination.Multiplier);
+            ResetState(sequencePlan);
+
+            foreach (var step in sequencePlan.Steps)
+            {
+                switch (step.Type)
+                {
+                    case ScoreStepType.DiceScored:
+                        await DiceStepAsync(step);
+                        break;
+                    
+                    case ScoreStepType.CharmTrigger:
+                        await CharmStepAsync(step);
+                        break;
+                    
+                    case ScoreStepType.CombinationBase:
+                        await CombinationStepAsync(step);
+                        break;
+                    
+                    case ScoreStepType.Multiply:
+                        await MultiplyStepAsync(step);
+                        break;
+                }
+            }
+            
             await UniTask.Delay(TimeSpan.FromSeconds(_delayAfterMult));
-            ApplyFinalScore(scoreResult.TotalScore);
+            ApplyFinalScore(sequencePlan.TotalScore);
         }
         
-        private async UniTask<int> AddPointsAsync(List<Dice> dices, int basePoints)
+        #region Step async Methods
+        private async UniTask DiceStepAsync(ScoreStep step)
         {
-            var currentPoints = basePoints;
-            var scoredDiceCount = 0;
-            
-            for (int i = 0; i < dices.Count; i++)
-            {
-                var dice = dices[i];
-                if (dice.Data.RolledValue <= 0) continue;
-                
-                await UniTask.Delay(TimeSpan.FromSeconds(_delayPerDice));
-                
-                var pitchMult =  1f + (0.11f * scoredDiceCount);
-                PlayPointsAddFx(dice, pitchMult);
-                scoredDiceCount++;
-                
-                var fromPoints = currentPoints;
-                currentPoints += dice.Data.RolledValue;
-                
-                await DoTextValueTween(_pointsText, fromPoints, currentPoints, _pointsAddDuration);
-            }
-            return currentPoints;
+            await UniTask.Delay(TimeSpan.FromSeconds(_delayPerStep));
+            PlayStepFx(step.SourceTransform);
+            await AddPointsAsync(step.BonusPoints);
         }
 
-        private async UniTask TriggerMultAsync(int currentPoints, int multiplier)
+        private async UniTask CharmStepAsync(ScoreStep step)
         {
-            PlayMultTriggerFx();
-            var toPoints = currentPoints * multiplier;
-            
+            await UniTask.Delay(TimeSpan.FromSeconds(_delayPerStep));
+            step.CharmView.PlayTriggerAnimation();
+            PlayStepFx(step.SourceTransform);
+            if (step.BonusPoints > 0)
+                await AddPointsAsync(step.BonusPoints);
+
+            if (step.BonusMultiplier > 0)
+                await AddMultAsync(step.BonusMultiplier);
+        }
+
+        private async UniTask CombinationStepAsync(ScoreStep step)
+        {
+            await UniTask.Delay(TimeSpan.FromSeconds(_delayPerStep));
+            PlayStepFx(step.SourceTransform);
             await UniTask.WhenAll(
-                DoTextValueTween(_pointsText, currentPoints, toPoints, _pointsMultDuration),
-                DoTextValueTween(_multText, multiplier, 1, _pointsMultDuration));
+                AddPointsAsync(step.BonusPoints),
+                AddMultAsync(step.BonusMultiplier));
+        }
+
+        private async UniTask MultiplyStepAsync(ScoreStep step)
+        {
+            await UniTask.Delay(TimeSpan.FromSeconds(_delayBeforeMult));
+            await TriggerMultAsync();
+        }
+        #endregion
+        
+        private async UniTask AddPointsAsync(int amount)
+        {
+            var target = _currentPoints + amount;
+            await DoTextValueTween(_pointsText, _currentPoints, target, _pointsAddDuration);
+            _currentPoints = target;
+        }
+
+        private async UniTask AddMultAsync(int amount)
+        {
+            var target = _currentMult + amount;
+            await DoTextValueTween(_multText, _currentMult, target, _pointsAddDuration);
+            _currentMult = target;
         }
         
-        private void PlayPointsAddFx(Dice dice, float pitchMult)
+        private void ApplyFinalScore(int totalScore)
         {
-            DoScalePopTween(dice.transform);
+            _scoreManager.AddScore(totalScore);
+            _sfxPlayer?.Play(_addScoreSfx);
+        }
+        
+        private async UniTask TriggerMultAsync()
+        {
+            PlayMultTriggerFx();
+            var targetPoints = _currentPoints * _currentMult;
+            
+            await UniTask.WhenAll(
+                DoTextValueTween(_pointsText, _currentPoints, targetPoints, _pointsMultDuration),
+                DoTextValueTween(_multText, _currentMult, 1, _pointsMultDuration));
+
+            _currentPoints = targetPoints;
+            _currentMult = 1;
+        }
+        
+        private void ResetState(ScoreSequencePlan scoreResult)
+        {
+            _currentPoints = 0;
+            _currentMult = 0;
+            _fxStepIndex = 0;
+        }
+        
+        #region FX Methods
+
+        private void PlayStepFx(Transform source)
+        {
             DoScalePopTween(_pointsText.transform, 1.8f);
             _cameraShaker.Shake(_diceScoreShake);
-            _sfxPlayer?.Play(_addPointsSfx, dice.transform.position, pitchMult);
+
+            var pitchMult = 1f + (0.09f * _fxStepIndex++);
+            if (source != null)
+            {
+                _sfxPlayer?.Play(_addPointsSfx, source.position, pitchMult);
+                DoScalePopTween(source);
+            }
+            else
+            {
+                _sfxPlayer?.Play(_addPointsSfx, pitchMult);
+            }
         }
 
         private void PlayMultTriggerFx()
@@ -106,13 +184,9 @@ namespace _Scripts.Managers
             _cameraShaker.Shake(_multTriggerShake);
             _sfxPlayer?.Play(_triggerMultSfx);
         }
-                
-        private void ApplyFinalScore(int totalScore)
-        {
-            _scoreManager.AddScore(totalScore);
-            _sfxPlayer?.Play(_addScoreSfx);
-        }
+        #endregion
 
+        #region Tweens
         private void DoScalePopTween(Transform target, float scaleMult = 1.5f, float inTime = 0.07f, float outTime = 0.35f)
         {
             target.DOKill(true);
@@ -141,5 +215,6 @@ namespace _Scripts.Managers
 
             text.text = toValue.ToString();
         }
+        #endregion
     }
 }
