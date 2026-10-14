@@ -108,7 +108,7 @@ MonoBehaviour:
       volume: 1
       pitch: 1
     volume: 0.34
-    pitch: 0.55
+    pitch: 0.8
     pitchRandomize: 0.06
     is3D: 0
     useGlobalSpatialBlend: 0
@@ -202,6 +202,21 @@ MonoBehaviour:
     volume: 0.4
     pitch: 1
     pitchRandomize: 0.1
+    is3D: 0
+    useGlobalSpatialBlend: 0
+    customSpatialBlend: 0
+    isLooped: 0
+    audioMixer: {fileID: -9158774617749725478, guid: 1470a324304038b4ab0db292ebdfc379, type: 2}
+    source: {fileID: 0}
+  - name: CharmTrigger
+    layers:
+    - clips:
+      - {fileID: 8300000, guid: 09e5c04a039a7834aad487596a8e4644, type: 3}
+      volume: 1
+      pitch: 1
+    volume: 0.33
+    pitch: 0.75
+    pitchRandomize: 0
     is3D: 0
     useGlobalSpatialBlend: 0
     customSpatialBlend: 0

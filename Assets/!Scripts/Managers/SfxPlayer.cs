@@ -129,8 +129,7 @@ namespace _Scripts.Managers
             mainSource.clip = firstClip;
             mainSource.volume = s.volume * firstLayer.volume;
 
-            float pitchRatio = firstLayer.pitch / s.pitch;
-            mainSource.pitch = Mathf.Clamp(baseRandomPitch * pitchRatio, 0.1f, 3f);
+            mainSource.pitch = Mathf.Clamp(baseRandomPitch * firstLayer.pitch, 0.1f, 3f);
             mainSource.Play();
         }
 

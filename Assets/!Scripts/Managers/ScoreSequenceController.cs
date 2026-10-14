@@ -35,6 +35,7 @@ namespace _Scripts.Managers
         [SerializeField] private string _addPointsSfx = "AddPoints";
         [SerializeField] private string _triggerMultSfx = "TriggerMult";
         [SerializeField] private string _addScoreSfx = "AddScore";
+        [SerializeField] private string _charmTriggerSfx = "CharmTrigger";
         
         private int _currentPoints;
         private int _currentMult;
@@ -86,7 +87,7 @@ namespace _Scripts.Managers
         private async UniTask DiceStepAsync(ScoreStep step)
         {
             await UniTask.Delay(TimeSpan.FromSeconds(_delayPerStep));
-            PlayStepFx(step.SourceTransform);
+            PlayStepFx(step.SourceTransform, _addPointsSfx, true);
             await AddPointsAsync(step.BonusPoints);
         }
 
@@ -94,7 +95,7 @@ namespace _Scripts.Managers
         {
             await UniTask.Delay(TimeSpan.FromSeconds(_delayPerStep));
             step.CharmView.PlayTriggerAnimation();
-            PlayStepFx(step.SourceTransform);
+            PlayStepFx(step.SourceTransform, _charmTriggerSfx, false);
             if (step.BonusPoints > 0)
                 await AddPointsAsync(step.BonusPoints);
 
@@ -104,8 +105,11 @@ namespace _Scripts.Managers
 
         private async UniTask CombinationStepAsync(ScoreStep step)
         {
+            if (step.BonusPoints == 0 && step.BonusMultiplier == 0) return;
+            
             await UniTask.Delay(TimeSpan.FromSeconds(_delayPerStep));
-            PlayStepFx(step.SourceTransform);
+            PlayStepFx(step.SourceTransform, _addPointsSfx, true);
+            
             if (step.BonusPoints > 0)
                 await AddPointsAsync(step.BonusPoints);
 
@@ -165,21 +169,21 @@ namespace _Scripts.Managers
         
         #region FX Methods
 
-        private void PlayStepFx(Transform source)
+        private void PlayStepFx(Transform source, string sfxName, bool is3D)
         {
+            DoScalePopTween(source);
             DoScalePopTween(_pointsText.transform, 1.8f);
             _cameraShaker.Shake(_diceScoreShake);
 
+            //SFX
+            if (sfxName == null) return;
+            
             var pitchMult = 1f + (0.09f * _fxStepIndex++);
-            if (source != null)
-            {
-                _sfxPlayer?.Play(_addPointsSfx, source.position, pitchMult);
-                DoScalePopTween(source);
-            }
+            if (is3D)
+                _sfxPlayer?.Play(sfxName, source.position, pitchMult);
+            
             else
-            {
-                _sfxPlayer?.Play(_addPointsSfx, pitchMult);
-            }
+                _sfxPlayer?.Play(sfxName, pitchMult);
         }
 
         private void PlayMultTriggerFx()
