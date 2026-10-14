@@ -35,10 +35,10 @@ namespace _Scripts.UI
                 _diceStateViews[i].SetRepairMode(enable);
         }
         
-        public Tween MoveToAnchorTween(Transform targetSlot, float duration, Ease ease)
+        public Tween MoveToPositionTween(Vector3 targetPosition, float duration, Ease ease)
         {
             _rectTransform.DOKill();
-            return _rectTransform.DOMove(targetSlot.position, duration).SetEase(ease);
+            return _rectTransform.DOMove(targetPosition, duration).SetEase(ease);
         }
 
         public Tween ResetPositionTween(float duration, Ease ease)

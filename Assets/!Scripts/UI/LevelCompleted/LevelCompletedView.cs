@@ -1,4 +1,3 @@
-using System;
 using System.Threading;
 using _Scripts.Dices;
 using _Scripts.Managers;
@@ -8,36 +7,35 @@ using DG.Tweening;
 using UnityEngine;
 using VContainer;
 
+[RequireComponent(typeof(CanvasGroup))]
 public class LevelCompletedView : MonoBehaviour
 {
     // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
     [Header("Panels")]
-    [SerializeField] private SlidingWindowView _slidingWindow;
     [SerializeField] private LevelRewardsView _rewardsView;
     [SerializeField] private WorkshopPanelView _workshopView;
 
-    [Header("Dice Slot")]
-    [SerializeField] private RectTransform _diceSlotRect;
+    [Header("Backdrop Settings")]
+    [SerializeField] private float _backdropFadeDuration = 0.25f;
 
-    [Header("Transition")]
-    [SerializeField] private float _diceMoveDuration = 0.35f;
-    [SerializeField] private float _pageFadeDuration = 0.2f;
-    [SerializeField] private Ease _diceEase = Ease.OutBack;
+    private CanvasGroup _backdropCanvasGroup;
 
     #region DI
     private LevelFlowController _levelFlowController;
-    private DiceStatePanelView _dicePanelView;
 
     [Inject]
-    public void Construct(LevelFlowController levelFlowController, DiceStatePanelView dicePanelView)
+    public void Construct(LevelFlowController levelFlowController)
     {
         _levelFlowController = levelFlowController;
-        _dicePanelView = dicePanelView;
     }
     #endregion
     // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 
-    private void Start() => HideInstant();
+    private void Awake()
+    {
+        _backdropCanvasGroup = GetComponent<CanvasGroup>();
+        HideInstant();
+    }
 
     private void OnEnable()
     {
@@ -52,72 +50,65 @@ public class LevelCompletedView : MonoBehaviour
         _rewardsView.OnWorkshopRequested -= HandleWorkshopRequested;
         _workshopView.OnNextLevelRequested -= HandleNextLevelRequested;
     }
-    
-    private void HandleWorkshopRequested() => SwitchToWorkshopPanelAsync().Forget();
-    private void HandleNextLevelRequested() => CompleteAndHideAsync().Forget();
 
     private void HandleLevelCompleted(TokenRewardData rewardData)
     {
         _rewardsView.Setup(rewardData);
-        ShowRewardsPanelAsync().Forget();
+        ShowFlowAsync().Forget();
     }
 
-    private async UniTaskVoid ShowRewardsPanelAsync()
+    private void HandleWorkshopRequested() => SwitchToWorkshopAsync().Forget();
+    private void HandleNextLevelRequested() => CompleteAndHideAsync().Forget();
+
+    private async UniTaskVoid ShowFlowAsync()
     {
         var ct = destroyCancellationToken;
 
-        _rewardsView.SetVisible(true);
-        _workshopView.SetVisible(false);
+        SetBackdropInteractable(true);
+        _backdropCanvasGroup.DOKill();
 
-        await _slidingWindow.ShowAsync(ct);
+        await UniTask.WhenAll(
+            _backdropCanvasGroup.DOFade(1f, _backdropFadeDuration).SetUpdate(true).WithCancellation(ct),
+            _rewardsView.ShowAsync(ct)
+        );
     }
 
-    private async UniTaskVoid SwitchToWorkshopPanelAsync()
+    private async UniTaskVoid SwitchToWorkshopAsync()
     {
         var ct = destroyCancellationToken;
 
-        var rewardsCanvas = _rewardsView.GetComponent<CanvasGroup>();
-        var workshopCanvas = _workshopView.GetComponent<CanvasGroup>();
-
-        Canvas.ForceUpdateCanvases();
-
-        await DOTween.Sequence()
-            .SetTarget(transform)
-            .SetUpdate(true)
-            .Join(rewardsCanvas.DOFade(0f, _pageFadeDuration))
-            .Join(_dicePanelView.MoveToAnchorTween(_diceSlotRect, _diceMoveDuration, _diceEase))
-            .AppendCallback(() =>
-            {
-                _rewardsView.SetVisible(false);
-                _workshopView.SetVisible(true);
-                _workshopView.SetNextLevelInteractable(false);
-                _dicePanelView.SetRepairMode(true);
-            })
-            .Append(workshopCanvas.DOFade(1f, _pageFadeDuration))
-            .WithCancellation(ct);
+        await _rewardsView.HideAsync(ct);
+        await _workshopView.ShowAsync(ct);
     }
 
     private async UniTaskVoid CompleteAndHideAsync()
     {
         var ct = destroyCancellationToken;
 
-        _dicePanelView.SetRepairMode(false);
-
-        await DOTween.Sequence()
-            .SetTarget(transform)
-            .SetUpdate(true)
-            .Join(_dicePanelView.ResetPositionTween(_diceMoveDuration, _diceEase))
-            .Join(_slidingWindow.HideTween())
-            .WithCancellation(ct);
+        _backdropCanvasGroup.DOKill();
         
+        await UniTask.WhenAll(
+            _workshopView.HideAsync(ct),
+            _backdropCanvasGroup.DOFade(0f, _backdropFadeDuration).SetUpdate(true).WithCancellation(ct)
+        );
+
+        SetBackdropInteractable(false);
         _levelFlowController.TryStartNextLevel();
     }
-    
+
     private void HideInstant()
     {
-        _slidingWindow.HideInstant();
-        _rewardsView.SetVisible(false);
-        _workshopView.SetVisible(false);
-        _dicePanelView.SetRepairMode(false);
+        _backdropCanvasGroup.DOKill();
+        _backdropCanvasGroup.alpha = 0f;
+        SetBackdropInteractable(false);
+
+        _rewardsView.HideInstant();
+        _workshopView.HideInstant();
+    }
+
+    private void SetBackdropInteractable(bool active)
+    {
+        _backdropCanvasGroup.blocksRaycasts = active;
+        _backdropCanvasGroup.interactable = active;
     }
 }
