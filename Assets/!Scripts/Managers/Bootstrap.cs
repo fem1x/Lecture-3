@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using _Scripts.Charms;
 using _Scripts.Configs;
 using _Scripts.Dices;
 using _Scripts.UI;
@@ -19,6 +20,7 @@ namespace _Scripts.Managers
         private readonly ISfxPlayer _sfxPlayer;
         private readonly CurrentCombinationView _currentCombinationView;
         private readonly DiceStatePanelView _diceStatePanelView;
+        private readonly CharmsPoolService _charmsPoolService;
 
         [Inject]
         public Bootstrap(
@@ -28,7 +30,8 @@ namespace _Scripts.Managers
             LevelFlowController levelFlowController,
             ISfxPlayer sfxPlayer,
             CurrentCombinationView currentCombinationView,
-            DiceStatePanelView diceStatePanelView)
+            DiceStatePanelView diceStatePanelView,
+            CharmsPoolService charmsPoolService)
         {
             _diceSpawner = diceSpawner;
             _diceTableController = diceTableController;
@@ -36,12 +39,15 @@ namespace _Scripts.Managers
             _sfxPlayer = sfxPlayer;
             _currentCombinationView = currentCombinationView;
             _diceStatePanelView = diceStatePanelView;
+            _charmsPoolService = charmsPoolService;
         }
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
         
         public void Initialize()
         {
             _sfxPlayer.Initialize();
+            
+            _charmsPoolService.InitializePool();
             
             var dices = _diceSpawner.SpawnDices();
             _diceSpawner.ResetDicesToSpawn(dices);

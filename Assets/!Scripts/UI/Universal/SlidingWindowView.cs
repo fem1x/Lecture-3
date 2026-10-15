@@ -9,17 +9,16 @@ namespace _Scripts.UI
     public class SlidingWindowView : MonoBehaviour
     {
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
+        [SerializeField] private CanvasGroup _canvasGroup;
         [SerializeField] private RectTransform _windowRect;
         [SerializeField] private float _slideDuration = 0.35f;
         [SerializeField] private Ease _slideEase = Ease.OutBack;
 
-        private CanvasGroup _canvasGroup;
         private float _shownY;
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 
         private void Awake()
         {
-            _canvasGroup = GetComponent<CanvasGroup>();
             _shownY = _windowRect.anchoredPosition.y;
             HideInstant();
         }
@@ -30,7 +29,6 @@ namespace _Scripts.UI
             SetInteractable(true);
 
             _windowRect.anchoredPosition = new Vector2(_windowRect.anchoredPosition.x, _shownY + GetHiddenOffsetY());
-            Canvas.ForceUpdateCanvases();
 
             await DOTween.Sequence()
                 .SetTarget(transform)
@@ -53,13 +51,15 @@ namespace _Scripts.UI
                 .Join(_canvasGroup.DOFade(0f, _slideDuration * 0.6f).SetEase(_slideEase))
                 .Join(_windowRect.DOAnchorPosY(hideY, _slideDuration).SetEase(_slideEase))
                 .WithCancellation(ct);
+
+            _windowRect.anchoredPosition = new Vector2(_windowRect.anchoredPosition.x, _shownY);
         }
 
         public void HideInstant()
         {
+            transform.DOKill();
             SetInteractable(false);
             _canvasGroup.alpha = 0f;
-            _windowRect.anchoredPosition = new Vector2(_windowRect.anchoredPosition.x, _shownY + GetHiddenOffsetY());
         }
 
         private float GetHiddenOffsetY() => -(_windowRect.rect.height > 0 ? _windowRect.rect.height * 1.5f : 1200f);
@@ -68,16 +68,6 @@ namespace _Scripts.UI
         {
             _canvasGroup.blocksRaycasts = active;
             _canvasGroup.interactable = active;
-        }
-        
-        public Vector3 GetSlotTargetPosition(RectTransform slotRect)
-        {
-            _windowRect.anchoredPosition = new Vector2(_windowRect.anchoredPosition.x, _shownY);
-            Canvas.ForceUpdateCanvases();
-
-            var targetPos = slotRect.position;
-            _windowRect.anchoredPosition = new Vector2(_windowRect.anchoredPosition.x, _shownY + GetHiddenOffsetY());
-            return targetPos;
         }
     }
 }

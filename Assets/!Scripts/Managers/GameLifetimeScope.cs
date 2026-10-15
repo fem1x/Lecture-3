@@ -25,6 +25,7 @@ public class GameLifetimeScope : LifetimeScope
     [SerializeField] private DiceDataConfig _diceDataConfig;
     [SerializeField] private TokenRewardConfig _tokenRewardConfig;
     [SerializeField] private InitialCombinationsConfig _initialCombinationsConfig;
+    [SerializeField] private CharmsPoolConfig _charmsPoolConfig;
     
     [Header("Scene")]
     [SerializeField] private Camera _mainCamera;
@@ -53,6 +54,7 @@ public class GameLifetimeScope : LifetimeScope
         builder.RegisterInstance(_diceDataConfig);
         builder.RegisterInstance(_tokenRewardConfig);
         builder.RegisterInstance(_initialCombinationsConfig);
+        builder.RegisterInstance(_charmsPoolConfig);
     }
     
     private void RegisterServices(IContainerBuilder builder)
@@ -83,6 +85,8 @@ public class GameLifetimeScope : LifetimeScope
         builder.Register<DiceRepairService>(Lifetime.Singleton);
         builder.Register<ActiveCombinationsService>(Lifetime.Singleton);
         builder.Register<CharmsService>(Lifetime.Singleton);
+        builder.Register<CharmsPoolService>(Lifetime.Singleton);
+        builder.Register<CharmsConveyorService>(Lifetime.Singleton);
         
         //Entry Point
         builder.RegisterEntryPoint<Bootstrap>();

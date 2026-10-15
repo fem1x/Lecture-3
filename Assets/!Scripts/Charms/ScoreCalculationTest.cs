@@ -34,6 +34,6 @@ public class ScoreCalculationTest : MonoBehaviour
 
     private void Start()
     {
-        _charmsService.AddCharm(_testCharmConfig);
+        _charmsService.TryAddCharm(_testCharmConfig);
     }
 }

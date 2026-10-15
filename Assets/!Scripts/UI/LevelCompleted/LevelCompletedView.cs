@@ -15,10 +15,9 @@ public class LevelCompletedView : MonoBehaviour
     [SerializeField] private LevelRewardsView _rewardsView;
     [SerializeField] private WorkshopPanelView _workshopView;
 
-    [Header("Backdrop Settings")]
+    [Header("Backdrop")]
     [SerializeField] private float _backdropFadeDuration = 0.25f;
-
-    private CanvasGroup _backdropCanvasGroup;
+    [SerializeField] private CanvasGroup _backdropCanvasGroup;
 
     #region DI
     private LevelFlowController _levelFlowController;

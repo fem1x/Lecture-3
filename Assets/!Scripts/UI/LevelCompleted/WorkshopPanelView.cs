@@ -11,13 +11,10 @@ namespace _Scripts.UI
     public class WorkshopPanelView : MonoBehaviour
     {
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
-        [Header("Window Component")]
+        [Header("References")]
         [SerializeField] private SlidingWindowView _slidingWindow;
-
-        [Header("Controls")]
         [SerializeField] private Button _nextLevelButton;
-
-        [Header("Panels")]
+        [Space]
         [SerializeField] private DiceRepairPanelView _diceRepairPanel;
         [SerializeField] private CharmConveyorView _charmConveyor;
 
@@ -48,9 +45,9 @@ namespace _Scripts.UI
 
         public async UniTask ShowAsync(CancellationToken ct)
         {
-            SetNextLevelInteractable(false);
+            _nextLevelButton.interactable = false;
 
-            var targetPosition = _slidingWindow.GetSlotTargetPosition(_diceSlotRect);
+            var targetPosition = _diceSlotRect.position;
 
             await UniTask.WhenAll(
                 _slidingWindow.ShowAsync(ct),
@@ -72,7 +69,5 @@ namespace _Scripts.UI
         }
 
         public void HideInstant() => _slidingWindow.HideInstant();
-
-        public void SetNextLevelInteractable(bool interactable) => _nextLevelButton.interactable = interactable;
     }
 }
