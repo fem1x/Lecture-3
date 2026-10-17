@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading;
+using _Scripts.Charms;
 using _Scripts.Dices;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
@@ -25,11 +26,18 @@ namespace _Scripts.UI
 
         #region DI
         private DiceStatePanelView _dicePanelView;
+        private CharmsRewardGenerator _rewardGenerator;
+        private CharmsConveyorService _conveyorService;
 
         [Inject]
-        public void Construct(DiceStatePanelView dicePanelView)
+        public void Construct(
+            DiceStatePanelView dicePanelView, 
+            CharmsRewardGenerator rewardGenerator, 
+            CharmsConveyorService conveyorService)
         {
             _dicePanelView = dicePanelView;
+            _rewardGenerator = rewardGenerator;
+            _conveyorService = conveyorService;
         }
         #endregion
 
@@ -45,6 +53,8 @@ namespace _Scripts.UI
 
         public async UniTask ShowAsync(CancellationToken ct)
         {
+            InitializeConveyorPanel();
+            
             _nextLevelButton.interactable = false;
 
             var targetPosition = _diceSlotRect.position;
@@ -69,5 +79,12 @@ namespace _Scripts.UI
         }
 
         public void HideInstant() => _slidingWindow.HideInstant();
+
+        private void InitializeConveyorPanel()
+        {
+            var rewardCharms = _rewardGenerator.GenerateCharmsRewards();
+            _conveyorService.InitializeConveyor(rewardCharms);
+            _charmConveyor.InitializeCharmViews();
+        }
     }
 }

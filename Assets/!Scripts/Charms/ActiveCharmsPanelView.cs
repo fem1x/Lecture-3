@@ -35,7 +35,7 @@ namespace _Scripts.Charms
         private void HandleCharmAdded(Charm charm)
         {
             var view = Instantiate(_charmViewPrefab, _container);
-            view.Init(charm.Config.Icon);
+            view.Setup(charm.Config);
             charm.AttachView(view);
             _views.Add(charm, view);
         }

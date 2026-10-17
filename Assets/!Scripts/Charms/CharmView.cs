@@ -6,10 +6,18 @@ namespace _Scripts.Charms
 {
     public class CharmView : MonoBehaviour
     {
+        // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
         [SerializeField] private Image _iconImage;
 
-        public void Init(Sprite icon) => _iconImage.sprite = icon;
-
+        private CharmConfigBase _config;
+        
+        public void Setup(CharmConfigBase config)
+        {
+            _config = config;
+            _iconImage.sprite = _config.Icon;
+        }
+        // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
+        
         public void PlayTriggerAnimation(float scaleMult = 1.35f, float duration = 0.2f)
         {
             transform.DOKill(true);

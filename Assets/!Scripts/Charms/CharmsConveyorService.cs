@@ -19,10 +19,9 @@ namespace _Scripts.Charms
         public event Action OnChoiceCompleted;
         
         public int CurrentIndex { get; private set; }
-        public CharmConfigBase CurrentCharm => _charms[CurrentIndex];
+        public List<CharmConfigBase> Charms { get; private set; } = new();
+        public CharmConfigBase CurrentCharm => Charms[CurrentIndex];
 
-        private List<CharmConfigBase> _charms;
-        
         #region DI
         private readonly RepairTokensManager _tokensManager;
         private readonly CharmsService _charmsService;
@@ -38,10 +37,9 @@ namespace _Scripts.Charms
 
         public void InitializeConveyor(List<CharmConfigBase> charms)
         {
-            _charms = new List<CharmConfigBase>(charms);
+            Charms = new List<CharmConfigBase>(charms);
             CurrentIndex = 0;
             
-            OnConveyorMoved?.Invoke(CurrentIndex);
             OnStateChanged?.Invoke();
         }
         
@@ -66,7 +64,7 @@ namespace _Scripts.Charms
             OnStateChanged?.Invoke();
         }
 
-        public bool CanMoveNext => CurrentIndex < _charms.Count - 1;
+        public bool CanMoveNext => CurrentIndex < Charms.Count - 1;
         public bool CanMoveReverse => CurrentIndex > 0 && _tokensManager.CurrentTokens >=  ReverseCost;
         
         #endregion
@@ -92,7 +90,7 @@ namespace _Scripts.Charms
             OnChoiceCompleted?.Invoke();
         }
 
-        public bool CanScrap => CurrentIndex == _charms.Count - 1;
+        public bool CanScrap => CurrentIndex == Charms.Count - 1;
 
         #endregion
     }

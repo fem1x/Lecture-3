@@ -15,7 +15,7 @@ MonoBehaviour:
   <Id>k__BackingField: 1
   <Title>k__BackingField: Sixes Bonus
   <Description>k__BackingField: no
-  <Icon>k__BackingField: {fileID: 21300000, guid: c96d0446f27357e4cb3ed7c31504b4a3, type: 3}
+  <Icon>k__BackingField: {fileID: -1733069916, guid: 140a94c4ea4433948ba2e3be95eda15e, type: 3}
   <TargetValue>k__BackingField: 6
   <BonusPoints>k__BackingField: 25
   <BonusMultiplier>k__BackingField: 2

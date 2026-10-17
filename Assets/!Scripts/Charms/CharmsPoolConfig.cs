@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace _Scripts.Charms
 {
-    [CreateAssetMenu(fileName = "CharmsPoolConfig", menuName = "Configs/CharmsPoolConfig")]
+    [CreateAssetMenu(fileName = "CharmsPoolConfig", menuName = "Configs/Charms/CharmsPoolConfig")]
     public class CharmsPoolConfig : ScriptableObject
     {
         [field: SerializeField] public List<CharmConfigBase> CharmsPool { get; private set; }= new();
