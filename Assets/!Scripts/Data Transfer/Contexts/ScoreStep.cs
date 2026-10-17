@@ -18,14 +18,14 @@ namespace _Scripts.Structs___Enums.Contexts
         public int BonusPoints { get; }
         public int BonusMultiplier { get; }
         public Transform SourceTransform { get; }
-        public CharmView CharmView { get; }
+        public CharmEquippedView CharmView { get; }
 
         public ScoreStep(
             ScoreStepType type, 
             int bonusPoints = 0, 
             int bonusMultiplier = 0, 
             Transform sourceTransform = null, 
-            CharmView charmView = null)
+            CharmEquippedView charmView = null)
         {
             Type = type;
             BonusPoints = bonusPoints;

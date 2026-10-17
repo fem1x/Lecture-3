@@ -5,11 +5,11 @@ namespace _Scripts.Structs___Enums.Contexts
 {
     public struct CharmTriggerResult
     {
-        public CharmView View { get; }
+        public CharmEquippedView View { get; }
         public int BonusPoints { get; }
         public int BonusMultiplier { get; }
 
-        public CharmTriggerResult(CharmView view, int bonusPoints, int bonusMultiplier)
+        public CharmTriggerResult(CharmEquippedView view, int bonusPoints, int bonusMultiplier)
         {
             View = view;
             BonusPoints = bonusPoints;

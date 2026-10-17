@@ -19,7 +19,7 @@ namespace _Scripts.Structs___Enums.Contexts
             Combination = combination;
         }
         
-        public void AddTrigger(CharmView view, int points, int multiplier)
+        public void AddTrigger(CharmEquippedView view, int points, int multiplier)
         {
             Triggers.Add(new CharmTriggerResult(view, points, multiplier));
         }

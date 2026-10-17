@@ -8,14 +8,14 @@ namespace _Scripts.Charms
     public abstract class Charm
     {
         public CharmConfigBase Config { get; }
-        public CharmView View { get; private set; }
+        public CharmEquippedView View { get; private set; }
         
         protected Charm(CharmConfigBase config)
         {
             Config = config;
         }
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
-        public void AttachView(CharmView view) => View = view;
+        public void AttachView(CharmEquippedView view) => View = view;
         public void DetachView() => View = null;
         
         public virtual void OnRoll() { }

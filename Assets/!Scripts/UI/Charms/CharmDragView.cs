@@ -8,7 +8,7 @@ namespace _Scripts.UI.Charms
     public class CharmDragView : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
     {
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
-        [field: SerializeField] public CharmView CharmView { get; private set; }
+        [field: SerializeField] public CharmGeneralView CharmGeneralView { get; private set; }
         [SerializeField] private RectTransform _rectTransform;
         [SerializeField] private CanvasGroup _canvasGroup;
         [SerializeField] private float _returnTweenTime = 0.5f;
@@ -29,7 +29,7 @@ namespace _Scripts.UI.Charms
         public void Setup(CharmConfigBase config, RectTransform dragLayer)
         {
             _dragLayer = dragLayer;
-            CharmView.Setup(config);
+            CharmGeneralView.Setup(config);
         }
         
         public void SetDraggable(bool isDraggable) =>  _isDraggable = isDraggable;
@@ -41,7 +41,6 @@ namespace _Scripts.UI.Charms
             
             _canvasGroup.blocksRaycasts = false;
             RememberOriginalState();
-            
             _rectTransform.SetParent(_dragLayer, worldPositionStays: true);
         }
 

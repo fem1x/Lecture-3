@@ -13,8 +13,9 @@ namespace _Scripts.UI
     {
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
         [Header("Charms Spawn")]
-        [SerializeField] private CharmView _charmPrefab;
+        [SerializeField] private CharmDragView _charmPrefab;
         [SerializeField] private HorizontalLayoutGroup _containerLayout;
+        [SerializeField] private RectTransform _dragLayer;
         
         [Header("Conveyor Movement")]
         [SerializeField] private float _moveDuration = 0.8f;
@@ -30,7 +31,7 @@ namespace _Scripts.UI
         [SerializeField] private Color _inactiveColor;
 
         private RectTransform _containerRect;
-        private readonly List<CharmView> _spawnedViewsList = new();
+        private readonly List<CharmDragView> _spawnedViewsList = new();
         private Tween _moveTween;
         
         #region DI
@@ -88,12 +89,14 @@ namespace _Scripts.UI
             foreach (var charm in _conveyorService.Charms)
             {
                 var view = _resolver.Instantiate(_charmPrefab, _containerRect);
-                view.Setup(charm);
+                view.Setup(charm, _dragLayer);
                 _spawnedViewsList.Add(view);
             }
 
             AdjustContainerLayout();
             ResetConveyorPosition();
+            UpdateDraggableCharm(0);
+            UpdateIndicators(0);
         }
 
         private void MoveToCharm(int charmIndex)
@@ -103,12 +106,19 @@ namespace _Scripts.UI
             _moveTween = _containerRect.DOAnchorPosX(targetX, _moveDuration).SetEase(_moveEase);
             
             UpdateIndicators(charmIndex);
+            UpdateDraggableCharm(charmIndex);
         }
 
-        private void UpdateIndicators(int charmIndex)
+        private void UpdateIndicators(int activeIndex)
         {
             for (int i = 0; i < _indicators.Count; i++)
-                _indicators[i].color = charmIndex == i ? _activeColor : _inactiveColor;
+                _indicators[i].color = activeIndex == i ? _activeColor : _inactiveColor;
+        }
+        
+        private void UpdateDraggableCharm(int activeIndex)
+        {
+            for (var i = 0; i < _spawnedViewsList.Count; i++)
+                _spawnedViewsList[i].SetDraggable(i == activeIndex);
         }
         
         private void ClearCharmViews()

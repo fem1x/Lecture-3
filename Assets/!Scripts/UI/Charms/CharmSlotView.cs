@@ -33,7 +33,7 @@ namespace _Scripts.UI.Charms
 
             if (!IsEmpty) return;
 
-            if (_charmsService.TryAddCharm(dragView.CharmView.Config))
+            if (_charmsService.TryAddCharm(dragView.CharmGeneralView.Config))
             {
                 _activeCharm = _charmsService.ActiveCharms[^1];
 
@@ -52,10 +52,10 @@ namespace _Scripts.UI.Charms
             _activeCharm = charm;
 
             _currentEquipped = Instantiate(_charmPrefab, _charmHolder);
-            _currentEquipped.CharmView.Setup(charm.Config);
+            _currentEquipped.CharmGeneralView.Setup(charm.Config);
             _currentEquipped.PlayTriggerAnimation();
 
-            charm.AttachView(_currentEquipped.CharmView);
+            charm.AttachView(_currentEquipped);
         }
         
         private void Clear()

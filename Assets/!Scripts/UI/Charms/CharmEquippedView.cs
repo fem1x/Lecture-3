@@ -6,7 +6,7 @@ namespace _Scripts.UI.Charms
 {
     public class CharmEquippedView : MonoBehaviour
     {
-        [field: SerializeField] public CharmView CharmView { get; private set; }
+        [field: SerializeField] public CharmGeneralView CharmGeneralView { get; private set; }
         
         public void PlayTriggerAnimation(float scaleMult = 1.35f, float duration = 0.2f)
         {

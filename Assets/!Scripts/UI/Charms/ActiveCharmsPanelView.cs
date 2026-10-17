@@ -7,10 +7,10 @@ namespace _Scripts.Charms
 {
     public class ActiveCharmsPanelView : MonoBehaviour
     {
-        [SerializeField] private CharmView _charmViewPrefab;
+        [SerializeField] private CharmEquippedView _charmViewPrefab;
         [SerializeField] private Transform _container;
 
-        private readonly Dictionary<Charm, CharmView> _views = new();
+        private readonly Dictionary<Charm, CharmGeneralView> _views = new();
 
         private CharmsService _charmsService;
 
@@ -20,34 +20,5 @@ namespace _Scripts.Charms
             _charmsService = charmsService;
         }
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
-
-        private void OnEnable()
-        {
-            _charmsService.OnCharmAdded += HandleCharmAdded;
-            _charmsService.OnCharmRemoved += HandleCharmRemoved;
-        }
-
-        private void OnDisable()
-        {
-            _charmsService.OnCharmAdded -= HandleCharmAdded;
-            _charmsService.OnCharmRemoved -= HandleCharmRemoved;
-        }
-
-        private void HandleCharmAdded(Charm charm)
-        {
-            var view = Instantiate(_charmViewPrefab, _container);
-            view.Setup(charm.Config);
-            charm.AttachView(view);
-            _views.Add(charm, view);
-        }
-
-        private void HandleCharmRemoved(Charm charm)
-        {
-            if (_views.Remove(charm, out var view))
-            {
-                charm.DetachView();
-                Destroy(view.gameObject);
-            }
-        }
     }
 }

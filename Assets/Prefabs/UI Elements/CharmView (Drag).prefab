@@ -1,0 +1,154 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &4303414995645182477
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1214982661794929846, guid: 4b61beccc7d12674db762c3c90a46557, type: 3}
+      propertyPath: m_Name
+      value: CharmView (Drag)
+      objectReference: {fileID: 0}
+    - target: {fileID: 3348164102561811891, guid: 4b61beccc7d12674db762c3c90a46557, type: 3}
+      propertyPath: m_Pivot.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3348164102561811891, guid: 4b61beccc7d12674db762c3c90a46557, type: 3}
+      propertyPath: m_Pivot.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3348164102561811891, guid: 4b61beccc7d12674db762c3c90a46557, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3348164102561811891, guid: 4b61beccc7d12674db762c3c90a46557, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3348164102561811891, guid: 4b61beccc7d12674db762c3c90a46557, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3348164102561811891, guid: 4b61beccc7d12674db762c3c90a46557, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3348164102561811891, guid: 4b61beccc7d12674db762c3c90a46557, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 58
+      objectReference: {fileID: 0}
+    - target: {fileID: 3348164102561811891, guid: 4b61beccc7d12674db762c3c90a46557, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 58
+      objectReference: {fileID: 0}
+    - target: {fileID: 3348164102561811891, guid: 4b61beccc7d12674db762c3c90a46557, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3348164102561811891, guid: 4b61beccc7d12674db762c3c90a46557, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3348164102561811891, guid: 4b61beccc7d12674db762c3c90a46557, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3348164102561811891, guid: 4b61beccc7d12674db762c3c90a46557, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3348164102561811891, guid: 4b61beccc7d12674db762c3c90a46557, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3348164102561811891, guid: 4b61beccc7d12674db762c3c90a46557, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3348164102561811891, guid: 4b61beccc7d12674db762c3c90a46557, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3348164102561811891, guid: 4b61beccc7d12674db762c3c90a46557, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3348164102561811891, guid: 4b61beccc7d12674db762c3c90a46557, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3348164102561811891, guid: 4b61beccc7d12674db762c3c90a46557, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3348164102561811891, guid: 4b61beccc7d12674db762c3c90a46557, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3348164102561811891, guid: 4b61beccc7d12674db762c3c90a46557, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1214982661794929846, guid: 4b61beccc7d12674db762c3c90a46557, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3519985585068647941}
+    - targetCorrespondingSourceObject: {fileID: 1214982661794929846, guid: 4b61beccc7d12674db762c3c90a46557, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3896439942729936315}
+  m_SourcePrefab: {fileID: 100100000, guid: 4b61beccc7d12674db762c3c90a46557, type: 3}
+--- !u!224 &1571717376178421694 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 3348164102561811891, guid: 4b61beccc7d12674db762c3c90a46557, type: 3}
+  m_PrefabInstance: {fileID: 4303414995645182477}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &3126819103483801275 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1214982661794929846, guid: 4b61beccc7d12674db762c3c90a46557, type: 3}
+  m_PrefabInstance: {fileID: 4303414995645182477}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &3519985585068647941
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3126819103483801275}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7dd80f9735f84646bb2e1d85746e0f67, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Game::_Scripts.UI.Charms.CharmDragView
+  <CharmGeneralView>k__BackingField: {fileID: 7644324132369258505}
+  _rectTransform: {fileID: 1571717376178421694}
+  _canvasGroup: {fileID: 3896439942729936315}
+  _returnTweenTime: 0.7
+--- !u!225 &3896439942729936315
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3126819103483801275}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
+--- !u!114 &7644324132369258505 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5885876437102488068, guid: 4b61beccc7d12674db762c3c90a46557, type: 3}
+  m_PrefabInstance: {fileID: 4303414995645182477}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3126819103483801275}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: abe8b3e038eb4c039cd94468575de097, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Game::_Scripts.Charms.CharmView

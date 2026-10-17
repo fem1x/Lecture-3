@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 namespace _Scripts.UI.Charms
 {
-    public class CharmView : MonoBehaviour
+    public class CharmGeneralView : MonoBehaviour
     {
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
         [SerializeField] private Image _iconImage;
