@@ -1,0 +1,74 @@
+﻿using _Scripts.Charms;
+using UnityEngine;
+using UnityEngine.EventSystems;
+using VContainer;
+
+namespace _Scripts.UI.Charms
+{
+    public class CharmSlotView : MonoBehaviour, IDropHandler
+    {
+        // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
+        [SerializeField] private CharmEquippedView _charmPrefab;
+        [SerializeField] private Transform _charmHolder;
+        [SerializeField] private GameObject _emptyPlaceholder;
+
+        private CharmsService _charmsService;
+        private CharmEquippedView _currentEquipped;
+        private Charm _activeCharm;
+
+        public bool IsEmpty => _currentEquipped == null;
+        
+        [Inject]
+        public void Construct(CharmsService charmsService)
+        {
+            _charmsService = charmsService;
+        }
+        // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
+        
+        public void OnDrop(PointerEventData eventData)
+        {
+            if (eventData.pointerDrag == null) return;
+
+            if (!eventData.pointerDrag.TryGetComponent<CharmDragView>(out var dragView)) return;
+
+            if (!IsEmpty) return;
+
+            if (_charmsService.TryAddCharm(dragView.CharmView.Config))
+            {
+                _activeCharm = _charmsService.ActiveCharms[^1];
+
+                Equip(_activeCharm);
+                dragView.OnSuccessfullyEquipped();
+            }
+            else
+            {
+                dragView.RestoreOriginalState();
+            }
+        }
+
+        private void Equip(Charm charm)
+        {
+            _emptyPlaceholder.SetActive(false);
+            _activeCharm = charm;
+
+            _currentEquipped = Instantiate(_charmPrefab, _charmHolder);
+            _currentEquipped.CharmView.Setup(charm.Config);
+            _currentEquipped.PlayTriggerAnimation();
+
+            charm.AttachView(_currentEquipped.CharmView);
+        }
+        
+        private void Clear()
+        {
+            if (_currentEquipped != null)
+            {
+                _activeCharm?.DetachView();
+                Destroy(_currentEquipped.gameObject);
+                _currentEquipped = null;
+                _activeCharm = null;
+            }
+
+            _emptyPlaceholder.SetActive(true);
+        }
+    }
+}

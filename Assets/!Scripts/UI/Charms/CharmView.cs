@@ -1,0 +1,21 @@
+﻿using _Scripts.Charms;
+using DG.Tweening;
+using UnityEngine;
+using UnityEngine.UI;
+
+namespace _Scripts.UI.Charms
+{
+    public class CharmView : MonoBehaviour
+    {
+        // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
+        [SerializeField] private Image _iconImage;
+        public CharmConfigBase Config { get; private set; }
+        // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
+        
+        public void Setup(CharmConfigBase config)
+        {
+            Config = config;
+            _iconImage.sprite = Config.Icon;
+        }
+    }
+}
