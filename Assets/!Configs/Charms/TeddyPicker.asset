@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70a250079fd3430d8da4f990995392d2, type: 3}
   m_Name: TeddyPicker
   m_EditorClassIdentifier: Game::_Scripts.Charms.TeddyPickerCharmConfig
-  <Id>k__BackingField: 
-  <Title>k__BackingField: 
-  <Description>k__BackingField: 
-  <Icon>k__BackingField: {fileID: 0}
+  <Id>k__BackingField: teddy_picker
+  <Title>k__BackingField: Teddy Picker
+  <Description>k__BackingField: no
+  <Icon>k__BackingField: {fileID: 21300000, guid: c96d0446f27357e4cb3ed7c31504b4a3, type: 3}
   <MaxDicesThreshold>k__BackingField: 2
   <XMultiplier>k__BackingField: 2

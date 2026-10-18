@@ -14,5 +14,7 @@ namespace _Scripts.Data_Transfer.Contexts
         {
             Dice = dice;
         }
+        
+        public void Cancel() =>  IsCancelled = true;
     }
 }
