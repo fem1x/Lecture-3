@@ -21,8 +21,8 @@ namespace _Scripts.Managers
         
         [Header("Timings")]
         [SerializeField] private float _delayPerStep = 0.22f;
-        [SerializeField] private float _delayBeforeMult = 0.25f;
-        [SerializeField] private float _delayAfterMult = 0.35f;
+        [SerializeField] private float _delayBeforeFinalMult = 0.25f;
+        [SerializeField] private float _delayAfterFinalMult = 0.35f;
         [Space(0.5f)]
         [SerializeField] private float _pointsMultDuration = 0.5f;
         [SerializeField] private float _pointsAddDuration = 0.15f;
@@ -79,7 +79,7 @@ namespace _Scripts.Managers
                 }
             }
             
-            await UniTask.Delay(TimeSpan.FromSeconds(_delayAfterMult));
+            await UniTask.Delay(TimeSpan.FromSeconds(_delayAfterFinalMult));
             ApplyFinalScore(sequencePlan.TotalScore);
         }
         
@@ -87,27 +87,37 @@ namespace _Scripts.Managers
         private async UniTask DiceStepAsync(ScoreStep step)
         {
             await UniTask.Delay(TimeSpan.FromSeconds(_delayPerStep));
-            PlayStepFx(step.SourceTransform, _addPointsSfx, true);
+            PlayDiceStepFx(step.SourceTransform, _addPointsSfx, true);
             await AddPointsAsync(step.BonusPoints);
         }
 
         private async UniTask CharmStepAsync(ScoreStep step)
         {
             await UniTask.Delay(TimeSpan.FromSeconds(_delayPerStep));
+    
             step.CharmView.PlayTriggerAnimation();
-            PlayStepFx(step.SourceTransform, _charmTriggerSfx, false);
+            _sfxPlayer?.Play(_charmTriggerSfx);
 
-            //+ Points
+            // +Points
             if (step.BonusPoints > 0)
+            {
+                DoScalePopTween(_pointsText.transform, 1.8f);
                 await AddPointsAsync(step.BonusPoints);
+            }
 
-            //+ Mult
+            // +Mult
             if (step.BonusMultiplier > 0)
+            {
+                DoScalePopTween(_multText.transform, 1.8f);
                 await AddMultAsync(step.BonusMultiplier);
+            }
 
-            //X-Mult
+            // X-Mult
             if (step.XMultiplier > 1f)
+            {
+                DoScalePopTween(_multText.transform, 2.5f);
                 await XMultAsync(step.XMultiplier);
+            }
         }
 
         private async UniTask CombinationStepAsync(ScoreStep step)
@@ -115,7 +125,7 @@ namespace _Scripts.Managers
             if (step.BonusPoints == 0 && step.BonusMultiplier == 0) return;
             
             await UniTask.Delay(TimeSpan.FromSeconds(_delayPerStep));
-            PlayStepFx(step.SourceTransform, _addPointsSfx, true);
+            PlayDiceStepFx(step.SourceTransform, _addPointsSfx, true);
             
             if (step.BonusPoints > 0)
                 await AddPointsAsync(step.BonusPoints);
@@ -126,7 +136,7 @@ namespace _Scripts.Managers
 
         private async UniTask MultiplyStepAsync(ScoreStep step)
         {
-            await UniTask.Delay(TimeSpan.FromSeconds(_delayBeforeMult));
+            await UniTask.Delay(TimeSpan.FromSeconds(_delayBeforeFinalMult));
             await TriggerMultAsync();
         }
         #endregion
@@ -148,7 +158,6 @@ namespace _Scripts.Managers
         private async UniTask XMultAsync(float xMult)
         {
             var target = Mathf.RoundToInt(_currentMult * xMult);
-            PlayMultTriggerFx();
             await DoTextValueTween(_multText, _currentMult, target, _pointsAddDuration);
             _currentMult = target;
         }
@@ -184,7 +193,7 @@ namespace _Scripts.Managers
         
         #region FX Methods
 
-        private void PlayStepFx(Transform source, string sfxName, bool is3D)
+        private void PlayDiceStepFx(Transform source, string sfxName, bool is3D)
         {
             DoScalePopTween(source);
             DoScalePopTween(_pointsText.transform, 1.8f);
