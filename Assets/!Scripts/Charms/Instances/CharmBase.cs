@@ -5,12 +5,12 @@ using _Scripts.UI.Charms;
 
 namespace _Scripts.Charms
 {
-    public abstract class Charm
+    public abstract class CharmBase
     {
         public CharmConfigBase Config { get; }
         public CharmEquippedView View { get; private set; }
         
-        protected Charm(CharmConfigBase config)
+        protected CharmBase(CharmConfigBase config)
         {
             Config = config;
         }
@@ -19,13 +19,11 @@ namespace _Scripts.Charms
         public void DetachView() => View = null;
         
         public virtual void OnRoll() { }
-
         public virtual void OnDiceScored(DiceScoreContext context) { }
-
         public virtual void OnCombinationScored(CombinationScoreContext context) { }
-
         public virtual void OnFinalizeScore(FinalizeScoreContext context) { }
-
         public virtual void OnRoundEnd() { }
+        public virtual void OnPreTakeDamage(DiceDamageContext context) { }
+        public virtual void OnDiceDegrading(DiceDegradeContext context) { }
     }
 }

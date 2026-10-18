@@ -11,6 +11,6 @@ namespace _Scripts.Charms
         [field: SerializeField] public Sprite Icon { get; private set; }
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 
-        public abstract Charm CreateCharmInstance();
+        public abstract CharmBase CreateCharmInstance();
     }
 }

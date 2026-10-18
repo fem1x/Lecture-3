@@ -58,16 +58,6 @@ namespace _Scripts.Dices
             foreach (var dice in _allDices)
                 if (dice != null) dice.Data.SetLock(false);
         }
-        
-        public void DegradePlayedDices(List<Dice> dices, int amount = 1)
-        {
-            if (dices == null) return;
-            foreach (var dice in dices)
-            {
-                if (dice != null)
-                    dice.Data.TakeDamage(amount);
-            }
-        }
 
         public void ActivateAllDices(List<Dice> dices)
         {

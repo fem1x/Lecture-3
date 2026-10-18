@@ -71,7 +71,7 @@ namespace _Scripts.Charms
         
         #region Selection
 
-        public bool TryClaim(CharmConfigBase config, out Charm createdCharm)
+        public bool TryClaim(CharmConfigBase config, out CharmBase createdCharm)
         {
             if (!_charmsService.TryAddCharm(config, out createdCharm))
                 return false;
@@ -87,7 +87,7 @@ namespace _Scripts.Charms
             OnChoiceCompleted?.Invoke();
         }
 
-        public void Replace(Charm oldCharm)
+        public void Replace(CharmBase oldCharm)
         {
             _charmsService.ReplaceCharm(oldCharm, CurrentCharm);
             OnChoiceCompleted?.Invoke();

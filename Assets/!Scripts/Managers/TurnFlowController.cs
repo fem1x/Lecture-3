@@ -29,6 +29,7 @@ namespace _Scripts.Managers
         private LevelFlowController  _levelFlowController;
         private ISfxPlayer _sfxPlayer;
         private ScoreSequenceController _scoreSequenceController;
+        private DiceDamageService _damageService;
         
         [Inject]
         public void Construct(
@@ -40,7 +41,8 @@ namespace _Scripts.Managers
             DiceRoller  diceRoller,
             LevelFlowController levelFlowController,
             ISfxPlayer sfxPlayer,
-            ScoreSequenceController scoreSequenceController)
+            ScoreSequenceController scoreSequenceController,
+            DiceDamageService damageService)
         {
             _tableController = tableController;
             _calculator = calculator;
@@ -51,6 +53,7 @@ namespace _Scripts.Managers
             _levelFlowController = levelFlowController;
             _sfxPlayer = sfxPlayer;
             _scoreSequenceController = scoreSequenceController;
+            _damageService = damageService;
         }
         #endregion
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== 
@@ -105,7 +108,7 @@ namespace _Scripts.Managers
             
             var scoreSequence = _calculator.Calculate(selectedDices);
             await _scoreSequenceController.PlaySequenceAsync(scoreSequence);
-            _tableController.DegradePlayedDices(selectedDices, 1);
+            _damageService.DamageDices(selectedDices);
             
             _isScoring = false;
 

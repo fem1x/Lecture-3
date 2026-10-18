@@ -7,13 +7,13 @@ namespace _Scripts.Charms
     public class CharmsService
     {
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
-        private readonly List<Charm> _activeCharms = new();
+        private readonly List<CharmBase> _activeCharms = new();
         
         public int MaxSlots { get; private set; } = 3;
-        public IReadOnlyList<Charm> ActiveCharms => _activeCharms;
+        public IReadOnlyList<CharmBase> ActiveCharms => _activeCharms;
         
-        public event Action<Charm> OnCharmAdded;
-        public event Action<Charm> OnCharmRemoved;
+        public event Action<CharmBase> OnCharmAdded;
+        public event Action<CharmBase> OnCharmRemoved;
         public event Action<int> OnMaxSlotsChanged;
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 
@@ -35,7 +35,7 @@ namespace _Scripts.Charms
         
         public bool TryAddCharm(CharmConfigBase charmConfig) => TryAddCharm(charmConfig, out _);
 
-        public bool TryAddCharm(CharmConfigBase charmConfig, out Charm createdCharm)
+        public bool TryAddCharm(CharmConfigBase charmConfig, out CharmBase createdCharm)
         {
             createdCharm = null;
 
@@ -48,13 +48,13 @@ namespace _Scripts.Charms
             return true;
         }
 
-        public void RemoveCharm(Charm charm)
+        public void RemoveCharm(CharmBase charm)
         {
             _activeCharms.Remove(charm);
             OnCharmRemoved?.Invoke(charm);
         }
 
-        public void ReplaceCharm(Charm oldCharm, CharmConfigBase newCharmConfig)
+        public void ReplaceCharm(CharmBase oldCharm, CharmConfigBase newCharmConfig)
         {
             RemoveCharm(oldCharm);
             TryAddCharm(newCharmConfig);

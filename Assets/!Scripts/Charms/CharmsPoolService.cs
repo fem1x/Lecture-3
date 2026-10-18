@@ -44,12 +44,12 @@ namespace _Scripts.Charms
             _charmsService.OnCharmRemoved -= HandleCharmRemoved;
         }
 
-        private void HandleCharmAdded(Charm charm)
+        private void HandleCharmAdded(CharmBase charm)
         {
             CharmsPool.Remove(charm.Config);
         }
 
-        private void HandleCharmRemoved(Charm charm)
+        private void HandleCharmRemoved(CharmBase charm)
         {
             CharmsPool.Add(charm.Config);
         }

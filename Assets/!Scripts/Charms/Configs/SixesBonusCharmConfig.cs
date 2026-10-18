@@ -2,7 +2,7 @@
 
 namespace _Scripts.Charms
 {
-    [CreateAssetMenu(fileName = "SixesBonusCharmConfig", menuName = "Configs/Charms/Sixes Bonus")]
+    [CreateAssetMenu(fileName = "SixesBonus", menuName = "Configs/Charms/SixesBonus")]
     public class SixesBonusCharmConfig : CharmConfigBase
     {
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
@@ -11,6 +11,6 @@ namespace _Scripts.Charms
         [field: SerializeField] public int BonusMultiplier { get; private set; } = 2;
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 
-        public override Charm CreateCharmInstance() => new SixesBonusCharm(this);
+        public override CharmBase CreateCharmInstance() => new SixesBonusCharm(this);
     }
 }

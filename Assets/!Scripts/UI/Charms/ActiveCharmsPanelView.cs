@@ -10,7 +10,7 @@ namespace _Scripts.Charms
         [SerializeField] private CharmEquippedView _charmViewPrefab;
         [SerializeField] private Transform _container;
 
-        private readonly Dictionary<Charm, CharmGeneralView> _views = new();
+        private readonly Dictionary<CharmBase, CharmGeneralView> _views = new();
 
         private CharmsService _charmsService;
 

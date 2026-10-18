@@ -2,7 +2,7 @@
 
 namespace _Scripts.Charms
 {
-    public class SixesBonusCharm : Charm
+    public class SixesBonusCharm : CharmBase
     {
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
         private readonly SixesBonusCharmConfig _config;

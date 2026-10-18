@@ -8,7 +8,7 @@ namespace _Scripts.Data_Transfer.Contexts
         public Dice Dice { get; }
         
         //Out:
-        public bool PreventDegradeAndRestoreHealth { get; set; }
+        public bool IsCancelled { get; private set; }
 
         public DiceDegradeContext(Dice dice)
         {

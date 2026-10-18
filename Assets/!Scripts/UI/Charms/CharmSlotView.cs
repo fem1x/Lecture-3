@@ -14,7 +14,7 @@ namespace _Scripts.UI.Charms
         public bool IsEmpty => _currentEquipped == null;
 
         private CharmEquippedView _currentEquipped;
-        private Charm _activeCharm;
+        private CharmBase _activeCharm;
         
         private CharmsConveyorService _conveyorService;
         
@@ -42,7 +42,7 @@ namespace _Scripts.UI.Charms
             }
         }
 
-        private void Equip(Charm charm)
+        private void Equip(CharmBase charm)
         {
             _emptyPlaceholder.SetActive(false);
             _activeCharm = charm;

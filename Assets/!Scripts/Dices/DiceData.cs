@@ -65,10 +65,17 @@ namespace _Scripts.Dices
             CurrentDurability -= amount;
             if (CurrentDurability <= 0)
             {
-                CurrentDurability = MaxDurability;
-                DamageLevel++;
+                Degrade();
+                return;
             }
 
+            OnDataChanged?.Invoke();
+        }
+
+        public void Degrade()
+        {
+            CurrentDurability = MaxDurability;
+            DamageLevel++;
             OnDataChanged?.Invoke();
         }
 
