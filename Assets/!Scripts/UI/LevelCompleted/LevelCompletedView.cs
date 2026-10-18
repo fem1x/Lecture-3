@@ -107,7 +107,7 @@ public class LevelCompletedView : MonoBehaviour
 
     private void SetBackdropInteractable(bool active)
     {
-        //_backdropCanvasGroup.blocksRaycasts = active;
+        _backdropCanvasGroup.blocksRaycasts = active;
         _backdropCanvasGroup.interactable = active;
     }
 }

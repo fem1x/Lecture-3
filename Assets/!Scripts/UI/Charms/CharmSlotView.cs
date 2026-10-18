@@ -42,7 +42,7 @@ namespace _Scripts.UI.Charms
             }
             else
             {
-                dragView.RestoreOriginalState();
+                dragView.ReturnToConveyor();
             }
         }
 

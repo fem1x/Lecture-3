@@ -1279,8 +1279,8 @@ CanvasGroup:
   m_GameObject: {fileID: 840940749852178367}
   m_Enabled: 1
   m_Alpha: 1
-  m_Interactable: 0
-  m_BlocksRaycasts: 0
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
 --- !u!222 &4186806446606389984
 CanvasRenderer:
@@ -1814,7 +1814,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
   m_Color: {r: 0.2264151, g: 0.2264151, b: 0.2264151, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -5526,8 +5526,8 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7212197057425964096}
-  - {fileID: 4966867623760193499}
   - {fileID: 1687509680728226550}
+  - {fileID: 4966867623760193499}
   - {fileID: 8541449471210441122}
   - {fileID: 2453700011438116718}
   - {fileID: 8183831586442563268}

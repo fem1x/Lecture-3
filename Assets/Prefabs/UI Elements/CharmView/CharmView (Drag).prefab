@@ -128,7 +128,8 @@ MonoBehaviour:
   <CharmGeneralView>k__BackingField: {fileID: 7644324132369258505}
   _rectTransform: {fileID: 1571717376178421694}
   _canvasGroup: {fileID: 3896439942729936315}
-  _returnTweenTime: 0.7
+  _returnTweenTime: 0.8
+  _returnEase: 18
 --- !u!225 &3896439942729936315
 CanvasGroup:
   m_ObjectHideFlags: 0

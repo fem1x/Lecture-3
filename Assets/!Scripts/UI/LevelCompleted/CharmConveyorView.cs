@@ -14,6 +14,7 @@ namespace _Scripts.UI
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
         [Header("Charms Spawn")]
         [SerializeField] private CharmDragView _charmPrefab;
+        [SerializeField] private ConveyorCellView _cellPrefab;
         [SerializeField] private HorizontalLayoutGroup _containerLayout;
         [SerializeField] private RectTransform _dragLayer;
         
@@ -30,8 +31,8 @@ namespace _Scripts.UI
         [SerializeField] private Color _activeColor;
         [SerializeField] private Color _inactiveColor;
 
+        private readonly List<ConveyorCellView> _spawnedCellsList = new();
         private RectTransform _containerRect;
-        private readonly List<CharmDragView> _spawnedViewsList = new();
         private Tween _moveTween;
         
         #region DI
@@ -85,12 +86,15 @@ namespace _Scripts.UI
         public void InitializeCharmViews()
         {
             ClearCharmViews();
-            
+    
             foreach (var charm in _conveyorService.Charms)
             {
-                var view = _resolver.Instantiate(_charmPrefab, _containerRect);
-                view.Setup(charm, _dragLayer);
-                _spawnedViewsList.Add(view);
+                var cell = _resolver.Instantiate(_cellPrefab, _containerRect);
+                var card = _resolver.Instantiate(_charmPrefab, cell.CharmHolder);
+                card.Setup(charm, _dragLayer, cell.CharmHolder);
+                cell.AttachCharm(card);
+
+                _spawnedCellsList.Add(cell);
             }
 
             AdjustContainerLayout();
@@ -101,10 +105,12 @@ namespace _Scripts.UI
 
         private void MoveToCharm(int charmIndex)
         {
-            _moveTween?.Kill();
-            var targetX = -_spawnedViewsList[charmIndex].transform.localPosition.x;
-            _moveTween = _containerRect.DOAnchorPosX(targetX, _moveDuration).SetEase(_moveEase);
+            ResetCharmStates();
             
+            _moveTween?.Kill();
+            var targetX = -_spawnedCellsList[charmIndex].transform.localPosition.x;
+            _moveTween = _containerRect.DOAnchorPosX(targetX, _moveDuration).SetEase(_moveEase);
+    
             UpdateIndicators(charmIndex);
             UpdateDraggableCharm(charmIndex);
         }
@@ -117,26 +123,28 @@ namespace _Scripts.UI
         
         private void UpdateDraggableCharm(int activeIndex)
         {
-            for (var i = 0; i < _spawnedViewsList.Count; i++)
-                _spawnedViewsList[i].SetDraggable(i == activeIndex);
+            for (var i = 0; i < _spawnedCellsList.Count; i++)
+                _spawnedCellsList[i].SetDraggable(i == activeIndex);
         }
         
         private void ClearCharmViews()
         {
-            foreach (var view in _spawnedViewsList)
-                Destroy(view.gameObject);
-            _spawnedViewsList.Clear();
+            foreach (var cell in _spawnedCellsList)
+                Destroy(cell.gameObject);
+        
+            _spawnedCellsList.Clear();
         }
 
         private void ResetConveyorPosition()
         {
             _moveTween?.Kill();
-            _containerRect.anchoredPosition = new Vector2(-_spawnedViewsList[0].transform.localPosition.x, _containerRect.anchoredPosition.y);
+            var targetX = -_spawnedCellsList[0].transform.localPosition.x;
+            _containerRect.anchoredPosition = new Vector2(targetX, _containerRect.anchoredPosition.y);
         }
 
         private void AdjustContainerLayout()
         {
-            var cardWidth = ((RectTransform)_spawnedViewsList[0].transform).rect.width;
+            var cardWidth = ((RectTransform)_spawnedCellsList[0].transform).rect.width;
             var conveyorWidth = ((RectTransform)_containerRect.parent).rect.width;
 
             _containerLayout.childForceExpandWidth = false;
@@ -146,6 +154,17 @@ namespace _Scripts.UI
             _containerRect.offsetMax = new Vector2(cardWidth / 2f, _containerRect.offsetMax.y);
 
             LayoutRebuilder.ForceRebuildLayoutImmediate(_containerRect);
+        }
+
+        private void ResetCharmStates()
+        {
+            foreach (var cell in _spawnedCellsList)
+            {
+                var charm = cell.CurrentCharm;
+                if (charm != null)
+                    charm.InstantReturnToConveyor();
+            }
+                
         }
     }
 }

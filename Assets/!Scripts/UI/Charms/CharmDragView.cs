@@ -11,80 +11,81 @@ namespace _Scripts.UI.Charms
         [field: SerializeField] public CharmGeneralView CharmGeneralView { get; private set; }
         [SerializeField] private RectTransform _rectTransform;
         [SerializeField] private CanvasGroup _canvasGroup;
-        [SerializeField] private float _returnTweenTime = 0.5f;
         
-        private Transform _originalParent;
-        private int _originalSiblingIndex;
-        private Vector3 _originalWorldPosition;
-        
-        private Canvas _rootCanvas;
+        [Header("Return Tween")]
+        [SerializeField] private float _returnTweenTime = 0.35f;
+        [SerializeField] private Ease _returnEase = Ease.OutCubic;
+
+        private RectTransform _cellHolder;
         private RectTransform _dragLayer;
-        
         private bool _isDraggable;
         private Tween _returnTween;
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
-        
-        private void Awake() => _rootCanvas = GetComponentInParent<Canvas>().rootCanvas;
-        
-        public void Setup(CharmConfigBase config, RectTransform dragLayer)
+
+        public void Setup(CharmConfigBase config, RectTransform dragLayer, RectTransform cellHolder)
         {
             _dragLayer = dragLayer;
+            _cellHolder = cellHolder;
+            
             CharmGeneralView.Setup(config);
         }
-        
-        public void SetDraggable(bool isDraggable) =>  _isDraggable = isDraggable;
 
+        public void SetDraggable(bool isDraggable) => _isDraggable = isDraggable;
 
         public void OnBeginDrag(PointerEventData eventData)
         {
             if (!_isDraggable) return;
-            
+
+            _returnTween?.Kill();
             _canvasGroup.blocksRaycasts = false;
-            RememberOriginalState();
+            
             _rectTransform.SetParent(_dragLayer, worldPositionStays: true);
         }
 
         public void OnDrag(PointerEventData eventData)
         {
             if (!_isDraggable) return;
-            
-            _rectTransform.anchoredPosition += eventData.delta / _rootCanvas.scaleFactor;
+
+            _rectTransform.position = eventData.position;
         }
 
         public void OnEndDrag(PointerEventData eventData)
         {
             if (!_isDraggable) return;
-            
+
             _canvasGroup.blocksRaycasts = true;
-            
+
             if (_rectTransform.parent == _dragLayer)
-                RestoreOriginalState();
+                ReturnToConveyor();
         }
 
-        private void RememberOriginalState()
+        public void ReturnToConveyor()
         {
             _returnTween?.Kill();
-            _originalParent = _rectTransform.parent;
-            _originalSiblingIndex = _rectTransform.GetSiblingIndex();
-            _originalWorldPosition = _rectTransform.position;
-        }
-
-        public void RestoreOriginalState()
-        {
-            _returnTween?.Kill();
-            _returnTween = _rectTransform.DOMove(_originalWorldPosition, _returnTweenTime)
-                .SetEase(Ease.OutCubic)
+            _returnTween = _rectTransform.DOMove(_cellHolder.position, _returnTweenTime)
+                .SetEase(_returnEase)
                 .OnComplete(() =>
                 {
-                    _rectTransform.SetParent(_originalParent, worldPositionStays: true);
-                    _rectTransform.SetSiblingIndex(_originalSiblingIndex);
+                    _rectTransform.SetParent(_cellHolder, worldPositionStays: false);
+                    _rectTransform.anchoredPosition = Vector2.zero;
                 });
         }
-        
+
+        public void InstantReturnToConveyor()
+        {
+            _returnTween?.Kill();
+            _canvasGroup.blocksRaycasts = true;
+
+            if (_rectTransform.parent != _cellHolder)
+            {
+                _rectTransform.SetParent(_cellHolder, worldPositionStays: false);
+                _rectTransform.anchoredPosition = Vector2.zero;
+            }
+        }
+
         public void OnSuccessfullyEquipped()
         {
             _returnTween?.Kill();
-            _canvasGroup.blocksRaycasts = true;
             Destroy(gameObject);
         }
     }
