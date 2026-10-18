@@ -6,20 +6,22 @@ namespace _Scripts.Data_Transfer.Contexts
     public class DiceDamageContext
     {
         //In:
-        public Dice TargetDice { get; }
+        public Dice Dice { get; }
         public IReadOnlyList<Dice> PlayedDices { get; }
         
         //Out:
         public int DamageAmount { get; set; }
         public bool IsCancelled { get; private set; }
+        public bool ShouldForceDegrade { get; private set; }
 
-        public DiceDamageContext(Dice targetDice, int damageAmount, IReadOnlyList<Dice> playedDices)
+        public DiceDamageContext(Dice dice, int damageAmount, IReadOnlyList<Dice> playedDices)
         {
-            TargetDice = targetDice;
+            Dice = dice;
             DamageAmount = damageAmount;
             PlayedDices = playedDices;
         }
 
         public void CancelDamage() => IsCancelled = true;
+        public void  ForceDegrade() => ShouldForceDegrade = true;
     }
 }

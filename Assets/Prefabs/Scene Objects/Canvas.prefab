@@ -1278,7 +1278,7 @@ CanvasGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 840940749852178367}
   m_Enabled: 1
-  m_Alpha: 1
+  m_Alpha: 0
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
@@ -2212,6 +2212,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Game::_Scripts.UI.CharmConveyorView
   _charmPrefab: {fileID: 3519985585068647941, guid: b20b97d95bede56468b700a6019b9553, type: 3}
+  _cellPrefab: {fileID: 2661062131785180254, guid: 1122f84b9b3170a45b8d1b259e3168ce, type: 3}
   _containerLayout: {fileID: 3350847499962391939}
   _dragLayer: {fileID: 3681785020073634023}
   _moveDuration: 0.9
@@ -6494,9 +6495,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Game::_Scripts.Managers.ScoreSequenceController
   _pointsText: {fileID: 4260171715948403159}
   _multText: {fileID: 6220326529064425507}
-  _delayPerStep: 0.35
-  _delayBeforeMult: 0.6
-  _delayAfterMult: 0.6
+  _delayPerStep: 0.42
+  _delayBeforeFinalMult: 1
+  _delayAfterFinalMult: 0.7
   _pointsMultDuration: 1
   _pointsAddDuration: 0.15
   _diceScoreShake: {fileID: 11400000, guid: 73afdda3bc6cc7a4aaa047831433a669, type: 2}

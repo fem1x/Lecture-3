@@ -23,13 +23,19 @@ namespace _Scripts.Managers
             foreach (var dice in dices)
             {
                 var damageContext = new DiceDamageContext(dice, amount, dices);
-                
+        
                 foreach (var charm in _charmsService.ActiveCharms)
                     charm.OnPreTakeDamage(damageContext);
-                
+        
+                if (damageContext.ShouldForceDegrade)
+                {
+                    ApplyDegrade(dice);
+                    continue;
+                }
+
                 if (damageContext.IsCancelled || damageContext.DamageAmount <= 0)
                     continue;
-                
+        
                 ApplyDamage(dice, damageContext.DamageAmount);
             }
         }
@@ -40,16 +46,24 @@ namespace _Scripts.Managers
 
             if (data.CurrentDurability - amount <= 0)
             {
-                var degradeContext = new DiceDegradeContext(dice);
-                
-                foreach (var charm in _charmsService.ActiveCharms)
-                    charm.OnDiceDegrading(degradeContext);
-
-                if (degradeContext.IsCancelled)
-                    return;
+                ApplyDegrade(dice);
+                return;
             }
-            
+    
             data.TakeDamage(amount);
+        }
+
+        private void ApplyDegrade(Dice dice)
+        {
+            var degradeContext = new DiceDegradeContext(dice);
+    
+            foreach (var charm in _charmsService.ActiveCharms)
+                charm.OnDiceDegrading(degradeContext);
+
+            if (degradeContext.IsCancelled)
+                return;
+
+            dice.Data.Degrade();
         }
     }
 }

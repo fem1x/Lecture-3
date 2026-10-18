@@ -16,9 +16,13 @@ namespace _Scripts.Charms
         public override void OnDiceScored(DiceScoreContext context)
         {
             if (context.Dice.Data.RolledValue != _config.TargetValue) return;
-
             context.AddTrigger(View, points: _config.BonusPoints, xMultiplier: _config.XMultiplier);
-            context.Dice.Data.Degrade();
+        }
+
+        public override void OnPreTakeDamage(DiceDamageContext context)
+        {
+            if (context.Dice.Data.RolledValue != _config.TargetValue) return;
+            context.ForceDegrade();
         }
     }
 }

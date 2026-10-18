@@ -12,7 +12,7 @@ namespace _Scripts.Charms
 
         public override void OnPreTakeDamage(DiceDamageContext context)
         {
-            if (context.TargetDice.Data.RolledValue == _config.ImmuneValue)
+            if (context.Dice.Data.RolledValue == _config.ImmuneValue)
                 context.CancelDamage();
         }
     }
