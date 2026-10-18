@@ -9,7 +9,7 @@ namespace _Scripts.Charms
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
         private readonly List<CharmBase> _activeCharms = new();
         
-        public int MaxSlots { get; private set; } = 3;
+        public int MaxSlots { get; private set; } = 5;
         public IReadOnlyList<CharmBase> ActiveCharms => _activeCharms;
         
         public event Action<CharmBase> OnCharmAdded;
