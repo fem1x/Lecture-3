@@ -7,12 +7,7 @@ namespace _Scripts.Charms
     {
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
         private readonly AirbagCharmConfig _config;
-        
-        [Inject]
-        public AirbagCharm(AirbagCharmConfig config) : base(config)
-        {
-            _config = config;
-        }
+        public AirbagCharm(AirbagCharmConfig config) : base(config) => _config = config;
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 
         public override void OnPreTakeDamage(DiceDamageContext context)

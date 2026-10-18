@@ -6,10 +6,7 @@ namespace _Scripts.Charms
     {
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
         private readonly SixesBonusCharmConfig _config;
-        public SixesBonusCharm(SixesBonusCharmConfig config) : base(config)
-        {
-            _config = config;
-        }
+        public SixesBonusCharm(SixesBonusCharmConfig config) : base(config) => _config = config;
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 
         public override void OnDiceScored(DiceScoreContext context)

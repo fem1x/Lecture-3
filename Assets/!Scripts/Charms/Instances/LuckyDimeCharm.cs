@@ -1,4 +1,5 @@
 ﻿using _Scripts.Data_Transfer.Contexts;
+using VContainer;
 
 namespace _Scripts.Charms
 {
@@ -6,10 +7,7 @@ namespace _Scripts.Charms
     {
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
         private readonly LuckyDimeCharmConfig _config;
-        public LuckyDimeCharm(LuckyDimeCharmConfig config) : base(config)
-        {
-            _config = config;
-        }
+        public LuckyDimeCharm(LuckyDimeCharmConfig config) : base(config) => _config = config;
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 
         public override void OnPreTakeDamage(DiceDamageContext context)

@@ -96,11 +96,18 @@ namespace _Scripts.Managers
             await UniTask.Delay(TimeSpan.FromSeconds(_delayPerStep));
             step.CharmView.PlayTriggerAnimation();
             PlayStepFx(step.SourceTransform, _charmTriggerSfx, false);
+
+            //+ Points
             if (step.BonusPoints > 0)
                 await AddPointsAsync(step.BonusPoints);
 
+            //+ Mult
             if (step.BonusMultiplier > 0)
                 await AddMultAsync(step.BonusMultiplier);
+
+            //X-Mult
+            if (step.XMultiplier > 1f)
+                await XMultAsync(step.XMultiplier);
         }
 
         private async UniTask CombinationStepAsync(ScoreStep step)
@@ -134,6 +141,14 @@ namespace _Scripts.Managers
         private async UniTask AddMultAsync(int amount)
         {
             var target = _currentMult + amount;
+            await DoTextValueTween(_multText, _currentMult, target, _pointsAddDuration);
+            _currentMult = target;
+        }
+        
+        private async UniTask XMultAsync(float xMult)
+        {
+            var target = Mathf.RoundToInt(_currentMult * xMult);
+            PlayMultTriggerFx();
             await DoTextValueTween(_multText, _currentMult, target, _pointsAddDuration);
             _currentMult = target;
         }
@@ -208,6 +223,7 @@ namespace _Scripts.Managers
         
         private async UniTask DoTextValueTween(TMP_Text text, int fromValue, int toValue, float duration)
         {
+            text.DOKill(true);
             var displayedValue = fromValue;
             await DOTween.To(
                     () => displayedValue,
