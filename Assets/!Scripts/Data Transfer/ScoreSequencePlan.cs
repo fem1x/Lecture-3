@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using _Scripts.Combinations;
-using _Scripts.Structs___Enums.Contexts;
+using _Scripts.Data_Transfer.Contexts;
 
 namespace _Scripts.Dices
 {

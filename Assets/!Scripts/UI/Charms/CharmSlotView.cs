@@ -11,33 +11,29 @@ namespace _Scripts.UI.Charms
         [SerializeField] private CharmEquippedView _charmPrefab;
         [SerializeField] private Transform _charmHolder;
         [SerializeField] private GameObject _emptyPlaceholder;
+        public bool IsEmpty => _currentEquipped == null;
 
-        private CharmsService _charmsService;
         private CharmEquippedView _currentEquipped;
         private Charm _activeCharm;
-
-        public bool IsEmpty => _currentEquipped == null;
+        
+        private CharmsConveyorService _conveyorService;
         
         [Inject]
-        public void Construct(CharmsService charmsService)
+        public void Construct(CharmsConveyorService conveyorService)
         {
-            _charmsService = charmsService;
+            _conveyorService = conveyorService;
         }
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
         
         public void OnDrop(PointerEventData eventData)
         {
             if (eventData.pointerDrag == null) return;
-
             if (!eventData.pointerDrag.TryGetComponent<CharmDragView>(out var dragView)) return;
-
             if (!IsEmpty) return;
 
-            if (_charmsService.TryAddCharm(dragView.CharmGeneralView.Config))
+            if (_conveyorService.TryClaim(dragView.CharmGeneralView.Config, out var createdCharm))
             {
-                _activeCharm = _charmsService.ActiveCharms[^1];
-
-                Equip(_activeCharm);
+                Equip(createdCharm);
                 dragView.OnSuccessfullyEquipped();
             }
             else

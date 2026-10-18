@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using _Scripts.Configs;
+using _Scripts.Data_Transfer.Contexts;
 using _Scripts.Dices;
-using _Scripts.Structs___Enums.Contexts;
 using _Scripts.Utility;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;

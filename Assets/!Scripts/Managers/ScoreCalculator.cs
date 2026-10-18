@@ -1,10 +1,11 @@
 using System.Collections.Generic;
 using _Scripts.Charms;
 using _Scripts.Combinations;
+using _Scripts.Data_Transfer.Contexts;
 using _Scripts.Dices;
 using _Scripts.Interfaces;
 using _Scripts.Managers;
-using _Scripts.Structs___Enums.Contexts;
+using UnityEngine;
 using VContainer;
 
 public class ScoreCalculator : IScoreCalculator
@@ -12,12 +13,20 @@ public class ScoreCalculator : IScoreCalculator
     // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== 
     private readonly CombinationEvaluator _evaluator;
     private readonly CharmsService _charmsService;
+    private readonly DiceTableController _tableController;
+    private readonly ResourceManager _resourceManager;
     
     [Inject]
-    public ScoreCalculator(CombinationEvaluator evaluator, CharmsService charmsService)
+    public ScoreCalculator(
+        CombinationEvaluator evaluator, 
+        CharmsService charmsService,  
+        DiceTableController tableController, 
+        ResourceManager resourceManager)
     {
         _evaluator = evaluator;
         _charmsService = charmsService;
+        _tableController = tableController;
+        _resourceManager = resourceManager;
     }
     // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== 
 
@@ -50,7 +59,7 @@ public class ScoreCalculator : IScoreCalculator
         steps.Add(new(ScoreStepType.CombinationBase, 0, 0));    
         
         //Charms
-        var combContext = new CombinationScoreContext(combination);
+        var combContext = new CombinationScoreContext(combination, selectedDices);
         foreach (var charm in _charmsService.ActiveCharms)
             charm.OnCombinationScored(combContext);
         
@@ -58,7 +67,14 @@ public class ScoreCalculator : IScoreCalculator
         
         // 3. OnFinalizeScore
         //Charms
-        var finalContext = new FinalizeScoreContext(totalPoints, totalMultiplier);
+        var finalContext = new FinalizeScoreContext(
+            totalPoints, 
+            totalMultiplier, 
+            _resourceManager.RerollsCount, 
+            _resourceManager.DiceCount, 
+            _tableController.AllDices, 
+            selectedDices);
+        
         foreach (var charm in _charmsService.ActiveCharms)
             charm.OnFinalizeScore(finalContext);
         
@@ -77,7 +93,11 @@ public class ScoreCalculator : IScoreCalculator
             var t = triggers[i];
             points += t.BonusPoints;
             mult += t.BonusMultiplier;
-            steps.Add(new(ScoreStepType.CharmTrigger, t.BonusPoints, t.BonusMultiplier, t.View?.transform, t.View));
+
+            if (t.XMultiplier > 1f)
+                mult = Mathf.RoundToInt(mult * t.XMultiplier);
+
+            steps.Add(new(ScoreStepType.CharmTrigger, t.BonusPoints, t.BonusMultiplier, t.XMultiplier, t.View?.transform, t.View));
         }
     }
 }

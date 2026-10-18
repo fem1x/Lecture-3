@@ -33,17 +33,18 @@ namespace _Scripts.Charms
             return true;
         }
         
-        public bool TryAddCharm(CharmConfigBase charmConfig)
+        public bool TryAddCharm(CharmConfigBase charmConfig) => TryAddCharm(charmConfig, out _);
+
+        public bool TryAddCharm(CharmConfigBase charmConfig, out Charm createdCharm)
         {
+            createdCharm = null;
+
             if (!CanAddCharm)
-            {
-                Debug.LogWarning("No more charm slots available!");
                 return false;
-            }
-            
-            var charm = charmConfig.CreateCharmInstance();
-            _activeCharms.Add(charm);
-            OnCharmAdded?.Invoke(charm);
+
+            createdCharm = charmConfig.CreateCharmInstance();
+            _activeCharms.Add(createdCharm);
+            OnCharmAdded?.Invoke(createdCharm);
             return true;
         }
 

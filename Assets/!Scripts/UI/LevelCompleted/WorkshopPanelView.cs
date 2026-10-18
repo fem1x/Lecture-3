@@ -46,10 +46,20 @@ namespace _Scripts.UI
 
         private void Awake() => HideInstant();
 
-        private void OnEnable() => _nextLevelButton.onClick.AddListener(HandleNextLevelButtonClick);
-        private void OnDisable() => _nextLevelButton.onClick.RemoveListener(HandleNextLevelButtonClick);
+        private void OnEnable()
+        {
+            _nextLevelButton.onClick.AddListener(HandleNextLevelButtonClick);
+            _conveyorService.OnChoiceCompleted += HandleChoiceCompleted;
+        }
+
+        private void OnDisable()
+        {
+            _nextLevelButton.onClick.RemoveListener(HandleNextLevelButtonClick);
+            _conveyorService.OnChoiceCompleted -= HandleChoiceCompleted;
+        }
 
         private void HandleNextLevelButtonClick() => OnNextLevelRequested?.Invoke();
+        private void HandleChoiceCompleted() => _nextLevelButton.interactable = true;
 
         public async UniTask ShowAsync(CancellationToken ct)
         {

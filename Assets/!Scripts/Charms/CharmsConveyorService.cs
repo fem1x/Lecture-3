@@ -71,10 +71,13 @@ namespace _Scripts.Charms
         
         #region Selection
 
-        public void Claim()
+        public bool TryClaim(CharmConfigBase config, out Charm createdCharm)
         {
-            if (!_charmsService.TryAddCharm(CurrentCharm)) return;
+            if (!_charmsService.TryAddCharm(config, out createdCharm))
+                return false;
+
             OnChoiceCompleted?.Invoke();
+            return true;
         }
 
         public void Scrap()
