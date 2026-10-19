@@ -19,7 +19,7 @@ MonoBehaviour:
     m_Items: []
   m_TableData:
   - m_Id: 34638516224
-    m_Localized: '- - - Workshop - - -'
+    m_Localized: Workshop
     m_Metadata:
       m_Items: []
   - m_Id: 1863128567808
@@ -27,7 +27,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1978077663232
-    m_Localized: Restore damaged dice
+    m_Localized: Push your luck
     m_Metadata:
       m_Items: []
   - m_Id: 2179253260288
@@ -143,7 +143,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 31973554638848
-    m_Localized: '- - - Codex - - -'
+    m_Localized: Codex
     m_Metadata:
       m_Items: []
   - m_Id: 33730397589504
@@ -151,7 +151,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 41997077172224
-    m_Localized: '- - - Level Completed - - -'
+    m_Localized: Level Completed
     m_Metadata:
       m_Items: []
   - m_Id: 41997077172225

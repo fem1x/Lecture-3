@@ -19,7 +19,7 @@ MonoBehaviour:
     m_Items: []
   m_TableData:
   - m_Id: 34638516224
-    m_Localized: '- - - Taller - - -'
+    m_Localized: Taller
     m_Metadata:
       m_Items: []
   - m_Id: 1863128567808
@@ -143,7 +143,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 31973554638848
-    m_Localized: "- - - C\xF3dice - - -"
+    m_Localized: "C\xF3dice"
     m_Metadata:
       m_Items: []
   - m_Id: 33730397589504
@@ -151,7 +151,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 41997077172224
-    m_Localized: '- - - Nivel completado - - -'
+    m_Localized: Nivel completado
     m_Metadata:
       m_Items: []
   - m_Id: 41997077172225
