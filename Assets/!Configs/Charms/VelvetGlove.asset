@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 255161669df34c26b1a4df587c5d5eb3, type: 3}
   m_Name: VelvetGlove
   m_EditorClassIdentifier: Game::_Scripts.Charms.VelvetGloveCharmConfig
-  <Id>k__BackingField: 
-  <Title>k__BackingField: 
-  <Description>k__BackingField: 
-  <Icon>k__BackingField: {fileID: 0}
+  <Id>k__BackingField: velvet_glove
+  <Title>k__BackingField: Velvet Glove
+  <Description>k__BackingField: no
+  <Icon>k__BackingField: {fileID: -1456169166, guid: 16766bedacd69774d946c31e9f1a5601, type: 3}
   <XMultiplier>k__BackingField: 1.8

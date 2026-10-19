@@ -63,6 +63,7 @@ namespace _Scripts.UI
 
         public async UniTask ShowAsync(CancellationToken ct)
         {
+            _charmConveyor.InstantCloseShutter();
             _nextLevelButton.interactable = false;
 
             var targetPosition = _diceSlotRect.position;
@@ -79,6 +80,8 @@ namespace _Scripts.UI
 
         public async UniTask HideAsync(CancellationToken ct)
         {
+            _charmConveyor.InstantCloseShutter();
+            _charmConveyor.ClearConveyorView();
             _dicePanelView.SetRepairMode(false);
 
             await UniTask.WhenAll(

@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Game::_Scripts.Charms.CassetteTapeCharmConfig
   <Id>k__BackingField: cassette_tape
   <Title>k__BackingField: Cassette Tape
-  <Description>k__BackingField: 
-  <Icon>k__BackingField: {fileID: 0}
+  <Description>k__BackingField: no
+  <Icon>k__BackingField: {fileID: -828996976, guid: 16766bedacd69774d946c31e9f1a5601, type: 3}
   <XMultiplierPerStep>k__BackingField: 1.25

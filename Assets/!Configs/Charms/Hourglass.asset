@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f589081d7d72460ea6ed9260252e3003, type: 3}
   m_Name: Hourglass
   m_EditorClassIdentifier: Game::_Scripts.Charms.HourglassCharmConfig
-  <Id>k__BackingField: 
-  <Title>k__BackingField: 
-  <Description>k__BackingField: 
-  <Icon>k__BackingField: {fileID: 0}
+  <Id>k__BackingField: hourglass
+  <Title>k__BackingField: Hourglass
+  <Description>k__BackingField: no
+  <Icon>k__BackingField: {fileID: 1632989412, guid: 16766bedacd69774d946c31e9f1a5601, type: 3}
   <XMultiplier>k__BackingField: 1.6

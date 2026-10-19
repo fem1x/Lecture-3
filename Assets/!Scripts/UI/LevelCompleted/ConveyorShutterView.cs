@@ -14,6 +14,7 @@ namespace _Scripts.UI
         [SerializeField] private float _closeTime = 0.5f;
         [SerializeField] private Ease _closeEase = Ease.OutExpo;
 
+        private bool _isClosed = false;
         private RectTransform _rect;
         private float _openY;
         private Tween _activeTween;
@@ -29,24 +30,25 @@ namespace _Scripts.UI
 
         public void Open()
         {
+            if (!_isClosed) return;
+            _isClosed = false;
+            
             _activeTween?.Kill();
             _activeTween = _rect.DOAnchorPosY(_openY, _openTime).SetEase(_openEase);
         }
 
         public void Close()
         {
+            if (_isClosed) return;
+            _isClosed = true;
+            
             _activeTween?.Kill();
             _activeTween = _rect.DOAnchorPosY(0, _closeTime).SetEase(_closeEase);
         }
         
-        public void ReOpen()
+        public void InstantClose()
         {
-            InstantClose();
-            Open();
-        }
-        
-        private void InstantClose()
-        {
+            _isClosed = true;
             _activeTween?.Kill();
             _rect.anchoredPosition = new Vector2(_rect.anchoredPosition.x, 0);
         }

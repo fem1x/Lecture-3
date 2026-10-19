@@ -13,8 +13,12 @@ MonoBehaviour:
   m_Name: _CharmsPoolConfig
   m_EditorClassIdentifier: Game::_Scripts.Charms.CharmsPoolConfig
   <CharmsPool>k__BackingField:
-  - {fileID: 11400000, guid: 8207938236c87544dbd757fb7efddee4, type: 2}
-  - {fileID: 11400000, guid: cde4ca64f2c6c984fa9d4048e76a89be, type: 2}
-  - {fileID: 11400000, guid: 5c1c000f074e6a74482bec6791713d7e, type: 2}
   - {fileID: 11400000, guid: ec37b7931e4aa2e4bacfd6256228f4f7, type: 2}
+  - {fileID: 11400000, guid: afd5cf8bf5ed71a46b32eb9196269e4c, type: 2}
+  - {fileID: 11400000, guid: 2a301ea3391928d438bda26d75315ad0, type: 2}
+  - {fileID: 11400000, guid: ab375db7007dc8f4d83a586138877631, type: 2}
+  - {fileID: 11400000, guid: 8207938236c87544dbd757fb7efddee4, type: 2}
+  - {fileID: 11400000, guid: 5c1c000f074e6a74482bec6791713d7e, type: 2}
+  - {fileID: 11400000, guid: cde4ca64f2c6c984fa9d4048e76a89be, type: 2}
   - {fileID: 11400000, guid: 803df0b99e131ff4cac22686218faff7, type: 2}
+  - {fileID: 11400000, guid: 195ba675ea333384ba94f38ae8498c6e, type: 2}

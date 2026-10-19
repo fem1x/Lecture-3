@@ -60,6 +60,7 @@ namespace _Scripts.UI
 
         private void Awake() => _containerRect = (RectTransform)_containerLayout.transform;
         
+        #region Event Subscriptions
         private void OnEnable()
         {
             _nextButton.onClick.AddListener(HandleNextButtonClick);
@@ -80,7 +81,9 @@ namespace _Scripts.UI
             _conveyorService.OnChoiceCompleted -= CloseConveyor;
             _moveTween?.Kill();
         }
+        #endregion
         
+        #region Buttons
         private void HandleNextButtonClick() => _conveyorService.MoveNext();
         private void HandleReverseButtonClick() => _conveyorService.MoveReverse();
         
@@ -89,10 +92,13 @@ namespace _Scripts.UI
             _nextButton.interactable = _conveyorService.CanMoveNext;
             _reverseButton.interactable = _conveyorService.CanMoveReverse;
         }
+        #endregion
+
+        public void InstantCloseShutter() => _shutter.InstantClose();
         
         public void InitializeConveyorView()
         {
-            ClearCharmViews();
+            ClearConveyorView();
             _containerRect.anchoredPosition = Vector2.zero;
     
             foreach (var charm in _conveyorService.Charms)
@@ -109,7 +115,19 @@ namespace _Scripts.UI
             ResetConveyorPosition();
             UpdateDraggableCharm(0);
             UpdateIndicators(0);
-            _shutter.ReOpen();
+            
+            _shutter.Open();
+        }
+        
+        public void ClearConveyorView()
+        {
+            foreach (var cell in _spawnedCellsList)
+            {
+                cell.transform.SetParent(null);
+                Destroy(cell.gameObject);
+            }
+        
+            _spawnedCellsList.Clear();
         }
 
         private void MoveToCharm(int charmIndex)
@@ -134,17 +152,6 @@ namespace _Scripts.UI
         {
             for (var i = 0; i < _spawnedCellsList.Count; i++)
                 _spawnedCellsList[i].SetDraggable(i == activeIndex);
-        }
-        
-        private void ClearCharmViews()
-        {
-            foreach (var cell in _spawnedCellsList)
-            {
-                cell.transform.SetParent(null);
-                Destroy(cell.gameObject);
-            }
-        
-            _spawnedCellsList.Clear();
         }
 
         private void ResetConveyorPosition()
