@@ -18,7 +18,7 @@ namespace _Scripts.Charms
         
         public List<CharmConfigBase> GenerateCharmsRewards(int count = 3)
         {
-            var currentPool = new List<CharmConfigBase>(_charmsPoolService.CharmsPool);
+            var currentPool = _charmsPoolService.GetAvailableCharms();
             var selectedCharms = new List<CharmConfigBase>();
             
             for (int i = 0; i < count; i++)

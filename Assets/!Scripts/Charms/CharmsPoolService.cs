@@ -1,17 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using UnityEngine.PlayerLoop;
+﻿using System.Collections.Generic;
+using System.Linq;
 using VContainer;
-using VContainer.Unity;
 
 namespace _Scripts.Charms
 {
-    public class CharmsPoolService : IInitializable, IDisposable
+    public class CharmsPoolService
     {
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
-        public List<CharmConfigBase> CharmsPool { get; private set; } = new();
-        
-        #region DI
         private readonly CharmsPoolConfig _charmsPoolConfig;
         private readonly CharmsService _charmsService;
 
@@ -21,37 +16,17 @@ namespace _Scripts.Charms
             _charmsPoolConfig = charmsPoolConfig;
             _charmsService = charmsService;
         }
-        #endregion
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 
-        public void InitializePool()
+        public List<CharmConfigBase> GetAvailableCharms()
         {
-            CharmsPool = new List<CharmConfigBase>(_charmsPoolConfig.CharmsPool);
+            var activeConfigs = _charmsService.ActiveCharms
+                .Select(c => c.Config)
+                .ToHashSet();
 
-            foreach (var activeCharm in _charmsService.ActiveCharms)
-                CharmsPool.Remove(activeCharm.Config);
-        }
-        
-        public void Initialize()
-        {
-            _charmsService.OnCharmAdded += HandleCharmAdded;
-            _charmsService.OnCharmRemoved += HandleCharmRemoved;
-        }
-
-        public void Dispose()
-        {
-            _charmsService.OnCharmAdded -= HandleCharmAdded;
-            _charmsService.OnCharmRemoved -= HandleCharmRemoved;
-        }
-
-        private void HandleCharmAdded(CharmBase charm)
-        {
-            CharmsPool.Remove(charm.Config);
-        }
-
-        private void HandleCharmRemoved(CharmBase charm)
-        {
-            CharmsPool.Add(charm.Config);
+            return _charmsPoolConfig.CharmsPool
+                .Where(cfg => !activeConfigs.Contains(cfg))
+                .ToList();
         }
     }
 }
