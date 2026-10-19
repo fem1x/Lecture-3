@@ -1,0 +1,52 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b11a58205ec3474ca216360e9fa74a8, type: 3}
+  m_Name: String Table Shared Data
+  m_EditorClassIdentifier: Unity.Localization::UnityEngine.Localization.Tables.SharedTableData
+  m_TableCollectionName: String Table
+  m_TableCollectionNameGuidString: 9f9c89d5b6ad399428ec5a9fe072ff95
+  m_Entries:
+  - m_Id: 34638516224
+    m_Key: workshop_title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1863128567808
+    m_Key: workshop_conveyor_title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1978077663232
+    m_Key: workshop_conveyor_desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2179253260288
+    m_Key: workshop_repair_title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2237877047296
+    m_Key: workshop_repair_desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2284140220416
+    m_Key: workshop_next_level_btn
+    m_Metadata:
+      m_Items: []
+  m_Metadata:
+    m_Items: []
+  m_KeyGenerator:
+    rid: 420518558509826312
+  references:
+    version: 2
+    RefIds:
+    - rid: 420518558509826312
+      type: {class: DistributedUIDGenerator, ns: UnityEngine.Localization.Tables, asm: Unity.Localization}
+      data:
+        m_CustomEpoch: 1792430913730
