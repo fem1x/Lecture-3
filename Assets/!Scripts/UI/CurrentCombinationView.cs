@@ -71,7 +71,7 @@ namespace _Scripts.UI
                 return;
             }
             
-            SetCombination(combination.DisplayName, combination.BasePoints, combination.Multiplier);
+            SetCombination(combination.DisplayName.GetLocalizedString(), combination.BasePoints, combination.Multiplier);
         }
         
         private void SetEmpty()

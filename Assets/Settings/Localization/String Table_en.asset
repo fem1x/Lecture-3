@@ -42,6 +42,94 @@ MonoBehaviour:
     m_Localized: NEXT LEVEL
     m_Metadata:
       m_Items: []
+  - m_Id: 9892515401728
+    m_Localized: Duplet
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9892519596032
+    m_Localized: 2 matching dice
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9892519596033
+    m_Localized: Mono
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9892519596034
+    m_Localized: Only even / odd
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9892519596035
+    m_Localized: Opposites
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9892519596036
+    m_Localized: 2 dice sum to 7
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9892523790336
+    m_Localized: Overload
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9892523790337
+    m_Localized: "Sum \u2265 24"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9892523790338
+    m_Localized: Quad
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9892523790339
+    m_Localized: 4 matching dice
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9892523790340
+    m_Localized: Sequence
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9892523790341
+    m_Localized: 5 consecutive numbers
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9892523790342
+    m_Localized: Singularity
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9892523790343
+    m_Localized: 5 matching dice
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9892523790344
+    m_Localized: Solo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9892523790345
+    m_Localized: Any single dice
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9892523790346
+    m_Localized: Triad
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9892523790347
+    m_Localized: 3 matching dice
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9892523790348
+    m_Localized: Two Duplets
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9892523790349
+    m_Localized: 2 pairs of matching dice
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9892523790350
+    m_Localized: Underload
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9892523790351
+    m_Localized: "Sum \u2264 9"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

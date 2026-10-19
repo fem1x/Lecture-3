@@ -14,8 +14,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: Game::_Scripts.Combinations.CombinationConfig
   <Id>k__BackingField: opposites
   <Priority>k__BackingField: 30
-  <DisplayName>k__BackingField: Opposites
-  <Description>k__BackingField: 2 dice sum to 7
+  <DisplayName>k__BackingField:
+    m_TableReference:
+      m_TableCollectionName: String Table
+    m_TableEntryReference:
+      m_KeyId: 0
+      m_Key: combo_opposites_name
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  <Description>k__BackingField:
+    m_TableReference:
+      m_TableCollectionName: String Table
+    m_TableEntryReference:
+      m_KeyId: 0
+      m_Key: combo_opposites_desc
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
   <Icon>k__BackingField: {fileID: 0}
   <Patterns>k__BackingField:
   - Values: 0100000006000000
@@ -28,13 +44,13 @@ MonoBehaviour:
   <Multiplier>k__BackingField: 2
   <DiceRefund>k__BackingField: 0
   <Rule>k__BackingField:
-    rid: 420518290836684887
+    rid: 420518558509826320
   references:
     version: 2
     RefIds:
-    - rid: 420518290836684887
+    - rid: 420518558509826320
       type: {class: SumRule, ns: _Scripts.Combinations.Rules, asm: Game}
       data:
-        <RequiredDiceCount>k__BackingField: 2
+        <RequiredDiceCount>k__BackingField: 0
         <Comparison>k__BackingField: 2
         <RequiredSum>k__BackingField: 7

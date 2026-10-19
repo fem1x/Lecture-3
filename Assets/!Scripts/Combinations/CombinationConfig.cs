@@ -3,6 +3,7 @@ using _Scripts.Attributes;
 using _Scripts.Dices;
 using _Scripts.Interfaces;
 using UnityEngine;
+using UnityEngine.Localization;
 
 namespace _Scripts.Combinations
 {
@@ -20,8 +21,8 @@ namespace _Scripts.Combinations
         [field: SerializeField] public int Priority { get; private set; }
 
         [field: Header("Display")]
-        [field: SerializeField] public string DisplayName { get; private set; }
-        [field: SerializeField] public string Description { get; private set; }
+        [field: SerializeField] public LocalizedString DisplayName { get; private set; }
+        [field: SerializeField] public LocalizedString Description { get; private set; }
         [field: SerializeField] public Sprite Icon { get; private set; }
         [field: SerializeField] public DicePatternExample[] Patterns { get; private set; }
 
@@ -41,5 +42,13 @@ namespace _Scripts.Combinations
 
             return Rule.Matches(dices);
         }
+
+#if UNITY_EDITOR
+        public void SetLocalizedStrings(LocalizedString nameString, LocalizedString descString)
+        {
+            DisplayName = nameString;
+            Description = descString;
+        }
+#endif
     }
 }

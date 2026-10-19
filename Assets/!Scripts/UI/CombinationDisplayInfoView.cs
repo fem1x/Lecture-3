@@ -34,8 +34,8 @@ namespace _Scripts.UI
             _config = config;
             if (_config == null) return;
 
-            _titleText.text = _config.DisplayName;
-            _descriptionText.text = _config.Description;
+            _titleText.text = _config.DisplayName.GetLocalizedString();
+            _descriptionText.text = _config.Description.GetLocalizedString();
             _pointsText.text = _config.BasePoints.ToString();
             _multiplierText.text = _config.Multiplier.ToString();
 

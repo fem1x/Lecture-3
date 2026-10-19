@@ -14,8 +14,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: Game::_Scripts.Combinations.CombinationConfig
   <Id>k__BackingField: solo
   <Priority>k__BackingField: 10
-  <DisplayName>k__BackingField: Solo
-  <Description>k__BackingField: Any single dice
+  <DisplayName>k__BackingField:
+    m_TableReference:
+      m_TableCollectionName: String Table
+    m_TableEntryReference:
+      m_KeyId: 0
+      m_Key: combo_solo_name
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  <Description>k__BackingField:
+    m_TableReference:
+      m_TableCollectionName: String Table
+    m_TableEntryReference:
+      m_KeyId: 0
+      m_Key: combo_solo_desc
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
   <Icon>k__BackingField: {fileID: 0}
   <Patterns>k__BackingField:
   - Values: 01000000
@@ -28,12 +44,12 @@ MonoBehaviour:
   <Multiplier>k__BackingField: 1
   <DiceRefund>k__BackingField: 0
   <Rule>k__BackingField:
-    rid: 420518290836684885
+    rid: 420518558509826318
   references:
     version: 2
     RefIds:
-    - rid: 420518290836684885
+    - rid: 420518558509826318
       type: {class: FrequencyRule, ns: _Scripts.Interfaces, asm: Game}
       data:
-        <RequiredDiceCount>k__BackingField: 1
+        <RequiredDiceCount>k__BackingField: 0
         <RequiredFrequency>k__BackingField: 1
