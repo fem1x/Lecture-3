@@ -30,6 +30,9 @@ namespace _Scripts.UI
         [SerializeField] private List<Image> _indicators;
         [SerializeField] private Color _activeColor;
         [SerializeField] private Color _inactiveColor;
+        
+        [Header("Shutter")]
+        [SerializeField] private ConveyorShutterView _shutter;
 
         private readonly List<ConveyorCellView> _spawnedCellsList = new();
         private RectTransform _containerRect;
@@ -48,6 +51,7 @@ namespace _Scripts.UI
             _conveyorService.OnConveyorInitialized += InitializeConveyorView;
             _conveyorService.OnStateChanged += RefreshButtonsState;
             _conveyorService.OnConveyorMoved += MoveToCharm;
+            _conveyorService.OnChoiceCompleted += CloseConveyor;
 
             RefreshButtonsState();
         }
@@ -73,6 +77,7 @@ namespace _Scripts.UI
             _conveyorService.OnStateChanged -= RefreshButtonsState;
             _conveyorService.OnConveyorMoved -= MoveToCharm;
             _conveyorService.OnConveyorInitialized -= InitializeConveyorView;
+            _conveyorService.OnChoiceCompleted -= CloseConveyor;
             _moveTween?.Kill();
         }
         
@@ -104,6 +109,7 @@ namespace _Scripts.UI
             ResetConveyorPosition();
             UpdateDraggableCharm(0);
             UpdateIndicators(0);
+            _shutter.ReOpen();
         }
 
         private void MoveToCharm(int charmIndex)
@@ -171,7 +177,15 @@ namespace _Scripts.UI
                 if (charm != null)
                     charm.InstantReturnToConveyor();
             }
-                
+        }
+
+        private void CloseConveyor()
+        {
+            _nextButton.interactable = false;
+            _reverseButton.interactable = false;
+            UpdateDraggableCharm(-1);
+            
+            _shutter.Close();
         }
     }
 }

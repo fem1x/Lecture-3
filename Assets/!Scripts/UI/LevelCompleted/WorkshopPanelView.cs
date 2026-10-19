@@ -63,8 +63,6 @@ namespace _Scripts.UI
 
         public async UniTask ShowAsync(CancellationToken ct)
         {
-            InitializeConveyorPanel();
-            
             _nextLevelButton.interactable = false;
 
             var targetPosition = _diceSlotRect.position;
@@ -75,6 +73,7 @@ namespace _Scripts.UI
                     .ToUniTask(cancellationToken: ct)
             );
 
+            InitializeConveyorPanel();
             _dicePanelView.SetRepairMode(true);
         }
 
