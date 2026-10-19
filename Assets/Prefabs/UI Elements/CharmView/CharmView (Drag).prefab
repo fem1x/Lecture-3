@@ -125,11 +125,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7dd80f9735f84646bb2e1d85746e0f67, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Game::_Scripts.UI.Charms.CharmDragView
-  <CharmGeneralView>k__BackingField: {fileID: 7644324132369258505}
+  <GeneralView>k__BackingField: {fileID: 7644324132369258505}
   _rectTransform: {fileID: 1571717376178421694}
   _canvasGroup: {fileID: 3896439942729936315}
   _returnTweenTime: 0.8
   _returnEase: 18
+  _unrevealedSprite: {fileID: 1910388748, guid: 16766bedacd69774d946c31e9f1a5601, type: 3}
 --- !u!225 &3896439942729936315
 CanvasGroup:
   m_ObjectHideFlags: 0

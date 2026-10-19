@@ -15,7 +15,9 @@ namespace _Scripts.UI.Charms
         public void Setup(CharmConfigBase config)
         {
             Config = config;
-            _iconImage.sprite = Config.Icon;
+            SetIconSprite(Config.Icon);
         }
+
+        public void SetIconSprite(Sprite sprite) => _iconImage.sprite = sprite;
     }
 }

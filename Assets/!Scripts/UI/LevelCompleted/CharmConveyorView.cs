@@ -96,7 +96,7 @@ namespace _Scripts.UI
 
         public void InstantCloseShutter() => _shutter.InstantClose();
         
-        public void InitializeConveyorView()
+        private void InitializeConveyorView()
         {
             ClearConveyorView();
             _containerRect.anchoredPosition = Vector2.zero;
@@ -104,17 +104,17 @@ namespace _Scripts.UI
             foreach (var charm in _conveyorService.Charms)
             {
                 var cell = _resolver.Instantiate(_cellPrefab, _containerRect);
-                var card = _resolver.Instantiate(_charmPrefab, cell.CharmHolder);
-                card.Setup(charm, _dragLayer, cell.CharmHolder);
-                cell.AttachCharm(card);
+                var charmView = _resolver.Instantiate(_charmPrefab, cell.CharmHolder);
+                charmView.Setup(charm, _dragLayer, cell.CharmHolder);
+                cell.AttachCharm(charmView);
 
                 _spawnedCellsList.Add(cell);
             }
 
             AdjustContainerLayout();
             ResetConveyorPosition();
-            UpdateDraggableCharm(0);
-            UpdateIndicators(0);
+            
+            UpdateToNewCharm(0);
             
             _shutter.Open();
         }
@@ -136,8 +136,15 @@ namespace _Scripts.UI
             
             _moveTween?.Kill();
             var targetX = -_spawnedCellsList[charmIndex].transform.localPosition.x;
-            _moveTween = _containerRect.DOAnchorPosX(targetX, _moveDuration).SetEase(_moveEase);
-    
+            _moveTween = _containerRect
+                .DOAnchorPosX(targetX, _moveDuration)
+                .SetEase(_moveEase)
+                .OnComplete(() => UpdateToNewCharm(charmIndex));
+        }
+
+        private void UpdateToNewCharm(int charmIndex)
+        {
+            RevealCharm(charmIndex);
             UpdateIndicators(charmIndex);
             UpdateDraggableCharm(charmIndex);
         }
@@ -194,5 +201,7 @@ namespace _Scripts.UI
             
             _shutter.Close();
         }
+
+        private void RevealCharm(int charmIndex) => _spawnedCellsList[charmIndex].CurrentCharm.SetRevealed(true);
     }
 }

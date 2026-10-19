@@ -8,14 +8,20 @@ namespace _Scripts.UI.Charms
     public class CharmDragView : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
     {
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
-        [field: SerializeField] public CharmGeneralView CharmGeneralView { get; private set; }
+        [field: SerializeField] public CharmGeneralView GeneralView { get; private set; }
         [SerializeField] private RectTransform _rectTransform;
         [SerializeField] private CanvasGroup _canvasGroup;
         
         [Header("Return Tween")]
         [SerializeField] private float _returnTweenTime = 0.35f;
         [SerializeField] private Ease _returnEase = Ease.OutCubic;
+        
+        [Header("Revealing")]
+        [SerializeField] Sprite _unrevealedSprite;
 
+        private bool _isRevealed;
+        private Sprite _revealedSprite;
+        
         private RectTransform _cellHolder;
         private RectTransform _dragLayer;
         private bool _isDraggable;
@@ -27,7 +33,17 @@ namespace _Scripts.UI.Charms
             _dragLayer = dragLayer;
             _cellHolder = cellHolder;
             
-            CharmGeneralView.Setup(config);
+            GeneralView.Setup(config);
+            _revealedSprite = config.Icon;
+            
+            SetRevealed(false);
+        }
+
+        public void SetRevealed(bool isRevealed)
+        {
+            _isRevealed = isRevealed;
+            var sprite = _isRevealed ? _revealedSprite : _unrevealedSprite;
+            GeneralView.SetIconSprite(sprite);
         }
 
         public void SetDraggable(bool isDraggable) => _isDraggable = isDraggable;

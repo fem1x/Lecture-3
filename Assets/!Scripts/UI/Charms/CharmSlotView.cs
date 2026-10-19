@@ -31,7 +31,7 @@ namespace _Scripts.UI.Charms
             if (!eventData.pointerDrag.TryGetComponent<CharmDragView>(out var dragView)) return;
             if (!IsEmpty) return;
 
-            if (_conveyorService.TryClaim(dragView.CharmGeneralView.Config, out var createdCharm))
+            if (_conveyorService.TryClaim(dragView.GeneralView.Config, out var createdCharm))
             {
                 Equip(createdCharm);
                 dragView.OnSuccessfullyEquipped();
