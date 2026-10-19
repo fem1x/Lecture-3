@@ -14,6 +14,7 @@ namespace _Scripts.Charms
         private const int ScrapReward = 2;
         
         //Events
+        public event Action OnConveyorInitialized;
         public event Action<int> OnConveyorMoved;
         public event Action OnStateChanged;
         public event Action OnChoiceCompleted;
@@ -40,6 +41,7 @@ namespace _Scripts.Charms
             Charms = new List<CharmConfigBase>(charms);
             CurrentIndex = 0;
             
+            OnConveyorInitialized?.Invoke();
             OnStateChanged?.Invoke();
         }
         

@@ -44,10 +44,11 @@ namespace _Scripts.UI
         {
             _resolver = resolver;
             _conveyorService = conveyorService;
-            
+
+            _conveyorService.OnConveyorInitialized += InitializeConveyorView;
             _conveyorService.OnStateChanged += RefreshButtonsState;
             _conveyorService.OnConveyorMoved += MoveToCharm;
-            
+
             RefreshButtonsState();
         }
         #endregion
@@ -71,6 +72,7 @@ namespace _Scripts.UI
         {
             _conveyorService.OnStateChanged -= RefreshButtonsState;
             _conveyorService.OnConveyorMoved -= MoveToCharm;
+            _conveyorService.OnConveyorInitialized -= InitializeConveyorView;
             _moveTween?.Kill();
         }
         
@@ -83,9 +85,10 @@ namespace _Scripts.UI
             _reverseButton.interactable = _conveyorService.CanMoveReverse;
         }
         
-        public void InitializeCharmViews()
+        public void InitializeConveyorView()
         {
             ClearCharmViews();
+            _containerRect.anchoredPosition = Vector2.zero;
     
             foreach (var charm in _conveyorService.Charms)
             {
@@ -130,7 +133,10 @@ namespace _Scripts.UI
         private void ClearCharmViews()
         {
             foreach (var cell in _spawnedCellsList)
+            {
+                cell.transform.SetParent(null);
                 Destroy(cell.gameObject);
+            }
         
             _spawnedCellsList.Clear();
         }
@@ -154,6 +160,7 @@ namespace _Scripts.UI
             _containerRect.offsetMax = new Vector2(cardWidth / 2f, _containerRect.offsetMax.y);
 
             LayoutRebuilder.ForceRebuildLayoutImmediate(_containerRect);
+            Canvas.ForceUpdateCanvases();
         }
 
         private void ResetCharmStates()

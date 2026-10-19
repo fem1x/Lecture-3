@@ -94,7 +94,6 @@ namespace _Scripts.UI
         {
             var rewardCharms = _rewardGenerator.GenerateCharmsRewards();
             _conveyorService.InitializeConveyor(rewardCharms);
-            _charmConveyor.InitializeCharmViews();
         }
     }
 }
