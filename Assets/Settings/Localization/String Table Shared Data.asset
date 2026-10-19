@@ -139,6 +139,34 @@ MonoBehaviour:
     m_Key: control_submit_btn
     m_Metadata:
       m_Items: []
+  - m_Id: 41997077172224
+    m_Key: completed_title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 41997077172225
+    m_Key: completed_rewards_title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 41997077172226
+    m_Key: completed_repair_tokens
+    m_Metadata:
+      m_Items: []
+  - m_Id: 41997077172227
+    m_Key: completed_stat_level
+    m_Metadata:
+      m_Items: []
+  - m_Id: 41997077172228
+    m_Key: completed_stat_throws
+    m_Metadata:
+      m_Items: []
+  - m_Id: 41997077172229
+    m_Key: completed_stat_rerolls
+    m_Metadata:
+      m_Items: []
+  - m_Id: 41997077172230
+    m_Key: completed_btn_workshop
+    m_Metadata:
+      m_Items: []
   - m_Id: 31973554638848
     m_Key: codex_title
     m_Metadata:

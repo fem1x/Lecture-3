@@ -150,6 +150,34 @@ MonoBehaviour:
     m_Localized: '?'
     m_Metadata:
       m_Items: []
+  - m_Id: 41997077172224
+    m_Localized: '- - - Nivel completado - - -'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 41997077172225
+    m_Localized: '- Recompensas -'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 41997077172226
+    m_Localized: "Fichas de reparaci\xF3n:"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 41997077172227
+    m_Localized: '- por nivel:'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 41997077172228
+    m_Localized: '- tiradas:'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 41997077172229
+    m_Localized: '- relanzamientos:'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 41997077172230
+    m_Localized: TALLER
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

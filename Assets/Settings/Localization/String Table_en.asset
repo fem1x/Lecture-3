@@ -150,6 +150,34 @@ MonoBehaviour:
     m_Localized: '?'
     m_Metadata:
       m_Items: []
+  - m_Id: 41997077172224
+    m_Localized: '- - - Level Completed - - -'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 41997077172225
+    m_Localized: '- Rewards -'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 41997077172226
+    m_Localized: 'Repair Tokens:'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 41997077172227
+    m_Localized: '- level reward:'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 41997077172228
+    m_Localized: '- throws:'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 41997077172229
+    m_Localized: '- rerolls:'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 41997077172230
+    m_Localized: WORKSHOP
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []
