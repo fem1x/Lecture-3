@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 84a9a95ab6aee114ea64d24fff8ce131
+guid: a6ba2e471ca22e14c9f29f052b2a3349
 TrueTypeFontImporter:
   externalObjects: {}
   serializedVersion: 4
@@ -9,7 +9,7 @@ TrueTypeFontImporter:
   characterPadding: 1
   includeFontData: 1
   fontNames:
-  - Hando Soft Trial
+  - Days One
   fallbackFontReferences: []
   customCharacters: 
   fontRenderingMode: 0

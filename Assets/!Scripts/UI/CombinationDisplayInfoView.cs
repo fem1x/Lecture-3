@@ -32,20 +32,16 @@ namespace _Scripts.UI
         public void Setup(CombinationConfig config)
         {
             _config = config;
-            if (_config == null) return;
 
             _titleText.text = _config.DisplayName.GetLocalizedString();
             _descriptionText.text = _config.Description.GetLocalizedString();
             _pointsText.text = _config.BasePoints.ToString();
             _multiplierText.text = _config.Multiplier.ToString();
 
-            if (_diceRefundText != null)
-            {
-                var hasRefund = _config.DiceRefund > 0;
-                _diceRefundText.gameObject.SetActive(hasRefund);
-                if (hasRefund)
-                    _diceRefundText.text = $"+{_config.DiceRefund}";
-            }
+            var hasRefund = _config.DiceRefund > 0;
+            _diceRefundText.gameObject.SetActive(hasRefund);
+            if (hasRefund)
+                _diceRefundText.text = $"+{_config.DiceRefund}";
 
             RestartPatternLoop();
         }
@@ -62,25 +58,19 @@ namespace _Scripts.UI
 
         private void NextPattern()
         {
-            if (_config.Patterns == null || _config.Patterns.Length == 0) return;
-
             _currentPatternIndex = (_currentPatternIndex + 1) % _config.Patterns.Length;
             ApplyPattern(_config.Patterns[_currentPatternIndex]);
         }
         
         private void ApplyPattern(DicePatternExample pattern)
         {
-            for (int i = 0; i < _diceSlots.Length; i++)
+            for (var i = 0; i < _diceSlots.Length; i++)
             {
-                if (pattern.Values != null && i < pattern.Values.Length)
-                {
-                    _diceSlots[i].gameObject.SetActive(true);
+                var hasDice = i < pattern.Values.Length;
+                _diceSlots[i].gameObject.SetActive(hasDice);
+                
+                if (hasDice)
                     _diceSlots[i].sprite = _diceAtlasConfig.GetSprite(pattern.Values[i]);
-                }
-                else
-                {
-                    _diceSlots[i].gameObject.SetActive(false);
-                }
             }
         }
     }

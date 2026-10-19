@@ -1,0 +1,155 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: String Table_es
+  m_EditorClassIdentifier: Unity.Localization::UnityEngine.Localization.Tables.StringTable
+  m_LocaleId:
+    m_Code: es
+  m_SharedData: {fileID: 11400000, guid: 9f9c89d5b6ad399428ec5a9fe072ff95, type: 2}
+  m_Metadata:
+    m_Items: []
+  m_TableData:
+  - m_Id: 34638516224
+    m_Localized: '- - - Taller - - -'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1863128567808
+    m_Localized: '- Cinta de amuletos -'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1978077663232
+    m_Localized: Prueba tu suerte
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2179253260288
+    m_Localized: "- Reparaci\xF3n de dados -"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2237877047296
+    m_Localized: "Restaura los dados da\xF1ados"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2284140220416
+    m_Localized: SIGUIENTE NIVEL
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9892515401728
+    m_Localized: Duplete
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9892519596032
+    m_Localized: 2 dados iguales
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9892519596033
+    m_Localized: Mono
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9892519596034
+    m_Localized: Solo pares / impares
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9892519596035
+    m_Localized: Opuestos
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9892519596036
+    m_Localized: 2 dados suman 7
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9892523790336
+    m_Localized: Sobrecarga
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9892523790337
+    m_Localized: "Suma \u2265 24"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9892523790338
+    m_Localized: Cuarteto
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9892523790339
+    m_Localized: 4 dados iguales
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9892523790340
+    m_Localized: Secuencia
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9892523790341
+    m_Localized: "5 n\xFAmeros consecutivos"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9892523790342
+    m_Localized: Singularidad
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9892523790343
+    m_Localized: 5 dados iguales
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9892523790344
+    m_Localized: Solo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9892523790345
+    m_Localized: Cualquier dado individual
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9892523790346
+    m_Localized: "Tr\xEDada"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9892523790347
+    m_Localized: 3 dados iguales
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9892523790348
+    m_Localized: Dos dupletes
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9892523790349
+    m_Localized: 2 pares de dados iguales
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9892523790350
+    m_Localized: Subcarga
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9892523790351
+    m_Localized: "Suma \u2264 9"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28798961438720
+    m_Localized: Cuota
+    m_Metadata:
+      m_Items: []
+  - m_Id: 31380622659584
+    m_Localized: Amuletos
+    m_Metadata:
+      m_Items: []
+  - m_Id: 31380622659585
+    m_Localized: ENTREGAR
+    m_Metadata:
+      m_Items: []
+  - m_Id: 31973554638848
+    m_Localized: "- - - C\xF3dice - - -"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 33730397589504
+    m_Localized: '?'
+    m_Metadata:
+      m_Items: []
+  references:
+    version: 2
+    RefIds: []

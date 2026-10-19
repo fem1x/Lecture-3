@@ -1,5 +1,6 @@
 ﻿#if UNITY_EDITOR
 using System.IO;
+using System.Text;
 using UnityEditor;
 using UnityEditor.Localization;
 using UnityEditor.Localization.Plugins.CSV;
@@ -10,19 +11,22 @@ namespace _Scripts.Editor
 {
     public static class GoogleSheetsLocalizationSync
     {
-        // Вставь сюда ID своей таблицы и GID листа:
         private const string SpreadsheetId = "1POx7CpQw7xOuYOVnc3mKFRZr6LcvntBIpQ428c9HWJw";
         private const string SheetGid = "672052263";
-
-        // Имя твоей коллекции таблиц в Unity
         private const string TableCollectionName = "String Table";
 
-        [MenuItem("Tools/Localization/Sync from Google Sheets")]
-        public static void SyncFromGoogleSheets()
+        // ВСТАВЬ СЮДА СКОПИРОВАННЫЙ URL ИЗ APPS SCRIPT:
+        private const string WebAppUrl = "https://script.google.com/macros/s/AKfycbywNEs8c37bAE3qYTzxnNOoA8O5izgB2ivlvcXHb-T3fxmgC9YyQrohf1C360mKR2sj/exec";
+
+        // =========================================================================
+        // PULL (Google Sheets -> Unity)
+        // =========================================================================
+        [MenuItem("Tools/Localization/Pull from Google Sheets")]
+        public static void PullFromGoogleSheets()
         {
             var url = $"https://docs.google.com/spreadsheets/d/{SpreadsheetId}/gviz/tq?tqx=out:csv&gid={SheetGid}";
 
-            EditorUtility.DisplayProgressBar("Localization Sync", "Загрузка данных из Google Sheets...", 0.2f);
+            EditorUtility.DisplayProgressBar("Localization Sync", "Загрузка таблицы из Google Sheets...", 0.2f);
 
             var request = UnityWebRequest.Get(url);
             var operation = request.SendWebRequest();
@@ -40,7 +44,7 @@ namespace _Scripts.Editor
                     var csvContent = request.downloadHandler.text;
                     if (string.IsNullOrWhiteSpace(csvContent))
                     {
-                        Debug.LogError("[Localization Sync] Получен пустой ответ от Google Sheets.");
+                        Debug.LogError("[Localization Sync] Пустой ответ от Google Sheets.");
                         return;
                     }
 
@@ -55,7 +59,6 @@ namespace _Scripts.Editor
 
                     Undo.RecordObject(collection, "Sync Localization from Google Sheets");
 
-                    // Импортируем CSV напрямую в коллекцию
                     using (var reader = new StringReader(csvContent))
                     {
                         Csv.ImportInto(reader, collection);
@@ -69,7 +72,71 @@ namespace _Scripts.Editor
                     AssetDatabase.SaveAssets();
                     AssetDatabase.Refresh();
 
-                    Debug.Log("[Localization Sync] Успешно синхронизировано из Google Sheets!");
+                    Debug.Log("[Localization Sync] Успешно затянуто из Google Sheets!");
+                }
+                finally
+                {
+                    EditorUtility.ClearProgressBar();
+                    request.Dispose();
+                }
+            };
+        }
+
+        // =========================================================================
+        // PUSH (Unity -> Google Sheets)
+        // =========================================================================
+        [MenuItem("Tools/Localization/Push to Google Sheets")]
+        public static void PushToGoogleSheets()
+        {
+            if (string.IsNullOrWhiteSpace(WebAppUrl) || WebAppUrl.Contains("ВСТАВЬ_СЮДА"))
+            {
+                Debug.LogError("[Localization Sync] Укажи WebAppUrl в скрипте GoogleSheetsLocalizationSync.cs!");
+                return;
+            }
+
+            var collection = LocalizationEditorSettings.GetStringTableCollection(TableCollectionName);
+            if (collection == null)
+            {
+                Debug.LogError($"[Localization Sync] Коллекция '{TableCollectionName}' не найдена!");
+                return;
+            }
+
+            EditorUtility.DisplayProgressBar("Localization Sync", "Экспорт данных из Unity...", 0.2f);
+
+            string csvContent;
+            using (var writer = new StringWriter())
+            {
+                Csv.Export(writer, collection);
+                csvContent = writer.ToString();
+            }
+
+            EditorUtility.DisplayProgressBar("Localization Sync", "Отправка данных в Google Sheets...", 0.6f);
+
+            var form = new WWWForm();
+            form.AddField("csv", csvContent);
+
+            var request = UnityWebRequest.Post(WebAppUrl, form);
+            var operation = request.SendWebRequest();
+
+            operation.completed += _ =>
+            {
+                try
+                {
+                    if (request.result != UnityWebRequest.Result.Success)
+                    {
+                        Debug.LogError($"[Localization Sync] Ошибка отправки: {request.error}");
+                        return;
+                    }
+
+                    var response = request.downloadHandler.text;
+                    if (response.Contains("SUCCESS"))
+                    {
+                        Debug.Log("[Localization Sync] Успешно выгружено в Google Sheets!");
+                    }
+                    else
+                    {
+                        Debug.LogError($"[Localization Sync] Ответ сервера: {response}");
+                    }
                 }
                 finally
                 {

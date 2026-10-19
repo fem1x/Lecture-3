@@ -130,6 +130,26 @@ MonoBehaviour:
     m_Localized: "Sum \u2264 9"
     m_Metadata:
       m_Items: []
+  - m_Id: 28798961438720
+    m_Localized: Quota
+    m_Metadata:
+      m_Items: []
+  - m_Id: 31380622659584
+    m_Localized: Charms
+    m_Metadata:
+      m_Items: []
+  - m_Id: 31380622659585
+    m_Localized: SUBMIT
+    m_Metadata:
+      m_Items: []
+  - m_Id: 31973554638848
+    m_Localized: '- - - Codex - - -'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 33730397589504
+    m_Localized: '?'
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

@@ -51,6 +51,6 @@ MonoBehaviour:
     - rid: 420518558509826327
       type: {class: SumRule, ns: _Scripts.Combinations.Rules, asm: Game}
       data:
-        <RequiredDiceCount>k__BackingField: 0
+        <RequiredDiceCount>k__BackingField: 5
         <Comparison>k__BackingField: 1
         <RequiredSum>k__BackingField: 9

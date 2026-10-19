@@ -51,4 +51,4 @@ MonoBehaviour:
     - rid: 420518558509826322
       type: {class: TwoDupletsRule, ns: _Scripts.Combinations.Rules, asm: Game}
       data:
-        <RequiredDiceCount>k__BackingField: 0
+        <RequiredDiceCount>k__BackingField: 4

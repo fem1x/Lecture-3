@@ -127,6 +127,26 @@ MonoBehaviour:
     m_Key: combo_underload_desc
     m_Metadata:
       m_Items: []
+  - m_Id: 28798961438720
+    m_Key: control_quota_label
+    m_Metadata:
+      m_Items: []
+  - m_Id: 31380622659584
+    m_Key: control_charms_label
+    m_Metadata:
+      m_Items: []
+  - m_Id: 31380622659585
+    m_Key: control_submit_btn
+    m_Metadata:
+      m_Items: []
+  - m_Id: 31973554638848
+    m_Key: codex_title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 33730397589504
+    m_Key: control_combination_placeholder_label
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

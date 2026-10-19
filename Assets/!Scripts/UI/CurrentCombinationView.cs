@@ -3,6 +3,7 @@ using _Scripts.Dices;
 using _Scripts.Interfaces;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Localization;
 using UnityEngine.UI;
 using VContainer;
 
@@ -18,7 +19,7 @@ namespace _Scripts.UI
         [Space]
         [SerializeField] private Button _submitButton;
         [Space]
-        [SerializeField] private string _placeholderCombinationText = "Select Dice";
+        [SerializeField] private LocalizedString _placeholderText;
 
         private List<Dice> _dices;
         
@@ -76,7 +77,7 @@ namespace _Scripts.UI
         
         private void SetEmpty()
         {
-            _combinationNameText.text = _placeholderCombinationText;
+            _combinationNameText.text = _placeholderText.GetLocalizedString();
             _pointsText.text = "0";
             _multText.text = "0";
             

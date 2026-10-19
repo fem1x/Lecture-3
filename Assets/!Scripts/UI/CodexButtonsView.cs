@@ -5,7 +5,7 @@ using VContainer;
 
 namespace _Scripts.UI
 {
-    public class CombinationsInfoView : MonoBehaviour
+    public class CodexButtonsView : MonoBehaviour
     {
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
         [SerializeField] private List<Button> _buttons;
