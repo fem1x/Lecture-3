@@ -1,11 +1,12 @@
-﻿using _Scripts.Charms;
+﻿using System;
+using _Scripts.Charms;
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
 namespace _Scripts.UI.Charms
 {
-    public class CharmDragView : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
+    public class CharmDragView : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler, IPointerClickHandler
     {
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
         [field: SerializeField] public CharmGeneralView GeneralView { get; private set; }
@@ -17,10 +18,13 @@ namespace _Scripts.UI.Charms
         [SerializeField] private Ease _returnEase = Ease.OutCubic;
         
         [Header("Revealing")]
-        [SerializeField] Sprite _unrevealedSprite;
+        [SerializeField] private Sprite _unrevealedSprite;
+
+        public event Action<CharmConfigBase> OnClicked;
 
         private bool _isRevealed;
         private Sprite _revealedSprite;
+        private CharmConfigBase _config;
         
         private RectTransform _cellHolder;
         private RectTransform _dragLayer;
@@ -30,6 +34,7 @@ namespace _Scripts.UI.Charms
 
         public void Setup(CharmConfigBase config, RectTransform dragLayer, RectTransform cellHolder)
         {
+            _config = config;
             _dragLayer = dragLayer;
             _cellHolder = cellHolder;
             
@@ -47,6 +52,14 @@ namespace _Scripts.UI.Charms
         }
 
         public void SetDraggable(bool isDraggable) => _isDraggable = isDraggable;
+
+        public void OnPointerClick(PointerEventData eventData)
+        {
+            if (eventData.dragging) return;
+            if (!_isRevealed) return;
+
+            OnClicked?.Invoke(_config);
+        }
 
         public void OnBeginDrag(PointerEventData eventData)
         {

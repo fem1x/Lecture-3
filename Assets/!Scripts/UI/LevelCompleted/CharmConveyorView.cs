@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using _Scripts.Charms;
 using _Scripts.UI.Charms;
+using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
@@ -17,6 +18,7 @@ namespace _Scripts.UI
         [SerializeField] private ConveyorCellView _cellPrefab;
         [SerializeField] private HorizontalLayoutGroup _containerLayout;
         [SerializeField] private RectTransform _dragLayer;
+        [SerializeField] private CharmCardView _charmCardView;
         
         [Header("Conveyor Movement")]
         [SerializeField] private float _moveDuration = 0.8f;
@@ -106,6 +108,9 @@ namespace _Scripts.UI
                 var cell = _resolver.Instantiate(_cellPrefab, _containerRect);
                 var charmView = _resolver.Instantiate(_charmPrefab, cell.CharmHolder);
                 charmView.Setup(charm, _dragLayer, cell.CharmHolder);
+                
+                charmView.OnClicked += HandleCharmClicked;
+                
                 cell.AttachCharm(charmView);
 
                 _spawnedCellsList.Add(cell);
@@ -118,11 +123,20 @@ namespace _Scripts.UI
             
             _shutter.Open();
         }
+
+        private void HandleCharmClicked(CharmConfigBase config)
+        {
+            if (_charmCardView != null && config != null)
+                _charmCardView.ShowAsync(config, destroyCancellationToken).Forget();
+        }
         
         public void ClearConveyorView()
         {
             foreach (var cell in _spawnedCellsList)
             {
+                if (cell.CurrentCharm != null)
+                    cell.CurrentCharm.OnClicked -= HandleCharmClicked;
+
                 cell.transform.SetParent(null);
                 Destroy(cell.gameObject);
             }
@@ -151,7 +165,7 @@ namespace _Scripts.UI
 
         private void UpdateIndicators(int activeIndex)
         {
-            for (int i = 0; i < _indicators.Count; i++)
+            for (var i = 0; i < _indicators.Count; i++)
                 _indicators[i].color = activeIndex == i ? _activeColor : _inactiveColor;
         }
         

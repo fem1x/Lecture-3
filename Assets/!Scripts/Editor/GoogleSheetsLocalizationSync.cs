@@ -1,4 +1,6 @@
 ﻿#if UNITY_EDITOR
+using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using UnityEditor;
@@ -15,7 +17,6 @@ namespace _Scripts.Editor
         private const string SheetGid = "672052263";
         private const string TableCollectionName = "String Table";
 
-        // ВСТАВЬ СЮДА СКОПИРОВАННЫЙ URL ИЗ APPS SCRIPT:
         private const string WebAppUrl = "https://script.google.com/macros/s/AKfycbywNEs8c37bAE3qYTzxnNOoA8O5izgB2ivlvcXHb-T3fxmgC9YyQrohf1C360mKR2sj/exec";
 
         // =========================================================================
@@ -110,6 +111,8 @@ namespace _Scripts.Editor
                 csvContent = writer.ToString();
             }
 
+            csvContent = CleanCsvColumns(csvContent);
+
             EditorUtility.DisplayProgressBar("Localization Sync", "Отправка данных в Google Sheets...", 0.6f);
 
             var form = new WWWForm();
@@ -144,6 +147,47 @@ namespace _Scripts.Editor
                     request.Dispose();
                 }
             };
+        }
+
+        private static string CleanCsvColumns(string csv)
+        {
+            if (string.IsNullOrWhiteSpace(csv)) return csv;
+
+            var lines = csv.Split(new[] { "\r\n", "\r", "\n" }, StringSplitOptions.None);
+            if (lines.Length == 0) return csv;
+
+            var headers = lines[0].Split(',');
+            var keepIndices = new List<int>();
+
+            for (var i = 0; i < headers.Length; i++)
+            {
+                var cleanHeader = headers[i].Trim('"', ' ');
+                var isId = string.Equals(cleanHeader, "Id", StringComparison.OrdinalIgnoreCase);
+                var isComment = cleanHeader.EndsWith("Comments", StringComparison.OrdinalIgnoreCase) || 
+                                cleanHeader.EndsWith("Comment", StringComparison.OrdinalIgnoreCase);
+
+                if (!isId && !isComment)
+                    keepIndices.Add(i);
+            }
+
+            var sb = new StringBuilder();
+            for (var lineIndex = 0; lineIndex < lines.Length; lineIndex++)
+            {
+                var line = lines[lineIndex];
+                if (string.IsNullOrEmpty(line) && lineIndex == lines.Length - 1) continue;
+
+                var columns = line.Split(',');
+                var filtered = new string[keepIndices.Count];
+                for (var i = 0; i < keepIndices.Count; i++)
+                {
+                    var colIdx = keepIndices[i];
+                    filtered[i] = colIdx < columns.Length ? columns[colIdx] : "";
+                }
+
+                sb.AppendLine(string.Join(",", filtered));
+            }
+
+            return sb.ToString();
         }
     }
 }

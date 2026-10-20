@@ -692,7 +692,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 0}
   m_AnchoredPosition: {x: 0, y: 896.9999}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 14.400002}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &2589049051632278250
 MonoBehaviour:
@@ -2566,6 +2566,7 @@ MonoBehaviour:
   _cellPrefab: {fileID: 2661062131785180254, guid: 1122f84b9b3170a45b8d1b259e3168ce, type: 3}
   _containerLayout: {fileID: 3350847499962391939}
   _dragLayer: {fileID: 3681785020073634023}
+  _charmCardView: {fileID: 3742041714327938654}
   _moveDuration: 0.65
   _moveEase: 15
   _nextButton: {fileID: 7299228577003908744}
@@ -6406,8 +6407,9 @@ RectTransform:
   - {fileID: 4966867623760193499}
   - {fileID: 8541449471210441122}
   - {fileID: 1285886131749188962}
-  - {fileID: 8183831586442563268}
   - {fileID: 3681785020073634023}
+  - {fileID: 2959381974101426219}
+  - {fileID: 8183831586442563268}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -6963,7 +6965,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1285886131749188962
 RectTransform:
   m_ObjectHideFlags: 0
@@ -11718,6 +11720,123 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4cb0f9a55a904d2ebfe645a2fd141953, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Game::_Scripts.UI.DiceStateView
+--- !u!1001 &2916350783366281609
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 8971640953311960382}
+    m_Modifications:
+    - target: {fileID: 101651704809273762, guid: ff56b818edc992a43be53b17834c7a7b, type: 3}
+      propertyPath: m_Pivot.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 101651704809273762, guid: ff56b818edc992a43be53b17834c7a7b, type: 3}
+      propertyPath: m_Pivot.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 101651704809273762, guid: ff56b818edc992a43be53b17834c7a7b, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 101651704809273762, guid: ff56b818edc992a43be53b17834c7a7b, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 101651704809273762, guid: ff56b818edc992a43be53b17834c7a7b, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 101651704809273762, guid: ff56b818edc992a43be53b17834c7a7b, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 101651704809273762, guid: ff56b818edc992a43be53b17834c7a7b, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 101651704809273762, guid: ff56b818edc992a43be53b17834c7a7b, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 101651704809273762, guid: ff56b818edc992a43be53b17834c7a7b, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 101651704809273762, guid: ff56b818edc992a43be53b17834c7a7b, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 101651704809273762, guid: ff56b818edc992a43be53b17834c7a7b, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 101651704809273762, guid: ff56b818edc992a43be53b17834c7a7b, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 101651704809273762, guid: ff56b818edc992a43be53b17834c7a7b, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 101651704809273762, guid: ff56b818edc992a43be53b17834c7a7b, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 101651704809273762, guid: ff56b818edc992a43be53b17834c7a7b, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 101651704809273762, guid: ff56b818edc992a43be53b17834c7a7b, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 101651704809273762, guid: ff56b818edc992a43be53b17834c7a7b, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 101651704809273762, guid: ff56b818edc992a43be53b17834c7a7b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 101651704809273762, guid: ff56b818edc992a43be53b17834c7a7b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 101651704809273762, guid: ff56b818edc992a43be53b17834c7a7b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5659813749713228258, guid: ff56b818edc992a43be53b17834c7a7b, type: 3}
+      propertyPath: m_Name
+      value: (Bg) CharmCard
+      objectReference: {fileID: 0}
+    - target: {fileID: 7223697321492025138, guid: ff56b818edc992a43be53b17834c7a7b, type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: ff56b818edc992a43be53b17834c7a7b, type: 3}
+--- !u!224 &2959381974101426219 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 101651704809273762, guid: ff56b818edc992a43be53b17834c7a7b, type: 3}
+  m_PrefabInstance: {fileID: 2916350783366281609}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &3742041714327938654 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1987937410957139927, guid: ff56b818edc992a43be53b17834c7a7b, type: 3}
+  m_PrefabInstance: {fileID: 2916350783366281609}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 519ad5006a41483bb93992cf12f97343, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Game::_Scripts.Charms.CharmCardView
 --- !u!1001 &3001191173092377054
 PrefabInstance:
   m_ObjectHideFlags: 0
