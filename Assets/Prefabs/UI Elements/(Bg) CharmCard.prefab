@@ -141,7 +141,7 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 7227727849590566563}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -479,7 +479,7 @@ CanvasGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5659813749713228258}
   m_Enabled: 1
-  m_Alpha: 0
+  m_Alpha: 1
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
@@ -717,7 +717,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
   m_AnchoredPosition: {x: -0.0000000060827, y: -83}
-  m_SizeDelta: {x: 511.25, y: 73.5398}
+  m_SizeDelta: {x: 460.0918, y: 73.5398}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!222 &5851530960251892338
 CanvasRenderer:
@@ -747,7 +747,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "2 X-Mult if \u2264 2 dice played"
+  m_text: Description Text
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 6cb24a902fe7ce046bdfdc9be2cc3fbf, type: 2}
   m_sharedMaterial: {fileID: -1065539734941738680, guid: 6cb24a902fe7ce046bdfdc9be2cc3fbf, type: 2}
@@ -774,15 +774,15 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 30
-  m_fontSizeBase: 30
+  m_fontSize: 26
+  m_fontSizeBase: 26
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
   m_HorizontalAlignment: 2
-  m_VerticalAlignment: 512
+  m_VerticalAlignment: 256
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_characterHorizontalScale: 1

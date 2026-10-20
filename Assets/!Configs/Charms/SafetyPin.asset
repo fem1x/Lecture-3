@@ -12,8 +12,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ebd4bb2ee1e4419491ae787c2248f671, type: 3}
   m_Name: SafetyPin
   m_EditorClassIdentifier: Game::_Scripts.Charms.SafetyPinCharmConfig
-  <Id>k__BackingField: safety_pin
-  <Title>k__BackingField: Safety Pin
-  <Description>k__BackingField: no
+  <Name>k__BackingField:
+    m_TableReference:
+      m_TableCollectionName: String Table
+    m_TableEntryReference:
+      m_KeyId: 0
+      m_Key: charm_safety_pin_name
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  <Description>k__BackingField:
+    m_TableReference:
+      m_TableCollectionName: String Table
+    m_TableEntryReference:
+      m_KeyId: 0
+      m_Key: charm_safety_pin_desc
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
   <Icon>k__BackingField: {fileID: -1309988188, guid: 16766bedacd69774d946c31e9f1a5601, type: 3}
   <SaveChance>k__BackingField: 0.4
+  references:
+    version: 2
+    RefIds: []

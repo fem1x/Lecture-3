@@ -12,10 +12,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 09fdb17e9d594e469a0aca31c42296a3, type: 3}
   m_Name: Porcelain
   m_EditorClassIdentifier: Game::_Scripts.Charms.PorcelainCharmConfig
-  <Id>k__BackingField: porcelain
-  <Title>k__BackingField: Porcelain
-  <Description>k__BackingField: no
+  <Name>k__BackingField:
+    m_TableReference:
+      m_TableCollectionName: String Table
+    m_TableEntryReference:
+      m_KeyId: 0
+      m_Key: charm_porcelain_name
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  <Description>k__BackingField:
+    m_TableReference:
+      m_TableCollectionName: String Table
+    m_TableEntryReference:
+      m_KeyId: 0
+      m_Key: charm_porcelain_desc
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
   <Icon>k__BackingField: {fileID: -62297399, guid: 16766bedacd69774d946c31e9f1a5601, type: 3}
   <TargetValue>k__BackingField: 6
   <BonusPoints>k__BackingField: 50
   <XMultiplier>k__BackingField: 1.4
+  references:
+    version: 2
+    RefIds: []

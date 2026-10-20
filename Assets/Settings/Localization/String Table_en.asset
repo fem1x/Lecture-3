@@ -178,6 +178,84 @@ MonoBehaviour:
     m_Localized: WORKSHOP
     m_Metadata:
       m_Items: []
+  - m_Id: 418204213956608
+    m_Localized: Airbag
+    m_Metadata:
+      m_Items: []
+  - m_Id: 418204264288257
+    m_Localized: Cassette Tape
+    m_Metadata:
+      m_Items: []
+  - m_Id: 418204264288259
+    m_Localized: Heart-Shaped Box
+    m_Metadata:
+      m_Items: []
+  - m_Id: 418204264288261
+    m_Localized: Hourglass
+    m_Metadata:
+      m_Items: []
+  - m_Id: 418204264288263
+    m_Localized: Lucky Dime
+    m_Metadata:
+      m_Items: []
+  - m_Id: 418204264288265
+    m_Localized: Porcelain
+    m_Metadata:
+      m_Items: []
+  - m_Id: 418204264288267
+    m_Localized: Safety Pin
+    m_Metadata:
+      m_Items: []
+  - m_Id: 418204264288269
+    m_Localized: Teddy Picker
+    m_Metadata:
+      m_Items: []
+  - m_Id: 418204264288271
+    m_Localized: Velvet Glove
+    m_Metadata:
+      m_Items: []
+  - m_Id: 418204264288256
+    m_Localized: "Played dice do not gain Cracks if \u2264 {maxDicesThreshold} dice
+      are played"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 418204264288258
+    m_Localized: Gives {xMultiplierPerStep} X-Mult for each Wear on played dice if
+      combination is Underload
+    m_Metadata:
+      m_Items: []
+  - m_Id: 418204264288260
+    m_Localized: Gives +{bonusMultiplier} Mult for each played die with Cracks
+    m_Metadata:
+      m_Items: []
+  - m_Id: 418204264288262
+    m_Localized: Gives {xMultiplier} X-Mult if played dice contain both a 1 and a
+      6
+    m_Metadata:
+      m_Items: []
+  - m_Id: 418204264288264
+    m_Localized: Dice with value {immuneValue} never gain Cracks
+    m_Metadata:
+      m_Items: []
+  - m_Id: 418204264288266
+    m_Localized: Gives +{bonusPoints} Points and {xMultiplier} X-Mult for each played
+      {targetValue}, but adds +1 Wear to the die
+    m_Metadata:
+      m_Items: []
+  - m_Id: 418204264288268
+    m_Localized: '{saveChance:0%} chance to prevent Wear and remove all Cracks from
+      the die'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 418204264288270
+    m_Localized: "Gives {xMultiplier} X-Mult if \u2264 {maxDicesThreshold} dice are
+      played"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 418204264288272
+    m_Localized: Gives {xMultiplier} X-Mult if all played dice are Intact
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

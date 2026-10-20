@@ -14,12 +14,5 @@ namespace _Scripts.Charms
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 
         public override CharmBase CreateCharmInstance() => new PorcelainCharm(this);
-        
-        protected override Dictionary<string, object> GetDescriptionArgs() => new()
-        {
-            { "targetValue", TargetValue },
-            { "bonusPoints", BonusPoints },
-            { "xMultiplier", XMultiplier.ToString("0.0") },
-        };
     }
 }

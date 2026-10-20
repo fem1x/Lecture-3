@@ -12,8 +12,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c91878b6ffe1438fba0a914f4380f039, type: 3}
   m_Name: CassetteTape
   m_EditorClassIdentifier: Game::_Scripts.Charms.CassetteTapeCharmConfig
-  <Id>k__BackingField: cassette_tape
-  <Title>k__BackingField: Cassette Tape
-  <Description>k__BackingField: no
+  <Name>k__BackingField:
+    m_TableReference:
+      m_TableCollectionName: String Table
+    m_TableEntryReference:
+      m_KeyId: 0
+      m_Key: charm_cassette_tape_name
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  <Description>k__BackingField:
+    m_TableReference:
+      m_TableCollectionName: String Table
+    m_TableEntryReference:
+      m_KeyId: 0
+      m_Key: charm_cassette_tape_desc
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
   <Icon>k__BackingField: {fileID: -828996976, guid: 16766bedacd69774d946c31e9f1a5601, type: 3}
   <XMultiplierPerStep>k__BackingField: 1.25
+  references:
+    version: 2
+    RefIds: []

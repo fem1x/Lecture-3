@@ -178,6 +178,85 @@ MonoBehaviour:
     m_Localized: TALLER
     m_Metadata:
       m_Items: []
+  - m_Id: 418204213956608
+    m_Localized: Airbag
+    m_Metadata:
+      m_Items: []
+  - m_Id: 418204264288257
+    m_Localized: Cinta de casete
+    m_Metadata:
+      m_Items: []
+  - m_Id: 418204264288259
+    m_Localized: "Caja con forma de coraz\xF3n"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 418204264288261
+    m_Localized: Reloj de arena
+    m_Metadata:
+      m_Items: []
+  - m_Id: 418204264288263
+    m_Localized: Moneda de la suerte
+    m_Metadata:
+      m_Items: []
+  - m_Id: 418204264288265
+    m_Localized: Porcelana
+    m_Metadata:
+      m_Items: []
+  - m_Id: 418204264288267
+    m_Localized: Imperdible
+    m_Metadata:
+      m_Items: []
+  - m_Id: 418204264288269
+    m_Localized: Gancho de peluches
+    m_Metadata:
+      m_Items: []
+  - m_Id: 418204264288271
+    m_Localized: Guante de terciopelo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 418204264288256
+    m_Localized: "Los dados jugados no reciben Grietas si se juegan \u2264 {maxDicesThreshold}
+      dados"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 418204264288258
+    m_Localized: "Otorga {xMultiplierPerStep} X-Mult por cada Desgaste en los dados
+      jugados si la combinaci\xF3n es Subcarga"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 418204264288260
+    m_Localized: Otorga +{bonusMultiplier} Mult por cada dado jugado con Grietas
+    m_Metadata:
+      m_Items: []
+  - m_Id: 418204264288262
+    m_Localized: Otorga {xMultiplier} X-Mult si los dados jugados contienen a la
+      vez un 1 y un 6
+    m_Metadata:
+      m_Items: []
+  - m_Id: 418204264288264
+    m_Localized: Los dados con valor {immuneValue} nunca reciben Grietas
+    m_Metadata:
+      m_Items: []
+  - m_Id: 418204264288266
+    m_Localized: "Otorga +{bonusPoints} Puntos y {xMultiplier} X-Mult por cada {targetValue}
+      jugado, pero a\xF1ade +1 Desgaste al dado"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 418204264288268
+    m_Localized: '{saveChance:0%} de probabilidad de evitar el Desgaste y eliminar
+      todas las Grietas del dado'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 418204264288270
+    m_Localized: "Otorga {xMultiplier} X-Mult si se juegan \u2264 {maxDicesThreshold}
+      dados"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 418204264288272
+    m_Localized: "Otorga {xMultiplier} X-Mult si todos los dados jugados est\xE1n
+      Intactos"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

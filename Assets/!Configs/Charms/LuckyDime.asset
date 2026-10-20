@@ -12,8 +12,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b9fd3c57a1f4873b2fb574d0ddc6114, type: 3}
   m_Name: LuckyDime
   m_EditorClassIdentifier: Game::_Scripts.Charms.LuckyDimeCharmConfig
-  <Id>k__BackingField: lucky_dime
-  <Title>k__BackingField: Lucky Dime
-  <Description>k__BackingField: no
+  <Name>k__BackingField:
+    m_TableReference:
+      m_TableCollectionName: String Table
+    m_TableEntryReference:
+      m_KeyId: 0
+      m_Key: charm_lucky_dime_name
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  <Description>k__BackingField:
+    m_TableReference:
+      m_TableCollectionName: String Table
+    m_TableEntryReference:
+      m_KeyId: 0
+      m_Key: charm_lucky_dime_desc
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
   <Icon>k__BackingField: {fileID: 6365969, guid: 16766bedacd69774d946c31e9f1a5601, type: 3}
   <ImmuneValue>k__BackingField: 1
+  references:
+    version: 2
+    RefIds: []

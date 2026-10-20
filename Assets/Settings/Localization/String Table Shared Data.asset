@@ -175,6 +175,78 @@ MonoBehaviour:
     m_Key: control_combination_placeholder_label
     m_Metadata:
       m_Items: []
+  - m_Id: 418204213956608
+    m_Key: charm_airbag_name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 418204264288256
+    m_Key: charm_airbag_desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 418204264288257
+    m_Key: charm_cassette_tape_name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 418204264288258
+    m_Key: charm_cassette_tape_desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 418204264288259
+    m_Key: charm_heart_shaped_box_name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 418204264288260
+    m_Key: charm_heart_shaped_box_desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 418204264288261
+    m_Key: charm_hourglass_name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 418204264288262
+    m_Key: charm_hourglass_desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 418204264288263
+    m_Key: charm_lucky_dime_name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 418204264288264
+    m_Key: charm_lucky_dime_desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 418204264288265
+    m_Key: charm_porcelain_name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 418204264288266
+    m_Key: charm_porcelain_desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 418204264288267
+    m_Key: charm_safety_pin_name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 418204264288268
+    m_Key: charm_safety_pin_desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 418204264288269
+    m_Key: charm_teddy_picker_name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 418204264288270
+    m_Key: charm_teddy_picker_desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 418204264288271
+    m_Key: charm_velvet_glove_name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 418204264288272
+    m_Key: charm_velvet_glove_desc
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

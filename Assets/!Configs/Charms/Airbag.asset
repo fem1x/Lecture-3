@@ -12,8 +12,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 693f2064a47f44ceafb330997724fcd6, type: 3}
   m_Name: Airbag
   m_EditorClassIdentifier: Game::_Scripts.Charms.AirbagCharmConfig
-  <Id>k__BackingField: airbag
-  <Title>k__BackingField: Airbag
-  <Description>k__BackingField: no
+  <Name>k__BackingField:
+    m_TableReference:
+      m_TableCollectionName: String Table
+    m_TableEntryReference:
+      m_KeyId: 0
+      m_Key: charm_airbag_name
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  <Description>k__BackingField:
+    m_TableReference:
+      m_TableCollectionName: String Table
+    m_TableEntryReference:
+      m_KeyId: 0
+      m_Key: charm_airbag_desc
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
   <Icon>k__BackingField: {fileID: 443923342, guid: 16766bedacd69774d946c31e9f1a5601, type: 3}
   <MaxDicesThreshold>k__BackingField: 2
+  references:
+    version: 2
+    RefIds: []

@@ -12,8 +12,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a61c528b69741f6888bde0967cd9177, type: 3}
   m_Name: HeartShapedBox
   m_EditorClassIdentifier: Game::_Scripts.Charms.HeartShapedBoxCharmConfig
-  <Id>k__BackingField: heart_shaped_box
-  <Title>k__BackingField: Heart-Shaped Box
-  <Description>k__BackingField: no
+  <Name>k__BackingField:
+    m_TableReference:
+      m_TableCollectionName: String Table
+    m_TableEntryReference:
+      m_KeyId: 0
+      m_Key: charm_heart_shaped_box_name
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  <Description>k__BackingField:
+    m_TableReference:
+      m_TableCollectionName: String Table
+    m_TableEntryReference:
+      m_KeyId: 0
+      m_Key: charm_heart_shaped_box_desc
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
   <Icon>k__BackingField: {fileID: -1620787752, guid: 16766bedacd69774d946c31e9f1a5601, type: 3}
   <BonusMultiplier>k__BackingField: 4
+  references:
+    version: 2
+    RefIds: []
