@@ -16,7 +16,8 @@ MonoBehaviour:
     m_Code: en
   m_SharedData: {fileID: 11400000, guid: 9f9c89d5b6ad399428ec5a9fe072ff95, type: 2}
   m_Metadata:
-    m_Items: []
+    m_Items:
+    - rid: 420518586740899945
   m_TableData:
   - m_Id: 34638516224
     m_Localized: Workshop
@@ -103,7 +104,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 9892523790345
-    m_Localized: Any single dice
+    m_Localized: Any single die
     m_Metadata:
       m_Items: []
   - m_Id: 9892523790346
@@ -215,47 +216,73 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 418204264288256
-    m_Localized: "Played dice do not gain Cracks if \u2264 {maxDicesThreshold} dice
-      are played"
+    m_Localized: "Played dice do not gain <style=cracks>Cracks</style> if \u2264
+      {maxDicesThreshold} dice are played"
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 420518586740899945
   - m_Id: 418204264288258
-    m_Localized: Gives {xMultiplierPerStep} X-Mult for each Wear on played dice if
-      combination is Underload
+    m_Localized: Gives <style=xmult>{xMultiplierPerStep} X-Mult</style> for each
+      <style=wear>Wear</style> on played dice if combination is <style=combo>Underload</style>
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 420518586740899945
   - m_Id: 418204264288260
-    m_Localized: Gives +{bonusMultiplier} Mult for each played die with Cracks
+    m_Localized: Gives <style=mult>+{bonusMultiplier} Mult</style> for each played
+      die with <style=cracks>Cracks</style>
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 420518586740899945
   - m_Id: 418204264288262
-    m_Localized: Gives {xMultiplier} X-Mult if played dice contain both a 1 and a
-      6
+    m_Localized: Gives <style=xmult>{xMultiplier} X-Mult</style> if played dice contain
+      both a <style=die>1</style> and a <style=die>6</style>
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 420518586740899945
   - m_Id: 418204264288264
-    m_Localized: Dice with value {immuneValue} never gain Cracks
+    m_Localized: Dice with value <style=die>{immuneValue}</style> never gain <style=cracks>Cracks</style>
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 420518586740899945
   - m_Id: 418204264288266
-    m_Localized: Gives +{bonusPoints} Points and {xMultiplier} X-Mult for each played
-      {targetValue}, but adds +1 Wear to the die
+    m_Localized: Gives <style=points>+{bonusPoints} Points</style> and <style=xmult>{xMultiplier}
+      X-Mult</style> for each played <style=die>{targetValue}</style>, but adds <style=wear>+1
+      Wear</style> to the die
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 420518586740899945
   - m_Id: 418204264288268
-    m_Localized: '{saveChance:0%} chance to prevent Wear and remove all Cracks from
-      the die'
+    m_Localized: <style=chance>{saveChance:0%}</style> chance to prevent <style=wear>Wear</style>
+      and remove all <style=cracks>Cracks</style> from the die
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 420518586740899945
   - m_Id: 418204264288270
-    m_Localized: "Gives {xMultiplier} X-Mult if \u2264 {maxDicesThreshold} dice are
-      played"
+    m_Localized: "Gives <style=xmult>{xMultiplier} X-Mult</style> if \u2264 {maxDicesThreshold}
+      dice are played"
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 420518586740899945
   - m_Id: 418204264288272
-    m_Localized: Gives {xMultiplier} X-Mult if all played dice are Intact
+    m_Localized: Gives <style=xmult>{xMultiplier} X-Mult</style> if all played dice
+      are <style=intact>Intact</style>
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 420518586740899945
   references:
     version: 2
-    RefIds: []
+    RefIds:
+    - rid: 420518586740899945
+      type: {class: SmartFormatTag, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_Entries: 
+        m_SharedEntries:
+        - id: 418204264288256
+        - id: 418204264288260
+        - id: 418204264288262
+        - id: 418204264288264
+        - id: 418204264288266
+        - id: 418204264288268
+        - id: 418204264288270
+        - id: 418204264288272
+        - id: 418204264288258

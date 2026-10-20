@@ -2,6 +2,7 @@
 using UnityEditor;
 using UnityEditor.Localization;
 using UnityEngine;
+using UnityEngine.Localization.Tables;
 
 namespace _Scripts.Editor
 {
@@ -20,13 +21,22 @@ namespace _Scripts.Editor
             }
 
             var updatedEntries = 0;
+            var sharedData = collection.SharedData;
 
-            foreach (var table in collection.StringTables)
+            // Обходим все доступные таблицы локалей (ru, en, es и т.д.)
+            foreach (var tableAsset in collection.Tables)
             {
-                foreach (var entry in table.Values)
+                var table = tableAsset.asset as StringTable;
+                if (table == null)
+                    continue;
+
+                foreach (var sharedEntry in sharedData.Entries)
                 {
-                    // Включаем Smart Format только для строк с плейсхолдерами {}
-                    if (entry.Value != null && entry.Value.Contains("{") && entry.Value.Contains("}"))
+                    var entry = table.GetEntry(sharedEntry.Id);
+                    if (entry == null || string.IsNullOrEmpty(entry.Value))
+                        continue;
+
+                    if (entry.Value.Contains("{") && entry.Value.Contains("}"))
                     {
                         if (!entry.IsSmart)
                         {
@@ -42,7 +52,7 @@ namespace _Scripts.Editor
             AssetDatabase.SaveAssets();
             AssetDatabase.Refresh();
 
-            Debug.Log($"[LocalizationSmartFormatEnabler] Успешно включён Smart Format для {updatedEntries} записей.");
+            Debug.Log($"[LocalizationSmartFormatEnabler] Успешно включён Smart Format для {updatedEntries} записей во всех локалях.");
         }
     }
 }
