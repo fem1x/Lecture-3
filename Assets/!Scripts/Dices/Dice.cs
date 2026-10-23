@@ -72,11 +72,12 @@ namespace _Scripts.Dices
 
         public void TeleportTo(Vector3 position, Quaternion rotation)
         {
+            _rb.position = position;
+            _rb.rotation = rotation;
             transform.position = position;
             transform.rotation = rotation;
 
-            _rb.MovePosition(position);
-            _rb.MoveRotation(rotation);
+            Physics.SyncTransforms();
         }
         
         public void PrepareForRoll()
@@ -84,12 +85,8 @@ namespace _Scripts.Dices
             Data?.RoundReset();
             _view.ResetVisual();
             
-            if (!_rb.isKinematic)
-            {
-                _rb.linearVelocity = Vector3.zero;
-                _rb.angularVelocity = Vector3.zero;
-            }
-            
+            _rb.linearVelocity = Vector3.zero;
+            _rb.angularVelocity = Vector3.zero;
             _rb.isKinematic = true;
         }
         

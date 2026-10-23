@@ -10,46 +10,46 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2eecb481ef504d6386ffe034b4ed7202, type: 3}
-  m_Name: SoloConfig
+  m_Name: DumpConfig
   m_EditorClassIdentifier: Game::_Scripts.Combinations.CombinationConfig
-  <Id>k__BackingField: solo
+  <Id>k__BackingField: dump
   <Priority>k__BackingField: 10
   <DisplayName>k__BackingField:
     m_TableReference:
-      m_TableCollectionName: String Table
+      m_TableCollectionName: GUID:9f9c89d5b6ad399428ec5a9fe072ff95
     m_TableEntryReference:
-      m_KeyId: 0
-      m_Key: combo_solo_name
+      m_KeyId: 1410400354422784
+      m_Key: 
     m_FallbackState: 0
     m_WaitForCompletion: 0
     m_LocalVariables: []
   <Description>k__BackingField:
     m_TableReference:
-      m_TableCollectionName: String Table
+      m_TableCollectionName: GUID:9f9c89d5b6ad399428ec5a9fe072ff95
     m_TableEntryReference:
-      m_KeyId: 0
-      m_Key: combo_solo_desc
+      m_KeyId: 1410400392171520
+      m_Key: 
     m_FallbackState: 0
     m_WaitForCompletion: 0
     m_LocalVariables: []
   <Icon>k__BackingField: {fileID: 0}
   <Patterns>k__BackingField:
-  - Values: 01000000
-  - Values: 02000000
-  - Values: 03000000
-  - Values: 04000000
-  - Values: 05000000
-  - Values: 06000000
-  <BasePoints>k__BackingField: 10
+  - Values: 0100000004000000
+  - Values: 06000000030000000500000004000000
+  - Values: 0400000002000000
+  - Values: 0400000002000000050000000300000002000000
+  - Values: 050000000300000001000000
+  - Values: 0600000002000000
+  <BasePoints>k__BackingField: 0
   <Multiplier>k__BackingField: 1
   <DiceRefund>k__BackingField: 0
   <Rule>k__BackingField:
-    rid: 420518558509826318
+    rid: 420518648391139451
   references:
     version: 2
     RefIds:
-    - rid: 420518558509826318
-      type: {class: FrequencyRule, ns: _Scripts.Interfaces, asm: Game}
+    - rid: 420518648391139451
+      type: {class: DumpRule, ns: _Scripts.Combinations.Rules, asm: Game}
       data:
-        <RequiredDiceCount>k__BackingField: 1
-        <RequiredFrequency>k__BackingField: 1
+        <MinDiceCount>k__BackingField: 1
+        <MaxDiceCount>k__BackingField: 5

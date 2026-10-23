@@ -95,12 +95,12 @@ MonoBehaviour:
     m_Key: combo_singularity_desc
     m_Metadata:
       m_Items: []
-  - m_Id: 9892523790344
-    m_Key: combo_solo_name
+  - m_Id: 1410400354422784
+    m_Key: combo_dump_name
     m_Metadata:
       m_Items: []
-  - m_Id: 9892523790345
-    m_Key: combo_solo_desc
+  - m_Id: 1410400392171520
+    m_Key: combo_dump_desc
     m_Metadata:
       m_Items: []
   - m_Id: 9892523790346

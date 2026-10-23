@@ -13,6 +13,9 @@ namespace _Scripts.Dices
         [SerializeField] private SpriteRenderer[] _faceRenderers;
         [SerializeField] private Sprite[] _faceSprites;
         
+        [Header("Drop Settings")]
+        [SerializeField] private bool _usePhysicsDrop = true;
+
         [Header("LiftUp Animation")]
         [SerializeField] private float _liftHeight = 1.2f;
         [SerializeField] private float _liftTime = 0.25f;
@@ -80,7 +83,7 @@ namespace _Scripts.Dices
             else
             {
                 if (_floorY == -999f) return;
-                DoDropTween();
+                DoDrop();
             }
         }
         
@@ -96,15 +99,23 @@ namespace _Scripts.Dices
             _rb.isKinematic = true;
             _moveTween = _rb.DOMoveY(_floorY + _liftHeight, _liftTime).SetEase(_liftEase);
         }
-        
-        private void DoDropTween()
+
+        private void DoDrop()
         {
-            if (_floorY == -999f)
+            if (_usePhysicsDrop)
             {
                 _rb.isKinematic = false;
+                _rb.linearVelocity = Vector3.zero;
+                _rb.angularVelocity = Vector3.zero;
+                _floorY = -999f;
                 return;
             }
 
+            DoDropTween();
+        }
+        
+        private void DoDropTween()
+        {
             _moveTween = transform.DOMoveY(_floorY, _dropTime).SetEase(_dropEase)
                 .OnComplete(() =>
                 {

@@ -72,7 +72,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 9892523790337
-    m_Localized: "Suma \u2265 24"
+    m_Localized: "Suma \u2265 25"
     m_Metadata:
       m_Items: []
   - m_Id: 9892523790338
@@ -99,14 +99,6 @@ MonoBehaviour:
     m_Localized: 5 dados iguales
     m_Metadata:
       m_Items: []
-  - m_Id: 9892523790344
-    m_Localized: Solo
-    m_Metadata:
-      m_Items: []
-  - m_Id: 9892523790345
-    m_Localized: Cualquier dado individual
-    m_Metadata:
-      m_Items: []
   - m_Id: 9892523790346
     m_Localized: "Tr\xEDada"
     m_Metadata:
@@ -128,7 +120,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 9892523790351
-    m_Localized: "Suma \u2264 9"
+    m_Localized: "Suma \u2264 10"
     m_Metadata:
       m_Items: []
   - m_Id: 28798961438720
@@ -271,6 +263,14 @@ MonoBehaviour:
     m_Metadata:
       m_Items:
       - rid: 420518586740899946
+  - m_Id: 1410400354422784
+    m_Localized: Dump
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1410400392171520
+    m_Localized: "1\u20135 dados sin combinaci\xF3n"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

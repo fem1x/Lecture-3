@@ -129,15 +129,13 @@ namespace _Scripts.Managers
 
         private void PrepareNextTurn(List<Dice> playedDices)
         {
-            _tableController.ClearSelection();
-            
             int countToReturn = Mathf.Min(playedDices.Count, _resourceManager.DiceCount);
             if (countToReturn > 0)
             {
                 var dicesToReturn = playedDices.Take(countToReturn).ToList();
                 _tableController.AddPendingDices(dicesToReturn);
                 _diceSpawner.ResetDicesToSpawn(_tableController.PendingDices);
-                
+        
                 var eliminatedDices = playedDices.Skip(countToReturn).ToList();
                 foreach (var extraDice in eliminatedDices)
                     extraDice.gameObject.SetActive(false);
@@ -147,6 +145,8 @@ namespace _Scripts.Managers
                 foreach (var dice in playedDices)
                     dice.gameObject.SetActive(false);
             }
+
+            _tableController.ClearSelection();
         }
     }
 }

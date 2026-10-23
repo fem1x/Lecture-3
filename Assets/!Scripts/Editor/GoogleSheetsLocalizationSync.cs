@@ -62,7 +62,7 @@ namespace _Scripts.Editor
 
                     using (var reader = new StringReader(csvContent))
                     {
-                        Csv.ImportInto(reader, collection);
+                        Csv.ImportInto(reader, collection, createUndo: false, reporter: null, removeMissingEntries: true);
                     }
 
                     EditorUtility.SetDirty(collection);

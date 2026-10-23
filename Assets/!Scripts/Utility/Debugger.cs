@@ -49,6 +49,12 @@ public class Debugger : MonoBehaviour
         if (_turnFlowController != null)
             _turnFlowController.OnScoreCalculated -= HandleScoreCalculated;
     }
+    
+    private void OnApplicationQuit()
+    {
+        CopyFullSessionToClipboard();
+        ClearSession();
+    }
 
     [ContextMenu("Start New Session Log")]
     public void StartNewSession()
