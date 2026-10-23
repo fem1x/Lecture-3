@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d917cd6e06ae4b828b77ce3ff6bd841b, type: 3}
   m_Name: ResourceConfig
   m_EditorClassIdentifier: Game::_Scripts.Configs.ResourceConfig
-  <InitialDiceCount>k__BackingField: 15
+  <InitialDiceCount>k__BackingField: 20
   <RerollsPerRound>k__BackingField: 6

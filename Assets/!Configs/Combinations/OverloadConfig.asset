@@ -40,9 +40,9 @@ MonoBehaviour:
   - Values: 0500000005000000050000000600000006000000
   - Values: 0500000005000000060000000600000006000000
   - Values: 0600000006000000060000000600000006000000
-  <BasePoints>k__BackingField: 70
-  <Multiplier>k__BackingField: 7
-  <DiceRefund>k__BackingField: 2
+  <BasePoints>k__BackingField: 75
+  <Multiplier>k__BackingField: 9
+  <DiceRefund>k__BackingField: 0
   <Rule>k__BackingField:
     rid: 420518558509826326
   references:
@@ -53,4 +53,4 @@ MonoBehaviour:
       data:
         <RequiredDiceCount>k__BackingField: 5
         <Comparison>k__BackingField: 0
-        <RequiredSum>k__BackingField: 24
+        <RequiredSum>k__BackingField: 25

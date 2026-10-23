@@ -17,6 +17,8 @@ namespace _Scripts.Dices
         private readonly DiceRollConfig _config;
         private readonly ResourceManager _resourceManager;
         
+        public event Action<bool, List<Dice>> OnRollCompleted; //(isFirstThrow, dices)
+        
         [Inject]
         public DiceRoller(DiceRollConfig config, ResourceManager resourceManager)
         {
@@ -69,6 +71,8 @@ namespace _Scripts.Dices
                     if (dice != null)
                         dice.UpdateValue();
                 }
+                
+                OnRollCompleted?.Invoke(spendDice, dices);
             }
             finally
             {

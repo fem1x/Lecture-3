@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: SequenceConfig
   m_EditorClassIdentifier: Game::_Scripts.Combinations.CombinationConfig
   <Id>k__BackingField: sequence
-  <Priority>k__BackingField: 80
+  <Priority>k__BackingField: 100
   <DisplayName>k__BackingField:
     m_TableReference:
       m_TableCollectionName: String Table
@@ -36,9 +36,9 @@ MonoBehaviour:
   <Patterns>k__BackingField:
   - Values: 0100000002000000030000000400000005000000
   - Values: 0200000003000000040000000500000006000000
-  <BasePoints>k__BackingField: 65
-  <Multiplier>k__BackingField: 7
-  <DiceRefund>k__BackingField: 2
+  <BasePoints>k__BackingField: 85
+  <Multiplier>k__BackingField: 10
+  <DiceRefund>k__BackingField: 0
   <Rule>k__BackingField:
     rid: 420518558509826325
   references:

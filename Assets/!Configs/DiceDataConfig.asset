@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: DiceDataConfig
   m_EditorClassIdentifier: Game::_Scripts.Configs.DiceDataConfig
   <DiceName>k__BackingField: Standard
-  <MaxDurability>k__BackingField: 2
+  <MaxDurability>k__BackingField: 3
   <Faces>k__BackingField:
   - <BaseValue>k__BackingField: 1
     <Direction>k__BackingField: {x: 0, y: 1, z: 0}

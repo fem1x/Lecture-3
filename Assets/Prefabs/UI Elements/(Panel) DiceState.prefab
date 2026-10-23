@@ -219,7 +219,7 @@ MonoBehaviour:
   m_text: -1
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 6cb24a902fe7ce046bdfdc9be2cc3fbf, type: 2}
-  m_sharedMaterial: {fileID: -7087541939783082960, guid: 6cb24a902fe7ce046bdfdc9be2cc3fbf, type: 2}
+  m_sharedMaterial: {fileID: -1065539734941738680, guid: 6cb24a902fe7ce046bdfdc9be2cc3fbf, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -305,7 +305,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &9053691218052312455
 RectTransform:
   m_ObjectHideFlags: 0
@@ -346,7 +346,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 0.56078434}
+  m_Color: {r: 0, g: 0, b: 0, a: 0.69803923}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -602,6 +602,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Game::_Scripts.UI.DurabilityView
   _cracksOverlay: {fileID: 7664320954259772245}
+  _lightCrackSprite: {fileID: -1043299799, guid: 6cbc55d5b35640140ae9bb368d4e02f9, type: 3}
+  _heavyCrackSprite: {fileID: 1439195297, guid: 6cbc55d5b35640140ae9bb368d4e02f9, type: 3}
+  _lightCrackAlpha: 0.5
+  _heavyCrackAlpha: 0.7
 --- !u!1 &9127133691794699000
 GameObject:
   m_ObjectHideFlags: 0

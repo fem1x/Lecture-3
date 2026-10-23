@@ -19,6 +19,8 @@ namespace _Scripts.Managers
         
         private bool _isScoring;
         
+        public event Action<ScoreSequencePlan, List<Dice>> OnScoreCalculated;
+        
         #region DI
         private DiceTableController _tableController;
         private IScoreCalculator _calculator;
@@ -107,6 +109,8 @@ namespace _Scripts.Managers
             _isScoring = true;
             
             var scoreSequence = _calculator.Calculate(selectedDices);
+            OnScoreCalculated?.Invoke(scoreSequence, selectedDices);
+            
             await _scoreSequenceController.PlaySequenceAsync(scoreSequence);
             _damageService.DamageDices(selectedDices);
             
