@@ -30,11 +30,7 @@ public class LevelCompletedView : MonoBehaviour
     #endregion
     // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 
-    private void Awake()
-    {
-        _backdropCanvasGroup = GetComponent<CanvasGroup>();
-        HideInstant();
-    }
+    private void Awake() => HideInstant();
 
     private void OnEnable()
     {

@@ -560,6 +560,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9545eb8b441a4ea9bbf7e7c8bad870fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Game::_Scripts.UI.Tooltips.CharmTooltipView
+--- !u!225 &1870229245 stripped
+CanvasGroup:
+  m_CorrespondingSourceObject: {fileID: 5780780619288973239, guid: ef5db77786d12194d88cb266471c1bf9, type: 3}
+  m_PrefabInstance: {fileID: 4271278360673963976}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &1950779564 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6168002809383655841, guid: 0dd24c35042c3644d9fdb11ea52633a5, type: 3}
@@ -797,6 +802,22 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 90659944924261555, guid: ef5db77786d12194d88cb266471c1bf9, type: 3}
+      propertyPath: m_fontColor.b
+      value: 0.043137256
+      objectReference: {fileID: 0}
+    - target: {fileID: 90659944924261555, guid: ef5db77786d12194d88cb266471c1bf9, type: 3}
+      propertyPath: m_fontColor.g
+      value: 0.06666667
+      objectReference: {fileID: 0}
+    - target: {fileID: 90659944924261555, guid: ef5db77786d12194d88cb266471c1bf9, type: 3}
+      propertyPath: m_fontColor.r
+      value: 0.10588236
+      objectReference: {fileID: 0}
+    - target: {fileID: 90659944924261555, guid: ef5db77786d12194d88cb266471c1bf9, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4278915355
+      objectReference: {fileID: 0}
     - target: {fileID: 563914179562146648, guid: ef5db77786d12194d88cb266471c1bf9, type: 3}
       propertyPath: m_AnchorMax.y
       value: 1
@@ -812,6 +833,10 @@ PrefabInstance:
     - target: {fileID: 563914179562146648, guid: ef5db77786d12194d88cb266471c1bf9, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -18.02165
+      objectReference: {fileID: 0}
+    - target: {fileID: 789013925587189285, guid: ef5db77786d12194d88cb266471c1bf9, type: 3}
+      propertyPath: m_Color.a
+      value: 0.81960785
       objectReference: {fileID: 0}
     - target: {fileID: 1071559028372283606, guid: ef5db77786d12194d88cb266471c1bf9, type: 3}
       propertyPath: m_SizeDelta.x
@@ -1005,6 +1030,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5745470076033109424, guid: ef5db77786d12194d88cb266471c1bf9, type: 3}
+      propertyPath: _canvasGroup
+      value: 
+      objectReference: {fileID: 1870229245}
     - target: {fileID: 5771991364894010929, guid: ef5db77786d12194d88cb266471c1bf9, type: 3}
       propertyPath: m_SizeDelta.x
       value: 0
@@ -1165,6 +1194,18 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1950779564}
+    - target: {fileID: 8811608323951651569, guid: ef5db77786d12194d88cb266471c1bf9, type: 3}
+      propertyPath: m_Color.b
+      value: 0.5254902
+      objectReference: {fileID: 0}
+    - target: {fileID: 8811608323951651569, guid: ef5db77786d12194d88cb266471c1bf9, type: 3}
+      propertyPath: m_Color.g
+      value: 0.6392157
+      objectReference: {fileID: 0}
+    - target: {fileID: 8811608323951651569, guid: ef5db77786d12194d88cb266471c1bf9, type: 3}
+      propertyPath: m_Color.r
+      value: 0.8941177
+      objectReference: {fileID: 0}
     - target: {fileID: 8971640953311960382, guid: ef5db77786d12194d88cb266471c1bf9, type: 3}
       propertyPath: m_Pivot.x
       value: 0

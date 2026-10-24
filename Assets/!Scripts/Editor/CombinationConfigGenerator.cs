@@ -2,7 +2,6 @@
 using System.IO;
 using _Scripts.Combinations;
 using _Scripts.Combinations.Rules;
-using _Scripts.Configs;
 using _Scripts.Interfaces;
 using UnityEditor;
 using UnityEngine;

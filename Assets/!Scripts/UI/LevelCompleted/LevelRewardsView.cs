@@ -13,6 +13,8 @@ namespace _Scripts.UI
     public class LevelRewardsView : MonoBehaviour
     {
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
+        [SerializeField] private CanvasGroup _canvasGroup;
+        
         [Header("Texts")]
         [SerializeField] private TMP_Text _totalTokensText;
         [SerializeField] private TMP_Text _levelTokensText;
@@ -24,17 +26,11 @@ namespace _Scripts.UI
 
         [Header("Fade Settings")]
         [SerializeField] private float _fadeDuration = 0.25f;
-
-        private CanvasGroup _canvasGroup;
-
+        
         public event Action OnWorkshopRequested;
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 
-        private void Awake()
-        {
-            _canvasGroup = GetComponent<CanvasGroup>();
-            HideInstant();
-        }
+        private void Awake() => HideInstant();
 
         private void OnEnable() => _workshopButton.onClick.AddListener(HandleWorkshopButtonClick);
         private void OnDisable() => _workshopButton.onClick.RemoveListener(HandleWorkshopButtonClick);
