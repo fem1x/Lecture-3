@@ -95,6 +95,7 @@ public class GameLifetimeScope : LifetimeScope
         builder.Register<CharmsConveyorService>(Lifetime.Singleton);
         builder.Register<CharmsRewardGenerator>(Lifetime.Singleton);
         builder.Register<DiceDamageService>(Lifetime.Singleton);
+        builder.Register<CodeLockService>(Lifetime.Singleton);
         
         //Entry Point
         builder.RegisterEntryPoint<Bootstrap>();
