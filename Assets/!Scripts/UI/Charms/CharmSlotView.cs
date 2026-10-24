@@ -2,6 +2,7 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 using VContainer;
+using VContainer.Unity;
 
 namespace _Scripts.UI.Charms
 {
@@ -17,11 +18,13 @@ namespace _Scripts.UI.Charms
         private CharmBase _activeCharm;
         
         private CharmsConveyorService _conveyorService;
+        private IObjectResolver _resolver;
         
         [Inject]
-        public void Construct(CharmsConveyorService conveyorService)
+        public void Construct(CharmsConveyorService conveyorService, IObjectResolver resolver)
         {
             _conveyorService = conveyorService;
+            _resolver = resolver;
         }
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
         
@@ -47,7 +50,7 @@ namespace _Scripts.UI.Charms
             _emptyPlaceholder.SetActive(false);
             _activeCharm = charm;
 
-            _currentEquipped = Instantiate(_charmPrefab, _charmHolder);
+            _currentEquipped = _resolver.Instantiate(_charmPrefab, _charmHolder);
             _currentEquipped.CharmGeneralView.Setup(charm.Config);
             _currentEquipped.PlayTriggerAnimation();
 

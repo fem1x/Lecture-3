@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: OverloadConfig
   m_EditorClassIdentifier: Game::_Scripts.Combinations.CombinationConfig
   <Id>k__BackingField: overload
-  <Priority>k__BackingField: 90
+  <Priority>k__BackingField: 80
   <DisplayName>k__BackingField:
     m_TableReference:
       m_TableCollectionName: String Table
@@ -40,8 +40,8 @@ MonoBehaviour:
   - Values: 0500000005000000050000000600000006000000
   - Values: 0500000005000000060000000600000006000000
   - Values: 0600000006000000060000000600000006000000
-  <BasePoints>k__BackingField: 75
-  <Multiplier>k__BackingField: 9
+  <BasePoints>k__BackingField: 60
+  <Multiplier>k__BackingField: 7
   <DiceRefund>k__BackingField: 0
   <Rule>k__BackingField:
     rid: 420518558509826326

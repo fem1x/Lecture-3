@@ -52,6 +52,7 @@ public class Debugger : MonoBehaviour
     
     private void OnApplicationQuit()
     {
+        if (!_enableDebug) return;
         CopyFullSessionToClipboard();
         ClearSession();
     }

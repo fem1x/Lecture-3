@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: UnderloadConfig
   m_EditorClassIdentifier: Game::_Scripts.Combinations.CombinationConfig
   <Id>k__BackingField: underload
-  <Priority>k__BackingField: 80
+  <Priority>k__BackingField: 70
   <DisplayName>k__BackingField:
     m_TableReference:
       m_TableCollectionName: String Table

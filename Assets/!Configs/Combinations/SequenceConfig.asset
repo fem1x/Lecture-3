@@ -36,8 +36,8 @@ MonoBehaviour:
   <Patterns>k__BackingField:
   - Values: 0100000002000000030000000400000005000000
   - Values: 0200000003000000040000000500000006000000
-  <BasePoints>k__BackingField: 85
-  <Multiplier>k__BackingField: 10
+  <BasePoints>k__BackingField: 100
+  <Multiplier>k__BackingField: 12
   <DiceRefund>k__BackingField: 0
   <Rule>k__BackingField:
     rid: 420518558509826325

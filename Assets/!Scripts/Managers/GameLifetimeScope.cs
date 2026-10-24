@@ -7,6 +7,7 @@ using _Scripts.Interfaces;
 using _Scripts.Managers;
 using _Scripts.Scriptable_Objects.Configs;
 using _Scripts.UI;
+using _Scripts.UI.Tooltips;
 using _Scripts.Utility;
 using UnityEngine;
 using VContainer;
@@ -35,11 +36,13 @@ public class GameLifetimeScope : LifetimeScope
     [SerializeField] private ScoreSequenceController _scoreSequenceController;
     [SerializeField] private CurrentCombinationView _currentCombinationView;
     [SerializeField] private DiceStatePanelView _diceStatePanelView;
+    [SerializeField] private CharmTooltipView _charmTooltipView;
     // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
     
     protected override void Configure(IContainerBuilder builder)
     {
         RegisterConfigs(builder);
+        RegisterSceneObjects(builder);
         RegisterServices(builder);
     }
     
@@ -56,10 +59,9 @@ public class GameLifetimeScope : LifetimeScope
         builder.RegisterInstance(_initialCombinationsConfig);
         builder.RegisterInstance(_charmsPoolConfig);
     }
-    
-    private void RegisterServices(IContainerBuilder builder)
+
+    private void RegisterSceneObjects(IContainerBuilder builder)
     {
-        //Scene objects
         builder.RegisterComponent(_mainCamera);
         builder.RegisterComponent(_spawnPoint);
         builder.RegisterComponent(_diceTableController);
@@ -67,7 +69,11 @@ public class GameLifetimeScope : LifetimeScope
         builder.RegisterComponent(_scoreSequenceController);
         builder.RegisterComponent(_currentCombinationView);
         builder.RegisterComponent(_diceStatePanelView);
-        
+        builder.RegisterComponent(_charmTooltipView);
+    }
+    
+    private void RegisterServices(IContainerBuilder builder)
+    {
         //C# classes
         builder.Register<SfxPlayer>(Lifetime.Singleton).As<ISfxPlayer>();
         builder.Register<AudioFilterController>(Lifetime.Singleton);

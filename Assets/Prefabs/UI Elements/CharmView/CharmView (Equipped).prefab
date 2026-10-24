@@ -99,6 +99,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 1214982661794929846, guid: 4b61beccc7d12674db762c3c90a46557, type: 3}
       insertIndex: -1
       addedObject: {fileID: -3575081561266522832}
+    - targetCorrespondingSourceObject: {fileID: 1214982661794929846, guid: 4b61beccc7d12674db762c3c90a46557, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1403491797200215172}
   m_SourcePrefab: {fileID: 100100000, guid: 4b61beccc7d12674db762c3c90a46557, type: 3}
 --- !u!114 &2417598920261664070 stripped
 MonoBehaviour:
@@ -111,6 +114,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: abe8b3e038eb4c039cd94468575de097, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Game::_Scripts.Charms.CharmView
+--- !u!224 &6797283708390660849 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 3348164102561811891, guid: 4b61beccc7d12674db762c3c90a46557, type: 3}
+  m_PrefabInstance: {fileID: 8080544082860283714}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &6989481398441479156 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1214982661794929846, guid: 4b61beccc7d12674db762c3c90a46557, type: 3}
@@ -129,3 +137,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Game::_Scripts.UI.Charms.CharmEquippedView
   <CharmGeneralView>k__BackingField: {fileID: 2417598920261664070}
+--- !u!114 &1403491797200215172
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6989481398441479156}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56cc52a58ee24798b9bc71b77353737d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Game::_Scripts.UI.Tooltips.CharmTooltipTrigger
+  <TargetRect>k__BackingField: {fileID: 6797283708390660849}
+  <EquippedView>k__BackingField: {fileID: -3575081561266522832}
