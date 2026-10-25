@@ -276,11 +276,33 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b08118d949685ad40ac841c924cad2ca, type: 3}
+--- !u!114 &188212633 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2239101097008840380, guid: 08c04146c042bc949ba3fbb852f9e65b, type: 3}
+  m_PrefabInstance: {fileID: 1130938417}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97fbdf526e014bd996ae1ca385e15576, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Game::_Scripts.UI.CodeLock.CodeLockSlotView
 --- !u!20 &330585545 stripped
 Camera:
   m_CorrespondingSourceObject: {fileID: 7731980850506434518, guid: f125e16385123e14db1accbcbcb13e0e, type: 3}
   m_PrefabInstance: {fileID: 5875776352766866004}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &396490799 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4886836377999641381, guid: 08c04146c042bc949ba3fbb852f9e65b, type: 3}
+  m_PrefabInstance: {fileID: 1130938417}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97fbdf526e014bd996ae1ca385e15576, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Game::_Scripts.UI.CodeLock.CodeLockSlotView
 --- !u!1 &622243860
 GameObject:
   m_ObjectHideFlags: 0
@@ -337,6 +359,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de4a7f2dcc5469546856f184a217773a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DiceRoller
+--- !u!114 &697636822 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3696743014660112876, guid: 08c04146c042bc949ba3fbb852f9e65b, type: 3}
+  m_PrefabInstance: {fileID: 1130938417}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97fbdf526e014bd996ae1ca385e15576, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Game::_Scripts.UI.CodeLock.CodeLockSlotView
+--- !u!114 &699349427 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6795205104262278840, guid: 08c04146c042bc949ba3fbb852f9e65b, type: 3}
+  m_PrefabInstance: {fileID: 1130938417}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97fbdf526e014bd996ae1ca385e15576, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Game::_Scripts.UI.CodeLock.CodeLockSlotView
 --- !u!1 &1016076069
 GameObject:
   m_ObjectHideFlags: 0
@@ -550,6 +594,30 @@ PrefabInstance:
       propertyPath: m_Name
       value: (Panel) CodeLock
       objectReference: {fileID: 0}
+    - target: {fileID: 6322855203843752514, guid: 08c04146c042bc949ba3fbb852f9e65b, type: 3}
+      propertyPath: _slots.Array.size
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6322855203843752514, guid: 08c04146c042bc949ba3fbb852f9e65b, type: 3}
+      propertyPath: '_slots.Array.data[0]'
+      value: 
+      objectReference: {fileID: 188212633}
+    - target: {fileID: 6322855203843752514, guid: 08c04146c042bc949ba3fbb852f9e65b, type: 3}
+      propertyPath: '_slots.Array.data[1]'
+      value: 
+      objectReference: {fileID: 697636822}
+    - target: {fileID: 6322855203843752514, guid: 08c04146c042bc949ba3fbb852f9e65b, type: 3}
+      propertyPath: '_slots.Array.data[2]'
+      value: 
+      objectReference: {fileID: 699349427}
+    - target: {fileID: 6322855203843752514, guid: 08c04146c042bc949ba3fbb852f9e65b, type: 3}
+      propertyPath: '_slots.Array.data[3]'
+      value: 
+      objectReference: {fileID: 396490799}
+    - target: {fileID: 6322855203843752514, guid: 08c04146c042bc949ba3fbb852f9e65b, type: 3}
+      propertyPath: '_slots.Array.data[4]'
+      value: 
+      objectReference: {fileID: 1984806442}
     - target: {fileID: 6487518900317192770, guid: 08c04146c042bc949ba3fbb852f9e65b, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -803,6 +871,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c01c7d50a2214afa9dff871a3191fd0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Game::_Scripts.Managers.RoundFlowController
+--- !u!114 &1984806442 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7222223454015617135, guid: 08c04146c042bc949ba3fbb852f9e65b, type: 3}
+  m_PrefabInstance: {fileID: 1130938417}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97fbdf526e014bd996ae1ca385e15576, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Game::_Scripts.UI.CodeLock.CodeLockSlotView
 --- !u!114 &2041444077 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5048878719678968659, guid: ef5db77786d12194d88cb266471c1bf9, type: 3}

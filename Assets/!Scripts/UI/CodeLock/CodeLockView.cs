@@ -1,5 +1,7 @@
-﻿using _Scripts.Combinations;
+﻿using System.Collections.Generic;
+using _Scripts.Combinations;
 using _Scripts.Managers;
+using _Scripts.UI.CodeLock;
 using _Scripts.Utility.Extensions;
 using TMPro;
 using UnityEngine;
@@ -14,6 +16,7 @@ namespace _Scripts.UI
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
         [SerializeField] private CanvasGroup _group;
         [SerializeField] private LocalizeStringEvent _codeNameEvent;
+        [SerializeField] private List<CodeLockSlotView> _slots;
 
         private CodeLockService _codeLockService;
 
@@ -45,18 +48,31 @@ namespace _Scripts.UI
             _codeLockService.OnLockBroken -= HideLock;
         }
         
-        private void ShowLock(CombinationConfig combinationCode)
+        private void ShowLock(CombinationConfig combo)
         {
-            if (combinationCode == null)
+            if (combo == null)
             {
                 HideLock();
                 return;
             }
             
-            _codeNameEvent.StringReference = combinationCode.DisplayName;
+            SetupSlots(combo);
+            _codeNameEvent.StringReference = combo.DisplayName;
             _group.Show();
         }
 
         private void HideLock() => _group.Hide();
+
+        private void SetupSlots(CombinationConfig combo)
+        {
+            int requiredCount = combo.Patterns.Length > 0 
+                ? combo.Patterns[0].Values.Length 
+                : 5;
+            
+            for (int i = 0; i < _slots.Count; i++)
+            {
+                _slots[i].SetActiveState(i < requiredCount);
+            }
+        }
     }
 }

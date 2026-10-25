@@ -9,7 +9,7 @@ namespace _Scripts.Combinations.Rules
     public abstract class CombinationRuleBase : ICombinationRule
     {
         [field: SerializeField] public int RequiredDiceCount { get; private set; }
-
+        
         public bool Matches(IReadOnlyList<Dice> dices)
         {
             if (dices == null || dices.Count != RequiredDiceCount)

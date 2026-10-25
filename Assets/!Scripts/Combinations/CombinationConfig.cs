@@ -43,12 +43,12 @@ namespace _Scripts.Combinations
             return Rule.Matches(dices);
         }
 
-#if UNITY_EDITOR
+        #if UNITY_EDITOR
         public void SetLocalizedStrings(LocalizedString nameString, LocalizedString descString)
         {
             DisplayName = nameString;
             Description = descString;
         }
-#endif
+        #endif
     }
 }
