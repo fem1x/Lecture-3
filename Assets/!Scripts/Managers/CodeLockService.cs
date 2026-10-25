@@ -3,18 +3,26 @@ using System.Collections.Generic;
 using _Scripts.Combinations;
 using _Scripts.Configs;
 using _Scripts.Dices;
+using UnityEngine;
 using VContainer;
 
 namespace _Scripts.Managers
 {
+    public enum LockBreakResult
+    {
+        Success,
+        Forced
+    }
+    
     public class CodeLockService
     {
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
         public event Action<CombinationConfig> OnLockSet;
         public event Action OnLockBroken;
         
-        private CombinationConfig _currentLock;
-
+        public CombinationConfig CurrentLock { get; private set; }
+        public bool IsActive => CurrentLock != null;
+        
         private readonly DiceDamageService _damageService;
 
         [Inject]
@@ -26,30 +34,29 @@ namespace _Scripts.Managers
 
         public void SetLock(LevelConfig levelConfig)
         {
-            _currentLock = levelConfig.HasLock ? levelConfig.GetRandomLock() : null;
+            CurrentLock = levelConfig.HasLock ? levelConfig.GetRandomLock() : null;
+            OnLockSet?.Invoke(CurrentLock);
         }
 
-        public bool TryBreakLock(List<Dice> dices, CombinationConfig playedCombo)
+        public LockBreakResult EvaluateAttempt(List<Dice> dices, CombinationConfig playedCombo)
         {
-            if (playedCombo == _currentLock)
-            {
-                BreakLock();
-                return true;
-            }
+            if (playedCombo == CurrentLock)
+                return LockBreakResult.Success;
 
             if (dices.Count == 5)
-            {
-                _damageService.DamageDices(dices);
-                BreakLock();
-                return true;
-            }
+                return LockBreakResult.Forced;
 
-            return false;
+            Debug.LogError("LockBreakResult error! (wrong combination and <5 dice");
+            return default;
         }
 
-        private void BreakLock()
+        public void BreakLock(LockBreakResult result, List<Dice> dices)
         {
-            _currentLock = null;
+            if (result == LockBreakResult.Forced)
+                _damageService.DamageDices(dices);
+
+            CurrentLock = null;
+            OnLockBroken?.Invoke();
         }
     }
 }

@@ -32,6 +32,7 @@ namespace _Scripts.Managers
         private ISfxPlayer _sfxPlayer;
         private ScoreSequenceController _scoreSequenceController;
         private DiceDamageService _damageService;
+        private CodeLockService _codeLockService;
         
         [Inject]
         public void Construct(
@@ -44,7 +45,8 @@ namespace _Scripts.Managers
             LevelFlowController levelFlowController,
             ISfxPlayer sfxPlayer,
             ScoreSequenceController scoreSequenceController,
-            DiceDamageService damageService)
+            DiceDamageService damageService,
+            CodeLockService  codeLockService)
         {
             _tableController = tableController;
             _calculator = calculator;
@@ -56,6 +58,7 @@ namespace _Scripts.Managers
             _sfxPlayer = sfxPlayer;
             _scoreSequenceController = scoreSequenceController;
             _damageService = damageService;
+            _codeLockService = codeLockService;
         }
         #endregion
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== 
@@ -108,11 +111,10 @@ namespace _Scripts.Managers
         {
             _isScoring = true;
             
-            var scoreSequence = _calculator.Calculate(selectedDices);
-            OnScoreCalculated?.Invoke(scoreSequence, selectedDices);
-            
-            await _scoreSequenceController.PlaySequenceAsync(scoreSequence);
-            _damageService.DamageDices(selectedDices);
+            if (_codeLockService.IsActive)
+                await CodeLockFlow(selectedDices);
+            else 
+                await StandardFlow(selectedDices);
             
             _isScoring = false;
 
@@ -122,9 +124,22 @@ namespace _Scripts.Managers
                 return;
             }
             
-            _resourceManager.AddRefundDice(scoreSequence.Combination.DiceRefund);
             PrepareNextTurn(selectedDices);
             _levelFlowController.CheckDefeatCondition();
+        }
+
+        private async UniTask StandardFlow(List<Dice> selectedDices)
+        {
+            var scoreSequence = _calculator.Calculate(selectedDices);
+            OnScoreCalculated?.Invoke(scoreSequence, selectedDices);
+            
+            await _scoreSequenceController.PlaySequenceAsync(scoreSequence);
+            _damageService.DamageDices(selectedDices);
+        }
+
+        private async UniTask CodeLockFlow(List<Dice> selectedDices)
+        {
+            
         }
 
         private void PrepareNextTurn(List<Dice> playedDices)

@@ -24,6 +24,7 @@ namespace _Scripts.Managers
         private readonly DiceSpawner _diceSpawner;
         private readonly RewardCalculator _rewardCalculator;
         private readonly RepairTokensManager _repairTokensManager;
+        private readonly CodeLockService _codeLockService;
         
         #region DI
         [Inject]
@@ -34,7 +35,8 @@ namespace _Scripts.Managers
             DiceTableController tableController,
             DiceSpawner diceSpawner,
             RewardCalculator rewardCalculator,
-            RepairTokensManager repairTokensManager)
+            RepairTokensManager repairTokensManager,
+            CodeLockService codeLockService)
         {
             _levelsConfig = levelsConfig;
             _scoreManager = scoreManager;
@@ -43,6 +45,7 @@ namespace _Scripts.Managers
             _diceSpawner = diceSpawner;
             _rewardCalculator = rewardCalculator;
             _repairTokensManager = repairTokensManager;
+            _codeLockService = codeLockService;
             
             _scoreManager.OnQuotaReached += HandleQuotaReached;
         }
@@ -89,6 +92,8 @@ namespace _Scripts.Managers
             _tableController.ActivateAllDices(allDices);
             _diceSpawner.ResetDicesToSpawn(allDices);
             _tableController.SetPendingDices(allDices);
+            
+            _codeLockService.SetLock(CurrentLevelConfig);
             
             OnLevelStarted?.Invoke(_currentLevelIndex + 1, CurrentLevelConfig.ScoreQuota);
         }
