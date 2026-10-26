@@ -4,6 +4,7 @@ using _Scripts.Configs;
 using _Scripts.Data_Transfer.Contexts;
 using _Scripts.Dices;
 using _Scripts.Utility;
+using _Scripts.Utility.Extensions;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using TMPro;
@@ -101,21 +102,21 @@ namespace _Scripts.Managers
             // +Points
             if (step.BonusPoints > 0)
             {
-                DoScalePopTween(_pointsText.transform, 1.8f);
+                _pointsText.transform.DoScalePop(scaleMult: 1.8f);
                 await AddPointsAsync(step.BonusPoints);
             }
 
             // +Mult
             if (step.BonusMultiplier > 0)
             {
-                DoScalePopTween(_multText.transform, 1.8f);
+                _multText.transform.DoScalePop(scaleMult: 1.8f);
                 await AddMultAsync(step.BonusMultiplier);
             }
 
             // X-Mult
             if (step.XMultiplier > 1f)
             {
-                DoScalePopTween(_multText.transform, 2.5f);
+                _multText.transform.DoScalePop(scaleMult: 2.5f);
                 await XMultAsync(step.XMultiplier);
             }
         }
@@ -195,8 +196,8 @@ namespace _Scripts.Managers
 
         private void PlayDiceStepFx(Transform source, string sfxName, bool is3D)
         {
-            DoScalePopTween(source);
-            DoScalePopTween(_pointsText.transform, 1.8f);
+            source.DoScalePop();
+            _pointsText.transform.DoScalePop(scaleMult: 1.8f);
             _cameraShaker.Shake(_diceScoreShake);
 
             //SFX
@@ -212,24 +213,14 @@ namespace _Scripts.Managers
 
         private void PlayMultTriggerFx()
         {
-            DoScalePopTween(_multText.transform, 3f, outTime: _pointsMultDuration);
-            DoScalePopTween(_pointsText.transform, 3f, outTime: _pointsMultDuration);
+            _multText.transform.DoScalePop(3f, outTime: _pointsMultDuration);
+            _pointsText.transform.DoScalePop(3f, outTime: _pointsMultDuration);
             _cameraShaker.Shake(_multTriggerShake);
             _sfxPlayer?.Play(_triggerMultSfx);
         }
         #endregion
 
         #region Tweens
-        private void DoScalePopTween(Transform target, float scaleMult = 1.5f, float inTime = 0.07f, float outTime = 0.35f)
-        {
-            target.DOKill(true);
-            var startingScale = target.localScale;
-            
-            DOTween.Sequence()
-                .Append(target.transform.DOScale(startingScale * scaleMult, inTime).SetEase(Ease.OutQuad))
-                .Append(target.transform.DOScale(startingScale, outTime).SetEase(Ease.InQuad));
-        }
-        
         private async UniTask DoTextValueTween(TMP_Text text, int fromValue, int toValue, float duration)
         {
             text.DOKill(true);
