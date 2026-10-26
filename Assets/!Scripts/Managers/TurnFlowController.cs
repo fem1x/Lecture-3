@@ -33,6 +33,7 @@ namespace _Scripts.Managers
         private ScoreSequenceController _scoreSequenceController;
         private DiceDamageService _damageService;
         private CodeLockService _codeLockService;
+        private CombinationEvaluator _evaluator;
         
         [Inject]
         public void Construct(
@@ -46,7 +47,8 @@ namespace _Scripts.Managers
             ISfxPlayer sfxPlayer,
             ScoreSequenceController scoreSequenceController,
             DiceDamageService damageService,
-            CodeLockService  codeLockService)
+            CodeLockService  codeLockService,
+            CombinationEvaluator evaluator)
         {
             _tableController = tableController;
             _calculator = calculator;
@@ -59,6 +61,7 @@ namespace _Scripts.Managers
             _scoreSequenceController = scoreSequenceController;
             _damageService = damageService;
             _codeLockService = codeLockService;
+            _evaluator = evaluator;
         }
         #endregion
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== 
@@ -139,7 +142,18 @@ namespace _Scripts.Managers
 
         private async UniTask CodeLockFlow(List<Dice> selectedDices)
         {
+            var combination = _evaluator.Evaluate(selectedDices);
+            var result = _codeLockService.EvaluateAttempt(selectedDices, combination);
+            if (result == LockBreakResult.None)
+            {
+                Debug.Log("Invalid unlock attempt!");
+                return;
+            }
             
+            //TODO: SequenceFLow
+            
+            _codeLockService.BreakLock(result, selectedDices);
+            await UniTask.Delay(TimeSpan.FromSeconds(0.5f));
         }
 
         private void PrepareNextTurn(List<Dice> playedDices)

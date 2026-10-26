@@ -14,5 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: Game::_Scripts.Configs.LevelConfig
   <ScoreQuota>k__BackingField: 1
   <TokensReward>k__BackingField: 1
-  <LockCombinationsPool>k__BackingField:
-  - {fileID: 11400000, guid: a77e59beab449f94699290a1b558cbbf, type: 2}
+  <LockCombinationsPool>k__BackingField: []
