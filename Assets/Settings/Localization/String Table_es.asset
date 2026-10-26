@@ -131,10 +131,6 @@ MonoBehaviour:
     m_Localized: Amuletos
     m_Metadata:
       m_Items: []
-  - m_Id: 31380622659585
-    m_Localized: ENTREGAR
-    m_Metadata:
-      m_Items: []
   - m_Id: 31973554638848
     m_Localized: "C\xF3dice"
     m_Metadata:
@@ -273,6 +269,34 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 2287798889336832
     m_Localized: Text
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2438422406746112
+    m_Localized: Abrir
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2438422448689152
+    m_Localized: Aceptado!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2438422448689153
+    m_Localized: Hackear
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2438422448689154
+    m_Localized: Fuerza Bruta!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2438422448689155
+    m_Localized: Bloqueado
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2438422448689156
+    m_Localized: En espera...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2438422448689157
+    m_Localized: Entregar
     m_Metadata:
       m_Items: []
   references:

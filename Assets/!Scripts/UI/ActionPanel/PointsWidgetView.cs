@@ -26,19 +26,18 @@ namespace _Scripts.UI
         public void Construct(ActiveSelectionService selectionService)
         {
             _selectionService = selectionService;
-            _selectionService.OnSelectionEvaluated += HandleSelection;
         }
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== 
 
         private void Start() => SetEmpty();
 
-        private void OnEnable() => _buttonView.SetDefaultAppearance();
-        
-        private void OnDestroy()
+        private void OnEnable()
         {
-            if (_selectionService != null)
-                _selectionService.OnSelectionEvaluated -= HandleSelection;
+            _selectionService.OnSelectionEvaluated += HandleSelection;
+            _buttonView.SetDefaultAppearance();
         }
+        
+        private void OnDisable() => _selectionService.OnSelectionEvaluated -= HandleSelection;
 
         private void HandleSelection(List<Dice> dices, CombinationConfig combo)
         {

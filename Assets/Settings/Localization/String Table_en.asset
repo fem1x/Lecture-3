@@ -131,10 +131,6 @@ MonoBehaviour:
     m_Localized: Charms
     m_Metadata:
       m_Items: []
-  - m_Id: 31380622659585
-    m_Localized: SUBMIT
-    m_Metadata:
-      m_Items: []
   - m_Id: 31973554638848
     m_Localized: Codex
     m_Metadata:
@@ -271,6 +267,34 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 2287798889336832
     m_Localized: Text
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2438422406746112
+    m_Localized: Unlock
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2438422448689152
+    m_Localized: Accepted!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2438422448689153
+    m_Localized: Hack
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2438422448689154
+    m_Localized: Brute Force!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2438422448689155
+    m_Localized: Locked
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2438422448689156
+    m_Localized: Pending...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2438422448689157
+    m_Localized: Submit
     m_Metadata:
       m_Items: []
   references:

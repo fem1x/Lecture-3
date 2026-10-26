@@ -47,14 +47,18 @@ namespace _Scripts.UI.CodeLock
         {
             _selectionService = selectionService;
             _codeLockService = codeLockService;
-
-            _selectionService.OnSelectionEvaluated += HandleSelection;
         }
         #endregion
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 
         private void Start() => ApplyState(_noneState);
-        
+        private void OnEnable() => _selectionService.OnSelectionEvaluated += HandleSelection;
+        private void OnDisable()
+        {
+            _selectionService.OnSelectionEvaluated -= HandleSelection;
+            _combinationText.color = Color.white;
+        }
+
         private void HandleSelection(List<Dice> dices, CombinationConfig combo)
         {
             if (dices.Count == 0 || !_codeLockService.IsActive)

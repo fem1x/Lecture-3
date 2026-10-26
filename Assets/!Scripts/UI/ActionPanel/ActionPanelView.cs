@@ -30,22 +30,22 @@ namespace _Scripts.UI
             _codeLockService = codeLockService;
             
             _selectionService.OnSelectionEvaluated += HandleSelection;
-            _codeLockService.OnLockBroken += UpdateWidgetVisibility;
+            _codeLockService.OnLockBroken += HandleLockBroken;
+            _codeLockService.OnLockSet += HandleLockSet;
         }
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
-
+        
         private void Start()
         {
-            UpdateWidgetVisibility();
+            UpdateWidgets(_codeLockService.IsActive);
             SetPlaceholder();
         }
         
         private void OnDestroy()
         {
-            if (_selectionService != null)
-                _selectionService.OnSelectionEvaluated -= HandleSelection;
-            if (_codeLockService != null)
-                _codeLockService.OnLockBroken -= UpdateWidgetVisibility;
+            _selectionService.OnSelectionEvaluated -= HandleSelection;
+            _codeLockService.OnLockBroken -= HandleLockBroken;
+            _codeLockService.OnLockSet -= HandleLockSet;
         }
         
         private void HandleSelection(List<Dice> dices, CombinationConfig combo)
@@ -57,10 +57,12 @@ namespace _Scripts.UI
         }
         
         private void SetPlaceholder() => _combinationNameText.text = _placeholderText.GetLocalizedString();
+
+        private void HandleLockSet(CombinationConfig lockCode) => UpdateWidgets(lockCode != null);
+        private void HandleLockBroken() => UpdateWidgets(_codeLockService.IsActive);
         
-        private void UpdateWidgetVisibility()
+        private void UpdateWidgets(bool hasLock)
         {
-            var hasLock = _codeLockService.IsActive;
             _lockWidget.SetActive(hasLock);
             _pointsWidget.SetActive(!hasLock);
         }

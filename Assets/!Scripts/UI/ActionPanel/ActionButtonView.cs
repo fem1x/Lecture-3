@@ -29,12 +29,8 @@ namespace _Scripts.UI
             _stringEvent.StringReference = text;
             _button.image.color = mainColor;
             _text.color = textColor;
-            
-            if (_icon != null)
-            {
-                _icon.sprite = icon;
-                _icon.color = textColor;
-            }
+            _icon.sprite = icon;
+            _icon.color = textColor;
         }
 
         public void SetDefaultAppearance()

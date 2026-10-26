@@ -139,10 +139,6 @@ MonoBehaviour:
     m_Key: control_charms_label
     m_Metadata:
       m_Items: []
-  - m_Id: 31380622659585
-    m_Key: control_submit_btn
-    m_Metadata:
-      m_Items: []
   - m_Id: 41997077172224
     m_Key: completed_title
     m_Metadata:
@@ -249,6 +245,34 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 418204264288272
     m_Key: charm_velvet_glove_desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2438422406746112
+    m_Key: action_success_btn
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2438422448689152
+    m_Key: action_success_widget
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2438422448689153
+    m_Key: action_forced_btn
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2438422448689154
+    m_Key: action_forced_widget
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2438422448689155
+    m_Key: action_none_btn
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2438422448689156
+    m_Key: action_none_widget
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2438422448689157
+    m_Key: action_default_btn
     m_Metadata:
       m_Items: []
   m_Metadata:
