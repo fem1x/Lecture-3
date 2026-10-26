@@ -34,6 +34,7 @@ namespace _Scripts.Managers
         private DiceDamageService _damageService;
         private CodeLockService _codeLockService;
         private CombinationEvaluator _evaluator;
+        private LockSequenceController _lockSequenceController;
         
         [Inject]
         public void Construct(
@@ -48,7 +49,8 @@ namespace _Scripts.Managers
             ScoreSequenceController scoreSequenceController,
             DiceDamageService damageService,
             CodeLockService  codeLockService,
-            CombinationEvaluator evaluator)
+            CombinationEvaluator evaluator,
+            LockSequenceController lockSequenceController)
         {
             _tableController = tableController;
             _calculator = calculator;
@@ -62,6 +64,7 @@ namespace _Scripts.Managers
             _damageService = damageService;
             _codeLockService = codeLockService;
             _evaluator = evaluator;
+            _lockSequenceController = lockSequenceController;
         }
         #endregion
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== 
@@ -150,7 +153,7 @@ namespace _Scripts.Managers
                 return;
             }
             
-            //TODO: SequenceFLow
+            await _lockSequenceController.PlaySequenceAsync(selectedDices);
             
             _codeLockService.BreakLock(result, selectedDices);
             await UniTask.Delay(TimeSpan.FromSeconds(0.5f));

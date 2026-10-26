@@ -7,7 +7,7 @@ namespace _Scripts.UI.CodeLock
     public class CodeLockSlotView : MonoBehaviour
     {
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== 
-        [SerializeField] private Image _diceImage;
+        [field: SerializeField] public Image DiceImage { get; private set; }
         [SerializeField] private List<Sprite> _diceSprites;
         
         [Header("Active / Inactive")]
@@ -18,14 +18,14 @@ namespace _Scripts.UI.CodeLock
         
         public void InsertValue(int value)
         {
-            _diceImage.sprite = _diceSprites[value];
-            _diceImage.gameObject.SetActive(true);
+            DiceImage.sprite = _diceSprites[value];
+            DiceImage.gameObject.SetActive(true);
         }
 
         public void RemoveValue()
         {
-            _diceImage.sprite = null;
-            _diceImage.gameObject.SetActive(false);
+            DiceImage.sprite = null;
+            DiceImage.gameObject.SetActive(false);
         }
 
         public void SetActiveState(bool isActive)

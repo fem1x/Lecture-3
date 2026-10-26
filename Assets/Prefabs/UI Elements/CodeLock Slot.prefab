@@ -91,7 +91,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97fbdf526e014bd996ae1ca385e15576, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Game::_Scripts.UI.CodeLock.CodeLockSlotView
-  _diceImage: {fileID: 4597122628229355757}
+  <DiceImage>k__BackingField: {fileID: 4597122628229355757}
   _diceSprites:
   - {fileID: 1635203978, guid: 140a94c4ea4433948ba2e3be95eda15e, type: 3}
   - {fileID: -787239318, guid: 140a94c4ea4433948ba2e3be95eda15e, type: 3}

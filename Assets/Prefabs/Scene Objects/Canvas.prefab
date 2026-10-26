@@ -144,7 +144,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Game::_Scripts.UI.CurrentCombinationView
   _pointsText: {fileID: 4260171715948403159}
   _multText: {fileID: 6220326529064425507}
-  _submitButton: {fileID: 8727366212257878693}
+  _buttonView: {fileID: 3190940140494637}
 --- !u!1 &98734608947613313
 GameObject:
   m_ObjectHideFlags: 0
@@ -1833,9 +1833,9 @@ MonoBehaviour:
   _combinationNameText: {fileID: 3173435848872490123}
   _placeholderText:
     m_TableReference:
-      m_TableCollectionName: 
+      m_TableCollectionName: GUID:9f9c89d5b6ad399428ec5a9fe072ff95
     m_TableEntryReference:
-      m_KeyId: 0
+      m_KeyId: 33730397589504
       m_Key: 
     m_FallbackState: 0
     m_WaitForCompletion: 0
@@ -3742,7 +3742,7 @@ MonoBehaviour:
     m_TableReference:
       m_TableCollectionName: GUID:9f9c89d5b6ad399428ec5a9fe072ff95
     m_TableEntryReference:
-      m_KeyId: 31380622659585
+      m_KeyId: 2438422448689157
       m_Key: 
     m_FallbackState: 0
     m_WaitForCompletion: 0
@@ -4719,10 +4719,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 3556332949996185038}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 45.36, y: 45.36}
+  m_AnchorMin: {x: 0, y: 0.5}
+  m_AnchorMax: {x: 0, y: 0.5}
+  m_AnchoredPosition: {x: 17.07492, y: 0}
+  m_SizeDelta: {x: 40.56, y: 40.56}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!222 &7853018778506166235
 CanvasRenderer:
@@ -7829,6 +7829,7 @@ GameObject:
   - component: {fileID: 7212197057425964096}
   - component: {fileID: 4980547750489575654}
   - component: {fileID: 5048878719678968659}
+  - component: {fileID: 5400155256445317551}
   m_Layer: 5
   m_Name: UiScripts
   m_TagString: Untagged
@@ -7896,6 +7897,25 @@ MonoBehaviour:
   _triggerMultSfx: TriggerMult
   _addScoreSfx: AddScore
   _charmTriggerSfx: CharmTrigger
+--- !u!114 &5400155256445317551
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5842214980115666250}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c7d5cf338f2446b8a0590f9788f8ae57, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Game::_Scripts.Managers.LockSequenceController
+  _slots:
+  - {fileID: 7485248665673677842}
+  - {fileID: 5458196424240726850}
+  - {fileID: 2792086217039899670}
+  - {fileID: 4261416104312965515}
+  - {fileID: 2074027897329056449}
+  _stampDelay: 0.15
 --- !u!1 &5882135076209435050
 GameObject:
   m_ObjectHideFlags: 0
@@ -7982,7 +8002,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5882135076209435050}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 30649d3a9faa99c48a7b1166b86bf2a0, type: 3}
   m_Name: 
@@ -8016,19 +8036,16 @@ MonoBehaviour:
   _combinationText: {fileID: 3173435848872490123}
   _widgetStringEvent: {fileID: 2862676774128041575}
   _widgetIcon: {fileID: 8631099608520290412}
-  _button: {fileID: 8727366212257878693}
-  _buttonStringEvent: {fileID: 614222396416356448}
-  _buttonText: {fileID: 5806296979698943959}
-  _buttonIcon: {fileID: 7531977495773617381}
+  _buttonView: {fileID: 3190940140494637}
   _successState:
-    <CombinationTextColor>k__BackingField: {r: 0, g: 0, b: 0, a: 0}
-    <MainColor>k__BackingField: {r: 0, g: 0, b: 0, a: 0}
-    <ButtonColor>k__BackingField: {r: 0, g: 0, b: 0, a: 0}
+    <CombinationTextColor>k__BackingField: {r: 1, g: 0.87843144, b: 0.50980395, a: 1}
+    <MainColor>k__BackingField: {r: 1, g: 0.8784314, b: 0.50980395, a: 1}
+    <ButtonTextColor>k__BackingField: {r: 0.10980393, g: 0.08627451, b: 0.13333334, a: 1}
     <WidgetString>k__BackingField:
       m_TableReference:
         m_TableCollectionName: GUID:9f9c89d5b6ad399428ec5a9fe072ff95
       m_TableEntryReference:
-        m_KeyId: 2287798889336832
+        m_KeyId: 2438422448689152
         m_Key: 
       m_FallbackState: 0
       m_WaitForCompletion: 0
@@ -8038,21 +8055,21 @@ MonoBehaviour:
       m_TableReference:
         m_TableCollectionName: GUID:9f9c89d5b6ad399428ec5a9fe072ff95
       m_TableEntryReference:
-        m_KeyId: 2287798889336832
+        m_KeyId: 2438422406746112
         m_Key: 
       m_FallbackState: 0
       m_WaitForCompletion: 0
       m_LocalVariables: []
     <ButtonIcon>k__BackingField: {fileID: 21300000, guid: 3a885332c83f72443a380e3ca356ca03, type: 3}
   _forcedState:
-    <CombinationTextColor>k__BackingField: {r: 0, g: 0, b: 0, a: 0}
-    <MainColor>k__BackingField: {r: 0, g: 0, b: 0, a: 0}
-    <ButtonColor>k__BackingField: {r: 0, g: 0, b: 0, a: 0}
+    <CombinationTextColor>k__BackingField: {r: 1, g: 1, b: 1, a: 1}
+    <MainColor>k__BackingField: {r: 0.68235296, g: 0.14509805, b: 0.28235295, a: 1}
+    <ButtonTextColor>k__BackingField: {r: 0.10980393, g: 0.08627451, b: 0.13333334, a: 1}
     <WidgetString>k__BackingField:
       m_TableReference:
         m_TableCollectionName: GUID:9f9c89d5b6ad399428ec5a9fe072ff95
       m_TableEntryReference:
-        m_KeyId: 2287798889336832
+        m_KeyId: 2438422448689154
         m_Key: 
       m_FallbackState: 0
       m_WaitForCompletion: 0
@@ -8062,21 +8079,21 @@ MonoBehaviour:
       m_TableReference:
         m_TableCollectionName: GUID:9f9c89d5b6ad399428ec5a9fe072ff95
       m_TableEntryReference:
-        m_KeyId: 2287798889336832
+        m_KeyId: 2438422448689153
         m_Key: 
       m_FallbackState: 0
       m_WaitForCompletion: 0
       m_LocalVariables: []
     <ButtonIcon>k__BackingField: {fileID: 21300000, guid: 3a885332c83f72443a380e3ca356ca03, type: 3}
   _noneState:
-    <CombinationTextColor>k__BackingField: {r: 0, g: 0, b: 0, a: 0}
-    <MainColor>k__BackingField: {r: 0, g: 0, b: 0, a: 0}
-    <ButtonColor>k__BackingField: {r: 0, g: 0, b: 0, a: 0}
+    <CombinationTextColor>k__BackingField: {r: 1, g: 1, b: 1, a: 1}
+    <MainColor>k__BackingField: {r: 0.12156863, g: 0.12156863, b: 0.16078432, a: 1}
+    <ButtonTextColor>k__BackingField: {r: 0.20392157, g: 0.20392157, b: 0.29411766, a: 1}
     <WidgetString>k__BackingField:
       m_TableReference:
         m_TableCollectionName: GUID:9f9c89d5b6ad399428ec5a9fe072ff95
       m_TableEntryReference:
-        m_KeyId: 2287798889336832
+        m_KeyId: 2438422448689156
         m_Key: 
       m_FallbackState: 0
       m_WaitForCompletion: 0
@@ -8086,7 +8103,7 @@ MonoBehaviour:
       m_TableReference:
         m_TableCollectionName: GUID:9f9c89d5b6ad399428ec5a9fe072ff95
       m_TableEntryReference:
-        m_KeyId: 2287798889336832
+        m_KeyId: 2438422448689155
         m_Key: 
       m_FallbackState: 0
       m_WaitForCompletion: 0
@@ -8483,8 +8500,9 @@ GameObject:
   - component: {fileID: 1070255282093483668}
   - component: {fileID: 3519201617061034037}
   - component: {fileID: 8727366212257878693}
+  - component: {fileID: 3190940140494637}
   m_Layer: 5
-  m_Name: (Button) Submit
+  m_Name: (Button) Action
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8604,6 +8622,37 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &3190940140494637
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6535240716188846655}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbd1736d7f9c45918cdaf5628a0d0ffb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Game::_Scripts.UI.ActionButtonView
+  _button: {fileID: 8727366212257878693}
+  _stringEvent: {fileID: 614222396416356448}
+  _text: {fileID: 5806296979698943959}
+  _icon: {fileID: 7531977495773617381}
+  _defaultString:
+    m_TableReference:
+      m_TableCollectionName: GUID:9f9c89d5b6ad399428ec5a9fe072ff95
+    m_TableEntryReference:
+      m_KeyId: 2438422448689157
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  _defaultMainColor: {r: 0.50980395, g: 0.10980393, b: 0.20784315, a: 1}
+  _defaultTextColor: {r: 1, g: 0.69803923, b: 0.5529412, a: 1}
+  _defaultIcon: {fileID: 21300000, guid: 3a885332c83f72443a380e3ca356ca03, type: 3}
+  references:
+    version: 2
+    RefIds: []
 --- !u!1 &6585183679920664765
 GameObject:
   m_ObjectHideFlags: 0
@@ -10282,10 +10331,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 3556332949996185038}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 196.635, y: -42}
-  m_SizeDelta: {x: 82.83, y: 50}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0.000045776367, y: 0}
+  m_SizeDelta: {x: 0, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5488321068978646099
 CanvasRenderer:
@@ -10324,8 +10373,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+    rgba: 4291479233
+  m_fontColor: {r: 0.75881094, g: 0.7756319, b: 0.7924528, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -10342,15 +10391,15 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 34
-  m_fontSizeBase: 34
+  m_fontSize: 28
+  m_fontSizeBase: 28
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
   m_HorizontalAlignment: 1
-  m_VerticalAlignment: 4096
+  m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_characterHorizontalScale: 1
@@ -10417,7 +10466,7 @@ MonoBehaviour:
     m_TableReference:
       m_TableCollectionName: GUID:9f9c89d5b6ad399428ec5a9fe072ff95
     m_TableEntryReference:
-      m_KeyId: 2287798889336832
+      m_KeyId: 2438422448689156
       m_Key: 
     m_FallbackState: 0
     m_WaitForCompletion: 0
@@ -13228,6 +13277,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 349775436423196421}
     m_Modifications:
+    - target: {fileID: 34278543153210851, guid: 08c04146c042bc949ba3fbb852f9e65b, type: 3}
+      propertyPath: m_fontSize
+      value: 33
+      objectReference: {fileID: 0}
+    - target: {fileID: 34278543153210851, guid: 08c04146c042bc949ba3fbb852f9e65b, type: 3}
+      propertyPath: m_fontSizeBase
+      value: 33
+      objectReference: {fileID: 0}
     - target: {fileID: 972577175002381249, guid: 08c04146c042bc949ba3fbb852f9e65b, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
