@@ -58,5 +58,11 @@ namespace _Scripts.Managers
             CurrentLock = null;
             OnLockBroken?.Invoke();
         }
+        
+        public bool IsValidAttempt(int diceCount, CombinationConfig playedCombo)
+        {
+            if (!IsActive) return true;
+            return playedCombo == CurrentLock || diceCount == 5;
+        }
     }
 }

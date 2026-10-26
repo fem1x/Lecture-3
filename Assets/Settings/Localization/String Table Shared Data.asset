@@ -15,6 +15,10 @@ MonoBehaviour:
   m_TableCollectionName: String Table
   m_TableCollectionNameGuidString: 9f9c89d5b6ad399428ec5a9fe072ff95
   m_Entries:
+  - m_Id: 2287798889336832
+    m_Key: placeholder
+    m_Metadata:
+      m_Items: []
   - m_Id: 34638516224
     m_Key: workshop_title
     m_Metadata:

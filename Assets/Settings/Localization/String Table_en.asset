@@ -269,6 +269,10 @@ MonoBehaviour:
     m_Localized: "1\u20135 unmatched dice"
     m_Metadata:
       m_Items: []
+  - m_Id: 2287798889336832
+    m_Localized: Text
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:
