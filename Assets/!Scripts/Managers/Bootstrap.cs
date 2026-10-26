@@ -18,7 +18,6 @@ namespace _Scripts.Managers
         private readonly ScoreManager _scoreManager;
         private readonly LevelFlowController _levelFlowController;
         private readonly ISfxPlayer _sfxPlayer;
-        private readonly CurrentCombinationView _currentCombinationView;
         private readonly DiceStatePanelView _diceStatePanelView;
 
         [Inject]
@@ -28,14 +27,13 @@ namespace _Scripts.Managers
             ResourceManager resourceManager,
             LevelFlowController levelFlowController,
             ISfxPlayer sfxPlayer,
-            CurrentCombinationView currentCombinationView,
+            PointsWidgetView pointsWidgetView,
             DiceStatePanelView diceStatePanelView)
         {
             _diceSpawner = diceSpawner;
             _diceTableController = diceTableController;
             _levelFlowController = levelFlowController;
             _sfxPlayer = sfxPlayer;
-            _currentCombinationView = currentCombinationView;
             _diceStatePanelView = diceStatePanelView;
         }
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
@@ -48,7 +46,6 @@ namespace _Scripts.Managers
             _diceSpawner.ResetDicesToSpawn(dices);
             _diceTableController.InitDiceList(dices);
             _diceStatePanelView.InitDiceStateViews(dices);
-            _currentCombinationView.Init(dices);
             
             _levelFlowController.StartGame();
         }

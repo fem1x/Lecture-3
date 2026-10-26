@@ -10,6 +10,7 @@ namespace _Scripts.Managers
 {
     public enum LockBreakResult
     {
+        None,
         Success,
         Forced
     }
@@ -46,8 +47,7 @@ namespace _Scripts.Managers
             if (dices.Count == 5)
                 return LockBreakResult.Forced;
 
-            Debug.LogError("LockBreakResult error! (wrong combination and <5 dice");
-            return default;
+            return LockBreakResult.None;
         }
 
         public void BreakLock(LockBreakResult result, List<Dice> dices)
@@ -57,12 +57,6 @@ namespace _Scripts.Managers
 
             CurrentLock = null;
             OnLockBroken?.Invoke();
-        }
-        
-        public bool IsValidAttempt(int diceCount, CombinationConfig playedCombo)
-        {
-            if (!IsActive) return true;
-            return playedCombo == CurrentLock || diceCount == 5;
         }
     }
 }

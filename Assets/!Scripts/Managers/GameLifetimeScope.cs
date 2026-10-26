@@ -34,7 +34,7 @@ public class GameLifetimeScope : LifetimeScope
     [SerializeField] private DiceTableController _diceTableController;
     [SerializeField] private DiceSpawnPoint _spawnPoint;
     [SerializeField] private ScoreSequenceController _scoreSequenceController;
-    [SerializeField] private CurrentCombinationView _currentCombinationView;
+    [SerializeField] private PointsWidgetView _pointsWidgetView;
     [SerializeField] private DiceStatePanelView _diceStatePanelView;
     [SerializeField] private CharmTooltipView _charmTooltipView;
     // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
@@ -67,7 +67,7 @@ public class GameLifetimeScope : LifetimeScope
         builder.RegisterComponent(_diceTableController);
         builder.RegisterComponent(_turnFlowController);
         builder.RegisterComponent(_scoreSequenceController);
-        builder.RegisterComponent(_currentCombinationView);
+        builder.RegisterComponent(_pointsWidgetView);
         builder.RegisterComponent(_diceStatePanelView);
         builder.RegisterComponent(_charmTooltipView);
     }
@@ -96,6 +96,7 @@ public class GameLifetimeScope : LifetimeScope
         builder.Register<CharmsRewardGenerator>(Lifetime.Singleton);
         builder.Register<DiceDamageService>(Lifetime.Singleton);
         builder.Register<CodeLockService>(Lifetime.Singleton);
+        builder.Register<ActiveSelectionService>(Lifetime.Singleton);
         
         //Entry Point
         builder.RegisterEntryPoint<Bootstrap>();
