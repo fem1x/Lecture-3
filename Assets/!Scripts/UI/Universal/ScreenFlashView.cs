@@ -10,11 +10,11 @@ namespace _Scripts.UI
         [SerializeField] private Image _image;
         [SerializeField] private Ease _inEase = Ease.OutCubic;
         [SerializeField] private Ease _outEase = Ease.OutCubic;
-        [SerializeField] private Color _defaultColor = Color.white;
+        [SerializeField] private Color _colorDefault = Color.white;
         
-        public void DoFlash(Color color=default, float alpha=0.5f, float inTime=0.02f, float outTime=0.7f)
+        public void DoFlash(Color color=default, float alpha=0.5f, float inTime=0.02f, float outTime=0.55f)
         {
-            var flashColor = color == default ? _defaultColor : color;
+            var flashColor = color == default ? _colorDefault : color;
             flashColor.a = 0;
             _image.color = flashColor;
 
