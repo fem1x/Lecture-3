@@ -40,6 +40,15 @@ namespace _Scripts.Managers
             }
         }
 
+        public void DegradeDices(IReadOnlyList<Dice> dices, int amount = 1)
+        {
+            foreach (var dice in dices)
+            {
+                ApplyDegrade(dice, amount, false);
+            }
+        }
+
+
         private void ApplyDamage(Dice dice, int amount = 1)
         {
             var data = dice.Data;
@@ -53,7 +62,7 @@ namespace _Scripts.Managers
             data.TakeDamage(amount);
         }
 
-        private void ApplyDegrade(Dice dice)
+        private void ApplyDegrade(Dice dice, int amount = 1, bool restoreHp = true)
         {
             var degradeContext = new DiceDegradeContext(dice);
     
@@ -62,8 +71,8 @@ namespace _Scripts.Managers
 
             if (degradeContext.IsCancelled)
                 return;
-
-            dice.Data.Degrade();
+            
+            dice.Data.Degrade(restoreHp);
         }
     }
 }

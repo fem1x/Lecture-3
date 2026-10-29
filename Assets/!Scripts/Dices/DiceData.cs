@@ -72,9 +72,11 @@ namespace _Scripts.Dices
             OnDataChanged?.Invoke();
         }
 
-        public void Degrade()
+        public void Degrade(bool restoreHp = true)
         {
-            CurrentDurability = MaxDurability;
+            if (restoreHp)
+                CurrentDurability = MaxDurability;
+            
             DamageLevel++;
             OnDataChanged?.Invoke();
         }

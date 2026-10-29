@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::_Scripts.Configs.DiceRollConfig
   <FirstRollSettings>k__BackingField:
     Direction: {x: 0, y: 0.7, z: 1}
-    DirectionRandomize: 0.05
-    Force: 4.6
+    DirectionRandomize: 0
+    Force: 4.7
     ForceRandomize: 0.15
     Torque: 2
     TorqueRandomize: 0.3

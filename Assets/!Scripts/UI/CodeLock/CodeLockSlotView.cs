@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -12,6 +13,19 @@ namespace _Scripts.UI.CodeLock
         
         [Header("Active / Inactive")]
         [SerializeField] private Image _activeOverlayImage;
+
+        [Header("Colors")] 
+        [SerializeField] private Color _activeColor;
+        [SerializeField] private Color _inactiveColor;
+        [SerializeField] private Color _correctColor;
+        [SerializeField] private Color _incorrectColor;
+        
+        [Header("Flash animation")]
+        [SerializeField] private float _flashAlpha;
+        [SerializeField] private float _flashInTime;
+        [SerializeField] private float _flashOutTime;
+        [SerializeField] private Ease _flashInEase;
+        [SerializeField] private Ease _flashOutEase;
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== 
 
         private void Start() => RemoveValue();
@@ -20,6 +34,7 @@ namespace _Scripts.UI.CodeLock
         {
             DiceImage.sprite = _diceSprites[value];
             DiceImage.gameObject.SetActive(true);
+            SetCorrectState(false);
         }
 
         public void RemoveValue()
@@ -30,7 +45,29 @@ namespace _Scripts.UI.CodeLock
 
         public void SetActiveState(bool isActive)
         {
-            _activeOverlayImage.gameObject.SetActive(isActive);
+            _activeOverlayImage.color = isActive ? _activeColor : _inactiveColor;
+        }
+
+        public void SetCorrectState(bool isCorrect)
+        {
+            if (isCorrect)
+                DoFlashTween(_correctColor);
+            else
+                DoFlashTween(_incorrectColor);
+        }
+
+        private void DoFlashTween(Color flashColor)
+        {
+            _activeOverlayImage.color = flashColor;
+            var startAlpha = _activeOverlayImage.color.a;
+            
+            var col = _activeOverlayImage.color;
+            col.a = _flashAlpha;
+            _activeOverlayImage.color = col;
+
+            DOTween.Sequence()
+                .Append(_activeOverlayImage.DOFade(_flashAlpha, _flashInTime).SetEase(_flashInEase))
+                .Append(_activeOverlayImage.DOFade(startAlpha, _flashOutTime).SetEase(_flashOutEase));
         }
     }
 }

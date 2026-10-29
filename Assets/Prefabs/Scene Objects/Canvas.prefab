@@ -4030,7 +4030,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: -225, y: -162}
+  m_AnchoredPosition: {x: -225, y: -153.95941}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &2596695689227947011
@@ -7915,7 +7915,8 @@ MonoBehaviour:
   - {fileID: 2792086217039899670}
   - {fileID: 4261416104312965515}
   - {fileID: 2074027897329056449}
-  _stampDelay: 0.15
+  _stampDelay: 0.11
+  _delayPerDice: 0.45
 --- !u!1 &5882135076209435050
 GameObject:
   m_ObjectHideFlags: 0
@@ -8061,6 +8062,7 @@ MonoBehaviour:
       m_WaitForCompletion: 0
       m_LocalVariables: []
     <ButtonIcon>k__BackingField: {fileID: 21300000, guid: 3a885332c83f72443a380e3ca356ca03, type: 3}
+    <Interactable>k__BackingField: 1
   _forcedState:
     <CombinationTextColor>k__BackingField: {r: 1, g: 1, b: 1, a: 1}
     <MainColor>k__BackingField: {r: 0.68235296, g: 0.14509805, b: 0.28235295, a: 1}
@@ -8085,9 +8087,10 @@ MonoBehaviour:
       m_WaitForCompletion: 0
       m_LocalVariables: []
     <ButtonIcon>k__BackingField: {fileID: 21300000, guid: 3a885332c83f72443a380e3ca356ca03, type: 3}
+    <Interactable>k__BackingField: 1
   _noneState:
     <CombinationTextColor>k__BackingField: {r: 1, g: 1, b: 1, a: 1}
-    <MainColor>k__BackingField: {r: 0.12156863, g: 0.12156863, b: 0.16078432, a: 1}
+    <MainColor>k__BackingField: {r: 0.1485849, g: 0.1485849, b: 0.1981132, a: 1}
     <ButtonTextColor>k__BackingField: {r: 0.20392157, g: 0.20392157, b: 0.29411766, a: 1}
     <WidgetString>k__BackingField:
       m_TableReference:
@@ -8109,6 +8112,7 @@ MonoBehaviour:
       m_WaitForCompletion: 0
       m_LocalVariables: []
     <ButtonIcon>k__BackingField: {fileID: 21300000, guid: 3a885332c83f72443a380e3ca356ca03, type: 3}
+    <Interactable>k__BackingField: 0
   references:
     version: 2
     RefIds: []
@@ -13301,6 +13305,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1172522519440908063, guid: 08c04146c042bc949ba3fbb852f9e65b, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2455805590805107411, guid: 08c04146c042bc949ba3fbb852f9e65b, type: 3}
       propertyPath: m_SizeDelta.x
       value: -26
@@ -13363,7 +13371,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3308314296844207478, guid: 08c04146c042bc949ba3fbb852f9e65b, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 250.6899
+      value: 243.6899
       objectReference: {fileID: 0}
     - target: {fileID: 3308314296844207478, guid: 08c04146c042bc949ba3fbb852f9e65b, type: 3}
       propertyPath: m_LocalPosition.x
@@ -13399,7 +13407,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3308314296844207478, guid: 08c04146c042bc949ba3fbb852f9e65b, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: 3.5
       objectReference: {fileID: 0}
     - target: {fileID: 3308314296844207478, guid: 08c04146c042bc949ba3fbb852f9e65b, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x

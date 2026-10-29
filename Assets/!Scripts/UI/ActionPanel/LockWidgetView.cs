@@ -22,6 +22,8 @@ namespace _Scripts.UI.CodeLock
         [field: SerializeField] public Sprite WidgetIcon { get; private set; }
         [field: SerializeField] public LocalizedString ButtonString { get; private set; }
         [field: SerializeField] public Sprite ButtonIcon { get; private set; }
+        [field: SerializeField] public bool Interactable { get; private set; }
+        
     }
     
     public class LockWidgetView : MonoBehaviour
@@ -86,6 +88,7 @@ namespace _Scripts.UI.CodeLock
             _widgetIcon.color = state.MainColor;
             
             _buttonView.SetAppearance(state.ButtonString, state.MainColor, state.ButtonTextColor, state.ButtonIcon);
+            _buttonView.SetInteractable(state.Interactable);
         }
     }
 }

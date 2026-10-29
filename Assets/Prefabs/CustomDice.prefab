@@ -557,7 +557,8 @@ MonoBehaviour:
   - {fileID: 1222986584, guid: dbc0cc68fa7c2044c83c51ee4d2f198d, type: 3}
   - {fileID: 159158417, guid: dbc0cc68fa7c2044c83c51ee4d2f198d, type: 3}
   - {fileID: -1733069916, guid: dbc0cc68fa7c2044c83c51ee4d2f198d, type: 3}
-  _liftHeight: 0.4
+  _usePhysicsDrop: 1
+  _liftHeight: 0.3
   _liftTime: 0.4
   _dropTime: 0.6
   _liftEase: 18
