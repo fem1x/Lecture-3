@@ -25,16 +25,26 @@ namespace _Scripts.Managers
         [Header("Screen Flash")]
         [SerializeField] private float _flashAlpha = 0.5f;
         
+        [Header("Camera Shake")]
+        [SerializeField] private CameraShakePreset _successShake;
+        [SerializeField] private CameraShakePreset _forcedShake;
+        
         private ISfxPlayer _sfxPlayer;
         private ScreenFlashView _screenFlashView;
         private ColorsConfig _colorsConfig;
+        private CameraShaker _cameraShaker;
 
         [Inject]
-        public void Construct(ISfxPlayer sfxPlayer, ScreenFlashView screenFlashView, ColorsConfig colorsConfig)
+        public void Construct(
+            ISfxPlayer sfxPlayer, 
+            ScreenFlashView screenFlashView, 
+            ColorsConfig colorsConfig,
+            CameraShaker cameraShaker)
         {
             _sfxPlayer = sfxPlayer;
             _screenFlashView = screenFlashView;
             _colorsConfig = colorsConfig;
+            _cameraShaker = cameraShaker;
         }
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 
@@ -48,6 +58,7 @@ namespace _Scripts.Managers
             await ValidationAsync(result);
             await UniTask.Delay(TimeSpan.FromSeconds(_delayAfterValidation));
             DoScreenFlash(result);
+            DoCameraShake(result);
         }
 
         private async UniTask InsertValuesAsync(List<Dice> dices)
@@ -78,6 +89,12 @@ namespace _Scripts.Managers
         {
             var color = result == LockBreakResult.Success ? _colorsConfig.Success : _colorsConfig.Failure;
             _screenFlashView.DoFlash(color: color, alpha: _flashAlpha);
+        }
+
+        private void DoCameraShake(LockBreakResult result)
+        {
+            var preset = result == LockBreakResult.Success ? _successShake : _forcedShake;
+            _cameraShaker.DoShake(preset);
         }
     }
 }

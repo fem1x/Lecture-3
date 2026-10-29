@@ -23,7 +23,7 @@ namespace _Scripts.Managers
         }
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 
-        public void Shake(CameraShakePreset preset)
+        public void DoShake(CameraShakePreset preset)
         {
             Stop();
 
@@ -51,7 +51,7 @@ namespace _Scripts.Managers
                 .OnComplete(ResetRotation);
         }
 
-        public void Shake(float duration, float strength, int vibrato = 10)
+        public void DoShake(float duration, float strength, int vibrato = 10)
         {
             Stop();
 

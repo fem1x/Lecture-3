@@ -102,7 +102,7 @@ namespace _Scripts.Dices
             
             //FX
             _sfxPlayer.Play(_throwSfx, transform.position); 
-            _cameraShaker.Shake(_rollShake);
+            _cameraShaker.DoShake(_rollShake);
         }
 
         public void UpdateValue()

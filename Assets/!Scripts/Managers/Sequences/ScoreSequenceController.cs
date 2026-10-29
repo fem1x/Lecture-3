@@ -198,7 +198,7 @@ namespace _Scripts.Managers
         {
             source.DoScalePop();
             _pointsText.transform.DoScalePop(scaleMult: 1.8f);
-            _cameraShaker.Shake(_diceScoreShake);
+            _cameraShaker.DoShake(_diceScoreShake);
 
             //SFX
             if (sfxName == null) return;
@@ -215,7 +215,7 @@ namespace _Scripts.Managers
         {
             _multText.transform.DoScalePop(3f, outTime: _pointsMultDuration);
             _pointsText.transform.DoScalePop(3f, outTime: _pointsMultDuration);
-            _cameraShaker.Shake(_multTriggerShake);
+            _cameraShaker.DoShake(_multTriggerShake);
             _sfxPlayer?.Play(_triggerMultSfx);
         }
         #endregion

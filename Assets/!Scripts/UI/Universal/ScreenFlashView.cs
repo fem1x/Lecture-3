@@ -1,5 +1,4 @@
 ﻿using DG.Tweening;
-using UnityEditor.Graphs;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -12,7 +11,7 @@ namespace _Scripts.UI
         [SerializeField] private Ease _outEase = Ease.OutCubic;
         [SerializeField] private Color _colorDefault = Color.white;
         
-        public void DoFlash(Color color=default, float alpha=0.5f, float inTime=0.02f, float outTime=0.55f)
+        public void DoFlash(Color color=default, float alpha=0.5f, float inTime=0.02f, float outTime=0.65f)
         {
             var flashColor = color == default ? _colorDefault : color;
             flashColor.a = 0;
