@@ -62,6 +62,12 @@ namespace _Scripts.Dices
                 if (dice != null) dice.Data.SetLock(false);
         }
 
+        public void SelectAll()
+        {
+            foreach (var dice in GetUnlockedDices())
+                dice.Data.SetLock(true);
+        }
+
         public void ActivateAllDices(List<Dice> dices)
         {
             foreach (var dice in dices)

@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7fbedbffe81c4337a2cf2e45c42f5bf0, type: 3}
   m_Name: LockForcedShake
   m_EditorClassIdentifier: Game::_Scripts.Configs.CameraShakePreset
-  <Duration>k__BackingField: 0.2
-  <Strength>k__BackingField: 0.11
-  <Vibrato>k__BackingField: 16
-  <Randomness>k__BackingField: 30
+  <Duration>k__BackingField: 0.22
+  <Strength>k__BackingField: 0.22
+  <Vibrato>k__BackingField: 26
+  <Randomness>k__BackingField: 35
   <EnableRotationShake>k__BackingField: 1
   <RotStrength>k__BackingField: 0.4
-  <RotVibrato>k__BackingField: 8
+  <RotVibrato>k__BackingField: 12
