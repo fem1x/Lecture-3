@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using _Scripts.Managers;
+using _Scripts.Utility.Extensions;
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
@@ -34,7 +36,8 @@ namespace _Scripts.UI.CodeLock
         {
             DiceImage.sprite = _diceSprites[value];
             DiceImage.gameObject.SetActive(true);
-            SetCorrectState(false);
+            
+            DiceImage.transform.DoScalePop();
         }
 
         public void RemoveValue()
@@ -48,12 +51,10 @@ namespace _Scripts.UI.CodeLock
             _activeOverlayImage.color = isActive ? _activeColor : _inactiveColor;
         }
 
-        public void SetCorrectState(bool isCorrect)
+        public void SetCorrectState(LockBreakResult result)
         {
-            if (isCorrect)
-                DoFlashTween(_correctColor);
-            else
-                DoFlashTween(_incorrectColor);
+            var color = result == LockBreakResult.Success ? _correctColor : _incorrectColor;
+            DoFlashTween(color);
         }
 
         private void DoFlashTween(Color flashColor)

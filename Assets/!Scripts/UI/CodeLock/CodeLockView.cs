@@ -14,9 +14,9 @@ namespace _Scripts.UI
     public class CodeLockView : MonoBehaviour
     {
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
+        [field: SerializeField] public List<CodeLockSlotView> Slots { get; private set; }
         [SerializeField] private CanvasGroup _group;
         [SerializeField] private LocalizeStringEvent _codeNameEvent;
-        [SerializeField] private List<CodeLockSlotView> _slots;
 
         private CodeLockService _codeLockService;
 
@@ -69,10 +69,16 @@ namespace _Scripts.UI
                 ? combo.Patterns[0].Values.Length 
                 : 5;
             
-            for (int i = 0; i < _slots.Count; i++)
+            for (int i = 0; i < Slots.Count; i++)
             {
-                _slots[i].SetActiveState(i < requiredCount);
+                Slots[i].SetActiveState(i < requiredCount);
             }
+        }
+
+        public void ClearSlots()
+        {
+            foreach (var slot in Slots)
+                slot.RemoveValue();
         }
     }
 }

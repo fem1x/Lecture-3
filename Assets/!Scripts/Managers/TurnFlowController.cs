@@ -153,7 +153,7 @@ namespace _Scripts.Managers
                 return;
             }
             
-            await _lockSequenceController.PlaySequenceAsync(selectedDices);
+            await _lockSequenceController.PlaySequenceAsync(selectedDices, result);
             
             _codeLockService.BreakLock(result, selectedDices);
             await UniTask.Delay(TimeSpan.FromSeconds(0.5f));
