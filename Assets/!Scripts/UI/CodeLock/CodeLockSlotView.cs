@@ -1,9 +1,11 @@
 ﻿using System.Collections.Generic;
+using _Scripts.Configs;
 using _Scripts.Managers;
 using _Scripts.Utility.Extensions;
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
+using VContainer;
 
 namespace _Scripts.UI.CodeLock
 {
@@ -19,15 +21,22 @@ namespace _Scripts.UI.CodeLock
         [Header("Colors")] 
         [SerializeField] private Color _activeColor;
         [SerializeField] private Color _inactiveColor;
-        [SerializeField] private Color _correctColor;
-        [SerializeField] private Color _incorrectColor;
         
         [Header("Flash animation")]
         [SerializeField] private float _flashAlpha;
+        [SerializeField] private float _afterFlashAlpha;
         [SerializeField] private float _flashInTime;
         [SerializeField] private float _flashOutTime;
         [SerializeField] private Ease _flashInEase;
         [SerializeField] private Ease _flashOutEase;
+        
+        private ColorsConfig _colorsConfig;
+
+        [Inject]
+        public void Construct(ColorsConfig colorsConfig)
+        {
+            _colorsConfig = colorsConfig;
+        }
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== 
 
         private void Start() => RemoveValue();
@@ -53,22 +62,18 @@ namespace _Scripts.UI.CodeLock
 
         public void SetCorrectState(LockBreakResult result)
         {
-            var color = result == LockBreakResult.Success ? _correctColor : _incorrectColor;
+            var color = result == LockBreakResult.Success ? _colorsConfig.Success : _colorsConfig.Failure;
             DoFlashTween(color);
         }
 
         private void DoFlashTween(Color flashColor)
         {
+            flashColor.a = 0;
             _activeOverlayImage.color = flashColor;
-            var startAlpha = _activeOverlayImage.color.a;
-            
-            var col = _activeOverlayImage.color;
-            col.a = _flashAlpha;
-            _activeOverlayImage.color = col;
 
             DOTween.Sequence()
                 .Append(_activeOverlayImage.DOFade(_flashAlpha, _flashInTime).SetEase(_flashInEase))
-                .Append(_activeOverlayImage.DOFade(startAlpha, _flashOutTime).SetEase(_flashOutEase));
+                .Append(_activeOverlayImage.DOFade(_afterFlashAlpha, _flashOutTime).SetEase(_flashOutEase));
         }
     }
 }

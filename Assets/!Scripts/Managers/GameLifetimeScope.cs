@@ -27,6 +27,7 @@ public class GameLifetimeScope : LifetimeScope
     [SerializeField] private TokenRewardConfig _tokenRewardConfig;
     [SerializeField] private InitialCombinationsConfig _initialCombinationsConfig;
     [SerializeField] private CharmsPoolConfig _charmsPoolConfig;
+    [SerializeField] private ColorsConfig _colorsConfig;
     
     [Header("Scene")]
     [SerializeField] private Camera _mainCamera;
@@ -38,6 +39,7 @@ public class GameLifetimeScope : LifetimeScope
     [SerializeField] private PointsWidgetView _pointsWidgetView;
     [SerializeField] private DiceStatePanelView _diceStatePanelView;
     [SerializeField] private CharmTooltipView _charmTooltipView;
+    [SerializeField] private ScreenFlashView _screenFlashView;
     // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
     
     protected override void Configure(IContainerBuilder builder)
@@ -59,6 +61,7 @@ public class GameLifetimeScope : LifetimeScope
         builder.RegisterInstance(_tokenRewardConfig);
         builder.RegisterInstance(_initialCombinationsConfig);
         builder.RegisterInstance(_charmsPoolConfig);
+        builder.RegisterInstance(_colorsConfig);
     }
 
     private void RegisterSceneObjects(IContainerBuilder builder)
@@ -72,6 +75,7 @@ public class GameLifetimeScope : LifetimeScope
         builder.RegisterComponent(_pointsWidgetView);
         builder.RegisterComponent(_diceStatePanelView);
         builder.RegisterComponent(_charmTooltipView);
+        builder.RegisterComponent(_screenFlashView);
     }
     
     private void RegisterServices(IContainerBuilder builder)

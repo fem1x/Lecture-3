@@ -50,7 +50,6 @@ namespace _Scripts.UI
             _pointsText.text = combo.BasePoints.ToString();
             _multText.text = combo.Multiplier.ToString();
             _buttonView.SetInteractable(true);
-            Debug.Log("!");
         }
         
         private void SetEmpty()
