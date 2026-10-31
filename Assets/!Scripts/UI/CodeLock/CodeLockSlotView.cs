@@ -45,8 +45,6 @@ namespace _Scripts.UI.CodeLock
         {
             DiceImage.sprite = _diceSprites[value];
             DiceImage.gameObject.SetActive(true);
-            
-            DiceImage.transform.DoScalePop();
         }
 
         public void RemoveValue()
