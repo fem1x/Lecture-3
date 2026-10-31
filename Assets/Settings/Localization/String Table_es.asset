@@ -299,6 +299,14 @@ MonoBehaviour:
     m_Localized: Entregar
     m_Metadata:
       m_Items: []
+  - m_Id: 4252570711085056
+    m_Localized: "\u0421erraja de c\xF3digo"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4252570748833792
+    m_Localized: "C\xF3digo:"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

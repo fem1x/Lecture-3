@@ -297,6 +297,14 @@ MonoBehaviour:
     m_Localized: Submit
     m_Metadata:
       m_Items: []
+  - m_Id: 4252570711085056
+    m_Localized: Code Lock
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4252570748833792
+    m_Localized: 'Code:'
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:
