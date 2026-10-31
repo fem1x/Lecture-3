@@ -223,3 +223,69 @@ MonoBehaviour:
     isLooped: 0
     audioMixer: {fileID: -9158774617749725478, guid: 1470a324304038b4ab0db292ebdfc379, type: 2}
     source: {fileID: 0}
+  - name: LockStampSlot
+    layers:
+    - clips:
+      - {fileID: 8300000, guid: 4cbeb87f88c039741a7d0e885d7cf967, type: 3}
+      - {fileID: 8300000, guid: ad2ec9e974aa0144f96cbd0e5ffd5df6, type: 3}
+      - {fileID: 8300000, guid: 0d6359cfd0ca1ae499e4e656adf51844, type: 3}
+      - {fileID: 8300000, guid: 81665bc68711e34409c6a6dc57f7e193, type: 3}
+      - {fileID: 8300000, guid: a167422b001450a48a158971b9bcbafe, type: 3}
+      - {fileID: 8300000, guid: f09cec8cd17b4e44384791c3dcc18c14, type: 3}
+      - {fileID: 8300000, guid: 44cd4d6826a90994f89cfbb0f62adf7b, type: 3}
+      volume: 1
+      pitch: 1
+    volume: 0.437
+    pitch: 1
+    pitchRandomize: 0.1
+    is3D: 0
+    useGlobalSpatialBlend: 0
+    customSpatialBlend: 0
+    isLooped: 0
+    audioMixer: {fileID: -9158774617749725478, guid: 1470a324304038b4ab0db292ebdfc379, type: 2}
+    source: {fileID: 0}
+  - name: LockStampDice
+    layers:
+    - clips:
+      - {fileID: 8300000, guid: c658ce520972cd945aa7bd9867714f55, type: 3}
+      volume: 1
+      pitch: 1
+    volume: 0.67
+    pitch: 0.7
+    pitchRandomize: 0
+    is3D: 1
+    useGlobalSpatialBlend: 1
+    customSpatialBlend: 0
+    isLooped: 0
+    audioMixer: {fileID: -9158774617749725478, guid: 1470a324304038b4ab0db292ebdfc379, type: 2}
+    source: {fileID: 0}
+  - name: LockSlotCorrect
+    layers:
+    - clips:
+      - {fileID: 8300000, guid: d74a27a3a8f8d6e43a232e0ea01387b4, type: 3}
+      volume: 1
+      pitch: 1
+    volume: 0.3
+    pitch: 1
+    pitchRandomize: 0.05
+    is3D: 0
+    useGlobalSpatialBlend: 0
+    customSpatialBlend: 0
+    isLooped: 0
+    audioMixer: {fileID: -9158774617749725478, guid: 1470a324304038b4ab0db292ebdfc379, type: 2}
+    source: {fileID: 0}
+  - name: LockSlotIncorrect
+    layers:
+    - clips:
+      - {fileID: 8300000, guid: 74210c1e875f4104dadbfcb44d2618f0, type: 3}
+      volume: 1
+      pitch: 1
+    volume: 0.38
+    pitch: 1
+    pitchRandomize: 0.05
+    is3D: 0
+    useGlobalSpatialBlend: 0
+    customSpatialBlend: 0
+    isLooped: 0
+    audioMixer: {fileID: -9158774617749725478, guid: 1470a324304038b4ab0db292ebdfc379, type: 2}
+    source: {fileID: 0}

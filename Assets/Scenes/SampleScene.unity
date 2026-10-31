@@ -1147,6 +1147,18 @@ PrefabInstance:
       propertyPath: m_SizeDelta.x
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3391301138803236709, guid: ef5db77786d12194d88cb266471c1bf9, type: 3}
+      propertyPath: m_fontSize
+      value: 38
+      objectReference: {fileID: 0}
+    - target: {fileID: 3391301138803236709, guid: ef5db77786d12194d88cb266471c1bf9, type: 3}
+      propertyPath: m_fontSizeBase
+      value: 38
+      objectReference: {fileID: 0}
+    - target: {fileID: 3391301138803236709, guid: ef5db77786d12194d88cb266471c1bf9, type: 3}
+      propertyPath: m_TextWrappingMode
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3850627949521091245, guid: ef5db77786d12194d88cb266471c1bf9, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -1174,6 +1186,14 @@ PrefabInstance:
     - target: {fileID: 5082593826032390721, guid: ef5db77786d12194d88cb266471c1bf9, type: 3}
       propertyPath: m_Name
       value: Canvas
+      objectReference: {fileID: 0}
+    - target: {fileID: 5400155256445317551, guid: ef5db77786d12194d88cb266471c1bf9, type: 3}
+      propertyPath: _stampDelay
+      value: 0.09
+      objectReference: {fileID: 0}
+    - target: {fileID: 5400155256445317551, guid: ef5db77786d12194d88cb266471c1bf9, type: 3}
+      propertyPath: _delayPerDice
+      value: 0.33
       objectReference: {fileID: 0}
     - target: {fileID: 5446863293164138899, guid: ef5db77786d12194d88cb266471c1bf9, type: 3}
       propertyPath: m_AnchorMax.y
