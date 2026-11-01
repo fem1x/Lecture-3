@@ -3,6 +3,7 @@ using _Scripts.Combinations;
 using _Scripts.Managers;
 using _Scripts.UI.CodeLock;
 using _Scripts.Utility.Extensions;
+using DG.Tweening;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Localization;
@@ -18,6 +19,19 @@ namespace _Scripts.UI
         [SerializeField] private CanvasGroup _group;
         [SerializeField] private LocalizeStringEvent _codeNameEvent;
 
+        [Header("Animation")] 
+        [SerializeField] private RectTransform _rect;
+        [SerializeField] private float _yOffset = 200f;
+        
+        [Header("Show")]
+        [SerializeField] private float _showTime = 0.5f;
+        [SerializeField] private Ease  _showEase = Ease.OutCubic; 
+        
+        [Header("Hide")]
+        [SerializeField] private float _hideTime = 0.5f;
+        [SerializeField] private Ease  _hideEase = Ease.OutCubic; 
+
+        private Tween _activeTween;
         private CodeLockService _codeLockService;
 
         [Inject]
@@ -59,9 +73,14 @@ namespace _Scripts.UI
             SetupSlots(combo);
             _codeNameEvent.StringReference = combo.DisplayName;
             _group.Show();
+            
+            DoShowTween();
         }
 
-        private void HideLock() => _group.Hide();
+        private void HideLock()
+        {
+            DoHideTween();
+        }
 
         private void SetupSlots(CombinationConfig combo)
         {
@@ -79,6 +98,20 @@ namespace _Scripts.UI
         {
             foreach (var slot in Slots)
                 slot.RemoveValue();
+        }
+
+        private void DoShowTween()
+        {
+            _activeTween.Kill();
+            _rect.anchoredPosition = new Vector2(_rect.anchoredPosition.x, _yOffset);
+            _activeTween = _rect.DOAnchorPosY(0, _showTime).SetEase(_showEase);
+        }
+
+        private void DoHideTween()
+        {
+            _activeTween.Kill();
+            _activeTween = _rect.DOAnchorPosY(_yOffset, _hideTime).SetEase(_hideEase)
+                .OnComplete(() => _group.Hide());
         }
     }
 }

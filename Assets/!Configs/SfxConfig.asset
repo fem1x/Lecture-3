@@ -235,7 +235,7 @@ MonoBehaviour:
       - {fileID: 8300000, guid: 44cd4d6826a90994f89cfbb0f62adf7b, type: 3}
       volume: 1
       pitch: 1
-    volume: 0.437
+    volume: 0.418
     pitch: 1
     pitchRandomize: 0.1
     is3D: 0
@@ -250,7 +250,7 @@ MonoBehaviour:
       - {fileID: 8300000, guid: c658ce520972cd945aa7bd9867714f55, type: 3}
       volume: 1
       pitch: 1
-    volume: 0.67
+    volume: 0.747
     pitch: 0.7
     pitchRandomize: 0
     is3D: 1
@@ -267,7 +267,7 @@ MonoBehaviour:
       pitch: 1
     volume: 0.3
     pitch: 1
-    pitchRandomize: 0.05
+    pitchRandomize: 0.03
     is3D: 0
     useGlobalSpatialBlend: 0
     customSpatialBlend: 0
@@ -282,7 +282,7 @@ MonoBehaviour:
       pitch: 1
     volume: 0.38
     pitch: 1
-    pitchRandomize: 0.05
+    pitchRandomize: 0.03
     is3D: 0
     useGlobalSpatialBlend: 0
     customSpatialBlend: 0
