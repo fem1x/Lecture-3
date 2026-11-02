@@ -404,6 +404,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8430069303479839931}
   - component: {fileID: 4256274525818252596}
+  - component: {fileID: 8666994065736463074}
   - component: {fileID: 1667117718460708657}
   - component: {fileID: 6548197973692428822}
   m_Layer: 5
@@ -444,6 +445,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1659124761256484609}
   m_CullTransparentMesh: 1
+--- !u!225 &8666994065736463074
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1659124761256484609}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 0
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!114 &1667117718460708657
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -486,6 +499,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d8fb974936340489da73880e2f33281, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Game::_Scripts.UI.CombinationDisplayInfoView
+  _cg: {fileID: 8666994065736463074}
   _titleText: {fileID: 4483459938983022935}
   _descriptionText: {fileID: 8147525963426283630}
   _pointsText: {fileID: 4340283239940222873}

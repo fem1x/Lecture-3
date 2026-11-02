@@ -1,5 +1,6 @@
 ﻿using _Scripts.Combinations;
 using _Scripts.Configs;
+using DG.Tweening;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -9,6 +10,9 @@ namespace _Scripts.UI
     public class CombinationDisplayInfoView : MonoBehaviour
     {
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
+        [Header("Canvas Group")]
+        [SerializeField] private CanvasGroup _cg;
+        
         [Header("UI Texts")]
         [SerializeField] private TMP_Text _titleText;
         [SerializeField] private TMP_Text _descriptionText;
@@ -72,6 +76,12 @@ namespace _Scripts.UI
                 if (hasDice)
                     _diceSlots[i].sprite = _diceAtlasConfig.GetSprite(pattern.Values[i]);
             }
+        }
+
+        public void PlayShowAnimation(float time, Ease ease)
+        {
+            _cg.alpha = 0;
+            _cg.DOFade(1, time).SetEase(ease).SetLink(gameObject);
         }
     }
 }

@@ -38,7 +38,7 @@ namespace _Scripts.Managers
         [SerializeField] private string _successSfx = "LockSuccess";
         [SerializeField] private string _forcedSfx = "LockForced";
         
-        
+        #region DI
         private ISfxPlayer _sfxPlayer;
         private ScreenFlashView _screenFlashView;
         private ColorsConfig _colorsConfig;
@@ -56,6 +56,7 @@ namespace _Scripts.Managers
             _colorsConfig = colorsConfig;
             _cameraShaker = cameraShaker;
         }
+        #endregion
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 
         public async UniTask PlaySequenceAsync(List<Dice> dices, LockBreakResult result)

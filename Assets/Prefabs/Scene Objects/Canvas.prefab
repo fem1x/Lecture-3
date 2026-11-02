@@ -783,7 +783,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 0}
   m_AnchoredPosition: {x: 0, y: 896.9999}
-  m_SizeDelta: {x: 0, y: 14.400002}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &2589049051632278250
 MonoBehaviour:
@@ -3149,7 +3149,7 @@ GameObject:
   - component: {fileID: 5675105664011346122}
   - component: {fileID: 1383803577724723369}
   m_Layer: 5
-  m_Name: (Button) ViewInfo
+  m_Name: (Button) Close
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3314,7 +3314,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 0.8588236, g: 0.72156864, b: 0.9607844, a: 1}
+  m_Color: {r: 0.8588236, g: 0.72156864, b: 0.9607844, a: 0}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -3579,7 +3579,7 @@ GameObject:
   - component: {fileID: 5964987300454059537}
   - component: {fileID: 3867584267155632747}
   m_Layer: 5
-  m_Name: (Wnd) Codex
+  m_Name: (Panel) Codex
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3599,11 +3599,11 @@ RectTransform:
   m_Children:
   - {fileID: 742631300550674142}
   - {fileID: 5065193855264864704}
-  m_Father: {fileID: 1285886131749188962}
+  m_Father: {fileID: 4098946360147810311}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0}
-  m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: -224.90005, y: 493}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 1071.1998, y: 985.1001}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8356720741610928160
@@ -3656,8 +3656,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 35aa8f10e1c740478302e74c619feb89, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Game::_Scripts.UI.CodexView
+  _backdropImage: {fileID: 789013925587189285}
   _cardPrefab: {fileID: 6548197973692428822, guid: f5f5d5ba63ed69b45887606bede45dd5, type: 3}
   _container: {fileID: 5002039288828754701}
+  _backdropButton: {fileID: 1935866856739408913}
+  _hideButton: {fileID: 1383803577724723369}
+  _showButton: {fileID: 4180148971455009090}
+  _cg: {fileID: 8666630180634571043}
+  _rect: {fileID: 2453700011438116718}
+  _slideTime: 0.7
+  _slideEase: 12
 --- !u!1 &2124622226946637465
 GameObject:
   m_ObjectHideFlags: 0
@@ -5558,6 +5566,42 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Game::_Scripts.UI.DiceCounterView
   _text: {fileID: 5082245269783279995}
+--- !u!1 &3880349694102754130
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4098946360147810311}
+  m_Layer: 5
+  m_Name: (Holder) Codex
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &4098946360147810311
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3880349694102754130}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 2453700011438116718}
+  m_Father: {fileID: 1285886131749188962}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0}
+  m_AnchorMax: {x: 0.5, y: 0}
+  m_AnchoredPosition: {x: -224.90005, y: 493}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &4017781907907630244
 GameObject:
   m_ObjectHideFlags: 0
@@ -7448,7 +7492,7 @@ GameObject:
   - component: {fileID: 8811608323951651569}
   - component: {fileID: 4180148971455009090}
   m_Layer: 5
-  m_Name: (Button) ViewInfo
+  m_Name: (Button) ShowCodex
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7745,13 +7789,15 @@ GameObject:
   - component: {fileID: 1285886131749188962}
   - component: {fileID: 8909878817022897908}
   - component: {fileID: 789013925587189285}
+  - component: {fileID: 1935866856739408913}
+  - component: {fileID: 8666630180634571043}
   m_Layer: 5
-  m_Name: (Panel) Codex
+  m_Name: (Bg) Codex
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1285886131749188962
 RectTransform:
   m_ObjectHideFlags: 0
@@ -7764,7 +7810,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 2453700011438116718}
+  - {fileID: 4098946360147810311}
   m_Father: {fileID: 8971640953311960382}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -7810,6 +7856,62 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &1935866856739408913
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5544462048300703269}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Button
+  m_Navigation:
+    m_Mode: 3
+    m_WrapAround: 0
+    m_SelectOnUp: {fileID: 0}
+    m_SelectOnDown: {fileID: 0}
+    m_SelectOnLeft: {fileID: 0}
+    m_SelectOnRight: {fileID: 0}
+  m_Transition: 0
+  m_Colors:
+    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
+    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_ColorMultiplier: 1
+    m_FadeDuration: 0.1
+  m_SpriteState:
+    m_HighlightedSprite: {fileID: 0}
+    m_PressedSprite: {fileID: 0}
+    m_SelectedSprite: {fileID: 0}
+    m_DisabledSprite: {fileID: 0}
+  m_AnimationTriggers:
+    m_NormalTrigger: Normal
+    m_HighlightedTrigger: Highlighted
+    m_PressedTrigger: Pressed
+    m_SelectedTrigger: Selected
+    m_DisabledTrigger: Disabled
+  m_Interactable: 1
+  m_TargetGraphic: {fileID: 789013925587189285}
+  m_OnClick:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!225 &8666630180634571043
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5544462048300703269}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &5577616941723705160
 GameObject:
   m_ObjectHideFlags: 0
@@ -8300,7 +8402,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7212197057425964096}
-  - component: {fileID: 4980547750489575654}
   - component: {fileID: 5048878719678968659}
   - component: {fileID: 5400155256445317551}
   m_Layer: 5
@@ -8329,22 +8430,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &4980547750489575654
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5842214980115666250}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 22aa0f87fb0e4a89ada51acc125d9b54, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Game::_Scripts.UI.CombinationsInfoView
-  _buttons:
-  - {fileID: 4180148971455009090}
-  - {fileID: 1383803577724723369}
-  _infoPanel: {fileID: 5544462048300703269}
 --- !u!114 &5048878719678968659
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10583,7 +10668,6 @@ GameObject:
   - component: {fileID: 2214609156232566544}
   - component: {fileID: 3981411518030607025}
   - component: {fileID: 2620313120365826602}
-  - component: {fileID: 4212030068932652775}
   - component: {fileID: 4966604442436595504}
   m_Layer: 5
   m_Name: (Img) LockOverlay
@@ -10633,7 +10717,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 1}
+  m_Color: {r: 0, g: 0, b: 0, a: 0}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -10650,18 +10734,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 15
---- !u!225 &4212030068932652775
-CanvasGroup:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7809885712459963276}
-  m_Enabled: 1
-  m_Alpha: 0
-  m_Interactable: 1
-  m_BlocksRaycasts: 1
-  m_IgnoreParentGroups: 0
 --- !u!114 &4966604442436595504
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10674,9 +10746,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7500bd1f08834515a4366a9c2b8adfa3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Game::_Scripts.UI.CodeLock.CodeLockQuotaView
-  _cg: {fileID: 4212030068932652775}
+  _overlay: {fileID: 2620313120365826602}
+  _icon: {fileID: 6914962615954848005}
   _iconRect: {fileID: 744237033897674226}
-  _fadeTime: 0.7
+  _fadeTime: 0.45
 --- !u!1 &8005929271153887512
 GameObject:
   m_ObjectHideFlags: 0
@@ -14265,7 +14338,7 @@ PrefabInstance:
       objectReference: {fileID: 6132617114397886424}
     - target: {fileID: 6322855203843752514, guid: 08c04146c042bc949ba3fbb852f9e65b, type: 3}
       propertyPath: _yOffset
-      value: 500
+      value: 420
       objectReference: {fileID: 0}
     - target: {fileID: 6322855203843752514, guid: 08c04146c042bc949ba3fbb852f9e65b, type: 3}
       propertyPath: _hideEase
@@ -14273,15 +14346,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6322855203843752514, guid: 08c04146c042bc949ba3fbb852f9e65b, type: 3}
       propertyPath: _hideTime
-      value: 0.62
+      value: 0.6
       objectReference: {fileID: 0}
     - target: {fileID: 6322855203843752514, guid: 08c04146c042bc949ba3fbb852f9e65b, type: 3}
       propertyPath: _showEase
-      value: 18
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 6322855203843752514, guid: 08c04146c042bc949ba3fbb852f9e65b, type: 3}
       propertyPath: _showTime
-      value: 2.2
+      value: 1.4
       objectReference: {fileID: 0}
     - target: {fileID: 6322855203843752514, guid: 08c04146c042bc949ba3fbb852f9e65b, type: 3}
       propertyPath: _quotaView

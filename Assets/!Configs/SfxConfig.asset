@@ -82,9 +82,9 @@ MonoBehaviour:
       - {fileID: 8300000, guid: 32e74c21b0a8c5642a763cbeb206854a, type: 3}
       - {fileID: 8300000, guid: ca469f0281e1d7a4ebc078f62e2ecb79, type: 3}
       volume: 1
-      pitch: 0.91
-    volume: 1
-    pitch: 0.9
+      pitch: 1
+    volume: 0.886
+    pitch: 0.63
     pitchRandomize: 0.05
     is3D: 1
     useGlobalSpatialBlend: 1
@@ -107,8 +107,8 @@ MonoBehaviour:
       - {fileID: 8300000, guid: 1006dc6543d3bbc48b0e4092ee8fb578, type: 3}
       volume: 1
       pitch: 1
-    volume: 0.34
-    pitch: 0.8
+    volume: 0.35
+    pitch: 0.73
     pitchRandomize: 0.06
     is3D: 0
     useGlobalSpatialBlend: 0
@@ -265,7 +265,7 @@ MonoBehaviour:
       - {fileID: 8300000, guid: d74a27a3a8f8d6e43a232e0ea01387b4, type: 3}
       volume: 1
       pitch: 1
-    volume: 0.3
+    volume: 0.34
     pitch: 1
     pitchRandomize: 0.03
     is3D: 0
@@ -280,9 +280,48 @@ MonoBehaviour:
       - {fileID: 8300000, guid: 74210c1e875f4104dadbfcb44d2618f0, type: 3}
       volume: 1
       pitch: 1
-    volume: 0.38
+    volume: 0.33
     pitch: 1
     pitchRandomize: 0.03
+    is3D: 0
+    useGlobalSpatialBlend: 0
+    customSpatialBlend: 0
+    isLooped: 0
+    audioMixer: {fileID: -9158774617749725478, guid: 1470a324304038b4ab0db292ebdfc379, type: 2}
+    source: {fileID: 0}
+  - name: LockForced
+    layers:
+    - clips:
+      - {fileID: 8300000, guid: 616bf266aac3a0846aab604f5837a27f, type: 3}
+      - {fileID: 8300000, guid: 1a7531acba71bca41ae5bd41416b7895, type: 3}
+      - {fileID: 8300000, guid: 586e16e10ebed094ca346ac71ae7728c, type: 3}
+      - {fileID: 8300000, guid: b8c56102c268c5242a5fb34586e0dd0b, type: 3}
+      - {fileID: 8300000, guid: 8ee897c6868bdae4b9e4b9b943480d95, type: 3}
+      - {fileID: 8300000, guid: 916e037cb659b22479819a2fc29d5b45, type: 3}
+      - {fileID: 8300000, guid: 170135e39bcd4b544bd0b326251fb07f, type: 3}
+      - {fileID: 8300000, guid: e5f6bf42ca85408408e5124a9a0cc84b, type: 3}
+      - {fileID: 8300000, guid: 4b19d006e05c61e42bca1829069865d8, type: 3}
+      - {fileID: 8300000, guid: 88e7c77c32c928043803fee7a621a179, type: 3}
+      volume: 1
+      pitch: 1
+    volume: 0.38
+    pitch: 1
+    pitchRandomize: 0
+    is3D: 0
+    useGlobalSpatialBlend: 0
+    customSpatialBlend: 0
+    isLooped: 0
+    audioMixer: {fileID: -9158774617749725478, guid: 1470a324304038b4ab0db292ebdfc379, type: 2}
+    source: {fileID: 0}
+  - name: LockSuccess
+    layers:
+    - clips:
+      - {fileID: 8300000, guid: 4ebfe9bdcbe7df74185e29e646a67e72, type: 3}
+      volume: 1
+      pitch: 1
+    volume: 0.241
+    pitch: 1
+    pitchRandomize: 0
     is3D: 0
     useGlobalSpatialBlend: 0
     customSpatialBlend: 0
