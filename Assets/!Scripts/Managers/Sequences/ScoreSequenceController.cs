@@ -197,7 +197,7 @@ namespace _Scripts.Managers
         private void PlayDiceStepFx(Transform source, string sfxName, bool is3D)
         {
             source.DoScalePop();
-            _pointsText.transform.DoScalePop(scaleMult: 1.8f);
+            _pointsText.transform.DoScalePop(scaleMult: 1.8f).ToUniTask().Forget();
             _cameraShaker.DoShake(_diceScoreShake);
 
             //SFX
