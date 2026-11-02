@@ -13,7 +13,7 @@ namespace _Scripts.UI
         [SerializeField] private Color _colorDefault = Color.white;
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
         
-        public void DoFlash(Color color=default, float alpha=0.5f, float inTime=0.02f, float outTime=0.65f)
+        public void DoFlash(Color color=default, float alpha=0.5f, float inTime=0.02f, float outTime=0.75f)
         {
             var flashColor = color == default ? _colorDefault : color;
             flashColor.a = 0;

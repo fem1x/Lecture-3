@@ -67,8 +67,8 @@ namespace _Scripts.Managers
             await UniTask.Delay(TimeSpan.FromSeconds(_delayBeforeValidation));
             await ValidationAsync(result);
             await UniTask.Delay(TimeSpan.FromSeconds(_delayAfterValidation));
-            DoScreenFlash(result);
-            DoCameraShake(result);
+            
+            DoResultFx(result);
         }
 
         private async UniTask InsertValuesAsync(List<Dice> dices)
@@ -105,13 +105,13 @@ namespace _Scripts.Managers
 
         private void DoScreenFlash(LockBreakResult result)
         {
-            var color = result == LockBreakResult.Success ? _colorsConfig.Success : _colorsConfig.Failure;
+            var color = IsSuccess(result) ? _colorsConfig.Success : _colorsConfig.Failure;
             _screenFlashView.DoFlash(color: color, alpha: _flashAlpha);
         }
 
         private void DoCameraShake(LockBreakResult result)
         {
-            var preset = result == LockBreakResult.Success ? _successShake : _forcedShake;
+            var preset = IsSuccess(result) ? _successShake : _forcedShake;
             _cameraShaker.DoShake(preset);
         }
         
@@ -122,6 +122,15 @@ namespace _Scripts.Managers
                 _sfxPlayer?.Play(sfxName, source.position, pitchMult);
             else
                 _sfxPlayer?.Play(sfxName, pitchMult);
+        }
+
+        private void DoResultFx(LockBreakResult result)
+        {
+            var sfxName = IsSuccess(result) ? _successSfx : _forcedSfx;
+            
+            _sfxPlayer.Play(sfxName);
+            DoScreenFlash(result);
+            DoCameraShake(result);
         }
 
         private bool IsSuccess(LockBreakResult result) => result ==  LockBreakResult.Success;
