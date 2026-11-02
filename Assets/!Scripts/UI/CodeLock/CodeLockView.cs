@@ -19,7 +19,7 @@ namespace _Scripts.UI
         [SerializeField] private CanvasGroup _group;
         [SerializeField] private LocalizeStringEvent _codeNameEvent;
 
-        [Header("Animation")] 
+        [Header("Show / Hide")] 
         [SerializeField] private RectTransform _rect;
         [SerializeField] private float _yOffset = 200f;
         
@@ -29,7 +29,10 @@ namespace _Scripts.UI
         
         [Header("Hide")]
         [SerializeField] private float _hideTime = 0.5f;
-        [SerializeField] private Ease  _hideEase = Ease.OutCubic; 
+        [SerializeField] private Ease  _hideEase = Ease.OutCubic;
+
+        [Header("Quota Overlay")]
+        [SerializeField] private CodeLockQuotaView _quotaView;
 
         private Tween _activeTween;
         private CodeLockService _codeLockService;
@@ -80,6 +83,7 @@ namespace _Scripts.UI
         private void HideLock()
         {
             DoHideTween();
+            _quotaView.Hide();
         }
 
         private void SetupSlots(CombinationConfig combo)
@@ -104,7 +108,8 @@ namespace _Scripts.UI
         {
             _activeTween.Kill();
             _rect.anchoredPosition = new Vector2(_rect.anchoredPosition.x, _yOffset);
-            _activeTween = _rect.DOAnchorPosY(0, _showTime).SetEase(_showEase);
+            _activeTween = _rect.DOAnchorPosY(0, _showTime).SetEase(_showEase)
+                .OnComplete(() => _quotaView.Show());
         }
 
         private void DoHideTween()
