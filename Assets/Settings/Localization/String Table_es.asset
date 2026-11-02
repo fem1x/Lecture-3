@@ -204,58 +204,47 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 418204264288256
-    m_Localized: "Los dados jugados no reciben <style=cracks>Grietas</style> si se
-      juegan \u2264 {maxDicesThreshold} dados"
+    m_Localized: "Los dados jugados no reciben <style=cracks>Grietas</style> si se juegan \u2264 {maxDicesThreshold} dados"
     m_Metadata:
       m_Items:
       - rid: 420518586740899946
   - m_Id: 418204264288258
-    m_Localized: "Otorga <style=xmult>{xMultiplierPerStep} X-Mult</style> por cada
-      <style=wear>Desgaste</style> en los dados jugados si la combinaci\xF3n es <style=combo>Subcarga</style>"
+    m_Localized: "Otorga <style=xmult>{xMultiplierPerStep} X-Mult</style> por cada <style=wear>Desgaste</style> en los dados jugados si la combinaci\xF3n es <style=combo>Subcarga</style>"
     m_Metadata:
       m_Items:
       - rid: 420518586740899946
   - m_Id: 418204264288260
-    m_Localized: Otorga <style=mult>+{bonusMultiplier} Mult</style> por cada dado
-      jugado con <style=cracks>Grietas</style>
+    m_Localized: Otorga <style=mult>+{bonusMultiplier} Mult</style> por cada dado jugado con <style=cracks>Grietas</style>
     m_Metadata:
       m_Items:
       - rid: 420518586740899946
   - m_Id: 418204264288262
-    m_Localized: Otorga <style=xmult>{xMultiplier} X-Mult</style> si los dados jugados
-      contienen a la vez un <style=die>1</style> y un <style=die>6</style>
+    m_Localized: Otorga <style=xmult>{xMultiplier} X-Mult</style> si los dados jugados contienen a la vez un <style=die>1</style> y un <style=die>6</style>
     m_Metadata:
       m_Items:
       - rid: 420518586740899946
   - m_Id: 418204264288264
-    m_Localized: Los dados con valor <style=die>{immuneValue}</style> nunca reciben
-      <style=cracks>Grietas</style>
+    m_Localized: Los dados con valor <style=die>{immuneValue}</style> nunca reciben <style=cracks>Grietas</style>
     m_Metadata:
       m_Items:
       - rid: 420518586740899946
   - m_Id: 418204264288266
-    m_Localized: "Otorga <style=points>+{bonusPoints} Puntos</style> y <style=xmult>{xMultiplier}
-      X-Mult</style> por cada <style=die>{targetValue}</style> jugado, pero a\xF1ade
-      <style=wear>+1 Desgaste</style> al dado"
+    m_Localized: "Otorga <style=points>+{bonusPoints} Puntos</style> y <style=xmult>{xMultiplier} X-Mult</style> por cada <style=die>{targetValue}</style> jugado, pero a\xF1ade <style=wear>+1 Desgaste</style> al dado"
     m_Metadata:
       m_Items:
       - rid: 420518586740899946
   - m_Id: 418204264288268
-    m_Localized: <style=chance>{saveChance:0%}</style> de probabilidad de evitar
-      el <style=wear>Desgaste</style> y eliminar todas las <style=cracks>Grietas</style>
-      del dado
+    m_Localized: <style=chance>{saveChance:0%}</style> de probabilidad de evitar el <style=wear>Desgaste</style> y eliminar todas las <style=cracks>Grietas</style> del dado
     m_Metadata:
       m_Items:
       - rid: 420518586740899946
   - m_Id: 418204264288270
-    m_Localized: "Otorga <style=xmult>{xMultiplier} X-Mult</style> si se juegan \u2264
-      {maxDicesThreshold} dados"
+    m_Localized: "Otorga <style=xmult>{xMultiplier} X-Mult</style> si se juegan \u2264 {maxDicesThreshold} dados"
     m_Metadata:
       m_Items:
       - rid: 420518586740899946
   - m_Id: 418204264288272
-    m_Localized: "Otorga <style=xmult>{xMultiplier} X-Mult</style> si todos los dados
-      jugados est\xE1n <style=intact>Intactos</style>"
+    m_Localized: "Otorga <style=xmult>{xMultiplier} X-Mult</style> si todos los dados jugados est\xE1n <style=intact>Intactos</style>"
     m_Metadata:
       m_Items:
       - rid: 420518586740899946
@@ -305,6 +294,14 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 4252570748833792
     m_Localized: "C\xF3digo:"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5071343542194176
+    m_Localized: Reemplazar?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5071343588331520
+    m_Localized: "ser\xE1 eliminado!"
     m_Metadata:
       m_Items: []
   references:

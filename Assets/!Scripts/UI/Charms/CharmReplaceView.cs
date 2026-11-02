@@ -1,6 +1,8 @@
 ﻿using System;
 using _Scripts.Utility.Extensions;
+using TMPro;
 using UnityEngine;
+using UnityEngine.Localization.Components;
 using UnityEngine.UI;
 
 namespace _Scripts.UI.Charms
@@ -8,11 +10,15 @@ namespace _Scripts.UI.Charms
     public class CharmReplaceView : MonoBehaviour
     {
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
+        [Header("References")]
         [SerializeField] private CanvasGroup _cg;
+        [SerializeField] private LocalizeStringEvent _charmStringEvent;
         
+        [Header("Icons")]
         [SerializeField] private Image _oldCharmIcon;
         [SerializeField] private Image _newCharmIcon;
         
+        [Header("Buttons")]
         [SerializeField] private Button _confirmBtn;
         [SerializeField] private Button _cancelBtn;
         
@@ -45,9 +51,10 @@ namespace _Scripts.UI.Charms
             _onCancel = onCancel;
 
             transform.position = target.position;
+            _charmStringEvent.StringReference = oldView.Config.Name;
             _oldCharmIcon.sprite = oldView.Config.Icon;
             _newCharmIcon.sprite = newView.Config.Icon;
-
+            
             _cg.Show();
         }
 

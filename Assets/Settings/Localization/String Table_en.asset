@@ -204,26 +204,22 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 418204264288256
-    m_Localized: "Played dice do not gain <style=cracks>Cracks</style> if \u2264
-      {maxDicesThreshold} dice are played"
+    m_Localized: "Played dice do not gain <style=cracks>Cracks</style> if \u2264 {maxDicesThreshold} dice are played"
     m_Metadata:
       m_Items:
       - rid: 420518586740899945
   - m_Id: 418204264288258
-    m_Localized: Gives <style=xmult>{xMultiplierPerStep} X-Mult</style> for each
-      <style=wear>Wear</style> on played dice if combination is <style=combo>Underload</style>
+    m_Localized: Gives <style=xmult>{xMultiplierPerStep} X-Mult</style> for each <style=wear>Wear</style> on played dice if combination is <style=combo>Underload</style>
     m_Metadata:
       m_Items:
       - rid: 420518586740899945
   - m_Id: 418204264288260
-    m_Localized: Gives <style=mult>+{bonusMultiplier} Mult</style> for each played
-      die with <style=cracks>Cracks</style>
+    m_Localized: Gives <style=mult>+{bonusMultiplier} Mult</style> for each played die with <style=cracks>Cracks</style>
     m_Metadata:
       m_Items:
       - rid: 420518586740899945
   - m_Id: 418204264288262
-    m_Localized: Gives <style=xmult>{xMultiplier} X-Mult</style> if played dice contain
-      both a <style=die>1</style> and a <style=die>6</style>
+    m_Localized: Gives <style=xmult>{xMultiplier} X-Mult</style> if played dice contain both a <style=die>1</style> and a <style=die>6</style>
     m_Metadata:
       m_Items:
       - rid: 420518586740899945
@@ -233,27 +229,22 @@ MonoBehaviour:
       m_Items:
       - rid: 420518586740899945
   - m_Id: 418204264288266
-    m_Localized: Gives <style=points>+{bonusPoints} Points</style> and <style=xmult>{xMultiplier}
-      X-Mult</style> for each played <style=die>{targetValue}</style>, but adds <style=wear>+1
-      Wear</style> to the die
+    m_Localized: Gives <style=points>+{bonusPoints} Points</style> and <style=xmult>{xMultiplier} X-Mult</style> for each played <style=die>{targetValue}</style>, but adds <style=wear>+1 Wear</style> to the die
     m_Metadata:
       m_Items:
       - rid: 420518586740899945
   - m_Id: 418204264288268
-    m_Localized: <style=chance>{saveChance:0%}</style> chance to prevent <style=wear>Wear</style>
-      and remove all <style=cracks>Cracks</style> from the die
+    m_Localized: <style=chance>{saveChance:0%}</style> chance to prevent <style=wear>Wear</style> and remove all <style=cracks>Cracks</style> from the die
     m_Metadata:
       m_Items:
       - rid: 420518586740899945
   - m_Id: 418204264288270
-    m_Localized: "Gives <style=xmult>{xMultiplier} X-Mult</style> if \u2264 {maxDicesThreshold}
-      dice are played"
+    m_Localized: "Gives <style=xmult>{xMultiplier} X-Mult</style> if \u2264 {maxDicesThreshold} dice are played"
     m_Metadata:
       m_Items:
       - rid: 420518586740899945
   - m_Id: 418204264288272
-    m_Localized: Gives <style=xmult>{xMultiplier} X-Mult</style> if all played dice
-      are <style=intact>Intact</style>
+    m_Localized: Gives <style=xmult>{xMultiplier} X-Mult</style> if all played dice are <style=intact>Intact</style>
     m_Metadata:
       m_Items:
       - rid: 420518586740899945
@@ -303,6 +294,14 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 4252570748833792
     m_Localized: 'Code:'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5071343542194176
+    m_Localized: Replace?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5071343588331520
+    m_Localized: will be removed!
     m_Metadata:
       m_Items: []
   references:
