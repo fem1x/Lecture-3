@@ -54,10 +54,11 @@ namespace _Scripts.Charms
             OnCharmRemoved?.Invoke(charm);
         }
 
-        public void ReplaceCharm(CharmBase oldCharm, CharmConfigBase newCharmConfig)
+        public CharmBase ReplaceCharm(CharmBase oldCharm, CharmConfigBase newCharmConfig)
         {
             RemoveCharm(oldCharm);
-            TryAddCharm(newCharmConfig);
+            TryAddCharm(newCharmConfig, out var newCharm);
+            return newCharm;
         }
     }
 }

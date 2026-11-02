@@ -9,6 +9,7 @@ namespace _Scripts.UI.Charms
     public class CharmSlotView : MonoBehaviour, IDropHandler
     {
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
+        [SerializeField] private RectTransform _slotRect;
         [SerializeField] private CharmEquippedView _charmPrefab;
         [SerializeField] private Transform _charmHolder;
         [SerializeField] private GameObject _emptyPlaceholder;
@@ -17,23 +18,47 @@ namespace _Scripts.UI.Charms
         private CharmEquippedView _currentEquipped;
         private CharmBase _activeCharm;
         
+        #region DI
+        private CharmReplaceView _replaceView;
         private CharmsConveyorService _conveyorService;
         private IObjectResolver _resolver;
         
         [Inject]
-        public void Construct(CharmsConveyorService conveyorService, IObjectResolver resolver)
+        public void Construct(
+            CharmsConveyorService conveyorService, 
+            IObjectResolver resolver, 
+            CharmReplaceView replaceView)
         {
             _conveyorService = conveyorService;
             _resolver = resolver;
+            _replaceView = replaceView;
         }
+        #endregion
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
         
         public void OnDrop(PointerEventData eventData)
         {
             if (eventData.pointerDrag == null) return;
             if (!eventData.pointerDrag.TryGetComponent<CharmDragView>(out var dragView)) return;
-            if (!IsEmpty) return;
+            
+            if (IsEmpty)
+            {
+                TryEquip(dragView);
+                return;
+            }
 
+            dragView.StartPending();
+            _replaceView.Show(
+                _slotRect, 
+                _currentEquipped.CharmGeneralView, 
+                dragView.GeneralView,
+                onConfirm: () => Replace(dragView),
+                onCancel: () => dragView.StopPending()
+            );
+        }
+
+        private void TryEquip(CharmDragView dragView)
+        {
             if (_conveyorService.TryClaim(dragView.GeneralView.Config, out var createdCharm))
             {
                 Equip(createdCharm);
@@ -68,6 +93,17 @@ namespace _Scripts.UI.Charms
             }
 
             _emptyPlaceholder.SetActive(true);
+        }
+
+        private void Replace(CharmDragView dragView)
+        {
+            var oldCharm = _activeCharm;
+            Clear();
+
+            var newCharm = _conveyorService.Replace(oldCharm, dragView.GeneralView.Config);
+            Equip(newCharm);
+    
+            dragView.OnSuccessfullyEquipped();
         }
     }
 }

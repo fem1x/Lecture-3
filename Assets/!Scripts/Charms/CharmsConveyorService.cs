@@ -89,10 +89,11 @@ namespace _Scripts.Charms
             OnChoiceCompleted?.Invoke();
         }
 
-        public void Replace(CharmBase oldCharm)
+        public CharmBase Replace(CharmBase oldCharm, CharmConfigBase newCharmConfig)
         {
-            _charmsService.ReplaceCharm(oldCharm, CurrentCharm);
+            var newCharm = _charmsService.ReplaceCharm(oldCharm, newCharmConfig);
             OnChoiceCompleted?.Invoke();
+            return newCharm;
         }
 
         public bool CanScrap => CurrentIndex == Charms.Count - 1;

@@ -1,5 +1,6 @@
 ﻿using System;
 using _Scripts.Charms;
+using _Scripts.Utility.Extensions;
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -22,6 +23,8 @@ namespace _Scripts.UI.Charms
 
         public event Action<CharmConfigBase> OnClicked;
 
+        private Vector3 _defaultScale;
+        private bool _isPending;
         private bool _isRevealed;
         private Sprite _revealedSprite;
         private CharmConfigBase _config;
@@ -31,6 +34,11 @@ namespace _Scripts.UI.Charms
         private bool _isDraggable;
         private Tween _returnTween;
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
+
+        private void Start()
+        {
+            _defaultScale = transform.localScale;
+        }
 
         public void Setup(CharmConfigBase config, RectTransform dragLayer, RectTransform cellHolder)
         {
@@ -84,7 +92,7 @@ namespace _Scripts.UI.Charms
 
             _canvasGroup.blocksRaycasts = true;
 
-            if (_rectTransform.parent == _dragLayer)
+            if (!_isPending && _rectTransform.parent == _dragLayer) 
                 ReturnToConveyor();
         }
 
@@ -102,8 +110,10 @@ namespace _Scripts.UI.Charms
 
         public void InstantReturnToConveyor()
         {
+            _isPending = false;
             _returnTween?.Kill();
             _canvasGroup.blocksRaycasts = true;
+            transform.localScale = Vector3.one;
 
             if (_rectTransform.parent != _cellHolder)
             {
@@ -116,6 +126,21 @@ namespace _Scripts.UI.Charms
         {
             _returnTween?.Kill();
             Destroy(gameObject);
+        }
+
+        public void StartPending()
+        {
+            _isPending = true;
+            _returnTween?.Kill();
+            transform.DoScaleOut(time: 0.2f);
+        }
+
+        public void StopPending()
+        {
+            _isPending = false;
+            transform.localScale = _defaultScale;
+            transform.DoScaleIn(0.2f);
+            ReturnToConveyor();
         }
     }
 }

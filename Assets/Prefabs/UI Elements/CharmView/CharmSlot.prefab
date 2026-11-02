@@ -165,6 +165,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 730caf084e8f4b009921771a07fd0a81, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Game::_Scripts.UI.Charms.CharmSlotView
+  _slotRect: {fileID: 7090738358462213799}
   _charmPrefab: {fileID: -3575081561266522832, guid: fb2bf6508bceb2b4b937f38d1db232c9, type: 3}
   _charmHolder: {fileID: 1568001936268085546}
   _emptyPlaceholder: {fileID: 851615654986586482}

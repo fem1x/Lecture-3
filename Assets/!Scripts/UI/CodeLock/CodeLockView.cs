@@ -50,7 +50,7 @@ namespace _Scripts.UI
             if (lockCombo != null)
                 ShowLock(lockCombo);
             else
-                HideLock();
+                HideLockInstant();
         }
 
         private void OnEnable()
@@ -84,6 +84,12 @@ namespace _Scripts.UI
         {
             DoHideTween();
             _quotaView.Hide();
+        }
+
+        private void HideLockInstant()
+        {
+            _quotaView.Hide();
+            _group.Hide();
         }
 
         private void SetupSlots(CombinationConfig combo)

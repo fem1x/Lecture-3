@@ -24,5 +24,12 @@ namespace _Scripts.Utility.Extensions
             target.localScale =  Vector3.zero;
             return target.DOScale(targetScale, time).SetEase(ease).SetLink(target.gameObject);
         }
+        
+        public static Tween DoScaleOut(this Transform target, float time = 0.5f, Ease ease = Ease.OutQuart)
+        {
+            target.DOKill(true);
+            
+            return target.DOScale(Vector3.zero, time).SetEase(ease).SetLink(target.gameObject);
+        }
     }
 }
