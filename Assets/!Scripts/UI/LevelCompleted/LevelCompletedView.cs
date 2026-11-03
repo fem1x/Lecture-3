@@ -88,7 +88,7 @@ public class LevelCompletedView : MonoBehaviour
         );
 
         SetBackdropInteractable(false);
-        _levelFlowController.TryStartNextLevel();
+        _levelFlowController.StartLevel();
     }
 
     private void HideInstant()

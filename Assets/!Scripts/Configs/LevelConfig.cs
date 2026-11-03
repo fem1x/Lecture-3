@@ -8,12 +8,9 @@ namespace _Scripts.Configs
     public class LevelConfig : ScriptableObject
     {
         [Header("General stats")]
-        
-        
-        [field: SerializeField] public int LevelIndex {get; private set;}
-        [field: SerializeField] public int SectionIndex {get; private set;}
         [field: SerializeField] public int ScoreQuota { get; private set; } = 1000;
         [field: SerializeField] public int TokensReward { get; private set; } = 1;
+        public int OrderIndex;
         
         [Header("Code Lock")]
         [field: SerializeField] public List<CombinationConfig> LockCombinationsPool { get; private set; }

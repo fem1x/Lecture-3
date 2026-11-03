@@ -105,6 +105,8 @@ public class GameLifetimeScope : LifetimeScope
         builder.Register<DiceDamageService>(Lifetime.Singleton);
         builder.Register<CodeLockService>(Lifetime.Singleton);
         builder.Register<ActiveSelectionService>(Lifetime.Singleton);
+        builder.Register<LevelService>(Lifetime.Singleton);
+        builder.Register<MapService>(Lifetime.Singleton);
         
         //Entry Point
         builder.RegisterEntryPoint<Bootstrap>();

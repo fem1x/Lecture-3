@@ -9,15 +9,13 @@ namespace _Scripts.Managers
     public class LevelFlowController : IDisposable
     {
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
-        public event Action<int, int> OnLevelStarted; //levelIndex, quota
         public event Action<TokenRewardData> OnLevelCompleted;
         public event Action OnGameWon;
         public event Action OnGameOver;
 
-        public LevelConfig CurrentLevelConfig { get; private set; }
-        private int _currentLevelIndex = 0;
+        private LevelConfig _currentLevel;
         
-		private readonly LevelsListConfig _levelsConfig;
+		private readonly LevelService _levelService;
         private readonly ScoreManager _scoreManager;
         private readonly ResourceManager _resourceManager;
         private readonly DiceTableController _tableController;
@@ -29,7 +27,7 @@ namespace _Scripts.Managers
         #region DI
         [Inject]
         public LevelFlowController(
-            LevelsListConfig levelsConfig,
+            LevelService levelService,
             ScoreManager scoreManager,
             ResourceManager resourceManager,
             DiceTableController tableController,
@@ -38,7 +36,7 @@ namespace _Scripts.Managers
             RepairTokensManager repairTokensManager,
             CodeLockService codeLockService)
         {
-            _levelsConfig = levelsConfig;
+            _levelService =  levelService;
             _scoreManager = scoreManager;
             _resourceManager = resourceManager;
             _tableController = tableController;
@@ -54,36 +52,12 @@ namespace _Scripts.Managers
 
         public void Dispose() => _scoreManager.OnQuotaReached -= HandleQuotaReached;
         
-        public void StartGame()
+        public void StartLevel()
         {
-            _currentLevelIndex = 0;
-            StartCurrentLevel();
-        }
-        
-        public bool TryStartNextLevel()
-        {
-            if (_currentLevelIndex < _levelsConfig.LevelsList.Count)
-            {
-                StartCurrentLevel();
-                return true;
-            }
-
-            OnGameWon?.Invoke();
-            return false;
-        } 
-        
-        private void StartCurrentLevel()
-        {
-            if (_currentLevelIndex >= _levelsConfig.LevelsList.Count)
-            {
-                OnGameWon?.Invoke();
-                return;
-            }
-
-            CurrentLevelConfig = _levelsConfig.LevelsList[_currentLevelIndex];
+            _currentLevel = _levelService.CurrentLevel;
             
             _scoreManager.ResetScore();
-            _scoreManager.SetQuota(CurrentLevelConfig.ScoreQuota);
+            _scoreManager.SetQuota(_currentLevel.ScoreQuota);
 
             _resourceManager.ResetForNewLevel();
 
@@ -93,9 +67,7 @@ namespace _Scripts.Managers
             _diceSpawner.ResetDicesToSpawn(allDices);
             _tableController.SetPendingDices(allDices);
             
-            _codeLockService.SetLock(CurrentLevelConfig);
-            
-            OnLevelStarted?.Invoke(_currentLevelIndex + 1, CurrentLevelConfig.ScoreQuota);
+            _codeLockService.SetLock(_currentLevel);
         }
         
         public void CheckDefeatCondition()
@@ -108,11 +80,11 @@ namespace _Scripts.Managers
         
         private void HandleQuotaReached()
         {
-            var rewardData = _rewardCalculator.GetTokenRewards(CurrentLevelConfig.TokensReward);
+            var rewardData = _rewardCalculator.GetTokenRewards(_currentLevel.TokensReward);
             _repairTokensManager.AddTokens(rewardData.TotalTokens);
             
-            _currentLevelIndex++;
-            OnLevelCompleted?.Invoke(rewardData);
+            if(_levelService.TrySelectNextLevel())
+                OnLevelCompleted?.Invoke(rewardData);
         }
     }
 }

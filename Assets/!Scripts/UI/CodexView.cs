@@ -89,7 +89,7 @@ namespace _Scripts.UI
                 card.Setup(config);
                 _spawnedCards.Add(card);
                 
-                card.transform.DoScaleIn(time: _scaleInTime, ease: _scaleInEase);
+                card.transform.DoScaleIn(time: _scaleInTime, ease: _scaleInEase).ToUniTask().Forget();
                 card.PlayShowAnimation(_scaleInTime, _fadeInEase);
                 
                 await UniTask.Delay(TimeSpan.FromSeconds(_delayPerCard));

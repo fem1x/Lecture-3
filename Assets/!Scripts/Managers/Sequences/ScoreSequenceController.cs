@@ -102,21 +102,21 @@ namespace _Scripts.Managers
             // +Points
             if (step.BonusPoints > 0)
             {
-                _pointsText.transform.DoScalePop(scaleMult: 1.8f);
+                _pointsText.transform.DoScalePop(scaleMult: 1.8f).ToUniTask().Forget();
                 await AddPointsAsync(step.BonusPoints);
             }
 
             // +Mult
             if (step.BonusMultiplier > 0)
             {
-                _multText.transform.DoScalePop(scaleMult: 1.8f);
+                _multText.transform.DoScalePop(scaleMult: 1.8f).ToUniTask().Forget();
                 await AddMultAsync(step.BonusMultiplier);
             }
 
             // X-Mult
             if (step.XMultiplier > 1f)
             {
-                _multText.transform.DoScalePop(scaleMult: 2.5f);
+                _multText.transform.DoScalePop(scaleMult: 2.5f).ToUniTask().Forget();
                 await XMultAsync(step.XMultiplier);
             }
         }
