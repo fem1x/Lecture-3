@@ -52,7 +52,7 @@ namespace _Scripts.UI
             _fillImg.color = visuals.FillColor;
             _text.color = visuals.TextColor;
             
-            _text.text = index.ToString();
+            _text.text = config.OrderIndex.ToString();
         }
 
         private void UpdateCompletedState()

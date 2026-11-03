@@ -299,7 +299,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 20.6073, y: -92.35956}
+  m_AnchoredPosition: {x: 28.036499, y: -86.03003}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!114 &1171245306
@@ -439,7 +439,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.RectMask2D
   m_Padding: {x: 0, y: 0, z: 0, w: 0}
-  m_Softness: {x: 0, y: 0}
+  m_Softness: {x: 0, y: 130}
 --- !u!1 &1437727853 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5082593826032390721, guid: ef5db77786d12194d88cb266471c1bf9, type: 3}
@@ -1133,6 +1133,14 @@ PrefabInstance:
       propertyPath: m_SizeDelta.x
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4631070425926434557, guid: ef5db77786d12194d88cb266471c1bf9, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 141.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4631070425926434557, guid: ef5db77786d12194d88cb266471c1bf9, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 29.93274
+      objectReference: {fileID: 0}
     - target: {fileID: 4688858526599419649, guid: ef5db77786d12194d88cb266471c1bf9, type: 3}
       propertyPath: m_SizeDelta.x
       value: 0
@@ -1155,7 +1163,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4859012413421270798, guid: ef5db77786d12194d88cb266471c1bf9, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 235.33
+      value: 254.08
+      objectReference: {fileID: 0}
+    - target: {fileID: 4859012413421270798, guid: ef5db77786d12194d88cb266471c1bf9, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 19.19983
       objectReference: {fileID: 0}
     - target: {fileID: 4937973179570124218, guid: ef5db77786d12194d88cb266471c1bf9, type: 3}
       propertyPath: m_Camera
@@ -1168,6 +1180,14 @@ PrefabInstance:
     - target: {fileID: 5082593826032390721, guid: ef5db77786d12194d88cb266471c1bf9, type: 3}
       propertyPath: m_Name
       value: Canvas
+      objectReference: {fileID: 0}
+    - target: {fileID: 5435868918023486535, guid: ef5db77786d12194d88cb266471c1bf9, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 468.6773
+      objectReference: {fileID: 0}
+    - target: {fileID: 5435868918023486535, guid: ef5db77786d12194d88cb266471c1bf9, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 131.14636
       objectReference: {fileID: 0}
     - target: {fileID: 5446863293164138899, guid: ef5db77786d12194d88cb266471c1bf9, type: 3}
       propertyPath: m_AnchorMax.y
@@ -1639,7 +1659,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9181538529794090604, guid: ef5db77786d12194d88cb266471c1bf9, type: 3}
       propertyPath: m_Spacing
-      value: 64
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 9181538529794090604, guid: ef5db77786d12194d88cb266471c1bf9, type: 3}
       propertyPath: m_ChildAlignment
