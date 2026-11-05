@@ -16,6 +16,8 @@ namespace _Scripts.UI
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
         [Header("References")] 
         [SerializeField] private SlidingPanelView _slidingPanelView;
+        [SerializeField] private BackdropView _backdrop;
+        [Space]
         [SerializeField] private CanvasGroup _cg;
         [SerializeField] private RectTransform _containerRect;
         [SerializeField] private MapSectionView _sectionPrefab;
@@ -131,10 +133,21 @@ namespace _Scripts.UI
 
         private async UniTaskVoid DoStartAsync()
         {
-            await _slidingPanelView.HideAsync();
+            await HideAsync();
             _levelFlowController.StartLevel();
         }
 
-        public void Show() => _slidingPanelView.ShowAsync().Forget();
+        private void Show()
+        {
+            _slidingPanelView.ShowAsync().Forget();
+            _backdrop.ShowAsync().Forget();
+        }
+
+        private async UniTask HideAsync()
+        {
+            await UniTask.WhenAll(
+                _slidingPanelView.HideAsync(), 
+                _backdrop.HideAsync());
+        }
     }
 }

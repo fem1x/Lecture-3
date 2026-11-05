@@ -54,6 +54,7 @@ namespace _Scripts.Managers
             _diceStatePanelView.InitDiceStateViews(dices);
             
             _levelService.SelectFirstLevel();
+            _mapService.RequestMap();
         }
     }
 }

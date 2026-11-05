@@ -45,5 +45,7 @@ namespace _Scripts.Managers
             SelectedSection--;
             OnSectionChanged?.Invoke(SelectedSection);
         }
+        
+        public void RequestMap() => OnMapRequested?.Invoke();
     }
 }

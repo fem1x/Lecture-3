@@ -20,11 +20,13 @@ public class LevelCompletedView : MonoBehaviour
 
     #region DI
     private LevelFlowController _levelFlowController;
+    private MapService _mapService;
 
     [Inject]
-    public void Construct(LevelFlowController levelFlowController)
+    public void Construct(LevelFlowController levelFlowController, MapService mapService)
     {
         _levelFlowController = levelFlowController;
+        _mapService = mapService;
     }
     #endregion
     // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
@@ -87,6 +89,7 @@ public class LevelCompletedView : MonoBehaviour
         );
 
         SetBackdropInteractable(false);
+        _mapService.RequestMap();
     }
 
     private void HideInstant()
