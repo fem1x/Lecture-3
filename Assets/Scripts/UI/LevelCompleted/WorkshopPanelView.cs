@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Threading;
 using _Scripts.Charms;
-using _Scripts.Dices;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;

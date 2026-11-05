@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using _Scripts.Configs;
+using UnityEngine;
 
 namespace _Scripts.Managers
 {
     public class MapService
     {
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
+        public event Action OnMapRequested;
         public event Action<int> OnSectionChanged; //(ActiveSectionIndex)
         public event Action OnMapInitialized;
 

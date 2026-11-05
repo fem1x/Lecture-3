@@ -1,4 +1,3 @@
-using System.Threading;
 using _Scripts.Dices;
 using _Scripts.Managers;
 using _Scripts.UI;
@@ -88,7 +87,6 @@ public class LevelCompletedView : MonoBehaviour
         );
 
         SetBackdropInteractable(false);
-        _levelFlowController.StartLevel();
     }
 
     private void HideInstant()

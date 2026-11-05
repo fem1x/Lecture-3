@@ -47,6 +47,7 @@ namespace _Scripts.UI
             
             _mapService.OnMapInitialized += Initialize;
             _mapService.OnSectionChanged += MoveToSection;
+            _mapService.OnMapRequested += Show;
         }
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
         
@@ -54,6 +55,8 @@ namespace _Scripts.UI
         {
             _mapService.OnMapInitialized -= Initialize;
             _mapService.OnSectionChanged -= MoveToSection;
+            _mapService.OnMapRequested -= Show;
+
         }
         
         private void OnEnable()
@@ -133,6 +136,5 @@ namespace _Scripts.UI
         }
 
         public void Show() => _slidingPanelView.ShowAsync().Forget();
-        public void Hide() => _slidingPanelView.HideAsync().Forget();
     }
 }

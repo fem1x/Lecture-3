@@ -6242,9 +6242,9 @@ CanvasGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2644529182097116939}
   m_Enabled: 1
-  m_Alpha: 1
-  m_Interactable: 1
-  m_BlocksRaycasts: 1
+  m_Alpha: 0
+  m_Interactable: 0
+  m_BlocksRaycasts: 0
   m_IgnoreParentGroups: 0
 --- !u!114 &4093142291086238183
 MonoBehaviour:
@@ -6258,6 +6258,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d0f4198505446df82f89f43f36dfad2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Game::_Scripts.UI.MapView
+  _slidingPanelView: {fileID: 8526296329580605136}
   _cg: {fileID: 991213187333319145}
   _containerRect: {fileID: 7724755800957913624}
   _sectionPrefab: {fileID: 3845736695945718720, guid: 1747723ab5056004f8cf1795ab3501ae, type: 3}
@@ -6282,10 +6283,10 @@ MonoBehaviour:
   _direction: 0
   _rect: {fileID: 5435868918023486535}
   _cg: {fileID: 991213187333319145}
-  _showTime: 0.5
-  _showEase: 9
-  _hideTime: 0.5
-  _hideEase: 9
+  _showTime: 0.98
+  _showEase: 12
+  _hideTime: 0.7
+  _hideEase: 15
 --- !u!1 &2722783425801484211
 GameObject:
   m_ObjectHideFlags: 0
@@ -10015,6 +10016,7 @@ RectTransform:
   - {fileID: 4966867623760193499}
   - {fileID: 349775436423196421}
   - {fileID: 8541449471210441122}
+  - {fileID: 7268292205601424535}
   - {fileID: 1285886131749188962}
   - {fileID: 4803654792849248850}
   - {fileID: 7539779873145766445}
@@ -10022,7 +10024,6 @@ RectTransform:
   - {fileID: 3270017495472473892}
   - {fileID: 3681785020073634023}
   - {fileID: 8183831586442563268}
-  - {fileID: 7268292205601424535}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -15997,19 +15998,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2301490210640101562}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: _Scripts.Managers.RoundFlowController, Game
-        m_MethodName: OnScoreButtonClicked
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!1 &8899799963100084398
 GameObject:
   m_ObjectHideFlags: 0
@@ -17118,10 +17107,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: (Bg) CharmCard
       objectReference: {fileID: 0}
-    - target: {fileID: 8972809369673733084, guid: ff56b818edc992a43be53b17834c7a7b, type: 3}
-      propertyPath: m_Alpha
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -17716,81 +17701,9 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2767441990376284499, guid: a99566481310beb45b9c6f1c11b287f7, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2767441990376284499, guid: a99566481310beb45b9c6f1c11b287f7, type: 3}
-      propertyPath: m_AnchorMin.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2767441990376284499, guid: a99566481310beb45b9c6f1c11b287f7, type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 114.2
-      objectReference: {fileID: 0}
-    - target: {fileID: 2767441990376284499, guid: a99566481310beb45b9c6f1c11b287f7, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 202.5576
-      objectReference: {fileID: 0}
-    - target: {fileID: 2767441990376284499, guid: a99566481310beb45b9c6f1c11b287f7, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: -97.47
-      objectReference: {fileID: 0}
-    - target: {fileID: 3818256261124814189, guid: a99566481310beb45b9c6f1c11b287f7, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3818256261124814189, guid: a99566481310beb45b9c6f1c11b287f7, type: 3}
-      propertyPath: m_AnchorMin.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3818256261124814189, guid: a99566481310beb45b9c6f1c11b287f7, type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 80.2
-      objectReference: {fileID: 0}
-    - target: {fileID: 3818256261124814189, guid: a99566481310beb45b9c6f1c11b287f7, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 189.5576
-      objectReference: {fileID: 0}
-    - target: {fileID: 3818256261124814189, guid: a99566481310beb45b9c6f1c11b287f7, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: -57.1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4723210096595369938, guid: a99566481310beb45b9c6f1c11b287f7, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4723210096595369938, guid: a99566481310beb45b9c6f1c11b287f7, type: 3}
-      propertyPath: m_AnchorMin.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4723210096595369938, guid: a99566481310beb45b9c6f1c11b287f7, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 202.5576
-      objectReference: {fileID: 0}
-    - target: {fileID: 4723210096595369938, guid: a99566481310beb45b9c6f1c11b287f7, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: -20.185
-      objectReference: {fileID: 0}
-    - target: {fileID: 5705315638115294793, guid: a99566481310beb45b9c6f1c11b287f7, type: 3}
-      propertyPath: m_Interactable
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5705315638115294793, guid: a99566481310beb45b9c6f1c11b287f7, type: 3}
-      propertyPath: m_BlocksRaycasts
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 6475193844729027301, guid: a99566481310beb45b9c6f1c11b287f7, type: 3}
       propertyPath: m_Name
       value: (Tooltip) Charm
-      objectReference: {fileID: 0}
-    - target: {fileID: 6475193844729027301, guid: a99566481310beb45b9c6f1c11b287f7, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8030464288276602504, guid: a99566481310beb45b9c6f1c11b287f7, type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 165.56999
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

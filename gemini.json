@@ -1,0 +1,10 @@
+{
+  "workspace": {
+    "root": "D:/UnityProjects/Lecture-3"
+  },
+  "security": {
+    "allowedDirectories": [
+      "."
+    ]
+  }
+}
