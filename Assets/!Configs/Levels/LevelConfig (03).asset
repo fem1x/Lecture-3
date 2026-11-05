@@ -12,8 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3643175f276947799ba503580491257c, type: 3}
   m_Name: LevelConfig (03)
   m_EditorClassIdentifier: Game::_Scripts.Configs.LevelConfig
-  <ScoreQuota>k__BackingField: 5000
-  <TokensReward>k__BackingField: 5
+  <ScoreQuota>k__BackingField: 2500
+  <TokensReward>k__BackingField: 4
+  OrderIndex: 3
   <LockCombinationsPool>k__BackingField:
   - {fileID: 11400000, guid: a77e59beab449f94699290a1b558cbbf, type: 2}
   - {fileID: 11400000, guid: 0182dcb8b237f4240a93269089258913, type: 2}

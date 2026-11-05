@@ -44,10 +44,12 @@ namespace _Scripts.Managers
         public bool TrySelectNextLevel()
         {
             CurrentLevelIndex++;
-            if (CurrentLevelIndex > SectionsList[CurrentSectionIndex].Levels.Count)
+
+            if (CurrentLevelIndex > SectionsList[CurrentSectionIndex - 1].Levels.Count)
             {
                 CurrentSectionIndex++;
-                if (CurrentSectionIndex > SectionsCount)
+
+                if (CurrentSectionIndex > SectionsList.Count)
                 {
                     Debug.LogWarning("No more levels available!");
                     return false;
@@ -55,7 +57,7 @@ namespace _Scripts.Managers
 
                 CurrentLevelIndex = 1;
             }
-            
+
             OnLevelChanged?.Invoke();
             return true;
         }
