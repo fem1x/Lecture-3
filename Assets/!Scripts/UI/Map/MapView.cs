@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
 using _Scripts.Managers;
+using _Scripts.Utility.Extensions;
+using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
@@ -12,8 +14,9 @@ namespace _Scripts.UI
     public class MapView : MonoBehaviour
     {
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
-        [Header("References")]
-        [SerializeField] private RectTransform _pointerRect;
+        [Header("References")] 
+        [SerializeField] private SlidingPanelView _slidingPanelView;
+        [SerializeField] private CanvasGroup _cg;
         [SerializeField] private RectTransform _containerRect;
         [SerializeField] private MapSectionView _sectionPrefab;
         [SerializeField] private TMP_Text _sectionText;
@@ -21,23 +24,26 @@ namespace _Scripts.UI
         [Header("Buttons")]
         [SerializeField] private Button _upButton;
         [SerializeField] private Button _downButton;
+        [SerializeField] private Button _startButton;
         
         [Header("Movement")]
         [SerializeField] private float _moveTime = 0.8f;
         [SerializeField] private Ease  _moveEase = Ease.OutCubic;
         
-        private Tween  _moveTween;
+        private Tween _moveTween;
         private int _sectionsCount;
         private readonly List<RectTransform> _sectionsList = new();
         
         private MapService _mapService;
         private IObjectResolver _resolver;
+        private LevelFlowController _levelFlowController;
 
         [Inject]
-        public void Construct(MapService mapService,  IObjectResolver resolver)
+        public void Construct(MapService mapService,  IObjectResolver resolver, LevelFlowController levelFlowController)
         {
             _mapService = mapService;
             _resolver = resolver;
+            _levelFlowController = levelFlowController;
             
             _mapService.OnMapInitialized += Initialize;
             _mapService.OnSectionChanged += MoveToSection;
@@ -54,12 +60,14 @@ namespace _Scripts.UI
         {
             _upButton.onClick.AddListener(_mapService.MoveUp);
             _downButton.onClick.AddListener(_mapService.MoveDown);
+            _startButton.onClick.AddListener(HandleStartButtonPressed);
         }
 
         private void OnDisable()
         {
             _upButton.onClick.RemoveListener(_mapService.MoveUp);
             _downButton.onClick.RemoveListener(_mapService.MoveDown);
+            _startButton.onClick.RemoveListener(HandleStartButtonPressed);
         }
 
         private void Initialize()
@@ -73,7 +81,7 @@ namespace _Scripts.UI
 
             _sectionsCount = _mapService.SectionsList.Count;
             AdjustContainerLayout();
-            MoveToSectionInstant(_mapService.ActiveSectionIndex);
+            MoveToSectionInstant(_mapService.SelectedSection);
         }
         
         private void MoveToSection(int index)
@@ -104,7 +112,7 @@ namespace _Scripts.UI
 
         private void RefreshText()
         {
-            _sectionText.text = $"{_mapService.ActiveSectionIndex} / {_sectionsCount}";
+            _sectionText.text = $"{_mapService.SelectedSection} / {_sectionsCount}";
         }
         
         private void AdjustContainerLayout()
@@ -112,5 +120,19 @@ namespace _Scripts.UI
             LayoutRebuilder.ForceRebuildLayoutImmediate(_containerRect);
             Canvas.ForceUpdateCanvases();
         }
+
+        private void HandleStartButtonPressed()
+        {
+            DoStartAsync().Forget();
+        }
+
+        private async UniTaskVoid DoStartAsync()
+        {
+            await _slidingPanelView.HideAsync();
+            _levelFlowController.StartLevel();
+        }
+
+        public void Show() => _slidingPanelView.ShowAsync().Forget();
+        public void Hide() => _slidingPanelView.HideAsync().Forget();
     }
 }

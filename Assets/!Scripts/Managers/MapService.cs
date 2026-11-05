@@ -11,9 +11,9 @@ namespace _Scripts.Managers
         public event Action OnMapInitialized;
 
         public List<LevelSection> SectionsList => _levelService.SectionsList;
-        public int ActiveSectionIndex { get; private set; } = 1;
-        public bool CanMoveDown => ActiveSectionIndex < SectionsList.Count;
-        public bool CanMoveUp => ActiveSectionIndex >= 2;
+        public int SelectedSection { get; private set; } = 1;
+        public bool CanMoveDown => SelectedSection < SectionsList.Count;
+        public bool CanMoveUp => SelectedSection >= 2;
         
         private readonly LevelService _levelService;
 
@@ -25,7 +25,7 @@ namespace _Scripts.Managers
 
         public void Initialize()
         {
-            ActiveSectionIndex = 1;   
+            SelectedSection = 1;   
             OnMapInitialized?.Invoke();
         }
         
@@ -33,15 +33,15 @@ namespace _Scripts.Managers
         {
             if (!CanMoveDown) return;
             
-            ActiveSectionIndex++;
-            OnSectionChanged?.Invoke(ActiveSectionIndex);
+            SelectedSection++;
+            OnSectionChanged?.Invoke(SelectedSection);
         }
 
         public void MoveUp()
         {
             if (!CanMoveUp) return;
-            ActiveSectionIndex--;
-            OnSectionChanged?.Invoke(ActiveSectionIndex);
+            SelectedSection--;
+            OnSectionChanged?.Invoke(SelectedSection);
         }
     }
 }

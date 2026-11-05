@@ -22,6 +22,10 @@ namespace _Scripts.UI
     public class MapCellView : MonoBehaviour
     {
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
+        [Header("References")]
+        [SerializeField] private RectTransform _rect;
+
+        [Header("UI Elements")]
         [SerializeField] private Image _outlineImg;
         [SerializeField] private Image _fillImg;
         [SerializeField] private TMP_Text _text;
@@ -34,15 +38,20 @@ namespace _Scripts.UI
         private int _orderIndex;
         private bool _isCompleted;
         private LevelService _levelService;
+        private MapLevelPointerView _pointerView;
         
         [Inject]
-        public void Construct(LevelService levelService) => _levelService = levelService;
+        public void Construct(LevelService levelService, MapLevelPointerView  pointerView)
+        {
+            _levelService = levelService;
+            _pointerView = pointerView;
+        }
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 
-        private void OnEnable() => _levelService.OnLevelChanged += UpdateCompletedState;
-        private void OnDisable() => _levelService.OnLevelChanged -= UpdateCompletedState;
+        private void OnEnable() => _levelService.OnLevelChanged += HandleLevelChanged;
+        private void OnDisable() => _levelService.OnLevelChanged -= HandleLevelChanged;
         
-        public void Setup(LevelConfig config, int index)
+        public void Setup(LevelConfig config)
         {
             _orderIndex = config.OrderIndex;
             
@@ -55,6 +64,12 @@ namespace _Scripts.UI
             _text.text = config.OrderIndex.ToString();
         }
 
+        private void HandleLevelChanged()
+        {
+            UpdateCompletedState();
+            UpdatePointerState();
+        }
+        
         private void UpdateCompletedState()
         {
             if (_isCompleted) return;
@@ -64,6 +79,13 @@ namespace _Scripts.UI
             
             _crossImg.gameObject.SetActive(_isCompleted);
             _crossImg.transform.DoScaleIn(time: 0.5f, ease: Ease.OutBack);
+        }
+
+        private void UpdatePointerState()
+        {
+            var isCurrent = _levelService.CurrentLevel.OrderIndex ==  _orderIndex;
+            if (isCurrent)
+                _pointerView.MoveToCellAsync(_rect).Forget();
         }
     }
 }

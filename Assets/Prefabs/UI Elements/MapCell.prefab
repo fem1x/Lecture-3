@@ -434,6 +434,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae9a29d649a149bdb34e334fd1a34e88, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Game::_Scripts.UI.MapCellView
+  _rect: {fileID: 6052905662915676931}
   _outlineImg: {fileID: 7120167595286288850}
   _fillImg: {fileID: 893906909959247874}
   _text: {fileID: 5141024383642357441}

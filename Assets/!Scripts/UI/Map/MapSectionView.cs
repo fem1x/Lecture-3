@@ -24,7 +24,7 @@ namespace _Scripts.UI
             for (int i = 0; i < section.Levels.Count; i++)
             {
                 var cell = _resolver.Instantiate(_mapCellPrefab, _rect);
-                cell.Setup(section.Levels[i], i + 1);
+                cell.Setup(section.Levels[i]);
                 _cellViews.Add(cell);
             }
         }

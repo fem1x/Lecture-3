@@ -88,7 +88,7 @@ namespace _Scripts.Managers
                 await UniTask.Delay(TimeSpan.FromSeconds(_stampDelay));
                 
                 slot.InsertValue(dice.Data.RolledValue);
-                slot.DiceImage.transform.DoScalePop();
+                slot.DiceImage.transform.DoScalePop().ToUniTask().Forget();
                 PlayStampSfx(_stampSlotSfx);
             }
         }
