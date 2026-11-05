@@ -5,7 +5,6 @@ using _Scripts.Configs;
 using _Scripts.Managers;
 using _Scripts.Utility;
 using Cysharp.Threading.Tasks;
-using UnityEngine;
 using VContainer;
 using Random = UnityEngine.Random;
 
@@ -14,10 +13,12 @@ namespace _Scripts.Dices
     public class DiceRoller
     {
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== 
+        public event Action<bool, List<Dice>> OnRollCompleted; //(isFirstThrow, dices)
+        public bool IsRolling { get; private set; }
+        public bool CanRoll { get; private set; } = false;
+        
         private readonly DiceRollConfig _config;
         private readonly ResourceManager _resourceManager;
-        
-        public event Action<bool, List<Dice>> OnRollCompleted; //(isFirstThrow, dices)
         
         [Inject]
         public DiceRoller(DiceRollConfig config, ResourceManager resourceManager)
@@ -25,10 +26,9 @@ namespace _Scripts.Dices
             _config = config;
             _resourceManager = resourceManager;
         }
-        
-        public bool IsRolling { get; private set; }
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== 
-        #region Public API
+        
+        public void SetCanRoll(bool canRoll) => CanRoll = canRoll;
         
         public async UniTask ThrowAsync(List<Dice> dices)
         {
@@ -41,9 +41,6 @@ namespace _Scripts.Dices
             if (IsRolling || dices == null || dices.Count == 0) return;
             await ExecuteRollAsync(dices, _config.RerollSettings, false);
         }
-        
-        #endregion
-        // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== 
         
         private async UniTask ExecuteRollAsync(List<Dice> dices, DiceThrowSettings settings, bool spendDice)
         {
@@ -82,18 +79,18 @@ namespace _Scripts.Dices
 
         private void DiceThrow(Dice dice, DiceThrowSettings settings)
         {
-            float forceMag = Utils.NumberInRange(settings.Force, settings.ForceRandomize);
-            float torqueMag = Utils.NumberInRange(settings.Torque, settings.TorqueRandomize);
+            var forceMag = Utils.NumberInRange(settings.Force, settings.ForceRandomize);
+            var torqueMag = Utils.NumberInRange(settings.Torque, settings.TorqueRandomize);
 
-            Vector3 dir = settings.Direction.normalized;
+            var dir = settings.Direction.normalized;
             if (settings.DirectionRandomize > 0f)
             {
-                Vector3 offset = Random.insideUnitSphere * settings.DirectionRandomize;
+                var offset = Random.insideUnitSphere * settings.DirectionRandomize;
                 dir = (dir + offset).normalized;
             }
 
-            Vector3 force = dir * forceMag;
-            Vector3 torque = Random.insideUnitSphere.normalized * torqueMag;
+            var force = dir * forceMag;
+            var torque = Random.insideUnitSphere.normalized * torqueMag;
 
             dice.Roll(force, torque);
         }

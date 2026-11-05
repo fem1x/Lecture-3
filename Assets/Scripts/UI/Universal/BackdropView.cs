@@ -19,16 +19,18 @@ namespace _Scripts.UI
         private void Awake()
         {
             _image.SetVisible(false);
+            _image.raycastTarget = false;
         }
 
         public async UniTask ShowAsync()
         {
+            _image.raycastTarget = true;
             await _image.DOFade(_opacity, _showTime).SetEase(_ease);
-            Debug.Log("Shoqwing");
         }
 
         public async UniTask HideAsync()
         {
+            _image.raycastTarget = false;
             await _image.DOFade(0, _showTime).SetEase(_ease);   
         }
     }

@@ -23,6 +23,7 @@ namespace _Scripts.Managers
         private readonly RewardCalculator _rewardCalculator;
         private readonly RepairTokensManager _repairTokensManager;
         private readonly CodeLockService _codeLockService;
+        private readonly DiceRoller _diceRoller;
         
         #region DI
         [Inject]
@@ -34,7 +35,8 @@ namespace _Scripts.Managers
             DiceSpawner diceSpawner,
             RewardCalculator rewardCalculator,
             RepairTokensManager repairTokensManager,
-            CodeLockService codeLockService)
+            CodeLockService codeLockService,
+            DiceRoller diceRoller)
         {
             _levelService =  levelService;
             _scoreManager = scoreManager;
@@ -44,6 +46,7 @@ namespace _Scripts.Managers
             _rewardCalculator = rewardCalculator;
             _repairTokensManager = repairTokensManager;
             _codeLockService = codeLockService;
+            _diceRoller = diceRoller;
             
             _scoreManager.OnQuotaReached += HandleQuotaReached;
         }
@@ -68,18 +71,22 @@ namespace _Scripts.Managers
             _tableController.SetPendingDices(allDices);
             
             _codeLockService.SetLock(_currentLevel);
+            
+            _diceRoller.SetCanRoll(true);
         }
         
         public void CheckDefeatCondition()
         {
             if (!_scoreManager.HasEnoughScore && _resourceManager.DiceCount <= 0 && !_tableController.HasPendingDices)
             {
+                _diceRoller.SetCanRoll(false);
                 OnGameOver?.Invoke();
             }
         }
         
         private void HandleQuotaReached()
         {
+            _diceRoller.SetCanRoll(false);
             var rewardData = _rewardCalculator.GetTokenRewards(_currentLevel.TokensReward);
             _repairTokensManager.AddTokens(rewardData.TotalTokens);
             

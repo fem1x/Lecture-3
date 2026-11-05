@@ -71,6 +71,7 @@ namespace _Scripts.Managers
        
         public void OnRoll(InputValue inputValue)
         {
+            if (!_diceRoller.CanRoll) return;
             if (_diceRoller.IsRolling || _isScoring) return;
             ExecuteRollAsync().Forget();
         }

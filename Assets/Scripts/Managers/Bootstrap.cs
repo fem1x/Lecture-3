@@ -15,7 +15,6 @@ namespace _Scripts.Managers
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
         private readonly DiceSpawner _diceSpawner;
         private readonly DiceTableController _diceTableController;
-        private readonly ScoreManager _scoreManager;
         private readonly ISfxPlayer _sfxPlayer;
         private readonly DiceStatePanelView _diceStatePanelView;
         private readonly LevelService _levelService;
@@ -25,8 +24,6 @@ namespace _Scripts.Managers
         public Bootstrap(
             DiceSpawner diceSpawner, 
             DiceTableController diceTableController, 
-            ResourceManager resourceManager,
-            LevelFlowController levelFlowController,
             ISfxPlayer sfxPlayer,
             DiceStatePanelView diceStatePanelView,
             LevelService levelService,
