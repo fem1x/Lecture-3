@@ -62,6 +62,8 @@ namespace _Scripts.UI
             _hiddenY = -_rect.rect.height;
             _hiddenPos = new Vector2(0, _hiddenY);
             _backdropOpacity = _backdropImage.color.a;
+            
+            _backdropImage.SetVisible(false);
             HideInstant();
         }
 
