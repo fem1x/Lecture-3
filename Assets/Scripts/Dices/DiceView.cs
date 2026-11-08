@@ -23,7 +23,7 @@ namespace _Scripts.Dices
         [SerializeField] private Ease _dropEase = Ease.OutBack;
 
         [Header("VFX")]
-        [SerializeField] private Outline _outline;
+        [SerializeField] private FreeOutline _outline;
         
         private IReadOnlyDiceData _data;
         private Rigidbody _rb;
@@ -34,7 +34,7 @@ namespace _Scripts.Dices
         private void Awake()
         {
             _rb = GetComponent<Rigidbody>();
-            _outline.enabled = false;
+            //_outline.SetOutline(false);
         }
 
         public void Bind(IReadOnlyDiceData data)
@@ -43,7 +43,7 @@ namespace _Scripts.Dices
             _data.OnLockChanged += SetLockedVisual;
             _data.OnDataChanged += UpdateFaces;
             
-            _outline.enabled = _data.IsLocked;
+            _outline.SetOutline(_data.IsLocked);
             UpdateFaces();
         }
         
@@ -70,7 +70,7 @@ namespace _Scripts.Dices
 
         private void SetLockedVisual(bool isLocked)
         {
-            _outline.enabled = isLocked;
+            _outline.SetOutline(isLocked);
             bool isAnimating = _moveTween != null && _moveTween.IsActive();
             _moveTween?.Kill();
             
@@ -90,7 +90,7 @@ namespace _Scripts.Dices
         public void ResetVisual()
         {
             _moveTween?.Kill();
-            _outline.enabled = false;
+            _outline.SetOutline(false);
             _floorY = -999f;
         }
 

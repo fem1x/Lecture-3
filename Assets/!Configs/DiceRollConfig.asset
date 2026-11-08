@@ -23,7 +23,7 @@ MonoBehaviour:
   <RerollSettings>k__BackingField:
     Direction: {x: 0, y: 1, z: 0}
     DirectionRandomize: 0.08
-    Force: 3.6
+    Force: 4.3
     ForceRandomize: 0.3
     Torque: 3.5
     TorqueRandomize: 0.3
