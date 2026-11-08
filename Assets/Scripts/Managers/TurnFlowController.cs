@@ -117,20 +117,22 @@ namespace _Scripts.Managers
         private async UniTaskVoid ExecuteScoreFlowAsync(List<Dice> selectedDices)
         {
             _isScoring = true;
-            
+            _tableController.SetInteractionLock(true);
+    
             if (_codeLockService.IsActive)
                 await CodeLockFlow(selectedDices);
             else 
                 await StandardFlow(selectedDices);
-            
+    
             _isScoring = false;
+            _tableController.SetInteractionLock(false);
 
             if (_scoreManager.HasEnoughScore)
             {
                 _tableController.DeactivateAllDices();
                 return;
             }
-            
+    
             PrepareNextTurn(selectedDices);
             _levelFlowController.CheckDefeatCondition();
         }

@@ -28,12 +28,14 @@ namespace _Scripts.Dices
         #region DI
         private ISfxPlayer _sfxPlayer;
         private CameraShaker _cameraShaker;
+        private DiceTableController _tableController;
         
         [Inject]
-        public void Construct(ISfxPlayer sfxPlayer, CameraShaker cameraShaker)
+        public void Construct(ISfxPlayer sfxPlayer, CameraShaker cameraShaker, DiceTableController tableController)
         {
             _sfxPlayer = sfxPlayer;
             _cameraShaker = cameraShaker;
+            _tableController = tableController;
         }
         #endregion
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
@@ -41,7 +43,7 @@ namespace _Scripts.Dices
                                  (_rb.linearVelocity.sqrMagnitude < 0.01f && _rb.angularVelocity.sqrMagnitude < 0.01f);
 
         public bool IsRolled => Data.RolledValue != -1;
-        public bool CanBeSelected => IsRolled;
+        public bool CanBeSelected => IsRolled && !_tableController.IsInteractionLocked;
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
         
         public void Init(DiceData data)
@@ -53,7 +55,7 @@ namespace _Scripts.Dices
         #region Locking
         public void OnPointerClick(PointerEventData eventData)
         {
-            ToggleLock();
+            if (!TryToggleLock()) return;
             
             if (Data.IsLocked)
                 _sfxPlayer.Play(_lockSfx, transform.position);
@@ -65,10 +67,11 @@ namespace _Scripts.Dices
             Data.SetLock(isLocked);
         }
 
-        public void ToggleLock()
+        public bool TryToggleLock()
         {
-            if (!CanBeSelected) return;
+            if (!CanBeSelected) return false;
             Data.ToggleLock();
+            return true;
         }
         #endregion
 
