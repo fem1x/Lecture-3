@@ -8,11 +8,14 @@ using VContainer;
 
 namespace _Scripts.Dices
 {
-    [RequireComponent(typeof(Rigidbody), typeof(DiceView))]
     public class Dice : MonoBehaviour, IPointerClickHandler
     {
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== 
         public DiceData Data { get; private set; }
+        
+        [Header("References")]
+        [SerializeField] private Rigidbody _rb;
+        [SerializeField] private DiceView _view;
         
         [Header("Camera Shake")]
         [SerializeField] private CameraShakePreset _rollShake;
@@ -21,9 +24,6 @@ namespace _Scripts.Dices
         [SerializeField] private string _lockSfx;
         [SerializeField] private string _throwSfx;
         [SerializeField] private string _hitSfx;
-        
-        private Rigidbody _rb;
-        private DiceView _view;
         
         #region DI
         private ISfxPlayer _sfxPlayer;
@@ -37,38 +37,40 @@ namespace _Scripts.Dices
         }
         #endregion
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
-        public bool IsStopped
-        {
-            get
-            {
-                if (this == null || _rb == null) return true;
+        public bool IsStopped => _rb.isKinematic || 
+                                 (_rb.linearVelocity.sqrMagnitude < 0.01f && _rb.angularVelocity.sqrMagnitude < 0.01f);
 
-                return _rb.isKinematic || 
-                       (_rb.linearVelocity.sqrMagnitude < 0.01f && _rb.angularVelocity.sqrMagnitude < 0.01f);
-            }
-        }
+        public bool IsRolled => Data.RolledValue != -1;
+        public bool CanBeSelected => IsRolled;
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
-    
-        private void Awake()
-        {
-            _rb = GetComponent<Rigidbody>();
-            _view = GetComponent<DiceView>();
-        }
-
+        
         public void Init(DiceData data)
         {
             Data = data;
             _view.Bind(data);
         }
 
+        #region Locking
         public void OnPointerClick(PointerEventData eventData)
         {
-            if (!IsStopped) return;
-            Data.ToggleLock();
+            ToggleLock();
             
             if (Data.IsLocked)
                 _sfxPlayer.Play(_lockSfx, transform.position);
         }
+
+        public void SetLock(bool isLocked)
+        {
+            if (!CanBeSelected) return;
+            Data.SetLock(isLocked);
+        }
+
+        public void ToggleLock()
+        {
+            if (!CanBeSelected) return;
+            Data.ToggleLock();
+        }
+        #endregion
 
         public void TeleportTo(Vector3 position, Quaternion rotation)
         {

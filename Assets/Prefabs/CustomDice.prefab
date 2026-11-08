@@ -80,6 +80,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a5d66754bd85774dbe25d422fa42188, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Dice
+  _rb: {fileID: 5167669996315487421}
+  _view: {fileID: 210894147978099469}
   _rollShake: {fileID: 11400000, guid: da72b317bc7a4054e95c10871aebca44, type: 2}
   _lockSfx: DiceLock
   _throwSfx: DiceThrow
@@ -110,6 +112,7 @@ MonoBehaviour:
   _liftEase: 18
   _dropEase: 30
   _outline: {fileID: 7301316086260029387}
+  _rb: {fileID: 5167669996315487421}
 --- !u!1 &8327534467184061715
 GameObject:
   m_ObjectHideFlags: 0
@@ -209,7 +212,7 @@ MeshCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8327534467184061715}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 52b2f30064ced83439565dee0982c615, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0

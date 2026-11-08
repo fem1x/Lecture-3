@@ -5,7 +5,6 @@ using UnityEngine;
 
 namespace _Scripts.Dices
 {
-    [RequireComponent(typeof(Rigidbody))]
     public class DiceView : MonoBehaviour
     {
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== 
@@ -22,11 +21,11 @@ namespace _Scripts.Dices
         [SerializeField] private Ease _liftEase = Ease.OutBack;
         [SerializeField] private Ease _dropEase = Ease.OutBack;
 
-        [Header("VFX")]
+        [Header("References")]
         [SerializeField] private FreeOutline _outline;
+        [SerializeField] private Rigidbody _rb;
         
         private IReadOnlyDiceData _data;
-        private Rigidbody _rb;
         private Tween _moveTween;
         private float _floorY = -999f;
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== 
@@ -34,7 +33,6 @@ namespace _Scripts.Dices
         private void Awake()
         {
             _rb = GetComponent<Rigidbody>();
-            //_outline.SetOutline(false);
         }
 
         public void Bind(IReadOnlyDiceData data)
@@ -71,13 +69,13 @@ namespace _Scripts.Dices
         private void SetLockedVisual(bool isLocked)
         {
             _outline.SetOutline(isLocked);
-            bool isAnimating = _moveTween != null && _moveTween.IsActive();
             _moveTween?.Kill();
-            
+    
             if (isLocked)
             {
-                if (!isAnimating || _floorY == -999f)
+                if (_floorY == -999f)
                     _floorY = _rb.position.y;
+            
                 DoLiftUpTween();
             }
             else
@@ -107,10 +105,8 @@ namespace _Scripts.Dices
                 _rb.isKinematic = false;
                 _rb.linearVelocity = Vector3.zero;
                 _rb.angularVelocity = Vector3.zero;
-                _floorY = -999f;
                 return;
             }
-
             DoDropTween();
         }
         
@@ -122,7 +118,6 @@ namespace _Scripts.Dices
                     _rb.isKinematic = false;
                     _rb.linearVelocity = Vector3.zero;
                     _rb.angularVelocity = Vector3.zero;
-                    _floorY = -999f;
                 });
         }
     }

@@ -58,8 +58,11 @@ namespace _Scripts.Dices
             OnLockChanged?.Invoke(value);
         }
         
-        public void ToggleLock() => SetLock(!IsLocked);
-        
+        public void ToggleLock()
+        {
+            SetLock(!IsLocked);
+        }
+
         public void TakeDamage(int amount = 1)
         {
             CurrentDurability -= amount;

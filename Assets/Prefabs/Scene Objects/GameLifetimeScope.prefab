@@ -71,3 +71,5 @@ MonoBehaviour:
   _diceStatePanelView: {fileID: 0}
   _charmTooltipView: {fileID: 0}
   _screenFlashView: {fileID: 0}
+  _charmReplaceView: {fileID: 0}
+  _mapLevelPointerView: {fileID: 0}

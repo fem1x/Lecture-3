@@ -21,6 +21,7 @@ namespace _Scripts.Dices
         public Dice GetDiceById(int id) => AllDices.Find(d => d.Data.Id == id);
         public List<Dice> GetSelectedDices() => AllDices.Where(d => d.Data.IsLocked).ToList();
         public List<Dice> GetUnlockedDices() => AllDices.Where(d => !d.Data.IsLocked).ToList();
+        public bool CanSelectAll() => AllDices.All(d => d.CanBeSelected) && GetUnlockedDices().Count > 0;
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== 
         public void OnRmbClick(InputValue value) => ClearSelection();
         
@@ -59,13 +60,14 @@ namespace _Scripts.Dices
         public void ClearSelection()
         {
             foreach (var dice in AllDices)
-                if (dice != null) dice.Data.SetLock(false);
+                if (dice != null) dice.SetLock(false);
         }
 
         public void SelectAll()
         {
+            if (!CanSelectAll()) return;
             foreach (var dice in GetUnlockedDices())
-                dice.Data.SetLock(true);
+                dice.SetLock(true);
         }
 
         public void ActivateAllDices(List<Dice> dices)
