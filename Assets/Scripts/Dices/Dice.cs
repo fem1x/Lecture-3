@@ -84,19 +84,21 @@ namespace _Scripts.Dices
         {
             Data?.RoundReset();
             _view.ResetVisual();
-    
+
             if (!_rb.isKinematic)
             {
                 _rb.linearVelocity = Vector3.zero;
                 _rb.angularVelocity = Vector3.zero;
             }
-    
+            
             _rb.isKinematic = true;
         }
         
         public void Roll(Vector3 force, Vector3 torque)
         {
+            _rb.constraints = RigidbodyConstraints.None;
             _rb.isKinematic = false;
+            
             _rb.AddForce(force, ForceMode.Impulse);
             _rb.AddTorque(torque, ForceMode.Impulse);
             
@@ -123,9 +125,9 @@ namespace _Scripts.Dices
             }
 
             if (bestFaceIndex >= 0)
-            {
                 Data.SetRolledValue(Data.GetFaceValue(bestFaceIndex));
-            }
+            
+            _rb.constraints = RigidbodyConstraints.FreezeRotation;
         }
         
         private void OnCollisionEnter(Collision collision)

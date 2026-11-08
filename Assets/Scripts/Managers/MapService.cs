@@ -8,8 +8,8 @@ namespace _Scripts.Managers
     public class MapService
     {
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
-        public event Action OnMapRequested;
-        public event Action<int> OnSectionChanged; //(ActiveSectionIndex)
+        public event Action<int> OnMapRequested; //(SelectedSection)
+        public event Action<int> OnSectionChanged; //(SelectedSection)
         public event Action OnMapInitialized;
 
         public List<LevelSection> SectionsList => _levelService.SectionsList;
@@ -46,6 +46,6 @@ namespace _Scripts.Managers
             OnSectionChanged?.Invoke(SelectedSection);
         }
         
-        public void RequestMap() => OnMapRequested?.Invoke();
+        public void RequestMap() => OnMapRequested?.Invoke(SelectedSection);
     }
 }

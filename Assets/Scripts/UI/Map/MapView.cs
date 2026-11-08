@@ -137,8 +137,9 @@ namespace _Scripts.UI
             _levelFlowController.StartLevel();
         }
 
-        private void Show()
+        private void Show(int sectionIndex)
         {
+            MoveToSectionInstant(sectionIndex);
             _slidingPanelView.ShowAsync().Forget();
             _backdrop.ShowAsync().Forget();
         }

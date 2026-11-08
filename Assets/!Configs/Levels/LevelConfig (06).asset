@@ -13,8 +13,7 @@ MonoBehaviour:
   m_Name: LevelConfig (06)
   m_EditorClassIdentifier: Game::_Scripts.Configs.LevelConfig
   <ScoreQuota>k__BackingField: 6000
-  <TokensReward>k__BackingField: 7
+  <TokensReward>k__BackingField: 6
   OrderIndex: 6
   <LockCombinationsPool>k__BackingField:
   - {fileID: 11400000, guid: 8eed484c7f81a6e4f855d91d784641a4, type: 2}
-  - {fileID: 11400000, guid: 8cd2e59b978f5b244bafbc177800d6c5, type: 2}

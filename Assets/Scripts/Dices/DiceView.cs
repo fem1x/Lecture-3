@@ -5,13 +5,12 @@ using UnityEngine;
 
 namespace _Scripts.Dices
 {
-    [RequireComponent(typeof(Rigidbody), typeof(Outline))]
+    [RequireComponent(typeof(Rigidbody))]
     public class DiceView : MonoBehaviour
     {
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== 
         [Header("Faces")] 
-        [SerializeField] private SpriteRenderer[] _faceRenderers;
-        [SerializeField] private Sprite[] _faceSprites;
+        [SerializeField] private DiceFaceView[] _faceViews;
         
         [Header("Drop Settings")]
         [SerializeField] private bool _usePhysicsDrop = true;
@@ -22,10 +21,11 @@ namespace _Scripts.Dices
         [SerializeField] private float _dropTime = 0.4f;
         [SerializeField] private Ease _liftEase = Ease.OutBack;
         [SerializeField] private Ease _dropEase = Ease.OutBack;
+
+        [Header("VFX")]
+        [SerializeField] private Outline _outline;
         
         private IReadOnlyDiceData _data;
-
-        private Outline _outline;
         private Rigidbody _rb;
         private Tween _moveTween;
         private float _floorY = -999f;
@@ -34,7 +34,6 @@ namespace _Scripts.Dices
         private void Awake()
         {
             _rb = GetComponent<Rigidbody>();
-            _outline = GetComponent<Outline>();
             _outline.enabled = false;
         }
 
@@ -57,18 +56,19 @@ namespace _Scripts.Dices
             _data.OnDataChanged -= UpdateFaces;
         }
         
-        public void UpdateFaces()
+        private void UpdateFaces()
         {
             if (_data == null) return;
 
-            for (int i = 0; i < _faceRenderers.Length; i++)
+            for (int i = 0; i < _faceViews.Length; i++)
             {
                 int value = _data.GetFaceValue(i);
-                _faceRenderers[i].sprite = _faceSprites[value];
+                _faceViews[i].SetValue(value);
+                _faceViews[i].SetCracksLevel(_data.CurrentDurability, _data.MaxDurability);
             }
         }
 
-        public void SetLockedVisual(bool isLocked)
+        private void SetLockedVisual(bool isLocked)
         {
             _outline.enabled = isLocked;
             bool isAnimating = _moveTween != null && _moveTween.IsActive();

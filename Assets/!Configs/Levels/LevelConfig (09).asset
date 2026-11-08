@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3643175f276947799ba503580491257c, type: 3}
+  m_Name: LevelConfig (09)
+  m_EditorClassIdentifier: Game::_Scripts.Configs.LevelConfig
+  <ScoreQuota>k__BackingField: 14000
+  <TokensReward>k__BackingField: 6
+  OrderIndex: 9
+  <LockCombinationsPool>k__BackingField:
+  - {fileID: 11400000, guid: 8cd2e59b978f5b244bafbc177800d6c5, type: 2}

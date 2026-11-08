@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: LevelConfig (05)
   m_EditorClassIdentifier: Game::_Scripts.Configs.LevelConfig
   <ScoreQuota>k__BackingField: 4000
-  <TokensReward>k__BackingField: 6
+  <TokensReward>k__BackingField: 5
   OrderIndex: 5
   <LockCombinationsPool>k__BackingField: []

@@ -72,7 +72,8 @@ namespace _Scripts.UI
                 HideLock();
                 return;
             }
-            
+
+            ClearSlots();
             SetupSlots(combo);
             _codeNameEvent.StringReference = combo.DisplayName;
             _group.Show();
