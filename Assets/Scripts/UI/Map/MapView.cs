@@ -39,17 +39,28 @@ namespace _Scripts.UI
         private MapService _mapService;
         private IObjectResolver _resolver;
         private LevelFlowController _levelFlowController;
+        private GameStateManager _gameStateManager;
+        private MapLevelPointerView _pointerView;
 
         [Inject]
-        public void Construct(MapService mapService,  IObjectResolver resolver, LevelFlowController levelFlowController)
+        public void Construct(
+            MapService mapService,  
+            IObjectResolver resolver, 
+            LevelFlowController levelFlowController, 
+            GameStateManager gameStateManager,
+            MapLevelPointerView pointerView)
         {
             _mapService = mapService;
             _resolver = resolver;
             _levelFlowController = levelFlowController;
+            _gameStateManager = gameStateManager;
+            _pointerView = pointerView;
             
             _mapService.OnMapInitialized += Initialize;
             _mapService.OnSectionChanged += MoveToSection;
             _mapService.OnMapRequested += Show;
+            
+            _gameStateManager.StateChanged += OnStateChanged;
         }
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
         
@@ -58,6 +69,18 @@ namespace _Scripts.UI
             _mapService.OnMapInitialized -= Initialize;
             _mapService.OnSectionChanged -= MoveToSection;
             _mapService.OnMapRequested -= Show;
+            
+            _gameStateManager.StateChanged -= OnStateChanged;
+        }
+        
+        private void OnStateChanged(GameState state)
+        {
+            if (state != GameState.Game)
+            {
+                _slidingPanelView.HideInstant();
+                _cg.Hide();
+                _backdrop.HideInstant();;
+            }
         }
         
         private void OnEnable()
@@ -76,6 +99,7 @@ namespace _Scripts.UI
 
         private void Initialize()
         {
+            ResetView();
             foreach (var section in _mapService.SectionsList)
             {
                 var spawnedSection = _resolver.Instantiate(_sectionPrefab, _containerRect);
@@ -86,6 +110,18 @@ namespace _Scripts.UI
             _sectionsCount = _mapService.SectionsList.Count;
             AdjustContainerLayout();
             MoveToSectionInstant(_mapService.SelectedSection);
+        }
+
+        private void ResetView()
+        {
+            _pointerView.transform.SetParent(this.transform, false);
+
+            foreach (var section in _sectionsList)
+            {
+                section.DOKill(true);
+                Destroy(section.gameObject);
+            }
+            _sectionsList.Clear();
         }
         
         private void MoveToSection(int index)

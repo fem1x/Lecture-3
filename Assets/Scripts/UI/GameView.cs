@@ -75,10 +75,9 @@ namespace _Scripts.UI
 
         private async UniTaskVoid ShowGameUiAsync(CancellationToken token)
         {
-            var isCancelled = await ShowBottomPanelsAsync(token).SuppressCancellationThrow();
-            if (isCancelled) return;
+            ShowBottomPanelsAsync(token).Forget();
 
-            isCancelled = await UniTask.Delay(TimeSpan.FromSeconds(_delayBeforeMap), cancellationToken: token).SuppressCancellationThrow();
+            var isCancelled = await UniTask.Delay(TimeSpan.FromSeconds(_delayBeforeMap), cancellationToken: token).SuppressCancellationThrow();
             if (isCancelled) return;
             
             _mapService.RequestMap();

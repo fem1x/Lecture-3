@@ -1,9 +1,11 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using _Scripts.Managers;
 using _Scripts.UI;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using VContainer;
 
 namespace _Scripts.Dices
 {
@@ -18,6 +20,30 @@ namespace _Scripts.Dices
         public bool HasPendingDices => PendingDices.Count > 0;
         public bool HasUnlockedDices => GetUnlockedDices().Count > 0;
         public bool IsInteractionLocked { get; private set; }
+        
+        private GameStateManager _gameStateManager;
+
+        [Inject]
+        public void Construct(GameStateManager gameStateManager)
+        {
+            _gameStateManager = gameStateManager;
+            _gameStateManager.StateChanged += OnStateChanged;
+        }
+        // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
+        
+        private void OnDestroy()
+        {
+            if (_gameStateManager != null)
+                _gameStateManager.StateChanged -= OnStateChanged;
+        }
+
+        private void OnStateChanged(GameState state)
+        {
+            if (state != GameState.Game)
+            {
+                DeactivateAllDices();
+            }
+        }
         
         public Dice GetDiceById(int id) => AllDices.Find(d => d.Data.Id == id);
         public List<Dice> GetSelectedDices() => AllDices.Where(d => d.Data.IsLocked).ToList();

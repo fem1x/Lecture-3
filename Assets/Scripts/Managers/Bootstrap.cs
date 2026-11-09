@@ -54,12 +54,34 @@ namespace _Scripts.Managers
             _levelService.InitializeLevelsOrder();
             _mapService.Initialize();
             
+            var dices = _diceTableController.AllDices;
+            if (dices == null || dices.Count == 0)
+                dices = CreateNewDices();
+            
+            ResetDicesData(dices);
+            ResetDicesState(dices);
+            _levelService.SelectFirstLevel();
+        }
+
+        private void ResetDicesData(List<Dice> dices)
+        {
+            foreach (var dice in dices)
+                dice.Data.ResetToDefault();
+        }
+
+        private List<Dice> CreateNewDices()
+        {
             var dices = _diceSpawner.SpawnDices();
-            _diceSpawner.ResetDicesToSpawn(dices);
             _diceTableController.InitDiceList(dices);
             _diceStatePanelView.InitDiceStateViews(dices);
-            
-            _levelService.SelectFirstLevel();
+
+            return dices;
+        }
+
+        private void ResetDicesState(List<Dice> dices)
+        {
+            _diceSpawner.ResetDicesToSpawn(dices);
+            _diceTableController.SetPendingDices(dices);
         }
     }
 }
