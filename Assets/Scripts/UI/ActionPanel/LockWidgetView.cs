@@ -54,7 +54,12 @@ namespace _Scripts.UI.CodeLock
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 
         private void Start() => ApplyState(_noneState);
-        private void OnEnable() => _selectionService.OnSelectionEvaluated += HandleSelection;
+        private void OnEnable()
+        {
+            _selectionService.OnSelectionEvaluated += HandleSelection;
+            ApplyState(_noneState);
+        }
+
         private void OnDisable()
         {
             _selectionService.OnSelectionEvaluated -= HandleSelection;

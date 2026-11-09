@@ -16,31 +16,38 @@ MonoBehaviour:
   <Priority>k__BackingField: 85
   <DisplayName>k__BackingField:
     m_TableReference:
-      m_TableCollectionName: 
+      m_TableCollectionName: GUID:9f9c89d5b6ad399428ec5a9fe072ff95
     m_TableEntryReference:
-      m_KeyId: 0
+      m_KeyId: 7370033339555840
       m_Key: 
     m_FallbackState: 0
     m_WaitForCompletion: 0
     m_LocalVariables: []
   <Description>k__BackingField:
     m_TableReference:
-      m_TableCollectionName: 
+      m_TableCollectionName: GUID:9f9c89d5b6ad399428ec5a9fe072ff95
     m_TableEntryReference:
-      m_KeyId: 0
+      m_KeyId: 7370033385693184
       m_Key: 
     m_FallbackState: 0
     m_WaitForCompletion: 0
     m_LocalVariables: []
   <Icon>k__BackingField: {fileID: 0}
-  <Patterns>k__BackingField: []
-  <BasePoints>k__BackingField: 0
-  <Multiplier>k__BackingField: 0
+  <Patterns>k__BackingField:
+  - Values: 0200000002000000020000000300000003000000i
+  - Values: 0500000005000000050000000200000002000000i
+  - Values: 0100000001000000010000000400000004000000i
+  - Values: 0600000006000000060000000200000002000000i
+  - Values: 0300000003000000030000000100000001000000i
+  <BasePoints>k__BackingField: 65
+  <Multiplier>k__BackingField: 8
   <DiceRefund>k__BackingField: 0
   <Rule>k__BackingField:
-    rid: -2
+    rid: 157279840760234377
   references:
     version: 2
     RefIds:
-    - rid: -2
-      type: {class: , ns: , asm: }
+    - rid: 157279840760234377
+      type: {class: FullHouseRule, ns: _Scripts.Combinations.Rules, asm: Game}
+      data:
+        <RequiredDiceCount>k__BackingField: 5
