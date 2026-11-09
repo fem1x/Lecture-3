@@ -65,6 +65,7 @@ namespace _Scripts.UI
             if (currentName == newName) return;
             
             _combinationNameText.text = newName;
+            _combinationNameText.transform.localScale = Vector3.one;
             _combinationNameText.transform.DoScalePop(scaleMult:1.18f, outTime: 0.18f);
         }
         
