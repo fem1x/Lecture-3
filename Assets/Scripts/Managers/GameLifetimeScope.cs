@@ -112,6 +112,6 @@ public class GameLifetimeScope : LifetimeScope
         builder.Register<GameStateManager>(Lifetime.Singleton);
         
         //Entry Point
-        builder.RegisterEntryPoint<Bootstrap>();
+        builder.RegisterEntryPoint<Bootstrap>().AsSelf();
     }
 }

@@ -45,7 +45,6 @@ namespace _Scripts.Managers
         {
             _gameStateManager.EnterMainMenu();
             _sfxPlayer.Initialize();
-            StartGame();
         }
 
         public void StartGame()

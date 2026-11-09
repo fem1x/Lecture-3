@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using _Scripts.Managers;
 using Cysharp.Threading.Tasks;
+using DG.Tweening;
 using UnityEngine;
 using VContainer;
 
@@ -13,7 +14,10 @@ namespace _Scripts.UI
         [Header("Elements")] 
         [SerializeField] private SlidingPanelView _diceUiSliding;
         [SerializeField] private SlidingPanelView _controlSliding;
+        [SerializeField] private CanvasGroup _selectionPanelCg;
 
+        [SerializeField] private float _delayBetweenPanels = 0.3f;
+        [SerializeField] private float _selectionPanelFadeTime = 0.5f;
         [SerializeField] private float _delayBeforeMap = 0.5f;
         
         private GameStateManager _gameStateManager;
@@ -38,15 +42,17 @@ namespace _Scripts.UI
 
         private async UniTaskVoid ShowGameUiAsync()
         {
-            await SlidePanelsAsync();
+            ShowBottomPanelsAsync().Forget();
+            await UniTask.Delay(TimeSpan.FromSeconds(_delayBeforeMap));
             _mapService.RequestMap();
         }
 
-        private async UniTask SlidePanelsAsync()
+        private async UniTask ShowBottomPanelsAsync()
         {
-            _diceUiSliding.ShowAsync().Forget();
             _controlSliding.ShowAsync().Forget();
-            await UniTask.Delay(TimeSpan.FromSeconds(_delayBeforeMap));
+            await  UniTask.Delay(TimeSpan.FromSeconds(_delayBetweenPanels));
+            await _diceUiSliding.ShowAsync();
+            await _selectionPanelCg.DOFade(1f, _selectionPanelFadeTime);
         }
     }
 }

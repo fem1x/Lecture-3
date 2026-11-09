@@ -1,4 +1,6 @@
 ﻿using _Scripts.Managers;
+using _Scripts.Utility.Extensions;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
 using VContainer;
@@ -33,6 +35,19 @@ namespace _Scripts.UI.MainMenu
         }
 
         private void OnStateChanged(GameState state)
+        {
+            if (state == GameState.MainMenu)
+            {
+                _cg.Show();
+                ShoMenuUiAsync().Forget();
+            }
+            else
+            {
+                _cg.Hide();
+            }
+        }
+
+        private async UniTaskVoid ShoMenuUiAsync()
         {
             
         }
