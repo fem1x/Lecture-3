@@ -53,6 +53,7 @@ namespace _Scripts.UI
             await  UniTask.Delay(TimeSpan.FromSeconds(_delayBetweenPanels));
             await _diceUiSliding.ShowAsync();
             await _selectionPanelCg.DOFade(1f, _selectionPanelFadeTime);
+            _selectionPanelCg.interactable = true;
         }
     }
 }
