@@ -1,5 +1,8 @@
-﻿using _Scripts.Combinations;
+﻿using System;
+using _Scripts.Combinations;
 using _Scripts.Configs;
+using _Scripts.Utility.Extensions;
+using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
@@ -26,6 +29,8 @@ namespace _Scripts.UI
         
         [Header("Switch Animation")]
         [SerializeField] private float _switchInterval = 2.0f;
+        [SerializeField] private float _timeBetweenDices = 0.1f;
+        [SerializeField] private float _flipTime;
         
         private CombinationConfig _config;
         private int _currentPatternIndex;
@@ -55,7 +60,7 @@ namespace _Scripts.UI
             CancelInvoke(nameof(NextPattern));
 
             _currentPatternIndex = 0;
-            ApplyPattern(_config.Patterns[0]);
+            ApplyPatternAsync(_config.Patterns[0]).Forget();
 
             InvokeRepeating(nameof(NextPattern), _switchInterval, _switchInterval);
         }
@@ -63,18 +68,29 @@ namespace _Scripts.UI
         private void NextPattern()
         {
             _currentPatternIndex = (_currentPatternIndex + 1) % _config.Patterns.Length;
-            ApplyPattern(_config.Patterns[_currentPatternIndex]);
+            ApplyPatternAsync(_config.Patterns[_currentPatternIndex]).Forget();
         }
         
-        private void ApplyPattern(DicePatternExample pattern)
+        private async UniTaskVoid ApplyPatternAsync(DicePatternExample pattern)
         {
+            var token = this.GetCancellationTokenOnDestroy();
+
             for (var i = 0; i < _diceSlots.Length; i++)
             {
                 var hasDice = i < pattern.Values.Length;
-                _diceSlots[i].gameObject.SetActive(hasDice);
+                var slot = _diceSlots[i];
                 
-                if (hasDice)
-                    _diceSlots[i].sprite = _diceAtlasConfig.GetSprite(pattern.Values[i]);
+                if (!hasDice)
+                {
+                    slot.gameObject.SetActive(false);
+                    continue;
+                }
+
+                slot.gameObject.SetActive(true);
+                var nextSprite = _diceAtlasConfig.GetSprite(pattern.Values[i]);
+                
+                slot.transform.DoFlipX(() => slot.sprite = nextSprite, _flipTime);
+                await UniTask.Delay(TimeSpan.FromSeconds(_timeBetweenDices), cancellationToken: token);
             }
         }
 

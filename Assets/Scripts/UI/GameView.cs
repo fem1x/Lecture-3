@@ -42,6 +42,7 @@ namespace _Scripts.UI
 
         private async UniTaskVoid ShowGameUiAsync()
         {
+            gameObject.SetActive(true);
             ShowBottomPanelsAsync().Forget();
             await UniTask.Delay(TimeSpan.FromSeconds(_delayBeforeMap));
             _mapService.RequestMap();

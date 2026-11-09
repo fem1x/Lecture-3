@@ -1,4 +1,5 @@
-﻿using DG.Tweening;
+﻿using System;
+using DG.Tweening;
 using UnityEngine;
 
 namespace _Scripts.Utility.Extensions
@@ -30,6 +31,21 @@ namespace _Scripts.Utility.Extensions
             target.DOKill(true);
             
             return target.DOScale(Vector3.zero, time).SetEase(ease).SetLink(target.gameObject);
+        }
+        
+        public static Tween DoFlipX(this Transform target, Action onHalfway, float time = 0.4f, Ease easeIn = Ease.InQuad, Ease easeOut = Ease.OutBack)
+        {
+            var halfTime = time * 0.5f;
+            
+            return DOTween.Sequence()
+                .Append(target.DOScaleX(0f, halfTime).SetEase(easeIn))
+                .AppendCallback(() => 
+                {
+                    if (target != null) onHalfway?.Invoke();
+                })
+                .Append(target.DOScaleX(1f, halfTime).SetEase(easeOut))
+                .SetTarget(target)
+                .SetLink(target.gameObject);
         }
     }
 }

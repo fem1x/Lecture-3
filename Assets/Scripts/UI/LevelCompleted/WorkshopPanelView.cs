@@ -2,6 +2,7 @@
 using System.Threading;
 using _Scripts.Charms;
 using Cysharp.Threading.Tasks;
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
 using VContainer;
@@ -21,7 +22,8 @@ namespace _Scripts.UI
         [Header("Dice Anchor")]
         [SerializeField] private RectTransform _diceSlotRect;
         [SerializeField] private float _diceMoveDuration = 0.35f;
-        [SerializeField] private DG.Tweening.Ease _diceEase = DG.Tweening.Ease.OutBack;
+        [SerializeField] private Ease _diceEaseIn = Ease.OutBack;
+        [SerializeField] private Ease _diceEaseOut = Ease.OutBack;
 
         #region DI
         private DiceStatePanelView _dicePanelView;
@@ -69,7 +71,7 @@ namespace _Scripts.UI
 
             await UniTask.WhenAll(
                 _slidingWindow.ShowAsync(ct),
-                _dicePanelView.MoveToPositionTween(targetPosition, _diceMoveDuration, _diceEase)
+                _dicePanelView.MoveToPositionTween(targetPosition, _diceMoveDuration, _diceEaseIn)
                     .ToUniTask(cancellationToken: ct)
             );
 
@@ -85,7 +87,7 @@ namespace _Scripts.UI
 
             await UniTask.WhenAll(
                 _slidingWindow.HideAsync(ct),
-                _dicePanelView.ResetPositionTween(_diceMoveDuration, _diceEase).ToUniTask(cancellationToken: ct)
+                _dicePanelView.ResetPositionTween(_diceMoveDuration, _diceEaseOut).ToUniTask(cancellationToken: ct)
             );
         }
 
