@@ -33,5 +33,12 @@ namespace _Scripts.UI
             _image.raycastTarget = false;
             await _image.DOFade(0, _showTime).SetEase(_ease);   
         }
+        
+        public void HideInstant()
+        {
+            _image.DOKill();
+            _image.SetVisible(false);
+            _image.raycastTarget = false;
+        }
     }
 }

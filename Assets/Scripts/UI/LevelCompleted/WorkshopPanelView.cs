@@ -2,7 +2,6 @@
 using System.Threading;
 using _Scripts.Charms;
 using Cysharp.Threading.Tasks;
-using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
 using VContainer;
@@ -13,7 +12,7 @@ namespace _Scripts.UI
     {
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
         [Header("References")]
-        [SerializeField] private SlidingWindowView _slidingWindow;
+        [SerializeField] private SlidingPanelView _slidingPanel;
         [SerializeField] private Button _nextLevelButton;
         [Space]
         [SerializeField] private DiceRepairPanelView _diceRepairPanel;
@@ -21,9 +20,6 @@ namespace _Scripts.UI
 
         [Header("Dice Anchor")]
         [SerializeField] private RectTransform _diceSlotRect;
-        [SerializeField] private float _diceMoveDuration = 0.35f;
-        [SerializeField] private Ease _diceEaseIn = Ease.OutBack;
-        [SerializeField] private Ease _diceEaseOut = Ease.OutBack;
 
         #region DI
         private DiceStatePanelView _dicePanelView;
@@ -32,8 +28,8 @@ namespace _Scripts.UI
 
         [Inject]
         public void Construct(
-            DiceStatePanelView dicePanelView, 
-            CharmsRewardGenerator rewardGenerator, 
+            DiceStatePanelView dicePanelView,
+            CharmsRewardGenerator rewardGenerator,
             CharmsConveyorService conveyorService)
         {
             _dicePanelView = dicePanelView;
@@ -67,13 +63,15 @@ namespace _Scripts.UI
             _charmConveyor.InstantCloseShutter();
             _nextLevelButton.interactable = false;
 
-            var targetPosition = _diceSlotRect.position;
+            var panelTask = _slidingPanel.ShowAsync();
 
-            await UniTask.WhenAll(
-                _slidingWindow.ShowAsync(ct),
-                _dicePanelView.MoveToPositionTween(targetPosition, _diceMoveDuration, _diceEaseIn)
-                    .ToUniTask(cancellationToken: ct)
-            );
+            await UniTask.WaitUntil(
+                () => _diceSlotRect.position.y >= _dicePanelView.HolderY,
+                cancellationToken: ct);
+
+            _dicePanelView.GrabBy(_diceSlotRect);
+
+            await panelTask;
 
             InitializeConveyorPanel();
             _dicePanelView.SetRepairMode(true);
@@ -85,13 +83,18 @@ namespace _Scripts.UI
             _charmConveyor.ClearConveyorView();
             _dicePanelView.SetRepairMode(false);
 
-            await UniTask.WhenAll(
-                _slidingWindow.HideAsync(ct),
-                _dicePanelView.ResetPositionTween(_diceMoveDuration, _diceEaseOut).ToUniTask(cancellationToken: ct)
-            );
+            var panelTask = _slidingPanel.HideAsync();
+
+            await UniTask.WaitUntil(
+                () => _diceSlotRect.position.y <= _dicePanelView.HolderY,
+                cancellationToken: ct);
+
+            _dicePanelView.Drop();
+
+            await panelTask;
         }
 
-        public void HideInstant() => _slidingWindow.HideInstant();
+        public void HideInstant() => _slidingPanel.HideInstant();
 
         private void InitializeConveyorPanel()
         {

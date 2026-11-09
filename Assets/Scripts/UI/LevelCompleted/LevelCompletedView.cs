@@ -1,22 +1,22 @@
 using _Scripts.Dices;
 using _Scripts.Managers;
 using _Scripts.UI;
+using _Scripts.Utility.Extensions;
 using Cysharp.Threading.Tasks;
-using DG.Tweening;
 using UnityEngine;
 using VContainer;
 
-[RequireComponent(typeof(CanvasGroup))]
 public class LevelCompletedView : MonoBehaviour
 {
     // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
+    [SerializeField] private CanvasGroup _cg;
+    
     [Header("Panels")]
     [SerializeField] private LevelRewardsView _rewardsView;
     [SerializeField] private WorkshopPanelView _workshopView;
 
     [Header("Backdrop")]
-    [SerializeField] private float _backdropFadeDuration = 0.25f;
-    [SerializeField] private CanvasGroup _backdropCanvasGroup;
+    [SerializeField] private BackdropView _backdropView;
 
     #region DI
     private LevelFlowController _levelFlowController;
@@ -58,13 +58,11 @@ public class LevelCompletedView : MonoBehaviour
 
     private async UniTaskVoid ShowFlowAsync()
     {
+        _cg.Show();
         var ct = destroyCancellationToken;
 
-        SetBackdropInteractable(true);
-        _backdropCanvasGroup.DOKill();
-
         await UniTask.WhenAll(
-            _backdropCanvasGroup.DOFade(1f, _backdropFadeDuration).SetUpdate(true).WithCancellation(ct),
+            _backdropView.ShowAsync(),
             _rewardsView.ShowAsync(ct)
         );
     }
@@ -80,31 +78,14 @@ public class LevelCompletedView : MonoBehaviour
     private async UniTaskVoid CompleteAndHideAsync()
     {
         var ct = destroyCancellationToken;
-
-        _backdropCanvasGroup.DOKill();
-        
-        await UniTask.WhenAll(
-            _workshopView.HideAsync(ct),
-            _backdropCanvasGroup.DOFade(0f, _backdropFadeDuration).SetUpdate(true).WithCancellation(ct)
-        );
-
-        SetBackdropInteractable(false);
+        await _workshopView.HideAsync(ct);
         _mapService.RequestMap();
     }
 
     private void HideInstant()
     {
-        _backdropCanvasGroup.DOKill();
-        _backdropCanvasGroup.alpha = 0f;
-        SetBackdropInteractable(false);
-
+        _backdropView.HideInstant();
         _rewardsView.HideInstant();
         _workshopView.HideInstant();
-    }
-
-    private void SetBackdropInteractable(bool active)
-    {
-        _backdropCanvasGroup.blocksRaycasts = active;
-        _backdropCanvasGroup.interactable = active;
     }
 }

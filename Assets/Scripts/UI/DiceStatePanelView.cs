@@ -1,7 +1,5 @@
 ﻿using System.Collections.Generic;
-using System.Threading;
 using _Scripts.Dices;
-using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using UnityEngine;
 
@@ -12,8 +10,18 @@ namespace _Scripts.UI
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
         [SerializeField] private RectTransform _rect;
         [SerializeField] private List<DiceStateView> _diceStateViews;
+        
+        private Transform _defaultParent;
+        
+        // Отдаем Y-координату родного холдера, чтобы мастерская знала, когда нас цеплять
+        public float HolderY => _defaultParent.position.y;
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
         
+        private void Awake()
+        {
+            _defaultParent = transform.parent;
+        }
+
         public void InitDiceStateViews(List<Dice> dices)
         {
             for (int i = 0; i < dices.Count; i++)
@@ -26,16 +34,22 @@ namespace _Scripts.UI
                 _diceStateViews[i].SetRepairMode(enable);
         }
         
-        public Tween MoveToPositionTween(Vector3 targetPosition, float duration, Ease ease)
+        public void GrabBy(Transform slotTarget)
         {
             _rect.DOKill();
-            return _rect.DOMove(targetPosition, duration).SetEase(ease);
+            // true сохраняет мировую позицию. Это важно, так как WaitUntil может сработать 
+            // между кадрами с небольшой погрешностью, и прямой сброс в Vector2.zero даст визуальный рывок.
+            _rect.SetParent(slotTarget, true); 
+            // Мягко и незаметно доводим панель ровно в центр слота (магнитный эффект)
+            _rect.DOLocalMove(Vector3.zero, 0.1f).SetEase(Ease.OutSine);
         }
 
-        public Tween ResetPositionTween(float duration, Ease ease)
+        public void Drop()
         {
             _rect.DOKill();
-            return _rect.DOAnchorPos(Vector2.zero, duration).SetEase(ease);
+            _rect.SetParent(_defaultParent, true);
+            // Доводим в ноль родного холдера
+            _rect.DOAnchorPos(Vector2.zero, 0.1f).SetEase(Ease.OutSine);
         }
     }
 }
