@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using _Scripts.Combinations;
 using _Scripts.Dices;
 using _Scripts.Managers;
+using _Scripts.Utility.Extensions;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Localization;
@@ -53,11 +54,20 @@ namespace _Scripts.UI
             if (combo == null)
                 SetPlaceholder();
             else
-                _combinationNameText.text = combo.DisplayName.GetLocalizedString();
+                SetCombinationName(combo.DisplayName.GetLocalizedString());
         }
         
-        private void SetPlaceholder() => _combinationNameText.text = _placeholderText.GetLocalizedString();
+        private void SetPlaceholder() => SetCombinationName(_placeholderText.GetLocalizedString());
 
+        private void SetCombinationName(string newName)
+        {
+            var currentName =  _combinationNameText.text;
+            if (currentName == newName) return;
+            
+            _combinationNameText.text = newName;
+            _combinationNameText.transform.DoScalePop(scaleMult:1.18f, outTime: 0.18f);
+        }
+        
         private void HandleLockSet(CombinationConfig lockCode) => UpdateWidgets(lockCode != null);
         private void HandleLockBroken() => UpdateWidgets(_codeLockService.IsActive);
         

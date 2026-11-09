@@ -8,8 +8,8 @@ PhysicsMaterial:
   m_PrefabAsset: {fileID: 0}
   m_Name: Walls Mat
   serializedVersion: 2
-  m_DynamicFriction: 0.4
-  m_StaticFriction: 0.4
-  m_Bounciness: 1
+  m_DynamicFriction: 0.6
+  m_StaticFriction: 0.6
+  m_Bounciness: 0.67
   m_FrictionCombine: 2
   m_BounceCombine: 3

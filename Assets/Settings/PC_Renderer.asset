@@ -13,11 +13,11 @@ MonoBehaviour:
   m_Name: FreeOutline
   m_EditorClassIdentifier: LineworkLite::LineworkLite.FreeOutline.FreeOutline
   m_Active: 1
-  settings: {fileID: 0}
+  settings: {fileID: 11400000, guid: 325dd635113b7cb4884e2589e0ea5c4b, type: 2}
   shaders:
-    mask: {fileID: 0}
-    outline: {fileID: 0}
-    clear: {fileID: 0}
+    mask: {fileID: 4800000, guid: 19ae7b440d27f4f9990007afdc74ddaf, type: 3}
+    outline: {fileID: 4800000, guid: fb375234a1509436fa2a7d37f08912f8, type: 3}
+    clear: {fileID: 4800000, guid: b854aa374420b4b47992044f7c9a0719, type: 3}
 --- !u!114 &-2322700729736570980
 MonoBehaviour:
   m_ObjectHideFlags: 1
