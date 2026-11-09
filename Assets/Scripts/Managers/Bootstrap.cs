@@ -19,6 +19,7 @@ namespace _Scripts.Managers
         private readonly DiceStatePanelView _diceStatePanelView;
         private readonly LevelService _levelService;
         private readonly MapService _mapService;
+        private readonly GameStateManager _gameStateManager;
 
         [Inject]
         public Bootstrap(
@@ -27,7 +28,8 @@ namespace _Scripts.Managers
             ISfxPlayer sfxPlayer,
             DiceStatePanelView diceStatePanelView,
             LevelService levelService,
-            MapService mapService)
+            MapService mapService,
+            GameStateManager gameStateManager)
         {
             _diceSpawner = diceSpawner;
             _diceTableController = diceTableController;
@@ -35,12 +37,20 @@ namespace _Scripts.Managers
             _diceStatePanelView = diceStatePanelView;
             _levelService = levelService;
             _mapService = mapService;
+            _gameStateManager = gameStateManager;
         }
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
         
         public void Initialize()
         {
+            _gameStateManager.EnterMainMenu();
             _sfxPlayer.Initialize();
+            StartGame();
+        }
+
+        public void StartGame()
+        {
+            _gameStateManager.StartGame();
             
             _levelService.InitializeLevelsOrder();
             _mapService.Initialize();
@@ -51,7 +61,6 @@ namespace _Scripts.Managers
             _diceStatePanelView.InitDiceStateViews(dices);
             
             _levelService.SelectFirstLevel();
-            _mapService.RequestMap();
         }
     }
 }

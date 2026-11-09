@@ -7,21 +7,12 @@ using UnityEngine;
 
 namespace _Scripts.UI
 {
-    [RequireComponent(typeof(RectTransform))]
     public class DiceStatePanelView : MonoBehaviour
     {
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
+        [SerializeField] private RectTransform _rect;
         [SerializeField] private List<DiceStateView> _diceStateViews;
-        
-        private Vector3 _defaultPosition;
-        private RectTransform _rectTransform;
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
-
-        private void Awake()
-        {
-            _rectTransform = GetComponent<RectTransform>();
-            _defaultPosition = _rectTransform.position;
-        }
         
         public void InitDiceStateViews(List<Dice> dices)
         {
@@ -37,14 +28,14 @@ namespace _Scripts.UI
         
         public Tween MoveToPositionTween(Vector3 targetPosition, float duration, Ease ease)
         {
-            _rectTransform.DOKill();
-            return _rectTransform.DOMove(targetPosition, duration).SetEase(ease);
+            _rect.DOKill();
+            return _rect.DOMove(targetPosition, duration).SetEase(ease);
         }
 
         public Tween ResetPositionTween(float duration, Ease ease)
         {
-            _rectTransform.DOKill();
-            return _rectTransform.DOMove(_defaultPosition, duration).SetEase(ease);
+            _rect.DOKill();
+            return _rect.DOAnchorPos(Vector2.zero, duration).SetEase(ease);
         }
     }
 }

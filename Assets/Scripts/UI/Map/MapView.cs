@@ -58,7 +58,6 @@ namespace _Scripts.UI
             _mapService.OnMapInitialized -= Initialize;
             _mapService.OnSectionChanged -= MoveToSection;
             _mapService.OnMapRequested -= Show;
-
         }
         
         private void OnEnable()
@@ -139,6 +138,7 @@ namespace _Scripts.UI
 
         private void Show(int sectionIndex)
         {
+            _cg.Show();
             MoveToSectionInstant(sectionIndex);
             _slidingPanelView.ShowAsync().Forget();
             _backdrop.ShowAsync().Forget();

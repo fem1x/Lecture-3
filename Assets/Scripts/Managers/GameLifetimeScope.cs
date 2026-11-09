@@ -109,6 +109,7 @@ public class GameLifetimeScope : LifetimeScope
         builder.Register<ActiveSelectionService>(Lifetime.Singleton);
         builder.Register<LevelService>(Lifetime.Singleton);
         builder.Register<MapService>(Lifetime.Singleton);
+        builder.Register<GameStateManager>(Lifetime.Singleton);
         
         //Entry Point
         builder.RegisterEntryPoint<Bootstrap>();

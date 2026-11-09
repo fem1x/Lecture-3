@@ -9,12 +9,15 @@ namespace _Scripts.UI
     public enum SlideDirection
     {
         Top,
-        Bottom
+        Bottom,
+        Left,
+        Right
     }
     
     public class SlidingPanelView : MonoBehaviour
     {
-        // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
+        [SerializeField] private bool _startsHidden = true;
+        
         [Header("Slide Animation")] 
         [SerializeField] private SlideDirection _direction;
         [SerializeField] private RectTransform _rect;
@@ -34,31 +37,34 @@ namespace _Scripts.UI
             get
             {
                 if (_hiddenPos == default)
-                    _hiddenPos = _rect.GetHiddenPosition(_direction == SlideDirection.Top);
+                    _hiddenPos = _rect.GetHiddenPosition(_direction);
                 return _hiddenPos;
             }
         }
         
-        private float HiddenY => HiddenPos.y;
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 
+        private void Awake()
+        {
+            if (_startsHidden) HideInstant();
+        }
+        
         public async UniTask ShowAsync()
         {
             HideInstant();
             _cg.Show();
-            await _rect.DOAnchorPosY(0f, _showTime).SetEase(_showEase);
+            await _rect.DOAnchorPos(Vector2.zero, _showTime).SetEase(_showEase);
         }
 
         public async UniTask HideAsync()
         {
-            await _rect.DOAnchorPosY(HiddenY, _hideTime).SetEase(_hideEase)
+            await _rect.DOAnchorPos(HiddenPos, _hideTime).SetEase(_hideEase)
                 .OnComplete(_cg.Hide);
         }
 
         private void HideInstant()
         {
             _rect.anchoredPosition = HiddenPos;
-            _cg.Hide();
         }
     }
 }
