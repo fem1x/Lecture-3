@@ -43,13 +43,13 @@ namespace _Scripts.Managers
         
         public void Initialize()
         {
-            _gameStateManager.EnterMainMenu();
+            _gameStateManager.EnterMenuState();
             _sfxPlayer.Initialize();
         }
 
         public void StartGame()
         {
-            _gameStateManager.StartGame();
+            _gameStateManager.EnterGameState();
             
             _levelService.InitializeLevelsOrder();
             _mapService.Initialize();

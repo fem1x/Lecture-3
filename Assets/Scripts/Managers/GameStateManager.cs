@@ -1,5 +1,4 @@
 ﻿using System;
-using VContainer.Unity;
 
 public enum GameState
 {
@@ -15,19 +14,14 @@ public class GameStateManager
     public GameState CurrentState { get; private set; }
     // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
     
-    public void EnterMainMenu()
+    public void ChangeState(GameState newState)
     {
-        if (CurrentState == GameState.MainMenu)
-            return;
-        CurrentState = GameState.MainMenu;
+        if (CurrentState == newState) return;
+        
+        CurrentState = newState;
         StateChanged?.Invoke(CurrentState);
     }
-
-    public void StartGame()
-    {
-        if (CurrentState == GameState.Game)
-            return;
-        CurrentState = GameState.Game;
-        StateChanged?.Invoke(CurrentState);
-    }
+    
+    public void EnterMenuState() => ChangeState(GameState.MainMenu);
+    public void EnterGameState() => ChangeState(GameState.Game);
 }

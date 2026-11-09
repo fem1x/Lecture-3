@@ -38,12 +38,12 @@ namespace _Scripts.UI.MainMenu
         {
             if (state == GameState.MainMenu)
             {
-                _cg.Show();
+                gameObject.SetActive(true);
                 ShoMenuUiAsync().Forget();
             }
             else
             {
-                _cg.Hide();
+                gameObject.SetActive(false);
             }
         }
 

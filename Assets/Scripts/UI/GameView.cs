@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Threading.Tasks;
+using System.Threading;
 using _Scripts.Managers;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
@@ -22,6 +22,7 @@ namespace _Scripts.UI
         
         private GameStateManager _gameStateManager;
         private MapService _mapService;
+        private CancellationTokenSource _cts;
         
         [Inject]
         public void Construct(GameStateManager gameStateManager, MapService mapService)
@@ -32,28 +33,68 @@ namespace _Scripts.UI
         }
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
         
-        private void OnDestroy() => _gameStateManager.StateChanged -= OnStateChanged;
+        private void OnDestroy()
+        {
+            _gameStateManager.StateChanged -= OnStateChanged;
+            _cts?.Cancel();
+            _cts?.Dispose();
+        }
 
         private void OnStateChanged(GameState state)
         {
             if (state == GameState.Game)
-                ShowGameUiAsync().Forget();
+            {
+                _cts?.Cancel();
+                _cts?.Dispose();
+                _cts = new CancellationTokenSource();
+
+                _diceUiSliding.HideInstant();
+                _controlSliding.HideInstant();
+                
+                _selectionPanelCg.DOKill();
+                _selectionPanelCg.alpha = 0f;
+                _selectionPanelCg.interactable = false;
+                
+                gameObject.SetActive(true);
+                ShowGameUiAsync(_cts.Token).Forget();
+            }
+            else
+            {
+                _cts?.Cancel();
+                
+                _diceUiSliding.HideInstant();
+                _controlSliding.HideInstant();
+                
+                _selectionPanelCg.DOKill();
+                _selectionPanelCg.alpha = 0f;
+                _selectionPanelCg.interactable = false;
+                
+                gameObject.SetActive(false);
+            }
         }
 
-        private async UniTaskVoid ShowGameUiAsync()
+        private async UniTaskVoid ShowGameUiAsync(CancellationToken token)
         {
-            gameObject.SetActive(true);
-            ShowBottomPanelsAsync().Forget();
-            await UniTask.Delay(TimeSpan.FromSeconds(_delayBeforeMap));
+            var isCancelled = await ShowBottomPanelsAsync(token).SuppressCancellationThrow();
+            if (isCancelled) return;
+
+            isCancelled = await UniTask.Delay(TimeSpan.FromSeconds(_delayBeforeMap), cancellationToken: token).SuppressCancellationThrow();
+            if (isCancelled) return;
+            
             _mapService.RequestMap();
         }
 
-        private async UniTask ShowBottomPanelsAsync()
+        private async UniTask ShowBottomPanelsAsync(CancellationToken token)
         {
             _controlSliding.ShowAsync().Forget();
-            await  UniTask.Delay(TimeSpan.FromSeconds(_delayBetweenPanels));
+            
+            await UniTask.Delay(TimeSpan.FromSeconds(_delayBetweenPanels), cancellationToken: token);
+            
             await _diceUiSliding.ShowAsync();
-            await _selectionPanelCg.DOFade(1f, _selectionPanelFadeTime);
+            
+            await _selectionPanelCg.DOFade(1f, _selectionPanelFadeTime)
+                .WithCancellation(token);
+                
             _selectionPanelCg.interactable = true;
         }
     }
