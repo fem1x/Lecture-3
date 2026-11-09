@@ -304,6 +304,14 @@ MonoBehaviour:
     m_Localized: "ser\xE1 eliminado!"
     m_Metadata:
       m_Items: []
+  - m_Id: 7370033339555840
+    m_Localized: Fullpack
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7370033385693184
+    m_Localized: "Tr\xEDada & Duplete"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

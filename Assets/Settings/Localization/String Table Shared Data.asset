@@ -131,6 +131,14 @@ MonoBehaviour:
     m_Key: combo_underload_desc
     m_Metadata:
       m_Items: []
+  - m_Id: 7370033339555840
+    m_Key: combo_fullpack_name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7370033385693184
+    m_Key: combo_fullpack_desc
+    m_Metadata:
+      m_Items: []
   - m_Id: 28798961438720
     m_Key: control_quota_label
     m_Metadata:

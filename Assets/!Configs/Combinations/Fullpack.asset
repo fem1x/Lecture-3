@@ -10,47 +10,37 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2eecb481ef504d6386ffe034b4ed7202, type: 3}
-  m_Name: OppositesConfig
+  m_Name: Fullpack
   m_EditorClassIdentifier: Game::_Scripts.Combinations.CombinationConfig
-  <Id>k__BackingField: opposites
-  <Priority>k__BackingField: 30
+  <Id>k__BackingField: fullpack
+  <Priority>k__BackingField: 85
   <DisplayName>k__BackingField:
     m_TableReference:
-      m_TableCollectionName: String Table
+      m_TableCollectionName: 
     m_TableEntryReference:
       m_KeyId: 0
-      m_Key: combo_opposites_name
+      m_Key: 
     m_FallbackState: 0
     m_WaitForCompletion: 0
     m_LocalVariables: []
   <Description>k__BackingField:
     m_TableReference:
-      m_TableCollectionName: String Table
+      m_TableCollectionName: 
     m_TableEntryReference:
       m_KeyId: 0
-      m_Key: combo_opposites_desc
+      m_Key: 
     m_FallbackState: 0
     m_WaitForCompletion: 0
     m_LocalVariables: []
   <Icon>k__BackingField: {fileID: 0}
-  <Patterns>k__BackingField:
-  - Values: 0100000006000000
-  - Values: 0200000005000000
-  - Values: 0300000004000000
-  - Values: 0400000003000000
-  - Values: 0500000002000000
-  - Values: 0600000001000000
-  <BasePoints>k__BackingField: 30
-  <Multiplier>k__BackingField: 2
+  <Patterns>k__BackingField: []
+  <BasePoints>k__BackingField: 0
+  <Multiplier>k__BackingField: 0
   <DiceRefund>k__BackingField: 0
   <Rule>k__BackingField:
-    rid: 420518558509826320
+    rid: -2
   references:
     version: 2
     RefIds:
-    - rid: 420518558509826320
-      type: {class: SumRule, ns: _Scripts.Combinations.Rules, asm: Game}
-      data:
-        <RequiredDiceCount>k__BackingField: 2
-        <Comparison>k__BackingField: 2
-        <RequiredSum>k__BackingField: 7
+    - rid: -2
+      type: {class: , ns: , asm: }

@@ -10,16 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2eecb481ef504d6386ffe034b4ed7202, type: 3}
-  m_Name: UnderloadConfig
+  m_Name: Opposites
   m_EditorClassIdentifier: Game::_Scripts.Combinations.CombinationConfig
-  <Id>k__BackingField: underload
-  <Priority>k__BackingField: 70
+  <Id>k__BackingField: opposites
+  <Priority>k__BackingField: 30
   <DisplayName>k__BackingField:
     m_TableReference:
       m_TableCollectionName: String Table
     m_TableEntryReference:
       m_KeyId: 0
-      m_Key: combo_underload_name
+      m_Key: combo_opposites_name
     m_FallbackState: 0
     m_WaitForCompletion: 0
     m_LocalVariables: []
@@ -28,29 +28,29 @@ MonoBehaviour:
       m_TableCollectionName: String Table
     m_TableEntryReference:
       m_KeyId: 0
-      m_Key: combo_underload_desc
+      m_Key: combo_opposites_desc
     m_FallbackState: 0
     m_WaitForCompletion: 0
     m_LocalVariables: []
   <Icon>k__BackingField: {fileID: 0}
   <Patterns>k__BackingField:
-  - Values: 0100000001000000010000000100000001000000
-  - Values: 0100000001000000010000000100000002000000
-  - Values: 0100000001000000010000000100000003000000
-  - Values: 0100000001000000010000000200000002000000
-  - Values: 0100000001000000010000000200000003000000
-  - Values: 0100000001000000020000000200000003000000
-  <BasePoints>k__BackingField: 75
-  <Multiplier>k__BackingField: 7
+  - Values: 0100000006000000
+  - Values: 0200000005000000
+  - Values: 0300000004000000
+  - Values: 0400000003000000
+  - Values: 0500000002000000
+  - Values: 0600000001000000
+  <BasePoints>k__BackingField: 30
+  <Multiplier>k__BackingField: 2
   <DiceRefund>k__BackingField: 0
   <Rule>k__BackingField:
-    rid: 420518558509826327
+    rid: 420518558509826320
   references:
     version: 2
     RefIds:
-    - rid: 420518558509826327
+    - rid: 420518558509826320
       type: {class: SumRule, ns: _Scripts.Combinations.Rules, asm: Game}
       data:
-        <RequiredDiceCount>k__BackingField: 5
-        <Comparison>k__BackingField: 1
-        <RequiredSum>k__BackingField: 10
+        <RequiredDiceCount>k__BackingField: 2
+        <Comparison>k__BackingField: 2
+        <RequiredSum>k__BackingField: 7

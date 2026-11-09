@@ -10,16 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2eecb481ef504d6386ffe034b4ed7202, type: 3}
-  m_Name: OverloadConfig
+  m_Name: Triad
   m_EditorClassIdentifier: Game::_Scripts.Combinations.CombinationConfig
-  <Id>k__BackingField: overload
-  <Priority>k__BackingField: 80
+  <Id>k__BackingField: triad
+  <Priority>k__BackingField: 40
   <DisplayName>k__BackingField:
     m_TableReference:
       m_TableCollectionName: String Table
     m_TableEntryReference:
       m_KeyId: 0
-      m_Key: combo_overload_name
+      m_Key: combo_triad_name
     m_FallbackState: 0
     m_WaitForCompletion: 0
     m_LocalVariables: []
@@ -28,29 +28,28 @@ MonoBehaviour:
       m_TableCollectionName: String Table
     m_TableEntryReference:
       m_KeyId: 0
-      m_Key: combo_overload_desc
+      m_Key: combo_triad_desc
     m_FallbackState: 0
     m_WaitForCompletion: 0
     m_LocalVariables: []
   <Icon>k__BackingField: {fileID: 0}
   <Patterns>k__BackingField:
-  - Values: 0400000005000000050000000500000005000000
-  - Values: 0500000005000000050000000500000005000000
-  - Values: 0400000005000000050000000600000006000000
-  - Values: 0500000005000000050000000600000006000000
-  - Values: 0500000005000000060000000600000006000000
-  - Values: 0600000006000000060000000600000006000000
-  <BasePoints>k__BackingField: 60
-  <Multiplier>k__BackingField: 7
+  - Values: 010000000100000001000000
+  - Values: 020000000200000002000000
+  - Values: 030000000300000003000000
+  - Values: 040000000400000004000000
+  - Values: 050000000500000005000000
+  - Values: 060000000600000006000000
+  <BasePoints>k__BackingField: 40
+  <Multiplier>k__BackingField: 4
   <DiceRefund>k__BackingField: 0
   <Rule>k__BackingField:
-    rid: 420518558509826326
+    rid: 420518558509826321
   references:
     version: 2
     RefIds:
-    - rid: 420518558509826326
-      type: {class: SumRule, ns: _Scripts.Combinations.Rules, asm: Game}
+    - rid: 420518558509826321
+      type: {class: FrequencyRule, ns: _Scripts.Interfaces, asm: Game}
       data:
-        <RequiredDiceCount>k__BackingField: 5
-        <Comparison>k__BackingField: 0
-        <RequiredSum>k__BackingField: 25
+        <RequiredDiceCount>k__BackingField: 3
+        <RequiredFrequency>k__BackingField: 3
