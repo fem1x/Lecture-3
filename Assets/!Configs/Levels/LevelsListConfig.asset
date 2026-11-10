@@ -15,13 +15,3 @@ MonoBehaviour:
   <Sections>k__BackingField:
   - <Levels>k__BackingField:
     - {fileID: 11400000, guid: 6155a4062222c7d40acbbd02f8489670, type: 2}
-    - {fileID: 11400000, guid: 264d5cb50f6d4ee48bc686be4b638617, type: 2}
-    - {fileID: 11400000, guid: 063709b25ae81e94b9a1107ba1c23192, type: 2}
-  - <Levels>k__BackingField:
-    - {fileID: 11400000, guid: b094c02e8c0e3e44f9b3ae10f40a151b, type: 2}
-    - {fileID: 11400000, guid: 9c012df1218c44c43b8aebaa6477210f, type: 2}
-    - {fileID: 11400000, guid: 9b704ee7c43262c43b5e66b114221792, type: 2}
-  - <Levels>k__BackingField:
-    - {fileID: 11400000, guid: ba5b09e1600b96e4eabcdb19be4ba11f, type: 2}
-    - {fileID: 11400000, guid: 096a82a178faff14d8d85022180e6108, type: 2}
-    - {fileID: 11400000, guid: 476d685932b62ee45bed37d3be354398, type: 2}
