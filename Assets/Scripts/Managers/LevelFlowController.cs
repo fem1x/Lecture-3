@@ -24,6 +24,7 @@ namespace _Scripts.Managers
         private readonly RepairTokensManager _repairTokensManager;
         private readonly CodeLockService _codeLockService;
         private readonly DiceRoller _diceRoller;
+        private readonly GameStateManager _gameStateManager;
         
         #region DI
         [Inject]
@@ -53,7 +54,10 @@ namespace _Scripts.Managers
         #endregion
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 
-        public void Dispose() => _scoreManager.OnQuotaReached -= HandleQuotaReached;
+        public void Dispose()
+        {
+            _scoreManager.OnQuotaReached -= HandleQuotaReached;
+        }
         
         public void StartLevel()
         {

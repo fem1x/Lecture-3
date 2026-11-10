@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading;
 using _Scripts.Configs;
 using _Scripts.Dices;
 using _Scripts.UI;
@@ -43,36 +44,75 @@ namespace _Scripts.Managers
         private ScreenFlashView _screenFlashView;
         private ColorsConfig _colorsConfig;
         private CameraShaker _cameraShaker;
+        private GameStateManager _gameStateManager;
+        private CancellationTokenSource _cts;
 
         [Inject]
         public void Construct(
             ISfxPlayer sfxPlayer, 
             ScreenFlashView screenFlashView, 
             ColorsConfig colorsConfig,
-            CameraShaker cameraShaker)
+            CameraShaker cameraShaker,
+            GameStateManager gameStateManager)
         {
             _sfxPlayer = sfxPlayer;
             _screenFlashView = screenFlashView;
             _colorsConfig = colorsConfig;
             _cameraShaker = cameraShaker;
+            _gameStateManager = gameStateManager;
+            
+            _gameStateManager.StateChanged += OnStateChanged;
         }
         #endregion
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 
+        private void OnDestroy()
+        {
+            if (_gameStateManager != null)
+                _gameStateManager.StateChanged -= OnStateChanged;
+                
+            CancelSequence();
+        }
+
+        private void OnStateChanged(GameState state)
+        {
+            if (state != GameState.Game)
+            {
+                CancelSequence();
+            }
+        }
+        
+        private void CancelSequence()
+        {
+            _cts?.Cancel();
+            _cts?.Dispose();
+            _cts = null;
+        }
+
         public async UniTask PlaySequenceAsync(List<Dice> dices, LockBreakResult result)
         {
+            CancelSequence();
+            _cts = new CancellationTokenSource();
+            var token = _cts.Token;
+
             _codeLockView.ClearSlots();
 
-            await InsertValuesAsync(dices);
+            var isCancelled = await InsertValuesAsync(dices, token).SuppressCancellationThrow();
+            if (isCancelled) return;
             
-            await UniTask.Delay(TimeSpan.FromSeconds(_delayBeforeValidation));
-            await ValidationAsync(result);
-            await UniTask.Delay(TimeSpan.FromSeconds(_delayAfterValidation));
+            isCancelled = await UniTask.Delay(TimeSpan.FromSeconds(_delayBeforeValidation), cancellationToken: token).SuppressCancellationThrow();
+            if (isCancelled) return;
+            
+            isCancelled = await ValidationAsync(result, token).SuppressCancellationThrow();
+            if (isCancelled) return;
+            
+            isCancelled = await UniTask.Delay(TimeSpan.FromSeconds(_delayAfterValidation), cancellationToken: token).SuppressCancellationThrow();
+            if (isCancelled) return;
             
             DoResultFx(result);
         }
 
-        private async UniTask InsertValuesAsync(List<Dice> dices)
+        private async UniTask InsertValuesAsync(List<Dice> dices, CancellationToken token)
         {
             var slots = _codeLockView.Slots;
             for (int i = 0; i < dices.Count && i < _codeLockView.Slots.Count; i++)
@@ -80,27 +120,27 @@ namespace _Scripts.Managers
                 var dice = dices[i];
                 var slot = slots[i];
                 
-                await UniTask.Delay(TimeSpan.FromSeconds(_delayPerDice));
+                await UniTask.Delay(TimeSpan.FromSeconds(_delayPerDice), cancellationToken: token);
                 
-                dice.transform.DoScalePop().ToUniTask().Forget();
+                dice.transform.DoScalePop().ToUniTask(cancellationToken: token).Forget();
                 PlayStampSfx(_stampDiceSfx, source: dice.transform, step: i);
                 
-                await UniTask.Delay(TimeSpan.FromSeconds(_stampDelay));
+                await UniTask.Delay(TimeSpan.FromSeconds(_stampDelay), cancellationToken: token);
                 
                 slot.InsertValue(dice.Data.RolledValue);
-                slot.DiceImage.transform.DoScalePop().ToUniTask().Forget();
+                slot.DiceImage.transform.DoScalePop().ToUniTask(cancellationToken: token).Forget();
                 PlayStampSfx(_stampSlotSfx);
             }
         }
 
-        private async UniTask ValidationAsync(LockBreakResult result)
+        private async UniTask ValidationAsync(LockBreakResult result, CancellationToken token)
         {
             foreach (var slot in _codeLockView.Slots)
             {
                 slot.SetCorrectState(result);
                 PlayStampSfx(IsSuccess(result) ? _slotCorrectSfx : _slotIncorrectSfx);
 
-                await UniTask.Delay(TimeSpan.FromSeconds(_validateDelayPerSlot));
+                await UniTask.Delay(TimeSpan.FromSeconds(_validateDelayPerSlot), cancellationToken: token);
             }
         }
 

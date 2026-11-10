@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading;
 using _Scripts.Configs;
 using _Scripts.Data_Transfer.Contexts;
 using _Scripts.Dices;
@@ -45,56 +46,96 @@ namespace _Scripts.Managers
         private ISfxPlayer _sfxPlayer;
         private ScoreManager _scoreManager;
         private CameraShaker _cameraShaker;
+        private GameStateManager _gameStateManager;
+        private CancellationTokenSource _cts;
+
         [Inject]
-        public void Construct(ISfxPlayer sfxPlayer, ScoreManager  scoreManager, CameraShaker cameraShaker)
+        public void Construct(ISfxPlayer sfxPlayer, ScoreManager scoreManager, CameraShaker cameraShaker, GameStateManager gameStateManager)
         {
             _sfxPlayer = sfxPlayer;
             _scoreManager = scoreManager;
             _cameraShaker = cameraShaker;
+            _gameStateManager = gameStateManager;
+            
+            _gameStateManager.StateChanged += OnStateChanged;
         }
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
         
+        private void OnDestroy()
+        {
+            if (_gameStateManager != null)
+                _gameStateManager.StateChanged -= OnStateChanged;
+                
+            CancelSequence();
+        }
+
+        private void OnStateChanged(GameState state)
+        {
+            if (state != GameState.Game)
+            {
+                CancelSequence();
+            }
+        }
+        
+        private void CancelSequence()
+        {
+            _cts?.Cancel();
+            _cts?.Dispose();
+            _cts = null;
+        }
+
         public async UniTask PlaySequenceAsync(ScoreSequencePlan sequencePlan)
         {
+            CancelSequence();
+            _cts = new CancellationTokenSource();
+            var token = _cts.Token;
+
             ResetState(sequencePlan);
 
-            foreach (var step in sequencePlan.Steps)
+            try
             {
-                switch (step.Type)
+                foreach (var step in sequencePlan.Steps)
                 {
-                    case ScoreStepType.DiceScored:
-                        await DiceStepAsync(step);
-                        break;
-                    
-                    case ScoreStepType.CharmTrigger:
-                        await CharmStepAsync(step);
-                        break;
-                    
-                    case ScoreStepType.CombinationBase:
-                        await CombinationStepAsync(step);
-                        break;
-                    
-                    case ScoreStepType.Multiply:
-                        await MultiplyStepAsync(step);
-                        break;
+                    switch (step.Type)
+                    {
+                        case ScoreStepType.DiceScored:
+                            await DiceStepAsync(step, token);
+                            break;
+                        
+                        case ScoreStepType.CharmTrigger:
+                            await CharmStepAsync(step, token);
+                            break;
+                        
+                        case ScoreStepType.CombinationBase:
+                            await CombinationStepAsync(step, token);
+                            break;
+                        
+                        case ScoreStepType.Multiply:
+                            await MultiplyStepAsync(step, token);
+                            break;
+                    }
                 }
+                
+                await UniTask.Delay(TimeSpan.FromSeconds(_delayAfterFinalMult), cancellationToken: token);
+                ApplyFinalScore(sequencePlan.TotalScore);
             }
-            
-            await UniTask.Delay(TimeSpan.FromSeconds(_delayAfterFinalMult));
-            ApplyFinalScore(sequencePlan.TotalScore);
+            catch (OperationCanceledException)
+            {
+                
+            }
         }
         
         #region Step async Methods
-        private async UniTask DiceStepAsync(ScoreStep step)
+        private async UniTask DiceStepAsync(ScoreStep step, CancellationToken token)
         {
-            await UniTask.Delay(TimeSpan.FromSeconds(_delayPerStep));
+            await UniTask.Delay(TimeSpan.FromSeconds(_delayPerStep), cancellationToken: token);
             PlayDiceStepFx(step.SourceTransform, _addPointsSfx, true);
-            await AddPointsAsync(step.BonusPoints);
+            await AddPointsAsync(step.BonusPoints, token);
         }
 
-        private async UniTask CharmStepAsync(ScoreStep step)
+        private async UniTask CharmStepAsync(ScoreStep step, CancellationToken token)
         {
-            await UniTask.Delay(TimeSpan.FromSeconds(_delayPerStep));
+            await UniTask.Delay(TimeSpan.FromSeconds(_delayPerStep), cancellationToken: token);
     
             step.CharmView.PlayTriggerAnimation();
             _sfxPlayer?.Play(_charmTriggerSfx);
@@ -102,64 +143,64 @@ namespace _Scripts.Managers
             // +Points
             if (step.BonusPoints > 0)
             {
-                _pointsText.transform.DoScalePop(scaleMult: 1.8f).ToUniTask().Forget();
-                await AddPointsAsync(step.BonusPoints);
+                _pointsText.transform.DoScalePop(scaleMult: 1.8f).ToUniTask(cancellationToken: token).Forget();
+                await AddPointsAsync(step.BonusPoints, token);
             }
 
             // +Mult
             if (step.BonusMultiplier > 0)
             {
-                _multText.transform.DoScalePop(scaleMult: 1.8f).ToUniTask().Forget();
-                await AddMultAsync(step.BonusMultiplier);
+                _multText.transform.DoScalePop(scaleMult: 1.8f).ToUniTask(cancellationToken: token).Forget();
+                await AddMultAsync(step.BonusMultiplier, token);
             }
 
             // X-Mult
             if (step.XMultiplier > 1f)
             {
-                _multText.transform.DoScalePop(scaleMult: 2.5f).ToUniTask().Forget();
-                await XMultAsync(step.XMultiplier);
+                _multText.transform.DoScalePop(scaleMult: 2.5f).ToUniTask(cancellationToken: token).Forget();
+                await XMultAsync(step.XMultiplier, token);
             }
         }
 
-        private async UniTask CombinationStepAsync(ScoreStep step)
+        private async UniTask CombinationStepAsync(ScoreStep step, CancellationToken token)
         {
             if (step.BonusPoints == 0 && step.BonusMultiplier == 0) return;
             
-            await UniTask.Delay(TimeSpan.FromSeconds(_delayPerStep));
+            await UniTask.Delay(TimeSpan.FromSeconds(_delayPerStep), cancellationToken: token);
             PlayDiceStepFx(step.SourceTransform, _addPointsSfx, true);
             
             if (step.BonusPoints > 0)
-                await AddPointsAsync(step.BonusPoints);
+                await AddPointsAsync(step.BonusPoints, token);
 
             if (step.BonusMultiplier > 0)
-                await AddMultAsync(step.BonusMultiplier);
+                await AddMultAsync(step.BonusMultiplier, token);
         }
 
-        private async UniTask MultiplyStepAsync(ScoreStep step)
+        private async UniTask MultiplyStepAsync(ScoreStep step, CancellationToken token)
         {
-            await UniTask.Delay(TimeSpan.FromSeconds(_delayBeforeFinalMult));
-            await TriggerMultAsync();
+            await UniTask.Delay(TimeSpan.FromSeconds(_delayBeforeFinalMult), cancellationToken: token);
+            await TriggerMultAsync(token);
         }
         #endregion
         
-        private async UniTask AddPointsAsync(int amount)
+        private async UniTask AddPointsAsync(int amount, CancellationToken token)
         {
             var target = _currentPoints + amount;
-            await DoTextValueTween(_pointsText, _currentPoints, target, _pointsAddDuration);
+            await DoTextValueTween(_pointsText, _currentPoints, target, _pointsAddDuration, token);
             _currentPoints = target;
         }
 
-        private async UniTask AddMultAsync(int amount)
+        private async UniTask AddMultAsync(int amount, CancellationToken token)
         {
             var target = _currentMult + amount;
-            await DoTextValueTween(_multText, _currentMult, target, _pointsAddDuration);
+            await DoTextValueTween(_multText, _currentMult, target, _pointsAddDuration, token);
             _currentMult = target;
         }
         
-        private async UniTask XMultAsync(float xMult)
+        private async UniTask XMultAsync(float xMult, CancellationToken token)
         {
             var target = Mathf.RoundToInt(_currentMult * xMult);
-            await DoTextValueTween(_multText, _currentMult, target, _pointsAddDuration);
+            await DoTextValueTween(_multText, _currentMult, target, _pointsAddDuration, token);
             _currentMult = target;
         }
         
@@ -169,14 +210,14 @@ namespace _Scripts.Managers
             _sfxPlayer?.Play(_addScoreSfx);
         }
         
-        private async UniTask TriggerMultAsync()
+        private async UniTask TriggerMultAsync(CancellationToken token)
         {
             PlayMultTriggerFx();
             var targetPoints = _currentPoints * _currentMult;
             
             await UniTask.WhenAll(
-                DoTextValueTween(_pointsText, _currentPoints, targetPoints, _pointsMultDuration),
-                DoTextValueTween(_multText, _currentMult, 1, _pointsMultDuration));
+                DoTextValueTween(_pointsText, _currentPoints, targetPoints, _pointsMultDuration, token),
+                DoTextValueTween(_multText, _currentMult, 1, _pointsMultDuration, token));
 
             _currentPoints = targetPoints;
             _currentMult = 1;
@@ -221,7 +262,7 @@ namespace _Scripts.Managers
         #endregion
 
         #region Tweens
-        private async UniTask DoTextValueTween(TMP_Text text, int fromValue, int toValue, float duration)
+        private async UniTask DoTextValueTween(TMP_Text text, int fromValue, int toValue, float duration, CancellationToken token)
         {
             text.DOKill(true);
             var displayedValue = fromValue;
@@ -236,7 +277,7 @@ namespace _Scripts.Managers
                     duration
                 )
                 .SetEase(Ease.OutQuad)
-                .ToUniTask();
+                .ToUniTask(cancellationToken: token);
 
             text.text = toValue.ToString();
         }

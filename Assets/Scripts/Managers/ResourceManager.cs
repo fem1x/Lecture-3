@@ -59,6 +59,7 @@ namespace _Scripts.Managers
             RerollsCount--;
             return true;
         }
+        
 
         public void ResetRerolls()
         {
@@ -75,6 +76,12 @@ namespace _Scripts.Managers
         {
             if (refundDice > 0)
                 DiceCount += refundDice;
+        }
+        
+        public void ClearResources()
+        {
+            DiceCount = 0;
+            RerollsCount = 0;
         }
     }
 }

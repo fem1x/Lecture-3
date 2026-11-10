@@ -20,6 +20,9 @@ namespace _Scripts.Managers
         private readonly LevelService _levelService;
         private readonly MapService _mapService;
         private readonly GameStateManager _gameStateManager;
+        private readonly ResourceManager _resourceManager;
+        private readonly ScoreManager _scoreManager;
+        private readonly DiceRoller _diceRoller;
 
         [Inject]
         public Bootstrap(
@@ -29,7 +32,10 @@ namespace _Scripts.Managers
             DiceStatePanelView diceStatePanelView,
             LevelService levelService,
             MapService mapService,
-            GameStateManager gameStateManager)
+            GameStateManager gameStateManager,
+            ResourceManager resourceManager,
+            ScoreManager scoreManager,
+            DiceRoller diceRoller)
         {
             _diceSpawner = diceSpawner;
             _diceTableController = diceTableController;
@@ -38,6 +44,9 @@ namespace _Scripts.Managers
             _levelService = levelService;
             _mapService = mapService;
             _gameStateManager = gameStateManager;
+            _resourceManager = resourceManager;
+            _scoreManager = scoreManager;
+            _diceRoller = diceRoller;
         }
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
         
@@ -50,6 +59,10 @@ namespace _Scripts.Managers
         public void StartGame()
         {
             _gameStateManager.EnterGameState();
+            
+            _diceRoller.SetCanRoll(false);
+            _resourceManager.ClearResources();
+            _scoreManager.ClearScore();
             
             _levelService.InitializeLevelsOrder();
             _mapService.Initialize();

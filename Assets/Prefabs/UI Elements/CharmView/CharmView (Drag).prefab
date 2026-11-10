@@ -130,7 +130,7 @@ MonoBehaviour:
   _canvasGroup: {fileID: 3896439942729936315}
   _returnTweenTime: 0.8
   _returnEase: 18
-  _unrevealedSprite: {fileID: 1910388748, guid: 16766bedacd69774d946c31e9f1a5601, type: 3}
+  _unrevealedSprite: {fileID: 21300000, guid: 21b984222cf83494ba2de5493aae1966, type: 3}
 --- !u!225 &3896439942729936315
 CanvasGroup:
   m_ObjectHideFlags: 0

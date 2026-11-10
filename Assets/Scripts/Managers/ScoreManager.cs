@@ -40,5 +40,12 @@ namespace _Scripts.Managers
             CurrentScore = 0;
             OnScoreChanged?.Invoke(CurrentScore, ScoreQuota);
         }
+
+        public void ClearScore()
+        {
+            CurrentScore = 0;
+            ScoreQuota = 0;
+            OnScoreChanged?.Invoke(CurrentScore, ScoreQuota);
+        }
     }
 }

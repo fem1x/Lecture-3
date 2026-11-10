@@ -30,7 +30,7 @@ MonoBehaviour:
     m_FallbackState: 0
     m_WaitForCompletion: 0
     m_LocalVariables: []
-  <Icon>k__BackingField: {fileID: 443923342, guid: 16766bedacd69774d946c31e9f1a5601, type: 3}
+  <Icon>k__BackingField: {fileID: 21300000, guid: 887664795835d32409d92a493fae63f7, type: 3}
   <MaxDicesThreshold>k__BackingField: 2
   references:
     version: 2
