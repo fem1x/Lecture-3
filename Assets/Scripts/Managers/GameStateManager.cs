@@ -1,27 +1,35 @@
 ﻿using System;
+using _Scripts.Dices;
 
-public enum GameState
+namespace _Scripts.Managers
 {
-    None,
-    MainMenu,
-    Game
-}
-
-public class GameStateManager
-{
-    // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
-    public event Action<GameState> StateChanged;
-    public GameState CurrentState { get; private set; }
-    // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
-    
-    public void ChangeState(GameState newState)
+    public class GameStateManager
     {
-        if (CurrentState == newState) return;
+        // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
+        public event Action<GameState> StateChanged;
         
-        CurrentState = newState;
-        StateChanged?.Invoke(CurrentState);
+        public GameState CurrentState { get; private set; } = GameState.MainMenu;
+        public GameEndType LastGameResult { get; private set; }
+        // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
+        
+        public void EnterMenuState() => ChangeState(GameState.MainMenu);
+        public void EnterGameState() => ChangeState(GameState.Game);
+
+        public void EnterGameResultState(GameEndType resultType)
+        {
+            LastGameResult = resultType;
+            ChangeState(GameState.GameResult);
+        }
+
+        public void ChangeState(GameState newState, GameEndType? resultType = null)
+        {
+            if (resultType.HasValue)
+                LastGameResult = resultType.Value;
+
+            if (CurrentState == newState) return;
+            
+            CurrentState = newState;
+            StateChanged?.Invoke(newState);
+        }
     }
-    
-    public void EnterMenuState() => ChangeState(GameState.MainMenu);
-    public void EnterGameState() => ChangeState(GameState.Game);
 }

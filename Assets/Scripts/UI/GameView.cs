@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Threading;
+using _Scripts.Dices;
 using _Scripts.Managers;
+using _Scripts.Utility.Extensions;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using UnityEngine;
@@ -35,7 +37,9 @@ namespace _Scripts.UI
         
         private void OnDestroy()
         {
-            _gameStateManager.StateChanged -= OnStateChanged;
+            if (_gameStateManager != null)
+                _gameStateManager.StateChanged -= OnStateChanged;
+                
             _cts?.Cancel();
             _cts?.Dispose();
         }
@@ -44,19 +48,21 @@ namespace _Scripts.UI
         {
             if (state == GameState.Game)
             {
-                _cts?.Cancel();
-                _cts?.Dispose();
-                _cts = new CancellationTokenSource();
+                ResetCts();
 
                 _diceUiSliding.HideInstant();
                 _controlSliding.HideInstant();
                 
                 _selectionPanelCg.DOKill();
-                _selectionPanelCg.alpha = 0f;
-                _selectionPanelCg.interactable = false;
+                _selectionPanelCg.Hide();
                 
                 gameObject.SetActive(true);
                 ShowGameUiAsync(_cts.Token).Forget();
+            }
+            else if (state == GameState.GameResult)
+            {
+                ResetCts();
+                HideGameUiAsync(_cts.Token).Forget();
             }
             else
             {
@@ -66,11 +72,17 @@ namespace _Scripts.UI
                 _controlSliding.HideInstant();
                 
                 _selectionPanelCg.DOKill();
-                _selectionPanelCg.alpha = 0f;
-                _selectionPanelCg.interactable = false;
+                _selectionPanelCg.Hide();
                 
                 gameObject.SetActive(false);
             }
+        }
+
+        private void ResetCts()
+        {
+            _cts?.Cancel();
+            _cts?.Dispose();
+            _cts = new();
         }
 
         private async UniTaskVoid ShowGameUiAsync(CancellationToken token)
@@ -82,7 +94,7 @@ namespace _Scripts.UI
             
             _mapService.RequestMap();
         }
-
+        
         private async UniTask ShowBottomPanelsAsync(CancellationToken token)
         {
             _controlSliding.ShowAsync().Forget();
@@ -95,6 +107,22 @@ namespace _Scripts.UI
                 .WithCancellation(token);
                 
             _selectionPanelCg.interactable = true;
+        }
+
+        private async UniTaskVoid HideGameUiAsync(CancellationToken token)
+        {
+            _selectionPanelCg.interactable = false;
+
+            var isCancelled = await UniTask.WhenAll(
+                _selectionPanelCg.DOFade(0f, _selectionPanelFadeTime).WithCancellation(token),
+                _diceUiSliding.HideAsync(),
+                _controlSliding.HideAsync()
+            ).SuppressCancellationThrow();
+
+            if (isCancelled) return;
+
+            _selectionPanelCg.Hide();
+            gameObject.SetActive(false);
         }
     }
 }

@@ -10,8 +10,8 @@ namespace _Scripts.Managers
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
         public event Action OnLevelChanged;
         
-        public int CurrentLevelIndex {get; private set;}
-        public int CurrentSectionIndex {get; private set;}
+        public int CurrentLevelIndex { get; private set; }
+        public int CurrentSectionIndex { get; private set; }
         
         public List<LevelSection> SectionsList => _levelsList.Sections;
         public int SectionsCount => SectionsList.Count;
@@ -64,8 +64,8 @@ namespace _Scripts.Managers
 
         public void SelectLevel(int section, int level)
         {
-            if (section > SectionsCount) return;
-            if (level > SectionsList[section].Levels.Count) return;
+            if (section <= 0 || section > SectionsCount) return;
+            if (level <= 0 || level > SectionsList[section - 1].Levels.Count) return;
             
             CurrentSectionIndex = section;
             CurrentLevelIndex = level;

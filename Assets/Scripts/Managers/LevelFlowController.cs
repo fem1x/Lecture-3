@@ -10,12 +10,10 @@ namespace _Scripts.Managers
     {
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
         public event Action<TokenRewardData> OnLevelCompleted;
-        public event Action OnGameWon;
-        public event Action OnGameOver;
 
         private LevelConfig _currentLevel;
         
-		private readonly LevelService _levelService;
+        private readonly LevelService _levelService;
         private readonly ScoreManager _scoreManager;
         private readonly ResourceManager _resourceManager;
         private readonly DiceTableController _tableController;
@@ -37,9 +35,10 @@ namespace _Scripts.Managers
             RewardCalculator rewardCalculator,
             RepairTokensManager repairTokensManager,
             CodeLockService codeLockService,
-            DiceRoller diceRoller)
+            DiceRoller diceRoller,
+            GameStateManager gameStateManager)
         {
-            _levelService =  levelService;
+            _levelService = levelService;
             _scoreManager = scoreManager;
             _resourceManager = resourceManager;
             _tableController = tableController;
@@ -48,6 +47,7 @@ namespace _Scripts.Managers
             _repairTokensManager = repairTokensManager;
             _codeLockService = codeLockService;
             _diceRoller = diceRoller;
+            _gameStateManager = gameStateManager;
             
             _scoreManager.OnQuotaReached += HandleQuotaReached;
         }
@@ -84,7 +84,7 @@ namespace _Scripts.Managers
             if (!_scoreManager.HasEnoughScore && _resourceManager.DiceCount <= 0 && !_tableController.HasPendingDices)
             {
                 _diceRoller.SetCanRoll(false);
-                OnGameOver?.Invoke();
+                _gameStateManager.EnterGameResultState(GameEndType.Defeat);
             }
         }
         
@@ -94,8 +94,10 @@ namespace _Scripts.Managers
             var rewardData = _rewardCalculator.GetTokenRewards(_currentLevel.TokensReward);
             _repairTokensManager.AddTokens(rewardData.TotalTokens);
             
-            if(_levelService.TrySelectNextLevel())
+            if (_levelService.TrySelectNextLevel())
                 OnLevelCompleted?.Invoke(rewardData);
+            else
+                _gameStateManager.EnterGameResultState(GameEndType.Victory);
         }
     }
 }
