@@ -18,17 +18,25 @@ namespace _Scripts.UI.MainMenu
         private GameStateManager _gameStateManager;
         private Bootstrap _bootstrap;
         
+        #region DI
         [Inject]
-        public void Construct(GameStateManager gameStateManager,  Bootstrap bootstrap)
+        public void Construct(GameStateManager gameStateManager, Bootstrap bootstrap)
         {
             _gameStateManager = gameStateManager;
             _bootstrap = bootstrap;
             
             _gameStateManager.StateChanged += OnStateChanged;
+            OnStateChanged(_gameStateManager.CurrentState);
         }
+        #endregion
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
         
-        private void OnDestroy() => _gameStateManager.StateChanged -= OnStateChanged;
+        private void OnDestroy()
+        {
+            if (_gameStateManager != null)
+                _gameStateManager.StateChanged -= OnStateChanged;
+        }
+
         private void Start()
         {
             _playButton.onClick.AddListener(_bootstrap.StartGame);
@@ -40,7 +48,7 @@ namespace _Scripts.UI.MainMenu
             if (state == GameState.MainMenu)
             {
                 gameObject.SetActive(true);
-                ShoMenuUiAsync().Forget();
+                ShowMenuUiAsync().Forget();
             }
             else
             {
@@ -48,9 +56,10 @@ namespace _Scripts.UI.MainMenu
             }
         }
 
-        private async UniTaskVoid ShoMenuUiAsync()
+        private async UniTaskVoid ShowMenuUiAsync()
         {
-            
+            if (_cg != null)
+                _cg.Show();
         }
     }
 }

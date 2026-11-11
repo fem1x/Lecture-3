@@ -227,11 +227,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d0763476b1f4dbbbb36cf62dd4fc11b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Game::_Scripts.UI.DurabilityView
-  _pointImages:
-  - {fileID: 2976776067598526207}
-  - {fileID: 5847626331961443281}
-  _activeColor: {r: 0.6792453, g: 0.1505874, b: 0.2844247, a: 1}
-  _inactiveColor: {r: 0.18823531, g: 0.18823531, b: 0.18823531, a: 1}
+  _cracksOverlay: {fileID: 0}
+  _lightCrackSprite: {fileID: 0}
+  _heavyCrackSprite: {fileID: 0}
+  _lightCrackAlpha: 0.4
+  _heavyCrackAlpha: 0.7
 --- !u!1 &2202111171776066226
 GameObject:
   m_ObjectHideFlags: 0

@@ -42,7 +42,8 @@ public class GameLifetimeScope : LifetimeScope
     [SerializeField] private ScreenFlashView _screenFlashView;
     [SerializeField] private CharmReplaceView _charmReplaceView;
     [SerializeField] private MapLevelPointerView _mapLevelPointerView;
-    [SerializeField] private ScreenFadeView _screenFadeView;    
+    [SerializeField] private ScreenFadeView _screenFadeView;
+    [SerializeField] private DiceInspectorView _diceInspectorView; 
     // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
     
     protected override void Configure(IContainerBuilder builder)
@@ -82,6 +83,7 @@ public class GameLifetimeScope : LifetimeScope
         builder.RegisterComponent(_charmReplaceView);
         builder.RegisterComponent(_mapLevelPointerView);
         builder.RegisterComponent(_screenFadeView);
+        builder.RegisterComponent(_diceInspectorView);
     }
     
     private void RegisterServices(IContainerBuilder builder)
