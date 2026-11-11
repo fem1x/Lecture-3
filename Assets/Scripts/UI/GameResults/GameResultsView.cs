@@ -7,7 +7,6 @@ using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 using VContainer;
 
 namespace _Scripts.UI
@@ -17,29 +16,25 @@ namespace _Scripts.UI
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
         [SerializeField] private CanvasGroup _cg;
         [SerializeField] private SlidingPanelView _slidingPanel;
+        [SerializeField] private VictoryShowcaseAnimationView _showcaseView;
         [SerializeField] private TMP_Text _titleText;
         [SerializeField] private float _delayBeforeShow = 0.8f;
+        [SerializeField] private float _delayBeforeShowcase = 0.4f;
 
         private GameStateManager _gameStateManager;
         private CancellationTokenSource _cts;
 
-        #region DI
         [Inject]
         public void Construct(GameStateManager gameStateManager)
         {
             _gameStateManager = gameStateManager;
             _gameStateManager.StateChanged += OnStateChanged;
         }
-        #endregion
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
-
-        private void Awake() => HideInstant();
         
         private void OnDestroy()
         {
-            if (_gameStateManager != null)
-                _gameStateManager.StateChanged -= OnStateChanged;
-
+            _gameStateManager.StateChanged -= OnStateChanged;
             _cts?.Cancel();
             _cts?.Dispose();
         }
@@ -55,6 +50,7 @@ namespace _Scripts.UI
                 _cg.DOKill();
                 _cg.Hide();
                 _slidingPanel?.HideInstant();
+                _showcaseView?.HideInstant();
                 
                 gameObject.SetActive(true);
                 ShowAsync(_cts.Token).Forget();
@@ -75,8 +71,7 @@ namespace _Scripts.UI
 
         private void SetupView(GameEndType resultType)
         {
-            if (_titleText != null)
-                _titleText.text = resultType == GameEndType.Victory ? "ПОБЕДА!" : "ПОРАЖЕНИЕ";
+            _titleText.text = resultType == GameEndType.Victory ? "ПОБЕДА!" : "ПОРАЖЕНИЕ";
         }
 
         private async UniTaskVoid ShowAsync(CancellationToken token)
@@ -87,6 +82,16 @@ namespace _Scripts.UI
             _cg.DOKill();
             _cg.Show();
             _slidingPanel?.ShowAsync();
+
+            ShowShowcaseWithDelayAsync(token).Forget();
+        }
+
+        private async UniTaskVoid ShowShowcaseWithDelayAsync(CancellationToken token)
+        {
+            var isCancelled = await UniTask.Delay(TimeSpan.FromSeconds(_delayBeforeShowcase), cancellationToken: token).SuppressCancellationThrow();
+            if (isCancelled) return;
+
+            _showcaseView.PlayShowAsync(token).Forget();
         }
         
         private void HideInstant()
@@ -94,6 +99,7 @@ namespace _Scripts.UI
             _cg.DOKill();
             _cg.Hide();
             _slidingPanel?.HideInstant();
+            _showcaseView?.HideInstant();
             gameObject.SetActive(false);
         }
     }

@@ -57,6 +57,7 @@ namespace _Scripts.UI
         private IReadOnlyDiceData _currentData;
         private bool _isOpen;
         private bool _isInitialized;
+        private int _lastSpinIndex = -1;
 
         private Sequence _closeSequence;
         private Tween _diceScaleTween;
@@ -194,10 +195,13 @@ namespace _Scripts.UI
         {
             _displayView.transform.localScale = _defaultScale;
 
-            var targetEuler = _defaultRotation.eulerAngles;
-            var randomIndex = Random.Range(0, _spinPresets.Length);
-            var randomAxis = _spinPresets[randomIndex];
+            var randomIndex = Random.Range(0, _spinPresets.Length - 1);
+            if (randomIndex >= _lastSpinIndex && _lastSpinIndex != -1)
+                randomIndex++;
 
+            _lastSpinIndex = randomIndex;
+            var randomAxis = _spinPresets[randomIndex];
+            var targetEuler = _defaultRotation.eulerAngles;
             _displayView.transform.localEulerAngles = targetEuler + randomAxis;
         }
 
