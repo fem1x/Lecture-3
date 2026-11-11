@@ -1,12 +1,16 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
 namespace _Scripts.Utility
 {
     [RequireComponent(typeof(Collider))]
-    public class ModelRotator : MonoBehaviour
+    public class ModelRotator : MonoBehaviour, IPointerDownHandler
     {
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
+        public event Action InteractionStarted;
+        
         [SerializeField] private float _sensitivity = 0.25f;
         [SerializeField] private float _damping = 8f;
         [SerializeField] private Camera _camera;
@@ -15,6 +19,10 @@ namespace _Scripts.Utility
         private Vector2 _lastMousePosition;
         private bool _isDragging;
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
+
+        public void OnPointerDown(PointerEventData eventData) => InteractionStarted?.Invoke();
+
+        public void ResetVelocity() => _angularVelocity = Vector3.zero;
 
         private void OnMouseDown()
         {

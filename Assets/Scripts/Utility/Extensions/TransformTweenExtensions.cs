@@ -47,5 +47,23 @@ namespace _Scripts.Utility.Extensions
                 .SetTarget(target)
                 .SetLink(target.gameObject);
         }
+        
+        #region Folding
+        public static Tween DoUnfoldX(this Transform target, float targetScaleX = 1f, float time = 0.4f, Ease ease = Ease.OutBack)
+        {
+            target.DOKill(true);
+            var currentScale = target.localScale;
+
+            target.localScale = new(0f, currentScale.y, currentScale.z);
+            return target.DOScaleX(targetScaleX, time).SetEase(ease).SetLink(target.gameObject);
+        }
+
+        public static Tween DoFoldX(this Transform target, float time = 0.3f, Ease ease = Ease.InQuart)
+        {
+            target.DOKill(true);
+
+            return target.DOScaleX(0f, time).SetEase(ease).SetLink(target.gameObject);
+        }
+        #endregion
     }
 }

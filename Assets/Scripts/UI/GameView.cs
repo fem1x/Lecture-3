@@ -107,6 +107,7 @@ namespace _Scripts.UI
                 .WithCancellation(token);
                 
             _selectionPanelCg.interactable = true;
+            _selectionPanelCg.blocksRaycasts = true;
         }
 
         private async UniTaskVoid HideGameUiAsync(CancellationToken token)
