@@ -28,6 +28,7 @@ public class GameLifetimeScope : LifetimeScope
     [SerializeField] private InitialCombinationsConfig _initialCombinationsConfig;
     [SerializeField] private CharmsPoolConfig _charmsPoolConfig;
     [SerializeField] private ColorsConfig _colorsConfig;
+    [SerializeField] private GameSpeedConfig _gameSpeedConfig;
     
     [Header("Scene")]
     [SerializeField] private Camera _mainCamera;
@@ -43,7 +44,8 @@ public class GameLifetimeScope : LifetimeScope
     [SerializeField] private CharmReplaceView _charmReplaceView;
     [SerializeField] private MapLevelPointerView _mapLevelPointerView;
     [SerializeField] private ScreenFadeView _screenFadeView;
-    [SerializeField] private DiceInspectorView _diceInspectorView; 
+    [SerializeField] private DiceInspectorView _diceInspectorView;
+    [SerializeField] private DamageSequenceController _damageSequenceController;
     // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
     
     protected override void Configure(IContainerBuilder builder)
@@ -66,6 +68,7 @@ public class GameLifetimeScope : LifetimeScope
         builder.RegisterInstance(_initialCombinationsConfig);
         builder.RegisterInstance(_charmsPoolConfig);
         builder.RegisterInstance(_colorsConfig);
+        builder.RegisterInstance(_gameSpeedConfig);
     }
 
     private void RegisterSceneObjects(IContainerBuilder builder)
@@ -84,6 +87,7 @@ public class GameLifetimeScope : LifetimeScope
         builder.RegisterComponent(_mapLevelPointerView);
         builder.RegisterComponent(_screenFadeView);
         builder.RegisterComponent(_diceInspectorView);
+        builder.RegisterComponent(_damageSequenceController);
     }
     
     private void RegisterServices(IContainerBuilder builder)

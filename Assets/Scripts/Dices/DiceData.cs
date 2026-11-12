@@ -63,26 +63,28 @@ namespace _Scripts.Dices
             SetLock(!IsLocked);
         }
 
-        public void TakeDamage(int amount = 1)
+        public void TakeDamage(int amount = 1, bool notify = true)
         {
             CurrentDurability -= amount;
             if (CurrentDurability <= 0)
             {
-                Degrade();
+                Degrade(notify: notify);
                 return;
             }
 
-            OnDataChanged?.Invoke();
+            if (notify) OnDataChanged?.Invoke();
         }
 
-        public void Degrade(bool restoreHp = true)
+        public void Degrade(bool restoreHp = true, bool notify = true)
         {
             if (restoreHp)
                 CurrentDurability = MaxDurability;
-            
+    
             DamageLevel++;
-            OnDataChanged?.Invoke();
+            if (notify) OnDataChanged?.Invoke();
         }
+
+        public void NotifyDataChanged() => OnDataChanged?.Invoke();
 
         public void Repair()
         {

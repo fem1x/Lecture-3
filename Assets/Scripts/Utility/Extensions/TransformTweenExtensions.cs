@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Runtime.CompilerServices;
 using DG.Tweening;
 using UnityEngine;
 
@@ -6,14 +7,28 @@ namespace _Scripts.Utility.Extensions
 {
     public static class TransformTweenExtensions
     {
-        public static Tween DoScalePop(this Transform target, float scaleMult = 1.3f, float inTime = 0.07f, float outTime = 0.25f)
+        private class ScaleCache
         {
-            target.DOKill(true);
-            var targetScale = target.localScale;
-            
+            public readonly Vector3 InitialScale;
+            public ScaleCache(Vector3 scale) => InitialScale = scale;
+        }
+        
+        private static readonly ConditionalWeakTable<Transform, ScaleCache> _initialScales = new();
+
+        public static Tween DoScalePop(
+            this Transform target, 
+            float scaleMult = 1.3f, 
+            float inTime = 0.07f, 
+            float outTime = 0.5f)
+        {
+            var baseScale = _initialScales.GetValue(target, t => new ScaleCache(t.localScale)).InitialScale;
+
+            target.DOKill();
+            target.localScale = baseScale;
+
             return DOTween.Sequence()
-                .Append(target.DOScale(targetScale * scaleMult, inTime).SetEase(Ease.OutQuad))
-                .Append(target.DOScale(targetScale, outTime).SetEase(Ease.InQuad))
+                .Append(target.DOScale(baseScale * scaleMult, inTime).SetEase(Ease.OutQuad))
+                .Append(target.DOScale(baseScale, outTime).SetEase(Ease.InQuad))
                 .SetLink(target.gameObject);
         }
 

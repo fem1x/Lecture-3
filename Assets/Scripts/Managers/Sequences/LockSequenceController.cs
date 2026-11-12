@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading;
 using _Scripts.Configs;
 using _Scripts.Dices;
@@ -39,13 +38,15 @@ namespace _Scripts.Managers
         [SerializeField] private string _successSfx = "LockSuccess";
         [SerializeField] private string _forcedSfx = "LockForced";
         
+        private CancellationTokenSource _cts;
+        
         #region DI
         private ISfxPlayer _sfxPlayer;
         private ScreenFlashView _screenFlashView;
         private ColorsConfig _colorsConfig;
         private CameraShaker _cameraShaker;
         private GameStateManager _gameStateManager;
-        private CancellationTokenSource _cts;
+        private GameSpeedConfig _speedConfig;
 
         [Inject]
         public void Construct(
@@ -53,13 +54,15 @@ namespace _Scripts.Managers
             ScreenFlashView screenFlashView, 
             ColorsConfig colorsConfig,
             CameraShaker cameraShaker,
-            GameStateManager gameStateManager)
+            GameStateManager gameStateManager,
+            GameSpeedConfig speedConfig)
         {
             _sfxPlayer = sfxPlayer;
             _screenFlashView = screenFlashView;
             _colorsConfig = colorsConfig;
             _cameraShaker = cameraShaker;
             _gameStateManager = gameStateManager;
+            _speedConfig = speedConfig;
             
             _gameStateManager.StateChanged += OnStateChanged;
         }
@@ -77,9 +80,7 @@ namespace _Scripts.Managers
         private void OnStateChanged(GameState state)
         {
             if (state != GameState.Game)
-            {
                 CancelSequence();
-            }
         }
         
         private void CancelSequence()
@@ -92,7 +93,7 @@ namespace _Scripts.Managers
         public async UniTask PlaySequenceAsync(List<Dice> dices, LockBreakResult result)
         {
             CancelSequence();
-            _cts = new CancellationTokenSource();
+            _cts = new();
             var token = _cts.Token;
 
             _codeLockView.ClearSlots();
@@ -100,13 +101,13 @@ namespace _Scripts.Managers
             var isCancelled = await InsertValuesAsync(dices, token).SuppressCancellationThrow();
             if (isCancelled) return;
             
-            isCancelled = await UniTask.Delay(TimeSpan.FromSeconds(_delayBeforeValidation), cancellationToken: token).SuppressCancellationThrow();
+            isCancelled = await _speedConfig.DelayAsync(_delayBeforeValidation, token).SuppressCancellationThrow();
             if (isCancelled) return;
             
             isCancelled = await ValidationAsync(result, token).SuppressCancellationThrow();
             if (isCancelled) return;
             
-            isCancelled = await UniTask.Delay(TimeSpan.FromSeconds(_delayAfterValidation), cancellationToken: token).SuppressCancellationThrow();
+            isCancelled = await _speedConfig.DelayAsync(_delayAfterValidation, token).SuppressCancellationThrow();
             if (isCancelled) return;
             
             DoResultFx(result);
@@ -120,15 +121,15 @@ namespace _Scripts.Managers
                 var dice = dices[i];
                 var slot = slots[i];
                 
-                await UniTask.Delay(TimeSpan.FromSeconds(_delayPerDice), cancellationToken: token);
+                await _speedConfig.DelayAsync(_delayPerDice, token);
                 
-                dice.transform.DoScalePop().ToUniTask(cancellationToken: token).Forget();
+                dice.transform.DoScalePop();
                 PlayStampSfx(_stampDiceSfx, source: dice.transform, step: i);
                 
-                await UniTask.Delay(TimeSpan.FromSeconds(_stampDelay), cancellationToken: token);
+                await _speedConfig.DelayAsync(_stampDelay, token);
                 
                 slot.InsertValue(dice.Data.RolledValue);
-                slot.DiceImage.transform.DoScalePop().ToUniTask(cancellationToken: token).Forget();
+                slot.DiceImage.transform.DoScalePop();
                 PlayStampSfx(_stampSlotSfx);
             }
         }
@@ -140,7 +141,7 @@ namespace _Scripts.Managers
                 slot.SetCorrectState(result);
                 PlayStampSfx(IsSuccess(result) ? _slotCorrectSfx : _slotIncorrectSfx);
 
-                await UniTask.Delay(TimeSpan.FromSeconds(_validateDelayPerSlot), cancellationToken: token);
+                await _speedConfig.DelayAsync(_validateDelayPerSlot, token);
             }
         }
 
@@ -156,7 +157,7 @@ namespace _Scripts.Managers
             _cameraShaker.DoShake(preset);
         }
         
-        private void PlayStampSfx(string sfxName, Transform source=null, int step=0)
+        private void PlayStampSfx(string sfxName, Transform source = null, int step = 0)
         {
             var pitchMult = 1f + (_pitchStep * step);
             if (source != null)
@@ -174,6 +175,6 @@ namespace _Scripts.Managers
             DoCameraShake(result);
         }
 
-        private bool IsSuccess(LockBreakResult result) => result ==  LockBreakResult.Success;
+        private bool IsSuccess(LockBreakResult result) => result == LockBreakResult.Success;
     }
 }

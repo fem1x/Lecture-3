@@ -15,8 +15,8 @@ MonoBehaviour:
   <FirstRollSettings>k__BackingField:
     Direction: {x: 0, y: 0.7, z: 1}
     DirectionRandomize: 0
-    Force: 4.7
-    ForceRandomize: 0.15
+    Force: 4.5
+    ForceRandomize: 0.08
     Torque: 2
     TorqueRandomize: 0.3
     TimeBetweenThrows: 0.2

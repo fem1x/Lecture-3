@@ -38,6 +38,7 @@ namespace _Scripts.Managers
         private CodeLockService _codeLockService;
         private CombinationEvaluator _evaluator;
         private LockSequenceController _lockSequenceController;
+        private DamageSequenceController _damageSequenceController;
         
         [Inject]
         public void Construct(
@@ -53,7 +54,8 @@ namespace _Scripts.Managers
             DiceDamageService damageService,
             CodeLockService codeLockService,
             CombinationEvaluator evaluator,
-            LockSequenceController lockSequenceController)
+            LockSequenceController lockSequenceController,
+            DamageSequenceController damageSequenceController)
         {
             _tableController = tableController;
             _calculator = calculator;
@@ -68,6 +70,7 @@ namespace _Scripts.Managers
             _codeLockService = codeLockService;
             _evaluator = evaluator;
             _lockSequenceController = lockSequenceController;
+            _damageSequenceController = damageSequenceController;
         }
         #endregion
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== 
@@ -160,9 +163,11 @@ namespace _Scripts.Managers
         {
             var scoreSequence = _calculator.Calculate(selectedDices);
             OnScoreCalculated?.Invoke(scoreSequence, selectedDices);
-            
+    
             await _scoreSequenceController.PlaySequenceAsync(scoreSequence);
-            _damageService.DamageDices(selectedDices);
+
+            var damagePlan = _damageService.DamageDices(selectedDices);
+            await _damageSequenceController.PlaySequenceAsync(damagePlan);
         }
 
         private async UniTask CodeLockFlow(List<Dice> selectedDices)

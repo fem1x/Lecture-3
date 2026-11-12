@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Threading;
 using _Scripts.Configs;
 using _Scripts.Data_Transfer.Contexts;
@@ -28,8 +27,12 @@ namespace _Scripts.Managers
         [Space(0.5f)]
         [SerializeField] private float _pointsMultDuration = 0.5f;
         [SerializeField] private float _pointsAddDuration = 0.15f;
+
+        [Header("Scale Pop")] 
+        [SerializeField] private float _dicePopMult = 1.6f;
+        [SerializeField] private float _uiPopMult = 1.88f;
         
-        [Header("Camera & Shake")]
+        [Header("Camera shake")]
         [SerializeField] private CameraShakePreset _diceScoreShake;
         [SerializeField] private CameraShakePreset _multTriggerShake;
         
@@ -43,22 +46,31 @@ namespace _Scripts.Managers
         private int _currentMult;
         private int _fxStepIndex;
         
+        #region DI
         private ISfxPlayer _sfxPlayer;
         private ScoreManager _scoreManager;
         private CameraShaker _cameraShaker;
         private GameStateManager _gameStateManager;
+        private GameSpeedConfig _speedConfig;
         private CancellationTokenSource _cts;
 
         [Inject]
-        public void Construct(ISfxPlayer sfxPlayer, ScoreManager scoreManager, CameraShaker cameraShaker, GameStateManager gameStateManager)
+        public void Construct(
+            ISfxPlayer sfxPlayer, 
+            ScoreManager scoreManager, 
+            CameraShaker cameraShaker, 
+            GameStateManager gameStateManager,
+            GameSpeedConfig speedConfig)
         {
             _sfxPlayer = sfxPlayer;
             _scoreManager = scoreManager;
             _cameraShaker = cameraShaker;
             _gameStateManager = gameStateManager;
+            _speedConfig = speedConfig;
             
             _gameStateManager.StateChanged += OnStateChanged;
         }
+        #endregion
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
         
         private void OnDestroy()
@@ -72,9 +84,7 @@ namespace _Scripts.Managers
         private void OnStateChanged(GameState state)
         {
             if (state != GameState.Game)
-            {
                 CancelSequence();
-            }
         }
         
         private void CancelSequence()
@@ -87,7 +97,7 @@ namespace _Scripts.Managers
         public async UniTask PlaySequenceAsync(ScoreSequencePlan sequencePlan)
         {
             CancelSequence();
-            _cts = new CancellationTokenSource();
+            _cts = new();
             var token = _cts.Token;
 
             ResetState(sequencePlan);
@@ -116,26 +126,26 @@ namespace _Scripts.Managers
                     }
                 }
                 
-                await UniTask.Delay(TimeSpan.FromSeconds(_delayAfterFinalMult), cancellationToken: token);
+                await _speedConfig.DelayAsync(_delayAfterFinalMult, token);
                 ApplyFinalScore(sequencePlan.TotalScore);
             }
             catch (OperationCanceledException)
             {
-                
+                ResetTextScales();
             }
         }
         
         #region Step async Methods
         private async UniTask DiceStepAsync(ScoreStep step, CancellationToken token)
         {
-            await UniTask.Delay(TimeSpan.FromSeconds(_delayPerStep), cancellationToken: token);
+            await _speedConfig.DelayAsync(_delayPerStep, token);
             PlayDiceStepFx(step.SourceTransform, _addPointsSfx, true);
             await AddPointsAsync(step.BonusPoints, token);
         }
 
         private async UniTask CharmStepAsync(ScoreStep step, CancellationToken token)
         {
-            await UniTask.Delay(TimeSpan.FromSeconds(_delayPerStep), cancellationToken: token);
+            await _speedConfig.DelayAsync(_delayPerStep, token);
     
             step.CharmView.PlayTriggerAnimation();
             _sfxPlayer?.Play(_charmTriggerSfx);
@@ -143,21 +153,21 @@ namespace _Scripts.Managers
             // +Points
             if (step.BonusPoints > 0)
             {
-                _pointsText.transform.DoScalePop(scaleMult: 1.8f).ToUniTask(cancellationToken: token).Forget();
+                _pointsText.transform.DoScalePop(_uiPopMult);
                 await AddPointsAsync(step.BonusPoints, token);
             }
 
             // +Mult
             if (step.BonusMultiplier > 0)
             {
-                _multText.transform.DoScalePop(scaleMult: 1.8f).ToUniTask(cancellationToken: token).Forget();
+                _multText.transform.DoScalePop(_uiPopMult);
                 await AddMultAsync(step.BonusMultiplier, token);
             }
 
             // X-Mult
             if (step.XMultiplier > 1f)
             {
-                _multText.transform.DoScalePop(scaleMult: 2.5f).ToUniTask(cancellationToken: token).Forget();
+                _multText.transform.DoScalePop(2.5f);
                 await XMultAsync(step.XMultiplier, token);
             }
         }
@@ -166,7 +176,7 @@ namespace _Scripts.Managers
         {
             if (step.BonusPoints == 0 && step.BonusMultiplier == 0) return;
             
-            await UniTask.Delay(TimeSpan.FromSeconds(_delayPerStep), cancellationToken: token);
+            await _speedConfig.DelayAsync(_delayPerStep, token);
             PlayDiceStepFx(step.SourceTransform, _addPointsSfx, true);
             
             if (step.BonusPoints > 0)
@@ -178,7 +188,7 @@ namespace _Scripts.Managers
 
         private async UniTask MultiplyStepAsync(ScoreStep step, CancellationToken token)
         {
-            await UniTask.Delay(TimeSpan.FromSeconds(_delayBeforeFinalMult), cancellationToken: token);
+            await _speedConfig.DelayAsync(_delayBeforeFinalMult, token);
             await TriggerMultAsync(token);
         }
         #endregion
@@ -186,21 +196,21 @@ namespace _Scripts.Managers
         private async UniTask AddPointsAsync(int amount, CancellationToken token)
         {
             var target = _currentPoints + amount;
-            await DoTextValueTween(_pointsText, _currentPoints, target, _pointsAddDuration, token);
+            await DoTextValueTween(_pointsText, _currentPoints, target, _speedConfig.ScaleDuration(_pointsAddDuration), token);
             _currentPoints = target;
         }
 
         private async UniTask AddMultAsync(int amount, CancellationToken token)
         {
             var target = _currentMult + amount;
-            await DoTextValueTween(_multText, _currentMult, target, _pointsAddDuration, token);
+            await DoTextValueTween(_multText, _currentMult, target, _speedConfig.ScaleDuration(_pointsAddDuration), token);
             _currentMult = target;
         }
         
         private async UniTask XMultAsync(float xMult, CancellationToken token)
         {
             var target = Mathf.RoundToInt(_currentMult * xMult);
-            await DoTextValueTween(_multText, _currentMult, target, _pointsAddDuration, token);
+            await DoTextValueTween(_multText, _currentMult, target, _speedConfig.ScaleDuration(_pointsAddDuration), token);
             _currentMult = target;
         }
         
@@ -212,12 +222,13 @@ namespace _Scripts.Managers
         
         private async UniTask TriggerMultAsync(CancellationToken token)
         {
-            PlayMultTriggerFx();
+            var scaledMultDuration = _speedConfig.ScaleDuration(_pointsMultDuration);
+            PlayMultTriggerFx(scaledMultDuration);
             var targetPoints = _currentPoints * _currentMult;
             
             await UniTask.WhenAll(
-                DoTextValueTween(_pointsText, _currentPoints, targetPoints, _pointsMultDuration, token),
-                DoTextValueTween(_multText, _currentMult, 1, _pointsMultDuration, token));
+                DoTextValueTween(_pointsText, _currentPoints, targetPoints, scaledMultDuration, token),
+                DoTextValueTween(_multText, _currentMult, 1, scaledMultDuration, token));
 
             _currentPoints = targetPoints;
             _currentMult = 1;
@@ -229,33 +240,39 @@ namespace _Scripts.Managers
             _currentMult = sequencePlan.Combination.Multiplier;
             _fxStepIndex = 0;
 
+            ResetTextScales();
             _pointsText.text = _currentPoints.ToString();
             _multText.text = _currentMult.ToString();
         }
+
+        private void ResetTextScales()
+        {
+            _pointsText.transform.DOKill();
+            _multText.transform.DOKill();
+            _pointsText.transform.localScale = Vector3.one;
+            _multText.transform.localScale = Vector3.one;
+        }
         
         #region FX Methods
-
         private void PlayDiceStepFx(Transform source, string sfxName, bool is3D)
         {
-            source.DoScalePop();
-            _pointsText.transform.DoScalePop(scaleMult: 1.8f).ToUniTask().Forget();
+            source.DoScalePop(_dicePopMult);
+            _pointsText.transform.DoScalePop(_uiPopMult);
             _cameraShaker.DoShake(_diceScoreShake);
 
-            //SFX
             if (sfxName == null) return;
             
             var pitchMult = 1f + (0.09f * _fxStepIndex++);
             if (is3D)
                 _sfxPlayer?.Play(sfxName, source.position, pitchMult);
-            
             else
                 _sfxPlayer?.Play(sfxName, pitchMult);
         }
 
-        private void PlayMultTriggerFx()
+        private void PlayMultTriggerFx(float duration)
         {
-            _multText.transform.DoScalePop(3f, outTime: _pointsMultDuration);
-            _pointsText.transform.DoScalePop(3f, outTime: _pointsMultDuration);
+            _multText.transform.DoScalePop(3f, outTime: duration);
+            _pointsText.transform.DoScalePop(3f, outTime: duration);
             _cameraShaker.DoShake(_multTriggerShake);
             _sfxPlayer?.Play(_triggerMultSfx);
         }
@@ -264,7 +281,7 @@ namespace _Scripts.Managers
         #region Tweens
         private async UniTask DoTextValueTween(TMP_Text text, int fromValue, int toValue, float duration, CancellationToken token)
         {
-            text.DOKill(true);
+            text.DOKill();
             var displayedValue = fromValue;
             await DOTween.To(
                     () => displayedValue,

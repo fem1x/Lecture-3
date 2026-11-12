@@ -107,7 +107,7 @@ MonoBehaviour:
       - {fileID: 8300000, guid: 1006dc6543d3bbc48b0e4092ee8fb578, type: 3}
       volume: 1
       pitch: 1
-    volume: 0.35
+    volume: 0.27
     pitch: 0.73
     pitchRandomize: 0.06
     is3D: 0
@@ -324,6 +324,40 @@ MonoBehaviour:
     pitchRandomize: 0
     is3D: 0
     useGlobalSpatialBlend: 0
+    customSpatialBlend: 0
+    isLooped: 0
+    audioMixer: {fileID: -9158774617749725478, guid: 1470a324304038b4ab0db292ebdfc379, type: 2}
+    source: {fileID: 0}
+  - name: DiceDamage
+    layers:
+    - clips:
+      - {fileID: 8300000, guid: 346ea247261a9fc468f3a7cac1f83efb, type: 3}
+      volume: 1
+      pitch: 1
+    volume: 0.6
+    pitch: 1
+    pitchRandomize: 0.15
+    is3D: 1
+    useGlobalSpatialBlend: 1
+    customSpatialBlend: 0
+    isLooped: 0
+    audioMixer: {fileID: -9158774617749725478, guid: 1470a324304038b4ab0db292ebdfc379, type: 2}
+    source: {fileID: 0}
+  - name: DiceDegrade
+    layers:
+    - clips:
+      - {fileID: 8300000, guid: 40c7423d3ed45f94bae5c1ee52619871, type: 3}
+      volume: 1
+      pitch: 1
+    - clips:
+      - {fileID: 8300000, guid: 346ea247261a9fc468f3a7cac1f83efb, type: 3}
+      volume: 0.5
+      pitch: 1
+    volume: 0.7
+    pitch: 1
+    pitchRandomize: 0.15
+    is3D: 1
+    useGlobalSpatialBlend: 1
     customSpatialBlend: 0
     isLooped: 0
     audioMixer: {fileID: -9158774617749725478, guid: 1470a324304038b4ab0db292ebdfc379, type: 2}

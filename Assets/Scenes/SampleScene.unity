@@ -1624,6 +1624,115 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 802130857}
   m_CullTransparentMesh: 1
+--- !u!1 &809512011
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 809512012}
+  - component: {fileID: 809512013}
+  - component: {fileID: 809512015}
+  - component: {fileID: 809512014}
+  m_Layer: 0
+  m_Name: Sequences
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &809512012
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 809512011}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 418.00436, y: 236.02347, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &809512013
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 809512011}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e411d8f1b14f433f8d486e772e8c315b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Game::_Scripts.Managers.DamageSequenceController
+  _delayPerDice: 0.25
+  _delayAfterSequence: 1.2
+  _damageShake: {fileID: 11400000, guid: 73afdda3bc6cc7a4aaa047831433a669, type: 2}
+  _degradeShake: {fileID: 11400000, guid: da72b317bc7a4054e95c10871aebca44, type: 2}
+  _damageSfx: DiceDamage
+  _degradeSfx: DiceDegrade
+--- !u!114 &809512014
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 809512011}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c7d5cf338f2446b8a0590f9788f8ae57, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Game::_Scripts.Managers.LockSequenceController
+  _codeLockView: {fileID: 1444523885420252964}
+  _stampDelay: 0.09
+  _delayPerDice: 0.33
+  _validateDelayPerSlot: 0.2
+  _delayBeforeValidation: 0.8
+  _delayAfterValidation: 1
+  _flashAlpha: 0.1
+  _successShake: {fileID: 11400000, guid: 0a7eab9434850b644900b108b7765692, type: 2}
+  _forcedShake: {fileID: 11400000, guid: c661cfe3f8b1e0f4fa140291ae140f7f, type: 2}
+  _pitchStep: 0.08
+  _stampDiceSfx: LockStampDice
+  _stampSlotSfx: LockStampSlot
+  _slotCorrectSfx: LockSlotCorrect
+  _slotIncorrectSfx: LockSlotIncorrect
+  _successSfx: LockSuccess
+  _forcedSfx: LockForced
+--- !u!114 &809512015
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 809512011}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62f7d6f3e69e469e99fcb9732738405d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Game::_Scripts.Managers.ScoreSequenceController
+  _pointsText: {fileID: 25203638025426463}
+  _multText: {fileID: 7860376795073877995}
+  _delayPerStep: 0.33
+  _delayBeforeFinalMult: 0.8
+  _delayAfterFinalMult: 0.7
+  _pointsMultDuration: 1
+  _pointsAddDuration: 0.15
+  _dicePopMult: 1.5
+  _uiPopMult: 1.9
+  _popInTime: 0.07
+  _popOutTime: 0.6
+  _diceScoreShake: {fileID: 11400000, guid: 73afdda3bc6cc7a4aaa047831433a669, type: 2}
+  _multTriggerShake: {fileID: 11400000, guid: 503aaaff3a5fac344b73a17f2df35bf2, type: 2}
+  _addPointsSfx: AddPoints
+  _triggerMultSfx: TriggerMult
+  _addScoreSfx: AddScore
+  _charmTriggerSfx: CharmTrigger
 --- !u!114 &821933423 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2952183702325394033, guid: bde62931d8190a744988fab77aaf389a, type: 3}
@@ -4672,7 +4781,7 @@ MonoBehaviour:
   m_SoftShadowQuality: 2
   m_RenderingLayersMask:
     serializedVersion: 0
-    m_Bits: 1
+    m_Bits: 3
   m_ShadowRenderingLayersMask:
     serializedVersion: 0
     m_Bits: 1
@@ -4954,6 +5063,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1871149648}
     m_Modifications:
+    - target: {fileID: 587848489612111598, guid: c4b0cffed3055364c9dd5eaa03deaff7, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 602787796214581256, guid: c4b0cffed3055364c9dd5eaa03deaff7, type: 3}
+      propertyPath: m_RenderingLayerMask
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 912670176924655890, guid: c4b0cffed3055364c9dd5eaa03deaff7, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.51
@@ -4974,10 +5091,62 @@ PrefabInstance:
       propertyPath: m_LocalPosition.y
       value: 2.47
       objectReference: {fileID: 0}
+    - target: {fileID: 1160003880660603145, guid: c4b0cffed3055364c9dd5eaa03deaff7, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1748382503181728141, guid: c4b0cffed3055364c9dd5eaa03deaff7, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1761993188722570118, guid: c4b0cffed3055364c9dd5eaa03deaff7, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2446885322956928734, guid: c4b0cffed3055364c9dd5eaa03deaff7, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3735075917161018459, guid: c4b0cffed3055364c9dd5eaa03deaff7, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4419741378775332598, guid: c4b0cffed3055364c9dd5eaa03deaff7, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6154793667381324379, guid: c4b0cffed3055364c9dd5eaa03deaff7, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6622979366275410166, guid: c4b0cffed3055364c9dd5eaa03deaff7, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7207204259814534151, guid: c4b0cffed3055364c9dd5eaa03deaff7, type: 3}
+      propertyPath: m_Name
+      value: Cube
+      objectReference: {fileID: 0}
+    - target: {fileID: 7207204259814534151, guid: c4b0cffed3055364c9dd5eaa03deaff7, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7207204259814534151, guid: c4b0cffed3055364c9dd5eaa03deaff7, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7921236059131292132, guid: c4b0cffed3055364c9dd5eaa03deaff7, type: 3}
       propertyPath: _camera
       value: 
       objectReference: {fileID: 4235478116480333186}
+    - target: {fileID: 7969096369090441454, guid: c4b0cffed3055364c9dd5eaa03deaff7, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8549721710548504329, guid: c4b0cffed3055364c9dd5eaa03deaff7, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 8648216024354602409, guid: c4b0cffed3055364c9dd5eaa03deaff7, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -5022,7 +5191,17 @@ PrefabInstance:
       propertyPath: m_Name
       value: ModelContainer
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 9136753073444531590, guid: c4b0cffed3055364c9dd5eaa03deaff7, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 9150223062917867405, guid: c4b0cffed3055364c9dd5eaa03deaff7, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 74475995645867297, guid: c4b0cffed3055364c9dd5eaa03deaff7, type: 3}
+    - {fileID: 7257571207252269528, guid: c4b0cffed3055364c9dd5eaa03deaff7, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -5575,6 +5754,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c01c7d50a2214afa9dff871a3191fd0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Game::_Scripts.Managers.RoundFlowController
+  _rollAction: {fileID: 796243349759039791, guid: 54ef8e7d99f66b5468c538cc1f1e26fe, type: 3}
   _submitSfx: Submit
 --- !u!114 &882221812078115102
 MonoBehaviour:
@@ -19646,7 +19826,7 @@ AudioSource:
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 8300000, guid: 1b7bba7d4bb132e41bb70a933d094d29, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.65
+  m_Volume: 0.55
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -23530,8 +23710,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6868128017335792520}
-  - component: {fileID: 9031856335447571611}
-  - component: {fileID: 8194182500259036775}
   m_Layer: 5
   m_Name: UiScripts
   m_TagString: Untagged
@@ -25216,34 +25394,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &8194182500259036775
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7662055199766895234}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c7d5cf338f2446b8a0590f9788f8ae57, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Game::_Scripts.Managers.LockSequenceController
-  _codeLockView: {fileID: 1444523885420252964}
-  _stampDelay: 0.09
-  _delayPerDice: 0.33
-  _validateDelayPerSlot: 0.2
-  _delayBeforeValidation: 0.8
-  _delayAfterValidation: 1
-  _flashAlpha: 0.1
-  _successShake: {fileID: 11400000, guid: 0a7eab9434850b644900b108b7765692, type: 2}
-  _forcedShake: {fileID: 11400000, guid: c661cfe3f8b1e0f4fa140291ae140f7f, type: 2}
-  _pitchStep: 0.08
-  _stampDiceSfx: LockStampDice
-  _stampSlotSfx: LockStampSlot
-  _slotCorrectSfx: LockSlotCorrect
-  _slotIncorrectSfx: LockSlotIncorrect
-  _successSfx: LockSuccess
-  _forcedSfx: LockForced
 --- !u!1 &8226821571072770981
 GameObject:
   m_ObjectHideFlags: 0
@@ -25563,7 +25713,7 @@ MonoBehaviour:
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 1920, y: 1080}
   m_ScreenMatchMode: 1
-  m_MatchWidthOrHeight: 1
+  m_MatchWidthOrHeight: 0
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
@@ -26263,7 +26413,7 @@ Light:
   m_CullingMask:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_RenderingLayerMask: 1
+  m_RenderingLayerMask: 3
   m_Lightmapping: 4
   m_LightShadowCasterMode: 0
   m_AreaSize: {x: 1, y: 1}
@@ -26977,12 +27127,13 @@ MonoBehaviour:
   _initialCombinationsConfig: {fileID: 11400000, guid: e0b645fcf4fa20d49a6bafb702242dca, type: 2}
   _charmsPoolConfig: {fileID: 11400000, guid: c84755c666e84cb4883272e4d0099319, type: 2}
   _colorsConfig: {fileID: 11400000, guid: 675cce796e87ad441a7b72e92ff20b17, type: 2}
+  _gameSpeedConfig: {fileID: 11400000, guid: 83c7d71891649814fa22405e787988d4, type: 2}
   _mainCamera: {fileID: 4235478116480333186}
   _turnFlowController: {fileID: 881944679754097541}
   _diceTableController: {fileID: 4352709627321837115}
   _spawnPoint: {fileID: 5431624477834202398}
-  _scoreSequenceController: {fileID: 9031856335447571611}
-  _lockSequenceController: {fileID: 8194182500259036775}
+  _scoreSequenceController: {fileID: 809512015}
+  _lockSequenceController: {fileID: 809512014}
   _pointsWidgetView: {fileID: 7491051643829521457}
   _diceStatePanelView: {fileID: 7221284854192429880}
   _charmTooltipView: {fileID: 1828934339743549457}
@@ -26991,6 +27142,7 @@ MonoBehaviour:
   _mapLevelPointerView: {fileID: 1659530025831587049}
   _screenFadeView: {fileID: 1074043887}
   _diceInspectorView: {fileID: 1871149649}
+  _damageSequenceController: {fileID: 809512013}
 --- !u!114 &8892290245594086093
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -27329,31 +27481,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 108, y: 108}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &9031856335447571611
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7662055199766895234}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 62f7d6f3e69e469e99fcb9732738405d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Game::_Scripts.Managers.ScoreSequenceController
-  _pointsText: {fileID: 25203638025426463}
-  _multText: {fileID: 7860376795073877995}
-  _delayPerStep: 0.33
-  _delayBeforeFinalMult: 1
-  _delayAfterFinalMult: 0.7
-  _pointsMultDuration: 1
-  _pointsAddDuration: 0.15
-  _diceScoreShake: {fileID: 11400000, guid: 73afdda3bc6cc7a4aaa047831433a669, type: 2}
-  _multTriggerShake: {fileID: 11400000, guid: 503aaaff3a5fac344b73a17f2df35bf2, type: 2}
-  _addPointsSfx: AddPoints
-  _triggerMultSfx: TriggerMult
-  _addScoreSfx: AddScore
-  _charmTriggerSfx: CharmTrigger
 --- !u!1 &9058277811833075797
 GameObject:
   m_ObjectHideFlags: 0
@@ -27914,6 +28041,7 @@ SceneRoots:
   - {fileID: 569490058964013936}
   - {fileID: 1016076070}
   - {fileID: 4672265383524896079}
+  - {fileID: 809512012}
   - {fileID: 622243862}
   - {fileID: 2496885840247425704}
   - {fileID: 6233253216318022348}
