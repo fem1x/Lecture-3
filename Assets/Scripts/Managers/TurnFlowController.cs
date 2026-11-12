@@ -14,6 +14,9 @@ namespace _Scripts.Managers
     public class TurnFlowController : MonoBehaviour
     {
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== 
+        [Header("Input")]
+        [SerializeField] private InputActionReference _rollAction;
+
         [Header("SFX")]
         [SerializeField] private string _submitSfx;
         
@@ -28,7 +31,7 @@ namespace _Scripts.Managers
         private ResourceManager _resourceManager;
         private DiceSpawner _diceSpawner;
         private DiceRoller _diceRoller;
-        private LevelFlowController  _levelFlowController;
+        private LevelFlowController _levelFlowController;
         private ISfxPlayer _sfxPlayer;
         private ScoreSequenceController _scoreSequenceController;
         private DiceDamageService _damageService;
@@ -43,12 +46,12 @@ namespace _Scripts.Managers
             ScoreManager scoreManager,
             ResourceManager resourceManager,
             DiceSpawner diceSpawner,
-            DiceRoller  diceRoller,
+            DiceRoller diceRoller,
             LevelFlowController levelFlowController,
             ISfxPlayer sfxPlayer,
             ScoreSequenceController scoreSequenceController,
             DiceDamageService damageService,
-            CodeLockService  codeLockService,
+            CodeLockService codeLockService,
             CombinationEvaluator evaluator,
             LockSequenceController lockSequenceController)
         {
@@ -56,7 +59,7 @@ namespace _Scripts.Managers
             _calculator = calculator;
             _scoreManager = scoreManager;
             _resourceManager = resourceManager;
-            _diceSpawner =  diceSpawner;
+            _diceSpawner = diceSpawner;
             _diceRoller = diceRoller;
             _levelFlowController = levelFlowController;
             _sfxPlayer = sfxPlayer;
@@ -68,11 +71,28 @@ namespace _Scripts.Managers
         }
         #endregion
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== 
-       
-        public void OnRoll(InputValue inputValue)
+
+        private void OnEnable()
+        {
+            if (_rollAction == null) return;
+            
+            _rollAction.action.Enable();
+            _rollAction.action.performed += HandleRollPerformed;
+        }
+
+        private void OnDisable()
+        {
+            if (_rollAction == null) return;
+            
+            _rollAction.action.performed -= HandleRollPerformed;
+            _rollAction.action.Disable();
+        }
+
+        private void HandleRollPerformed(InputAction.CallbackContext ctx)
         {
             if (!_diceRoller.CanRoll) return;
             if (_diceRoller.IsRolling || _isScoring) return;
+            
             ExecuteRollAsync().Forget();
         }
         
@@ -99,7 +119,6 @@ namespace _Scripts.Managers
             var activeRolledDices = _tableController.AllDices
                 .Where(d => d != null && d.Data.RolledValue > 0)
                 .ToList();
-            
         }
         
         public void OnScoreButtonClicked()
@@ -152,7 +171,7 @@ namespace _Scripts.Managers
             var result = _codeLockService.EvaluateAttempt(selectedDices, combination);
             if (result == LockBreakResult.None)
             {
-                Debug.Log("Invalid unlock attempt!");
+                Debug.LogWarning("Invalid unlock attempt!");
                 return;
             }
             

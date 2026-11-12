@@ -58,8 +58,7 @@ namespace _Scripts.UI.MainMenu
 
         private async UniTaskVoid ShowMenuUiAsync()
         {
-            if (_cg != null)
-                _cg.Show();
+            _cg.Show();
         }
     }
 }

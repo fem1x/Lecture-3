@@ -26,13 +26,12 @@ namespace _Scripts.UI
         [SerializeField] private Ease _hideEase = Ease.OutCubic;
 
         private Vector2 _shownPos;
-        private Vector2 _hiddenPos;
+        private bool _isInitialized;
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 
         private void Awake()
         {
-            _shownPos = _rect.anchoredPosition;
-            _hiddenPos = _rect.GetHiddenPosition(_direction);
+            EnsureInitialized();
 
             if (_startsHidden)
                 HideInstant();
@@ -40,8 +39,10 @@ namespace _Scripts.UI
 
         public async UniTask ShowAsync()
         {
+            EnsureInitialized();
             _rect.DOKill();
-            _rect.anchoredPosition = _hiddenPos;
+
+            _rect.anchoredPosition = _rect.GetHiddenPosition(_direction, _shownPos);
             _cg.Show();
 
             await _rect.DOAnchorPos(_shownPos, _showTime)
@@ -51,9 +52,12 @@ namespace _Scripts.UI
 
         public async UniTask HideAsync()
         {
+            EnsureInitialized();
             _rect.DOKill();
 
-            await _rect.DOAnchorPos(_hiddenPos, _hideTime)
+            var hiddenPos = _rect.GetHiddenPosition(_direction, _shownPos);
+
+            await _rect.DOAnchorPos(hiddenPos, _hideTime)
                 .SetEase(_hideEase)
                 .SetUpdate(true);
 
@@ -62,9 +66,19 @@ namespace _Scripts.UI
 
         public void HideInstant()
         {
+            EnsureInitialized();
             _rect.DOKill();
-            _rect.anchoredPosition = _hiddenPos;
+
+            _rect.anchoredPosition = _rect.GetHiddenPosition(_direction, _shownPos);
             _cg.Hide();
+        }
+
+        private void EnsureInitialized()
+        {
+            if (_isInitialized) return;
+
+            _shownPos = _rect.anchoredPosition;
+            _isInitialized = true;
         }
     }
 }
