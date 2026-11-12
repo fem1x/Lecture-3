@@ -196,21 +196,21 @@ namespace _Scripts.Managers
         private async UniTask AddPointsAsync(int amount, CancellationToken token)
         {
             var target = _currentPoints + amount;
-            await DoTextValueTween(_pointsText, _currentPoints, target, _speedConfig.ScaleDuration(_pointsAddDuration), token);
+            await DoTextValueTween(_pointsText, _currentPoints, target, _speedConfig.ScaleTime(_pointsAddDuration), token);
             _currentPoints = target;
         }
 
         private async UniTask AddMultAsync(int amount, CancellationToken token)
         {
             var target = _currentMult + amount;
-            await DoTextValueTween(_multText, _currentMult, target, _speedConfig.ScaleDuration(_pointsAddDuration), token);
+            await DoTextValueTween(_multText, _currentMult, target, _speedConfig.ScaleTime(_pointsAddDuration), token);
             _currentMult = target;
         }
         
         private async UniTask XMultAsync(float xMult, CancellationToken token)
         {
             var target = Mathf.RoundToInt(_currentMult * xMult);
-            await DoTextValueTween(_multText, _currentMult, target, _speedConfig.ScaleDuration(_pointsAddDuration), token);
+            await DoTextValueTween(_multText, _currentMult, target, _speedConfig.ScaleTime(_pointsAddDuration), token);
             _currentMult = target;
         }
         
@@ -222,7 +222,7 @@ namespace _Scripts.Managers
         
         private async UniTask TriggerMultAsync(CancellationToken token)
         {
-            var scaledMultDuration = _speedConfig.ScaleDuration(_pointsMultDuration);
+            var scaledMultDuration = _speedConfig.ScaleTime(_pointsMultDuration);
             PlayMultTriggerFx(scaledMultDuration);
             var targetPoints = _currentPoints * _currentMult;
             

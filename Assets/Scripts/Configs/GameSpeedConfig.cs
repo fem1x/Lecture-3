@@ -12,9 +12,9 @@ namespace _Scripts.Configs
 
         public float Multiplier => Mathf.Max(0.1f, SpeedMultiplier);
 
-        public float ScaleDuration(float baseDuration) => baseDuration / Multiplier;
+        public float ScaleTime(float baseTime) => baseTime / Multiplier;
 
         public UniTask DelayAsync(float baseSeconds, CancellationToken token = default) => 
-            UniTask.Delay(TimeSpan.FromSeconds(ScaleDuration(baseSeconds)), cancellationToken: token);
+            UniTask.Delay(TimeSpan.FromSeconds(ScaleTime(baseSeconds)), cancellationToken: token);
     }
 }

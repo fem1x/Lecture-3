@@ -52,9 +52,6 @@ namespace _Scripts.Managers
 
         public void BreakLock(LockBreakResult result, List<Dice> dices)
         {
-            if (result == LockBreakResult.Forced)
-                _damageService.DegradeDices(dices);
-
             CurrentLock = null;
             OnLockBroken?.Invoke();
         }

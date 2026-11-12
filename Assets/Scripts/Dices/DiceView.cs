@@ -1,5 +1,6 @@
-﻿using System;
+﻿using System.Threading;
 using _Scripts.Interfaces;
+using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using UnityEngine;
 
@@ -8,6 +9,8 @@ namespace _Scripts.Dices
     public class DiceView : MonoBehaviour
     {
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== 
+        public Vector3 InitialScale { get; private set; }
+        
         [Header("Faces")] 
         [SerializeField] private DiceFaceView[] _faceViews;
         
@@ -27,12 +30,14 @@ namespace _Scripts.Dices
         
         private IReadOnlyDiceData _data;
         private Tween _moveTween;
+        private Sequence _collectSequence;
         private float _floorY = -999f;
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== 
 
         private void Awake()
         {
             _rb = GetComponent<Rigidbody>();
+            InitialScale = transform.localScale;
         }
 
         public void Bind(IReadOnlyDiceData data)
@@ -48,6 +53,7 @@ namespace _Scripts.Dices
         private void OnDestroy()
         {
             _moveTween?.Kill();
+            _collectSequence?.Kill();
             
             if (_data == null) return;
             _data.OnLockChanged -= SetLockedVisual;
@@ -88,8 +94,12 @@ namespace _Scripts.Dices
         public void ResetVisual()
         {
             _moveTween?.Kill();
+            transform.DOKill();
+            transform.localScale = InitialScale;
+
             _outline.SetOutline(false);
             _floorY = -999f;
+            _rb.isKinematic = true;
         }
 
         private void DoLiftUpTween()

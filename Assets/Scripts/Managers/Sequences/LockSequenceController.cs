@@ -13,14 +13,17 @@ namespace _Scripts.Managers
     public class LockSequenceController : MonoBehaviour
     {
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
-        [Header("Slots")]
+        [Header("Lock View")]
         [SerializeField] private CodeLockView _codeLockView;
+        
+        [Header("Timings")]
         [SerializeField] private float _stampDelay = 0.15f;
         [SerializeField] private float _delayPerDice = 0.5f;
-        
+        [Space]
         [SerializeField] private float _validateDelayPerSlot = 0.2f;
         [SerializeField] private float _delayBeforeValidation = 0.8f;
         [SerializeField] private float _delayAfterValidation = 0.8f;
+        [SerializeField] private float _delayAfterUnlock = 0.5f;
         
         [Header("Screen Flash")]
         [SerializeField] private float _flashAlpha = 0.5f;
@@ -111,6 +114,8 @@ namespace _Scripts.Managers
             if (isCancelled) return;
             
             DoResultFx(result);
+            
+            await _speedConfig.DelayAsync(_delayAfterUnlock, token).SuppressCancellationThrow();
         }
 
         private async UniTask InsertValuesAsync(List<Dice> dices, CancellationToken token)

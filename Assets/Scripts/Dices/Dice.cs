@@ -11,11 +11,11 @@ namespace _Scripts.Dices
     public class Dice : MonoBehaviour, IPointerClickHandler
     {
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== 
+        [field: SerializeField] public DiceView View { get; private set; }
         public DiceData Data { get; private set; }
         
         [Header("References")]
         [SerializeField] private Rigidbody _rb;
-        [SerializeField] private DiceView _view;
         
         [Header("Camera Shake")]
         [SerializeField] private CameraShakePreset _rollShake;
@@ -49,7 +49,7 @@ namespace _Scripts.Dices
         public void Init(DiceData data)
         {
             Data = data;
-            _view.Bind(data);
+            View.Bind(data);
         }
 
         #region Locking
@@ -88,7 +88,7 @@ namespace _Scripts.Dices
         public void PrepareForRoll()
         {
             Data?.RoundReset();
-            _view.ResetVisual();
+            View.ResetVisual();
 
             if (!_rb.isKinematic)
             {

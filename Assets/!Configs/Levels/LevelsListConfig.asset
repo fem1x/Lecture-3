@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: Game::_Scripts.Configs.LevelsListConfig
   <Sections>k__BackingField:
   - <Levels>k__BackingField:
-    - {fileID: 11400000, guid: 6155a4062222c7d40acbbd02f8489670, type: 2}
+    - {fileID: 11400000, guid: 1809d33a9c1cd6a438c5aa82e59aa0c8, type: 2}

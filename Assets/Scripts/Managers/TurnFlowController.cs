@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using _Scripts.Data_Transfer.Contexts;
 using _Scripts.Dices;
 using _Scripts.Interfaces;
 using _Scripts.UI;
@@ -34,11 +35,11 @@ namespace _Scripts.Managers
         private LevelFlowController _levelFlowController;
         private ISfxPlayer _sfxPlayer;
         private ScoreSequenceController _scoreSequenceController;
-        private DiceDamageService _damageService;
         private CodeLockService _codeLockService;
         private CombinationEvaluator _evaluator;
         private LockSequenceController _lockSequenceController;
-        private DamageSequenceController _damageSequenceController;
+        private ReturnSequenceController _returnSequenceController;
+        private EndTurnSequenceController _endTurnSequenceController;
         
         [Inject]
         public void Construct(
@@ -51,11 +52,11 @@ namespace _Scripts.Managers
             LevelFlowController levelFlowController,
             ISfxPlayer sfxPlayer,
             ScoreSequenceController scoreSequenceController,
-            DiceDamageService damageService,
             CodeLockService codeLockService,
             CombinationEvaluator evaluator,
             LockSequenceController lockSequenceController,
-            DamageSequenceController damageSequenceController)
+            ReturnSequenceController returnSequenceController,
+            EndTurnSequenceController endTurnSequenceController)
         {
             _tableController = tableController;
             _calculator = calculator;
@@ -66,11 +67,11 @@ namespace _Scripts.Managers
             _levelFlowController = levelFlowController;
             _sfxPlayer = sfxPlayer;
             _scoreSequenceController = scoreSequenceController;
-            _damageService = damageService;
             _codeLockService = codeLockService;
             _evaluator = evaluator;
             _lockSequenceController = lockSequenceController;
-            _damageSequenceController = damageSequenceController;
+            _returnSequenceController = returnSequenceController;
+            _endTurnSequenceController = endTurnSequenceController;
         }
         #endregion
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== 
@@ -131,7 +132,7 @@ namespace _Scripts.Managers
             var selectedDices = _tableController.GetSelectedDices();
             if (selectedDices.Count == 0) return;
             
-            _sfxPlayer.Play(_submitSfx); //SFX
+            _sfxPlayer.Play(_submitSfx);
             
             ExecuteScoreFlowAsync(selectedDices).Forget();
         }
@@ -145,17 +146,19 @@ namespace _Scripts.Managers
                 await CodeLockFlow(selectedDices);
             else 
                 await StandardFlow(selectedDices);
-    
-            _isScoring = false;
-            _tableController.SetInteractionLock(false);
 
             if (_scoreManager.HasEnoughScore)
             {
+                _isScoring = false;
+                _tableController.SetInteractionLock(false);
                 _tableController.DeactivateAllDices();
                 return;
             }
     
             PrepareNextTurn(selectedDices);
+
+            _isScoring = false;
+            _tableController.SetInteractionLock(false);
             _levelFlowController.CheckDefeatCondition();
         }
 
@@ -166,8 +169,9 @@ namespace _Scripts.Managers
     
             await _scoreSequenceController.PlaySequenceAsync(scoreSequence);
 
-            var damagePlan = _damageService.DamageDices(selectedDices);
-            await _damageSequenceController.PlaySequenceAsync(damagePlan);
+            if (_scoreManager.HasEnoughScore) return;
+
+            await _endTurnSequenceController.ProcessAllDicesAsync(selectedDices, forceDegrade: false, destroyCancellationToken);
         }
 
         private async UniTask CodeLockFlow(List<Dice> selectedDices)
@@ -181,9 +185,12 @@ namespace _Scripts.Managers
             }
             
             await _lockSequenceController.PlaySequenceAsync(selectedDices, result);
-            
             _codeLockService.BreakLock(result, selectedDices);
-            await UniTask.Delay(TimeSpan.FromSeconds(0.5f));
+
+            if (result == LockBreakResult.Forced)
+                await _endTurnSequenceController.ProcessAllDicesAsync(selectedDices, forceDegrade: true, destroyCancellationToken);
+            else
+                await _returnSequenceController.ReturnAllDiceAsync(selectedDices);
         }
 
         private void PrepareNextTurn(List<Dice> playedDices)

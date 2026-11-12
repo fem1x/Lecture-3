@@ -45,7 +45,8 @@ public class GameLifetimeScope : LifetimeScope
     [SerializeField] private MapLevelPointerView _mapLevelPointerView;
     [SerializeField] private ScreenFadeView _screenFadeView;
     [SerializeField] private DiceInspectorView _diceInspectorView;
-    [SerializeField] private DamageSequenceController _damageSequenceController;
+    [SerializeField] private ReturnSequenceController _returnSequenceController;
+    [SerializeField] private EndTurnSequenceController _endTurnSequenceController;
     // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
     
     protected override void Configure(IContainerBuilder builder)
@@ -87,7 +88,8 @@ public class GameLifetimeScope : LifetimeScope
         builder.RegisterComponent(_mapLevelPointerView);
         builder.RegisterComponent(_screenFadeView);
         builder.RegisterComponent(_diceInspectorView);
-        builder.RegisterComponent(_damageSequenceController);
+        builder.RegisterComponent(_endTurnSequenceController);
+        builder.RegisterComponent(_returnSequenceController);
     }
     
     private void RegisterServices(IContainerBuilder builder)

@@ -10,9 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3643175f276947799ba503580491257c, type: 3}
-  m_Name: LevelTest
+  m_Name: _LockLevel
   m_EditorClassIdentifier: Game::_Scripts.Configs.LevelConfig
-  <ScoreQuota>k__BackingField: 1
+  <ScoreQuota>k__BackingField: 9999
   <TokensReward>k__BackingField: 3
   OrderIndex: 1
-  <LockCombinationsPool>k__BackingField: []
+  <LockCombinationsPool>k__BackingField:
+  - {fileID: 11400000, guid: a77e59beab449f94699290a1b558cbbf, type: 2}
