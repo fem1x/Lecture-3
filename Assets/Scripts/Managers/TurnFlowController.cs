@@ -147,17 +147,18 @@ namespace _Scripts.Managers
             else 
                 await StandardFlow(selectedDices);
 
+            _isScoring = false;
+            
             if (_scoreManager.HasEnoughScore)
             {
-                _isScoring = false;
                 _tableController.SetInteractionLock(false);
                 _tableController.DeactivateAllDices();
+                _levelFlowController.CompleteLevel();
                 return;
             }
     
             PrepareNextTurn(selectedDices);
 
-            _isScoring = false;
             _tableController.SetInteractionLock(false);
             _levelFlowController.CheckDefeatCondition();
         }
@@ -168,9 +169,6 @@ namespace _Scripts.Managers
             OnScoreCalculated?.Invoke(scoreSequence, selectedDices);
     
             await _scoreSequenceController.PlaySequenceAsync(scoreSequence);
-
-            if (_scoreManager.HasEnoughScore) return;
-
             await _endTurnSequenceController.ProcessAllDicesAsync(selectedDices, forceDegrade: false, destroyCancellationToken);
         }
 

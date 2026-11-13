@@ -353,7 +353,7 @@ MonoBehaviour:
       - {fileID: 8300000, guid: 346ea247261a9fc468f3a7cac1f83efb, type: 3}
       volume: 0.5
       pitch: 1
-    volume: 0.7
+    volume: 0.6
     pitch: 1
     pitchRandomize: 0.15
     is3D: 1

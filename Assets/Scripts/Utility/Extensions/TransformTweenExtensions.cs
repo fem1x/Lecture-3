@@ -13,7 +13,14 @@ namespace _Scripts.Utility.Extensions
             public ScaleCache(Vector3 scale) => InitialScale = scale;
         }
         
+        private class RotationCache
+        {
+            public readonly Quaternion InitialRotation;
+            public RotationCache(Quaternion rotation) => InitialRotation = rotation;
+        }
+        
         private static readonly ConditionalWeakTable<Transform, ScaleCache> _initialScales = new();
+        private static readonly ConditionalWeakTable<Transform, RotationCache> _initialRotations = new();
 
         public static Tween DoScalePop(
             this Transform target, 
@@ -60,6 +67,28 @@ namespace _Scripts.Utility.Extensions
                 })
                 .Append(target.DOScaleX(1f, halfTime).SetEase(easeOut))
                 .SetTarget(target)
+                .SetLink(target.gameObject);
+        }
+        
+        public static Tween DoRotationPop(
+            this Transform target,
+            float angle = 16f,
+            float time = 0.22f,
+            int vibrato = 12,
+            float elasticity = 0.5f)
+        {
+            var baseRot = _initialRotations.GetValue(target, t => new RotationCache(t.localRotation)).InitialRotation;
+
+            target.DOKill();
+            target.localRotation = baseRot;
+
+            var randomAxis = new Vector3(
+                UnityEngine.Random.Range(-angle, angle),
+                UnityEngine.Random.Range(-angle * 0.5f, angle * 0.5f),
+                UnityEngine.Random.Range(-angle, angle));
+
+            return target
+                .DOPunchRotation(randomAxis, time, vibrato, elasticity)
                 .SetLink(target.gameObject);
         }
         

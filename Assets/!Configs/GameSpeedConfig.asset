@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 60d619fdf90447f19edcec7f3a600b0c, type: 3}
   m_Name: GameSpeedConfig
   m_EditorClassIdentifier: Game::_Scripts.Configs.GameSpeedConfig
-  <SpeedMultiplier>k__BackingField: 1
+  <SpeedMultiplier>k__BackingField: 2

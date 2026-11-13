@@ -87,23 +87,28 @@ namespace _Scripts.Managers
         {
             var dice = step.TargetDice;
             var diceTransform = dice.transform;
-            diceTransform.DoScalePop(scaleMult: 1.4f);
+            var damageFeedback = dice.View.DamageFeedback;
+
+            diceTransform.DoScalePop(1.5f);
             
             switch (step.Outcome)
             {
                 case DamageOutcome.Damaged:
                     dice.Data.NotifyDataChanged();
+                    damageFeedback.PlayDamageHit();
                     _cameraShaker.DoShake(_damageShake);
                     _sfxPlayer.Play(_damageSfx, diceTransform.position);
                     break;
 
                 case DamageOutcome.Degraded:
                     dice.Data.NotifyDataChanged();
+                    damageFeedback.PlayDegradeHit();
                     _cameraShaker.DoShake(_degradeShake);
                     _sfxPlayer.Play(_degradeSfx, diceTransform.position);
                     break;
 
                 case DamageOutcome.Blocked:
+                    damageFeedback.PlayBlockedHit();
                     _cameraShaker.DoShake(_blockedShake);
                     _sfxPlayer.Play(_blockedSfx, diceTransform.position);
                     break;

@@ -74,5 +74,11 @@ namespace _Scripts.Utility
                 .SetTarget(text)
                 .SetEase(Ease.OutQuad);
         }
+        
+        public static int RollNormalInt(int min, int max)
+        {
+            var t = (Random.value + Random.value + Random.value) / 3f;
+            return Mathf.RoundToInt(Mathf.Lerp(min, max, t));
+        }
     }
 }

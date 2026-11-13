@@ -6,7 +6,7 @@ using VContainer.Unity;
 
 namespace _Scripts.Managers
 {
-    public class LevelFlowController : IDisposable
+    public class LevelFlowController
     {
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
         public event Action<TokenRewardData> OnLevelCompleted;
@@ -48,17 +48,11 @@ namespace _Scripts.Managers
             _codeLockService = codeLockService;
             _diceRoller = diceRoller;
             _gameStateManager = gameStateManager;
-            
-            _scoreManager.OnQuotaReached += HandleQuotaReached;
         }
         #endregion
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 
-        public void Dispose()
-        {
-            _scoreManager.OnQuotaReached -= HandleQuotaReached;
-        }
-        
+
         public void StartLevel()
         {
             _currentLevel = _levelService.CurrentLevel;
@@ -88,7 +82,7 @@ namespace _Scripts.Managers
             }
         }
         
-        private void HandleQuotaReached()
+        public void CompleteLevel()
         {
             _diceRoller.SetCanRoll(false);
             var rewardData = _rewardCalculator.GetTokenRewards(_currentLevel.TokensReward);

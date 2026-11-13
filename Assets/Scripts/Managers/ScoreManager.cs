@@ -7,7 +7,6 @@ namespace _Scripts.Managers
     {
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
         public event Action<int, int> OnScoreChanged; //(currentScore, scoreQuota)
-        public event Action OnQuotaReached;
         
         public int CurrentScore {get; private set; }
         public int ScoreQuota {get; private set; }
@@ -30,9 +29,6 @@ namespace _Scripts.Managers
             
             CurrentScore += score;
             OnScoreChanged?.Invoke(CurrentScore, ScoreQuota);
-            
-            if (HasEnoughScore)
-                OnQuotaReached?.Invoke();
         }
 
         public void ResetScore()

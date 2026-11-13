@@ -15,7 +15,7 @@ namespace _Scripts.Utility
         private bool _isInitialized;
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 
-        private void OnDisable() => Stop(resetPosition: true);
+        private void OnDisable() => StopInstant();
 
         private void OnDestroy() => _floatTween?.Kill();
 
@@ -26,17 +26,32 @@ namespace _Scripts.Utility
 
             transform.localPosition = _initialLocalPosition;
 
+            var localUp = transform.parent != null
+                ? transform.parent.InverseTransformDirection(Vector3.up)
+                : Vector3.up;
+
+            var targetLocalPos = _initialLocalPosition + localUp * _distance;
+
             _floatTween = transform
-                .DOLocalMoveY(_initialLocalPosition.y + _distance, _duration)
+                .DOLocalMove(targetLocalPos, _duration)
                 .SetEase(_ease)
                 .SetLoops(-1, LoopType.Yoyo);
         }
 
-        public void Stop(bool resetPosition = false)
+        public void StopSmooth(float time = 0.15f)
         {
             _floatTween?.Kill();
+            if (!_isInitialized) return;
 
-            if (resetPosition && _isInitialized)
+            _floatTween = transform
+                .DOLocalMove(_initialLocalPosition, time)
+                .SetEase(Ease.OutQuad);
+        }
+
+        public void StopInstant()
+        {
+            _floatTween?.Kill();
+            if (_isInitialized)
                 transform.localPosition = _initialLocalPosition;
         }
 

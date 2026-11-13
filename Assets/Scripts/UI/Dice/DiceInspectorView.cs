@@ -132,7 +132,7 @@ namespace _Scripts.UI
 
             KillAllTweens();
             _rotator.enabled = false;
-            _floater.Stop(resetPosition: true);
+            _floater.StopInstant();
             _rotator.ResetVelocity();
 
             _backdropFadeTween = _backdropImage
@@ -216,7 +216,7 @@ namespace _Scripts.UI
         private void ResetAndDeactivate()
         {
             _rotator.ResetVelocity();
-            _floater.Stop(resetPosition: true);
+            _floater.StopInstant();
             _displayView.transform.localScale = _defaultScale;
             _displayView.transform.localRotation = _defaultRotation;
             _panelTransform.localScale = Vector3.one;

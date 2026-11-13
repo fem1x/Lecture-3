@@ -40,7 +40,7 @@ namespace _Scripts.Dices
         #endregion
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
         public bool IsStopped => _rb.isKinematic || 
-                                 (_rb.linearVelocity.sqrMagnitude < 0.01f && _rb.angularVelocity.sqrMagnitude < 0.01f);
+                                 (_rb.linearVelocity.sqrMagnitude < 0.001f && _rb.angularVelocity.sqrMagnitude < 0.001f);
 
         public bool IsRolled => Data.RolledValue != -1;
         public bool CanBeSelected => IsRolled && !_tableController.IsInteractionLocked;

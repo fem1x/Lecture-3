@@ -1,6 +1,5 @@
-﻿using System.Threading;
-using _Scripts.Interfaces;
-using Cysharp.Threading.Tasks;
+﻿using _Scripts.Interfaces;
+using _Scripts.Utility;
 using DG.Tweening;
 using UnityEngine;
 
@@ -9,6 +8,7 @@ namespace _Scripts.Dices
     public class DiceView : MonoBehaviour
     {
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== 
+        [field: SerializeField] public DiceDamageFeedback DamageFeedback { get; private set; }
         public Vector3 InitialScale { get; private set; }
         
         [Header("Faces")] 
@@ -23,14 +23,17 @@ namespace _Scripts.Dices
         [SerializeField] private float _dropTime = 0.4f;
         [SerializeField] private Ease _liftEase = Ease.OutBack;
         [SerializeField] private Ease _dropEase = Ease.OutBack;
+        [Space]
+        [SerializeField] private float _floatStartNormalized = 0.65f;
 
         [Header("References")]
         [SerializeField] private FreeOutline _outline;
-        [SerializeField] private Rigidbody _rb;
+        [SerializeField] private TransformFloater _floater;
+        [SerializeField] private TransformWobbler _wobbler;
         
+        private Rigidbody _rb;
         private IReadOnlyDiceData _data;
         private Tween _moveTween;
-        private Sequence _collectSequence;
         private float _floorY = -999f;
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== 
 
@@ -53,7 +56,6 @@ namespace _Scripts.Dices
         private void OnDestroy()
         {
             _moveTween?.Kill();
-            _collectSequence?.Kill();
             
             if (_data == null) return;
             _data.OnLockChanged -= SetLockedVisual;
@@ -62,8 +64,6 @@ namespace _Scripts.Dices
         
         private void UpdateFaces()
         {
-            if (_data == null) return;
-
             for (int i = 0; i < _faceViews.Length; i++)
             {
                 int value = _data.GetFaceValue(i);
@@ -95,8 +95,11 @@ namespace _Scripts.Dices
         {
             _moveTween?.Kill();
             transform.DOKill();
+            
+            _floater.StopSmooth(time: 0.3f);
+            _floater.StopSmooth(time: 0.3f);
+            
             transform.localScale = InitialScale;
-
             _outline.SetOutline(false);
             _floorY = -999f;
             _rb.isKinematic = true;
@@ -105,11 +108,26 @@ namespace _Scripts.Dices
         private void DoLiftUpTween()
         {
             _rb.isKinematic = true;
-            _moveTween = _rb.DOMoveY(_floorY + _liftHeight, _liftTime).SetEase(_liftEase);
+            var floatStarted = false;
+
+            _moveTween = _rb.DOMoveY(_floorY + _liftHeight, _liftTime)
+                .SetEase(_liftEase)
+                .OnUpdate(() =>
+                {
+                    if (floatStarted) return;
+                    if (_moveTween.ElapsedPercentage() < _floatStartNormalized) return;
+
+                    floatStarted = true;
+                    _floater.Play();
+                    _wobbler.Play();
+                });
         }
 
         private void DoDrop()
         {
+            _floater.StopSmooth(time: 0.2f);
+            _wobbler.StopSmooth(time: 0.3f);
+
             if (_usePhysicsDrop)
             {
                 _rb.isKinematic = false;
