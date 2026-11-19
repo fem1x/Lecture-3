@@ -1,5 +1,5 @@
+
 using System;
-using System.Collections;
 using _Scripts.Configs;
 using _Scripts.Managers;
 using UnityEngine;
@@ -10,26 +10,26 @@ namespace _Scripts.Dices
 {
     public class Dice : MonoBehaviour, IPointerClickHandler
     {
-        // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== 
+        // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
         [field: SerializeField] public DiceView View { get; private set; }
         public DiceData Data { get; private set; }
-        
+
         [Header("References")]
         [SerializeField] private Rigidbody _rb;
-        
+
         [Header("Camera Shake")]
         [SerializeField] private CameraShakePreset _rollShake;
-        
+
         [Header("SFX")]
         [SerializeField] private string _lockSfx;
         [SerializeField] private string _throwSfx;
         [SerializeField] private string _hitSfx;
-        
+
         #region DI
         private ISfxPlayer _sfxPlayer;
         private CameraShaker _cameraShaker;
         private DiceTableController _tableController;
-        
+
         [Inject]
         public void Construct(ISfxPlayer sfxPlayer, CameraShaker cameraShaker, DiceTableController tableController)
         {
@@ -39,13 +39,13 @@ namespace _Scripts.Dices
         }
         #endregion
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
-        public bool IsStopped => _rb.isKinematic || 
+        public bool IsStopped => _rb.isKinematic ||
                                  (_rb.linearVelocity.sqrMagnitude < 0.001f && _rb.angularVelocity.sqrMagnitude < 0.001f);
 
         public bool IsRolled => Data.RolledValue != -1;
         public bool CanBeSelected => IsRolled && !_tableController.IsInteractionLocked;
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
-        
+
         public void Init(DiceData data)
         {
             Data = data;
@@ -56,7 +56,7 @@ namespace _Scripts.Dices
         public void OnPointerClick(PointerEventData eventData)
         {
             if (!TryToggleLock()) return;
-            
+
             if (Data.IsLocked)
                 _sfxPlayer.Play(_lockSfx, transform.position);
         }
@@ -84,7 +84,7 @@ namespace _Scripts.Dices
 
             Physics.SyncTransforms();
         }
-        
+
         public void PrepareForRoll()
         {
             Data?.RoundReset();
@@ -95,20 +95,20 @@ namespace _Scripts.Dices
                 _rb.linearVelocity = Vector3.zero;
                 _rb.angularVelocity = Vector3.zero;
             }
-            
+
             _rb.isKinematic = true;
         }
-        
+
         public void Roll(Vector3 force, Vector3 torque)
         {
             _rb.constraints = RigidbodyConstraints.None;
             _rb.isKinematic = false;
-            
+
             _rb.AddForce(force, ForceMode.Impulse);
             _rb.AddTorque(torque, ForceMode.Impulse);
-            
+
             //FX
-            _sfxPlayer.Play(_throwSfx, transform.position); 
+            _sfxPlayer.Play(_throwSfx, transform.position);
             _cameraShaker.DoShake(_rollShake);
         }
 
@@ -121,7 +121,7 @@ namespace _Scripts.Dices
             {
                 var worldDirection = transform.TransformDirection(Data.GetFaceDirection(i));
                 var dot = Vector3.Dot(worldDirection, Vector3.up);
-                
+
                 if (dot > maxDot)
                 {
                     maxDot = dot;
@@ -130,17 +130,17 @@ namespace _Scripts.Dices
             }
 
             if (bestFaceIndex >= 0)
-                Data.SetRolledValue(Data.GetFaceValue(bestFaceIndex));
-            
+                Data.SetRolledFace(bestFaceIndex);
+
             _rb.constraints = RigidbodyConstraints.FreezeRotation;
         }
-        
+
         private void OnCollisionEnter(Collision collision)
         {
-            var contactPoint = collision.contacts.Length > 0 
-                ? collision.contacts[0].point 
+            var contactPoint = collision.contacts.Length > 0
+                ? collision.contacts[0].point
                 : transform.position;
-            
+
             _sfxPlayer.Play(_hitSfx, contactPoint);
         }
     }

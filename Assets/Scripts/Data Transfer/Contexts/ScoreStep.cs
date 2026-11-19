@@ -7,6 +7,7 @@ namespace _Scripts.Data_Transfer.Contexts
     {
         CombinationBase,
         DiceScored,
+        DiceUpgradeBonus,
         CharmTrigger,
         Multiply
     }

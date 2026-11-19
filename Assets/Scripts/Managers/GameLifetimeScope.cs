@@ -29,6 +29,7 @@ public class GameLifetimeScope : LifetimeScope
     [SerializeField] private CharmsPoolConfig _charmsPoolConfig;
     [SerializeField] private ColorsConfig _colorsConfig;
     [SerializeField] private GameSpeedConfig _gameSpeedConfig;
+    [SerializeField] private DiceUpgradeConfig _diceUpgradeConfig;
     
     [Header("Scene")]
     [SerializeField] private Camera _mainCamera;
@@ -70,6 +71,7 @@ public class GameLifetimeScope : LifetimeScope
         builder.RegisterInstance(_charmsPoolConfig);
         builder.RegisterInstance(_colorsConfig);
         builder.RegisterInstance(_gameSpeedConfig);
+        builder.RegisterInstance(_diceUpgradeConfig);
     }
 
     private void RegisterSceneObjects(IContainerBuilder builder)
@@ -121,6 +123,7 @@ public class GameLifetimeScope : LifetimeScope
         builder.Register<MapService>(Lifetime.Singleton);
         builder.Register<GameStateManager>(Lifetime.Singleton);
         builder.Register<TransitionService>(Lifetime.Singleton);
+        builder.Register<DiceUpgradeService>(Lifetime.Singleton);
         
         //Entry Point
         builder.RegisterEntryPoint<Bootstrap>().AsSelf();

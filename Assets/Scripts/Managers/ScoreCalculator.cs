@@ -46,12 +46,20 @@ public class ScoreCalculator : IScoreCalculator
             var diceValue = dice.Data.RolledValue;
             totalPoints += diceValue;
             steps.Add(new(ScoreStepType.DiceScored, diceValue, sourceTransform: dice.transform));
-            
-            //Charms
+
+            var upgradeBonus = dice.Data.RolledFaceBonus;
+
+            if (upgradeBonus > 0)
+            {
+                totalPoints += upgradeBonus;
+                steps.Add(new(ScoreStepType.DiceUpgradeBonus, upgradeBonus, sourceTransform: dice.transform));
+            }
+
+            // Charms
             var context = new DiceScoreContext(dice, combination);
             foreach (var charm in _charmsService.ActiveCharms)
-                charm.OnDiceScored(context); 
-            
+                charm.OnDiceScored(context);
+
             AddTriggers(context.Triggers, steps, ref totalPoints, ref totalMultiplier);
         }
         

@@ -123,6 +123,10 @@ namespace _Scripts.Managers
                         case ScoreStepType.Multiply:
                             await MultiplyStepAsync(step, token);
                             break;
+                        
+                        case ScoreStepType.DiceUpgradeBonus:
+                            await DiceUpgradeBonusStepAsync(step, token);
+                            break;
                     }
                 }
                 
@@ -137,6 +141,13 @@ namespace _Scripts.Managers
         
         #region Step async Methods
         private async UniTask DiceStepAsync(ScoreStep step, CancellationToken token)
+        {
+            await _speedConfig.DelayAsync(_delayPerStep, token);
+            PlayDiceStepFx(step.SourceTransform, _addPointsSfx, true);
+            await AddPointsAsync(step.BonusPoints, token);
+        }
+        
+        private async UniTask DiceUpgradeBonusStepAsync(ScoreStep step, CancellationToken token)
         {
             await _speedConfig.DelayAsync(_delayPerStep, token);
             PlayDiceStepFx(step.SourceTransform, _addPointsSfx, true);
