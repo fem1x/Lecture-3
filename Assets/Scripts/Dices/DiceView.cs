@@ -97,7 +97,7 @@ namespace _Scripts.Dices
             transform.DOKill();
             
             _floater.StopSmooth(time: 0.3f);
-            _floater.StopSmooth(time: 0.3f);
+            _wobbler.StopSmooth(time: 0.3f);
             
             transform.localScale = InitialScale;
             _outline.SetOutline(false);

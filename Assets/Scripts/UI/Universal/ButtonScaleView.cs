@@ -15,14 +15,15 @@ namespace _Scripts.UI
         [SerializeField] private Button _button;
 
         [Header("Scale")]
-        [SerializeField] private float _hoverScale = 1.1f;
-        [SerializeField] private float _pressedScale = 0.9f;
+        [SerializeField] private float _hoverScale = 1.08f;
+        [SerializeField] private float _pressedScale = 0.95f;
 
         [Header("Animation")]
-        [SerializeField] private float _duration = 0.15f;
-        [SerializeField] private Ease _ease = Ease.OutBack;
+        [SerializeField] private float _duration = 0.3f;
+        [SerializeField] private Ease _ease = Ease.OutQuint;
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 
+        private RectTransform _rectTransform;
         private Vector3 _defaultScale;
         private Tween _scaleTween;
 
@@ -31,6 +32,8 @@ namespace _Scripts.UI
 
         private void Awake()
         {
+            _rectTransform = (RectTransform)transform;
+            CenterPivot();
             _defaultScale = transform.localScale;
         }
 
@@ -69,6 +72,18 @@ namespace _Scripts.UI
         {
             _isPressed = false;
             UpdateScale();
+        }
+
+        private void CenterPivot()
+        {
+            var center = new Vector2(0.5f, 0.5f);
+            var deltaPivot = _rectTransform.pivot - center;
+            var deltaPosition = new Vector2(
+                deltaPivot.x * _rectTransform.rect.width * _rectTransform.localScale.x,
+                deltaPivot.y * _rectTransform.rect.height * _rectTransform.localScale.y);
+
+            _rectTransform.pivot = center;
+            _rectTransform.anchoredPosition -= deltaPosition;
         }
 
         private void UpdateScale()

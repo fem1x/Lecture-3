@@ -16,13 +16,14 @@ namespace _Scripts.UI
         [SerializeField] private SlidingPanelView _slidingPanel;
         [SerializeField] private WorkshopSequenceController _sequenceController;
         [SerializeField] private Button _nextLevelButton;
-        [SerializeField] private Button _upgradeToggleButton;
+        [SerializeField] private RopeButtonView _upgradeRopeButton;
 
         [Header("Panels")]
         [SerializeField] private DiceRepairPanelView _diceRepairPanel;
         [SerializeField] private CharmConveyorView _charmConveyor;
         [SerializeField] private UpgradePanelView _upgradePanel;
         [SerializeField] private float _conveyorOpenDelay = 0.2f;
+        [SerializeField] private float _ropeShowDelay = 0.15f;
 
         #region DI
         private CharmsRewardGenerator _rewardGenerator;
@@ -49,14 +50,14 @@ namespace _Scripts.UI
         private void OnEnable()
         {
             _nextLevelButton.onClick.AddListener(HandleNextLevelButtonClick);
-            _upgradeToggleButton.onClick.AddListener(HandleUpgradeToggleClick);
+            _upgradeRopeButton.OnPulled += HandleUpgradeToggleClick;
             _conveyorService.OnChoiceCompleted += HandleChoiceCompleted;
         }
 
         private void OnDisable()
         {
             _nextLevelButton.onClick.RemoveListener(HandleNextLevelButtonClick);
-            _upgradeToggleButton.onClick.RemoveListener(HandleUpgradeToggleClick);
+            _upgradeRopeButton.OnPulled -= HandleUpgradeToggleClick;
             _conveyorService.OnChoiceCompleted -= HandleChoiceCompleted;
             CancelTransition();
         }
@@ -69,6 +70,7 @@ namespace _Scripts.UI
 
             _sequenceController.HideUpgradeInstant();
             _sequenceController.HideMainInstant();
+            _upgradeRopeButton.gameObject.SetActive(false);
 
             _charmConveyor.InstantCloseShutter();
             _nextLevelButton.interactable = false;
@@ -78,7 +80,8 @@ namespace _Scripts.UI
             await UniTask.WhenAll(
                 _slidingPanel.ShowAsync(),
                 _sequenceController.ShowMainAsync(ct),
-                InitConveyorAfterDelayAsync(ct));
+                InitConveyorAfterDelayAsync(ct),
+                ShowRopeAfterDelayAsync(ct));
         }
 
         public async UniTask HideAsync(CancellationToken ct)
@@ -87,6 +90,7 @@ namespace _Scripts.UI
             _isUpgradeMode = false;
             _conveyorInitializedThisVisit = false;
 
+            _upgradeRopeButton.gameObject.SetActive(false);
             _charmConveyor.InstantCloseShutter();
             _charmConveyor.ClearConveyorView();
             _diceRepairPanel.SetRepairMode(false);
@@ -97,8 +101,20 @@ namespace _Scripts.UI
 
         public void HideInstant()
         {
+            _upgradeRopeButton.gameObject.SetActive(false);
             _slidingPanel.HideInstant();
             _sequenceController.HideUpgradeInstant();
+        }
+
+        private async UniTask ShowRopeAfterDelayAsync(CancellationToken ct)
+        {
+            if (_ropeShowDelay > 0f)
+                await UniTask.Delay(TimeSpan.FromSeconds(_ropeShowDelay), ignoreTimeScale: true, cancellationToken: ct);
+
+            ct.ThrowIfCancellationRequested();
+
+            _upgradeRopeButton.gameObject.SetActive(true);
+            _upgradeRopeButton.CollapseToAnchor();
         }
 
         private async UniTask InitConveyorAfterDelayAsync(CancellationToken ct)

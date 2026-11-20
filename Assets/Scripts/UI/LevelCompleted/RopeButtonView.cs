@@ -16,19 +16,21 @@ namespace _Scripts.UI.Workshop
         [SerializeField] private Image _segmentPrefab;
 
         [Header("Rope Layout")]
-        [SerializeField, Min(2)] private int _nodeCount = 10;
-        [SerializeField] private float _segmentLength = 16f;
-        [SerializeField] private float _segmentWidth = 6f;
+        [SerializeField, Min(2)] private int _nodeCount = 16;
+        [SerializeField] private float _segmentLength = 12f;
+        [SerializeField] private float _segmentWidth = 8f;
 
-        [Header("Physics")]
-        [SerializeField] private float _gravity = 1800f;
-        [SerializeField, Range(0.8f, 0.999f)] private float _damping = 0.985f;
-        [SerializeField, Min(1)] private int _solverIterations = 10;
-        [SerializeField] private float _inertiaMultiplier = 0.65f;
+        [Header("Physics & Elasticity")]
+        [SerializeField] private float _gravity = 1600f;
+        [SerializeField, Range(0.8f, 0.999f)] private float _damping = 0.965f;
+        [SerializeField, Min(1)] private int _solverIterations = 3;
+        [SerializeField, Range(0.05f, 1f)] private float _elasticity = 0.35f;
+        [SerializeField] private float _restSpringPull = 12f;
+        [SerializeField] private float _inertiaMultiplier = 0.7f;
 
         [Header("Pull Impulse")]
-        [SerializeField] private float _pullDownImpulse = 950f;
-        [SerializeField] private float _pullSideImpulse = 160f;
+        [SerializeField] private float _pullDownImpulse = 1400f;
+        [SerializeField] private float _pullSideImpulse = 320f;
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
         public event Action OnPulled;
 
@@ -66,6 +68,9 @@ namespace _Scripts.UI.Workshop
             StepVerlet(dt, rootDelta);
             SyncVisuals();
         }
+
+        [ContextMenu("Redeploy Rope")]
+        public void RedeployRope() => CollapseToAnchor();
 
         public void CollapseToAnchor()
         {
@@ -122,7 +127,12 @@ namespace _Scripts.UI.Workshop
                 var prev = _previousPositions[i] - rootDelta * _inertiaMultiplier;
 
                 var velocity = (curr - prev) * _damping;
-                var next = curr + velocity + new Vector2(0f, -_gravity * dtSq);
+                var springToRest = i > 0
+                    ? new Vector2((anchorLocal.x - curr.x) * _restSpringPull, 0f)
+                    : Vector2.zero;
+
+                var accel = new Vector2(0f, -_gravity) + springToRest;
+                var next = curr + velocity + accel * dtSq;
 
                 _previousPositions[i] = curr;
                 _currentPositions[i] = next;
@@ -141,7 +151,7 @@ namespace _Scripts.UI.Workshop
                     var dist = delta.magnitude;
                     if (dist <= 0.0001f) continue;
 
-                    var diff = (dist - _segmentLength) / dist;
+                    var diff = ((dist - _segmentLength) / dist) * _elasticity;
 
                     if (i == 0)
                     {
