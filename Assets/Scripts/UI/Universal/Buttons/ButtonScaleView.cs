@@ -5,7 +5,6 @@ using UnityEngine.UI;
 
 namespace _Scripts.UI
 {
-    [RequireComponent(typeof(Button))]
     public class ButtonScaleView : MonoBehaviour,
         IPointerEnterHandler,
         IPointerExitHandler,

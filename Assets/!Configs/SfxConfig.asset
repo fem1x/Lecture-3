@@ -368,8 +368,8 @@ MonoBehaviour:
       - {fileID: 8300000, guid: 0cd537c60c5a67d499ded80bdff3f856, type: 3}
       volume: 1
       pitch: 1
-    volume: 0.2
-    pitch: 0.85
+    volume: 0.3
+    pitch: 0.7
     pitchRandomize: 0.1
     is3D: 0
     useGlobalSpatialBlend: 0
@@ -381,10 +381,14 @@ MonoBehaviour:
     layers:
     - clips:
       - {fileID: 8300000, guid: a8cc3d098d07b844aa5569e63ab12c52, type: 3}
+      volume: 0.5
+      pitch: 1
+    - clips:
+      - {fileID: 8300000, guid: ede173a98eb3bff44a8e64dbc2c743de, type: 3}
       volume: 1
       pitch: 1
-    volume: 0.52
-    pitch: 1
+    volume: 0.5
+    pitch: 0.7
     pitchRandomize: 0.1
     is3D: 0
     useGlobalSpatialBlend: 0

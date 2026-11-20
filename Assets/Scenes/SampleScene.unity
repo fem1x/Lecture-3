@@ -307,6 +307,109 @@ MonoBehaviour:
   - {fileID: 1887069037}
   - {fileID: 1651493686}
   - {fileID: 1613519638}
+--- !u!1 &19885421
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 19885422}
+  - component: {fileID: 19885424}
+  - component: {fileID: 19885423}
+  - component: {fileID: 19885425}
+  m_Layer: 5
+  m_Name: Visuals
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &19885422
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 19885421}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1740034789788791746}
+  m_Father: {fileID: 5365573228030301198}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: -6.81, y: -6.81}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &19885423
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 19885421}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
+  m_Material: {fileID: 0}
+  m_Color: {r: 0.8941177, g: 0.6392157, b: 0.5254902, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: -2413806693520163455, guid: ce2e272c05a96c14999b89a4c0c3dcc4, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &19885424
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 19885421}
+  m_CullTransparentMesh: 1
+--- !u!114 &19885425
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 19885421}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f88ec0ef622d4170b112a9d23d757b48, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Game::_Scripts.UI.ButtonScaleView
+  _button: {fileID: 91336836374503050}
+  _insideLayoutGroup: 0
+  _hoverScale: 1.2
+  _pressedScale: 0.7
+  _squashAmount: 0.1
+  _pressDipY: 3
+  _hoverTiltZ: 1.5
+  _pressTiltZ: 2
+  _hoverDuration: 0.15
+  _hoverEase: 12
+  _pressDuration: 0.06
+  _pressEase: 6
+  _releaseDuration: 0.5
+  _releaseEase: 27
 --- !u!1 &59782820
 GameObject:
   m_ObjectHideFlags: 0
@@ -2147,6 +2250,7 @@ GameObject:
   - component: {fileID: 700538651}
   - component: {fileID: 700538654}
   - component: {fileID: 700538655}
+  - component: {fileID: 700538656}
   m_Layer: 5
   m_Name: (Button) Play
   m_TagString: Untagged
@@ -2309,6 +2413,22 @@ MonoBehaviour:
   _pressEase: 6
   _releaseDuration: 0.25
   _releaseEase: 27
+--- !u!114 &700538656
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 700538648}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 83f459f1a848410b96dc5f9f328080e6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Game::_Scripts.UI.ButtonSfxView
+  _button: {fileID: 700538651}
+  _hoverSfx: ButtonHover
+  _clickSfx: ButtonClick
+  _disabledClickSfx: ButtonDisabledClick
 --- !u!1001 &742257314
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3993,6 +4113,7 @@ GameObject:
   - component: {fileID: 1264832204}
   - component: {fileID: 1264832203}
   - component: {fileID: 1264832207}
+  - component: {fileID: 1264832208}
   m_Layer: 5
   m_Name: (Button) Quit
   m_TagString: Untagged
@@ -4155,6 +4276,22 @@ MonoBehaviour:
   _pressEase: 6
   _releaseDuration: 0.25
   _releaseEase: 27
+--- !u!114 &1264832208
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1264832201}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 83f459f1a848410b96dc5f9f328080e6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Game::_Scripts.UI.ButtonSfxView
+  _button: {fileID: 1264832204}
+  _hoverSfx: ButtonHover
+  _clickSfx: ButtonClick
+  _disabledClickSfx: ButtonDisabledClick
 --- !u!1 &1302761376
 GameObject:
   m_ObjectHideFlags: 0
@@ -5837,6 +5974,8 @@ GameObject:
   - component: {fileID: 1694647730}
   - component: {fileID: 1694647729}
   - component: {fileID: 1694647728}
+  - component: {fileID: 1694647732}
+  - component: {fileID: 1694647731}
   m_Layer: 5
   m_Name: (Btn) ToggleUpgrade
   m_TagString: Untagged
@@ -5946,6 +6085,48 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1694647726}
   m_CullTransparentMesh: 1
+--- !u!114 &1694647731
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1694647726}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f88ec0ef622d4170b112a9d23d757b48, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Game::_Scripts.UI.ButtonScaleView
+  _button: {fileID: 1694647728}
+  _insideLayoutGroup: 0
+  _hoverScale: 1.08
+  _pressedScale: 0.92
+  _squashAmount: 0.08
+  _pressDipY: 4
+  _hoverTiltZ: 0
+  _pressTiltZ: 0
+  _hoverDuration: 0.15
+  _hoverEase: 12
+  _pressDuration: 0.06
+  _pressEase: 6
+  _releaseDuration: 0.25
+  _releaseEase: 27
+--- !u!114 &1694647732
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1694647726}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 83f459f1a848410b96dc5f9f328080e6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Game::_Scripts.UI.ButtonSfxView
+  _button: {fileID: 1694647728}
+  _hoverSfx: ButtonHover
+  _clickSfx: ButtonClick
+  _disabledClickSfx: ButtonDisabledClick
 --- !u!1 &1701348953
 GameObject:
   m_ObjectHideFlags: 0
@@ -7544,6 +7725,8 @@ GameObject:
   - component: {fileID: 3402945276324101633}
   - component: {fileID: 2667743774738961264}
   - component: {fileID: 4766072142203490347}
+  - component: {fileID: 4766072142203490349}
+  - component: {fileID: 4766072142203490348}
   m_Layer: 5
   m_Name: (Button) SelectAll
   m_TagString: Untagged
@@ -7564,6 +7747,7 @@ GameObject:
   - component: {fileID: 8912552902430776607}
   - component: {fileID: 8712645204847698274}
   - component: {fileID: 8912552902430776608}
+  - component: {fileID: 8912552902430776609}
   m_Layer: 5
   m_Name: (Button) NextLevel
   m_TagString: Untagged
@@ -9324,6 +9508,9 @@ GameObject:
   - component: {fileID: 8866938593785071028}
   - component: {fileID: 58607895592449857}
   - component: {fileID: 6776422920269488448}
+  - component: {fileID: 8866938593785071031}
+  - component: {fileID: 8866938593785071030}
+  - component: {fileID: 8866938593785071029}
   m_Layer: 5
   m_Name: (Button) ->
   m_TagString: Untagged
@@ -11568,7 +11755,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 5365573228030301198}
+  m_Father: {fileID: 19885422}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -13581,6 +13768,9 @@ GameObject:
   - component: {fileID: 7012056543841088323}
   - component: {fileID: 1349502119228440543}
   - component: {fileID: 5909743341640155716}
+  - component: {fileID: 7012056543841088326}
+  - component: {fileID: 7012056543841088325}
+  - component: {fileID: 7012056543841088324}
   m_Layer: 5
   m_Name: (Btn) Up
   m_TagString: Untagged
@@ -15974,6 +16164,7 @@ GameObject:
   - component: {fileID: 8468077373986500354}
   - component: {fileID: 2914641550648192865}
   - component: {fileID: 8468077373986500355}
+  - component: {fileID: 8468077373986500356}
   m_Layer: 5
   m_Name: (Button) Close
   m_TagString: Untagged
@@ -19354,6 +19545,9 @@ GameObject:
   - component: {fileID: 3694724110602580292}
   - component: {fileID: 2645346013119172466}
   - component: {fileID: 3395555208805525664}
+  - component: {fileID: 6737091127981348844}
+  - component: {fileID: 6737091127981348845}
+  - component: {fileID: 6737091127981348846}
   m_Layer: 5
   m_Name: (Btn) Next level
   m_TagString: Untagged
@@ -19540,7 +19734,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 0.8941177, g: 0.6392157, b: 0.5254902, a: 1}
+  m_Color: {r: 0, g: 0, b: 0, a: 0}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -19667,6 +19861,41 @@ MonoBehaviour:
   _pressEase: 6
   _releaseDuration: 0.25
   _releaseEase: 27
+--- !u!114 &4766072142203490348
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 100767837857273217}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 83f459f1a848410b96dc5f9f328080e6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Game::_Scripts.UI.ButtonSfxView
+  _button: {fileID: 2667743774738961264}
+  _hoverSfx: ButtonHover
+  _clickSfx: ButtonClick
+  _disabledClickSfx: ButtonDisabledClick
+--- !u!114 &4766072142203490349
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 100767837857273217}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be3922dca17f4344a82273ed6c24081c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Game::_Scripts.UI.ButtonDisabledView
+  _button: {fileID: 2667743774738961264}
+  _insideLayoutGroup: 1
+  _shakePosX: 4
+  _shakeVibratoX: 22
+  _shakeAngleZ: 8
+  _shakeVibratoZ: 22
+  _duration: 0.19
 --- !u!224 &4773085872419476321
 RectTransform:
   m_ObjectHideFlags: 0
@@ -20807,6 +21036,8 @@ GameObject:
   - component: {fileID: 6376667567193443650}
   - component: {fileID: 232258698049537533}
   - component: {fileID: 5182845156480488633}
+  - component: {fileID: 6376667567193443651}
+  - component: {fileID: 6376667567193443652}
   m_Layer: 5
   m_Name: (Button) ToWorkshop
   m_TagString: Untagged
@@ -21606,14 +21837,14 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1740034789788791746}
+  - {fileID: 19885422}
   m_Father: {fileID: 3136050095038515387}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 14.313477, y: 13.597229}
-  m_SizeDelta: {x: 38.100006, y: 38.1}
-  m_Pivot: {x: 1, y: 1}
+  m_AnchoredPosition: {x: -5.225708, y: -4.6257477}
+  m_SizeDelta: {x: 42.8515, y: 42.8515}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &5391433337182660328
 GameObject:
   m_ObjectHideFlags: 0
@@ -22430,6 +22661,9 @@ GameObject:
   - component: {fileID: 7028506333560617681}
   - component: {fileID: 5424085295177833196}
   - component: {fileID: 8404720430990576682}
+  - component: {fileID: 8404720430990576685}
+  - component: {fileID: 8404720430990576684}
+  - component: {fileID: 8404720430990576683}
   m_Layer: 5
   m_Name: (Btn) Down
   m_TagString: Untagged
@@ -23346,6 +23580,8 @@ GameObject:
   - component: {fileID: 6795647035361754214}
   - component: {fileID: 5632564143075996235}
   - component: {fileID: 6795647035361754215}
+  - component: {fileID: 6795647035361754217}
+  - component: {fileID: 6795647035361754216}
   m_Layer: 5
   m_Name: (Button) DeselectAll
   m_TagString: Untagged
@@ -24152,6 +24388,48 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5179561375388244639}
   m_CullTransparentMesh: 1
+--- !u!114 &6376667567193443651
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5179561375388244639}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f88ec0ef622d4170b112a9d23d757b48, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Game::_Scripts.UI.ButtonScaleView
+  _button: {fileID: 5182845156480488633}
+  _insideLayoutGroup: 0
+  _hoverScale: 1.08
+  _pressedScale: 0.92
+  _squashAmount: 0.08
+  _pressDipY: 4
+  _hoverTiltZ: 0
+  _pressTiltZ: 0
+  _hoverDuration: 0.15
+  _hoverEase: 12
+  _pressDuration: 0.06
+  _pressEase: 6
+  _releaseDuration: 0.25
+  _releaseEase: 27
+--- !u!114 &6376667567193443652
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5179561375388244639}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 83f459f1a848410b96dc5f9f328080e6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Game::_Scripts.UI.ButtonSfxView
+  _button: {fileID: 5182845156480488633}
+  _hoverSfx: ButtonHover
+  _clickSfx: ButtonClick
+  _disabledClickSfx: ButtonDisabledClick
 --- !u!114 &6377616289449661296
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -25010,6 +25288,67 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 398.6579, y: 77.3}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &6737091127981348844
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4612532647983908781}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f88ec0ef622d4170b112a9d23d757b48, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Game::_Scripts.UI.ButtonScaleView
+  _button: {fileID: 3395555208805525664}
+  _insideLayoutGroup: 0
+  _hoverScale: 1.08
+  _pressedScale: 0.92
+  _squashAmount: 0.08
+  _pressDipY: 4
+  _hoverTiltZ: 0
+  _pressTiltZ: 0
+  _hoverDuration: 0.15
+  _hoverEase: 12
+  _pressDuration: 0.06
+  _pressEase: 6
+  _releaseDuration: 0.25
+  _releaseEase: 27
+--- !u!114 &6737091127981348845
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4612532647983908781}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 83f459f1a848410b96dc5f9f328080e6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Game::_Scripts.UI.ButtonSfxView
+  _button: {fileID: 3395555208805525664}
+  _hoverSfx: ButtonHover
+  _clickSfx: ButtonClick
+  _disabledClickSfx: ButtonDisabledClick
+--- !u!114 &6737091127981348846
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4612532647983908781}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be3922dca17f4344a82273ed6c24081c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Game::_Scripts.UI.ButtonDisabledView
+  _button: {fileID: 3395555208805525664}
+  _insideLayoutGroup: 0
+  _shakePosX: 4
+  _shakeVibratoX: 22
+  _shakeAngleZ: 0.5
+  _shakeVibratoZ: 22
+  _duration: 0.16
 --- !u!224 &6740388211066747051
 RectTransform:
   m_ObjectHideFlags: 0
@@ -25308,6 +25647,41 @@ MonoBehaviour:
   _pressEase: 6
   _releaseDuration: 0.25
   _releaseEase: 27
+--- !u!114 &6795647035361754216
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6059725006534154091}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 83f459f1a848410b96dc5f9f328080e6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Game::_Scripts.UI.ButtonSfxView
+  _button: {fileID: 5632564143075996235}
+  _hoverSfx: ButtonHover
+  _clickSfx: ButtonClick
+  _disabledClickSfx: ButtonDisabledClick
+--- !u!114 &6795647035361754217
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6059725006534154091}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be3922dca17f4344a82273ed6c24081c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Game::_Scripts.UI.ButtonDisabledView
+  _button: {fileID: 5632564143075996235}
+  _insideLayoutGroup: 1
+  _shakePosX: 4
+  _shakeVibratoX: 22
+  _shakeAngleZ: 8
+  _shakeVibratoZ: 22
+  _duration: 0.19
 --- !u!1 &6802710332228901241
 GameObject:
   m_ObjectHideFlags: 0
@@ -25918,6 +26292,67 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2438217453969876877}
   m_CullTransparentMesh: 1
+--- !u!114 &7012056543841088324
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2438217453969876877}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f88ec0ef622d4170b112a9d23d757b48, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Game::_Scripts.UI.ButtonScaleView
+  _button: {fileID: 5909743341640155716}
+  _insideLayoutGroup: 1
+  _hoverScale: 1.08
+  _pressedScale: 0.92
+  _squashAmount: 0.08
+  _pressDipY: 4
+  _hoverTiltZ: 0
+  _pressTiltZ: 0
+  _hoverDuration: 0.15
+  _hoverEase: 12
+  _pressDuration: 0.06
+  _pressEase: 6
+  _releaseDuration: 0.25
+  _releaseEase: 27
+--- !u!114 &7012056543841088325
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2438217453969876877}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be3922dca17f4344a82273ed6c24081c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Game::_Scripts.UI.ButtonDisabledView
+  _button: {fileID: 5909743341640155716}
+  _insideLayoutGroup: 1
+  _shakePosX: 4
+  _shakeVibratoX: 22
+  _shakeAngleZ: 7
+  _shakeVibratoZ: 25
+  _duration: 0.16
+--- !u!114 &7012056543841088326
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2438217453969876877}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 83f459f1a848410b96dc5f9f328080e6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Game::_Scripts.UI.ButtonSfxView
+  _button: {fileID: 5909743341640155716}
+  _hoverSfx: ButtonHover
+  _clickSfx: ButtonClick
+  _disabledClickSfx: ButtonDisabledClick
 --- !u!224 &7022401112171367710
 RectTransform:
   m_ObjectHideFlags: 0
@@ -26077,6 +26512,8 @@ GameObject:
   - component: {fileID: 4781543373954112877}
   - component: {fileID: 4273343395522023653}
   - component: {fileID: 7059242639972091384}
+  - component: {fileID: 7059242639972091385}
+  - component: {fileID: 7059242639972091386}
   m_Layer: 5
   m_Name: (Button) Action
   m_TagString: Untagged
@@ -26110,6 +26547,41 @@ MonoBehaviour:
   _pressEase: 6
   _releaseDuration: 0.25
   _releaseEase: 27
+--- !u!114 &7059242639972091385
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7059242639972091383}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be3922dca17f4344a82273ed6c24081c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Game::_Scripts.UI.ButtonDisabledView
+  _button: {fileID: 4781543373954112877}
+  _insideLayoutGroup: 0
+  _shakePosX: 4
+  _shakeVibratoX: 22
+  _shakeAngleZ: 0.5
+  _shakeVibratoZ: 22
+  _duration: 0.16
+--- !u!114 &7059242639972091386
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7059242639972091383}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 83f459f1a848410b96dc5f9f328080e6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Game::_Scripts.UI.ButtonSfxView
+  _button: {fileID: 4781543373954112877}
+  _hoverSfx: ButtonHover
+  _clickSfx: ButtonClick
+  _disabledClickSfx: ButtonDisabledClick
 --- !u!114 &7063673671144788564
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -26148,6 +26620,9 @@ GameObject:
   - component: {fileID: 4163358251981802853}
   - component: {fileID: 4277595278046493525}
   - component: {fileID: 2707407899008482879}
+  - component: {fileID: 7068533635441896589}
+  - component: {fileID: 7068533635441896588}
+  - component: {fileID: 7068533635441896587}
   m_Layer: 5
   m_Name: (Button) <-
   m_TagString: Untagged
@@ -26155,6 +26630,67 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &7068533635441896587
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7068533635441896586}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be3922dca17f4344a82273ed6c24081c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Game::_Scripts.UI.ButtonDisabledView
+  _button: {fileID: 2707407899008482879}
+  _insideLayoutGroup: 1
+  _shakePosX: 4
+  _shakeVibratoX: 22
+  _shakeAngleZ: 0.5
+  _shakeVibratoZ: 22
+  _duration: 0.16
+--- !u!114 &7068533635441896588
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7068533635441896586}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f88ec0ef622d4170b112a9d23d757b48, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Game::_Scripts.UI.ButtonScaleView
+  _button: {fileID: 2707407899008482879}
+  _insideLayoutGroup: 1
+  _hoverScale: 1.08
+  _pressedScale: 0.92
+  _squashAmount: 0.08
+  _pressDipY: 4
+  _hoverTiltZ: 0
+  _pressTiltZ: 0
+  _hoverDuration: 0.15
+  _hoverEase: 12
+  _pressDuration: 0.06
+  _pressEase: 6
+  _releaseDuration: 0.25
+  _releaseEase: 27
+--- !u!114 &7068533635441896589
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7068533635441896586}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 83f459f1a848410b96dc5f9f328080e6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Game::_Scripts.UI.ButtonSfxView
+  _button: {fileID: 2707407899008482879}
+  _hoverSfx: ButtonHover
+  _clickSfx: ButtonClick
+  _disabledClickSfx: ButtonDisabledClick
 --- !u!222 &7076718828677814394
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -29396,7 +29932,7 @@ GameObject:
   - component: {fileID: 3370223208904850401}
   - component: {fileID: 4688174765688202553}
   - component: {fileID: 91336836374503050}
-  - component: {fileID: 8150237415921585736}
+  - component: {fileID: 8150237415921585737}
   m_Layer: 5
   m_Name: (Button) ShowCodex
   m_TagString: Untagged
@@ -29404,7 +29940,7 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &8150237415921585736
+--- !u!114 &8150237415921585737
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -29413,23 +29949,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 8150237415921585735}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f88ec0ef622d4170b112a9d23d757b48, type: 3}
+  m_Script: {fileID: 11500000, guid: 83f459f1a848410b96dc5f9f328080e6, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Game::_Scripts.UI.ButtonScaleView
+  m_EditorClassIdentifier: Game::_Scripts.UI.ButtonSfxView
   _button: {fileID: 91336836374503050}
-  _insideLayoutGroup: 0
-  _hoverScale: 1.2
-  _pressedScale: 0.7
-  _squashAmount: 0.1
-  _pressDipY: 3
-  _hoverTiltZ: 1.5
-  _pressTiltZ: 2
-  _hoverDuration: 0.15
-  _hoverEase: 12
-  _pressDuration: 0.06
-  _pressEase: 6
-  _releaseDuration: 0.5
-  _releaseEase: 27
+  _hoverSfx: ButtonHover
+  _clickSfx: ButtonClick
+  _disabledClickSfx: ButtonDisabledClick
 --- !u!1 &8164156052131063120
 GameObject:
   m_ObjectHideFlags: 0
@@ -29844,6 +30370,67 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &8404720430990576683
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5738491024445797511}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f88ec0ef622d4170b112a9d23d757b48, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Game::_Scripts.UI.ButtonScaleView
+  _button: {fileID: 8404720430990576682}
+  _insideLayoutGroup: 1
+  _hoverScale: 1.08
+  _pressedScale: 0.92
+  _squashAmount: 0.08
+  _pressDipY: 4
+  _hoverTiltZ: 0
+  _pressTiltZ: 0
+  _hoverDuration: 0.15
+  _hoverEase: 12
+  _pressDuration: 0.06
+  _pressEase: 6
+  _releaseDuration: 0.25
+  _releaseEase: 27
+--- !u!114 &8404720430990576684
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5738491024445797511}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be3922dca17f4344a82273ed6c24081c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Game::_Scripts.UI.ButtonDisabledView
+  _button: {fileID: 8404720430990576682}
+  _insideLayoutGroup: 1
+  _shakePosX: 4
+  _shakeVibratoX: 22
+  _shakeAngleZ: 7
+  _shakeVibratoZ: 25
+  _duration: 0.16
+--- !u!114 &8404720430990576685
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5738491024445797511}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 83f459f1a848410b96dc5f9f328080e6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Game::_Scripts.UI.ButtonSfxView
+  _button: {fileID: 8404720430990576682}
+  _hoverSfx: ButtonHover
+  _clickSfx: ButtonClick
+  _disabledClickSfx: ButtonDisabledClick
 --- !u!224 &8411661379770642366
 RectTransform:
   m_ObjectHideFlags: 0
@@ -30088,6 +30675,22 @@ MonoBehaviour:
   _pressEase: 6
   _releaseDuration: 0.24
   _releaseEase: 27
+--- !u!114 &8468077373986500356
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3358409082648571469}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 83f459f1a848410b96dc5f9f328080e6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Game::_Scripts.UI.ButtonSfxView
+  _button: {fileID: 2914641550648192865}
+  _hoverSfx: ButtonHover
+  _clickSfx: ButtonClick
+  _disabledClickSfx: ButtonDisabledClick
 --- !u!1 &8486055339894473169
 GameObject:
   m_ObjectHideFlags: 0
@@ -30543,7 +31146,7 @@ GameObject:
   - component: {fileID: 4537354795006897799}
   - component: {fileID: 3561955104086475737}
   m_Layer: 5
-  m_Name: (Layour) Buttons
+  m_Name: (Layout) Buttons
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -31049,6 +31652,67 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 902028698060561260}
   m_CullTransparentMesh: 1
+--- !u!114 &8866938593785071029
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 902028698060561260}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be3922dca17f4344a82273ed6c24081c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Game::_Scripts.UI.ButtonDisabledView
+  _button: {fileID: 6776422920269488448}
+  _insideLayoutGroup: 1
+  _shakePosX: 4
+  _shakeVibratoX: 22
+  _shakeAngleZ: 0.5
+  _shakeVibratoZ: 22
+  _duration: 0.16
+--- !u!114 &8866938593785071030
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 902028698060561260}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f88ec0ef622d4170b112a9d23d757b48, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Game::_Scripts.UI.ButtonScaleView
+  _button: {fileID: 6776422920269488448}
+  _insideLayoutGroup: 1
+  _hoverScale: 1.08
+  _pressedScale: 0.92
+  _squashAmount: 0.08
+  _pressDipY: 4
+  _hoverTiltZ: 0
+  _pressTiltZ: 0
+  _hoverDuration: 0.15
+  _hoverEase: 12
+  _pressDuration: 0.06
+  _pressEase: 6
+  _releaseDuration: 0.25
+  _releaseEase: 27
+--- !u!114 &8866938593785071031
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 902028698060561260}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 83f459f1a848410b96dc5f9f328080e6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Game::_Scripts.UI.ButtonSfxView
+  _button: {fileID: 6776422920269488448}
+  _hoverSfx: ButtonHover
+  _clickSfx: ButtonClick
+  _disabledClickSfx: ButtonDisabledClick
 --- !u!222 &8869002367905680874
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -31295,6 +31959,22 @@ MonoBehaviour:
   _pressEase: 6
   _releaseDuration: 0.25
   _releaseEase: 27
+--- !u!114 &8912552902430776609
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 125094177334195735}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 83f459f1a848410b96dc5f9f328080e6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Game::_Scripts.UI.ButtonSfxView
+  _button: {fileID: 8712645204847698274}
+  _hoverSfx: ButtonHover
+  _clickSfx: ButtonClick
+  _disabledClickSfx: ButtonDisabledClick
 --- !u!222 &8922165102364129926
 CanvasRenderer:
   m_ObjectHideFlags: 0
