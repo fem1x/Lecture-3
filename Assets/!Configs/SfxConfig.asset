@@ -362,3 +362,48 @@ MonoBehaviour:
     isLooped: 0
     audioMixer: {fileID: -9158774617749725478, guid: 1470a324304038b4ab0db292ebdfc379, type: 2}
     source: {fileID: 0}
+  - name: ButtonHover
+    layers:
+    - clips:
+      - {fileID: 8300000, guid: 0cd537c60c5a67d499ded80bdff3f856, type: 3}
+      volume: 1
+      pitch: 1
+    volume: 0.2
+    pitch: 0.85
+    pitchRandomize: 0.1
+    is3D: 0
+    useGlobalSpatialBlend: 0
+    customSpatialBlend: 0
+    isLooped: 0
+    audioMixer: {fileID: -9158774617749725478, guid: 1470a324304038b4ab0db292ebdfc379, type: 2}
+    source: {fileID: 0}
+  - name: ButtonClick
+    layers:
+    - clips:
+      - {fileID: 8300000, guid: a8cc3d098d07b844aa5569e63ab12c52, type: 3}
+      volume: 1
+      pitch: 1
+    volume: 0.52
+    pitch: 1
+    pitchRandomize: 0.1
+    is3D: 0
+    useGlobalSpatialBlend: 0
+    customSpatialBlend: 0
+    isLooped: 0
+    audioMixer: {fileID: -9158774617749725478, guid: 1470a324304038b4ab0db292ebdfc379, type: 2}
+    source: {fileID: 0}
+  - name: ButtonDisabledClick
+    layers:
+    - clips:
+      - {fileID: 8300000, guid: 1434a5f7a8c64e84ca46e700193f818e, type: 3}
+      volume: 1
+      pitch: 1
+    volume: 0.5
+    pitch: 1
+    pitchRandomize: 0.1
+    is3D: 0
+    useGlobalSpatialBlend: 0
+    customSpatialBlend: 0
+    isLooped: 0
+    audioMixer: {fileID: -9158774617749725478, guid: 1470a324304038b4ab0db292ebdfc379, type: 2}
+    source: {fileID: 0}

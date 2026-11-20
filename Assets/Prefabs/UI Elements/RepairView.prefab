@@ -522,6 +522,9 @@ GameObject:
   - component: {fileID: 703800812242752564}
   - component: {fileID: 5621541894260974704}
   - component: {fileID: 4265064736299778913}
+  - component: {fileID: 7849635329407279884}
+  - component: {fileID: 6682211704549919418}
+  - component: {fileID: 8411976159118139614}
   m_Layer: 5
   m_Name: Button
   m_TagString: Untagged
@@ -643,6 +646,67 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
+--- !u!114 &7849635329407279884
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6525421012959301349}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f88ec0ef622d4170b112a9d23d757b48, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Game::_Scripts.UI.ButtonScaleView
+  _button: {fileID: 5621541894260974704}
+  _insideLayoutGroup: 0
+  _hoverScale: 1.2
+  _pressedScale: 0.85
+  _squashAmount: 0.06
+  _pressDipY: 4
+  _hoverTiltZ: 1.5
+  _pressTiltZ: 3
+  _hoverDuration: 0.15
+  _hoverEase: 12
+  _pressDuration: 0.06
+  _pressEase: 6
+  _releaseDuration: 0.25
+  _releaseEase: 27
+--- !u!114 &6682211704549919418
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6525421012959301349}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 83f459f1a848410b96dc5f9f328080e6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Game::_Scripts.UI.ButtonSfxView
+  _button: {fileID: 5621541894260974704}
+  _hoverSfx: ButtonHover
+  _clickSfx: ButtonClick
+  _disabledClickSfx: ButtonDisabledClick
+--- !u!114 &8411976159118139614
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6525421012959301349}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be3922dca17f4344a82273ed6c24081c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Game::_Scripts.UI.ButtonDisabledView
+  _button: {fileID: 5621541894260974704}
+  _insideLayoutGroup: 0
+  _shakePosX: 4
+  _shakeVibratoX: 22
+  _shakeAngleZ: 0.5
+  _shakeVibratoZ: 22
+  _duration: 0.16
 --- !u!1 &7258385062881620240
 GameObject:
   m_ObjectHideFlags: 0

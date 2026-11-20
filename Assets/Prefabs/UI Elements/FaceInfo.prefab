@@ -12,6 +12,9 @@ GameObject:
   - component: {fileID: 5241317848456751330}
   - component: {fileID: 4661657585883156376}
   - component: {fileID: 2563038651277975599}
+  - component: {fileID: 3431386907087056547}
+  - component: {fileID: 261902185497598105}
+  - component: {fileID: 9102848439210920286}
   m_Layer: 5
   m_Name: Face
   m_TagString: Untagged
@@ -122,6 +125,67 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &3431386907087056547
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 854398992739223227}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 83f459f1a848410b96dc5f9f328080e6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Game::_Scripts.UI.ButtonSfxView
+  _button: {fileID: 2563038651277975599}
+  _hoverSfx: ButtonHover
+  _clickSfx: ButtonClick
+  _disabledClickSfx: ButtonDisabledClick
+--- !u!114 &261902185497598105
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 854398992739223227}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be3922dca17f4344a82273ed6c24081c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Game::_Scripts.UI.ButtonDisabledView
+  _button: {fileID: 2563038651277975599}
+  _insideLayoutGroup: 1
+  _shakePosX: 4
+  _shakeVibratoX: 22
+  _shakeAngleZ: 5
+  _shakeVibratoZ: 22
+  _duration: 0.16
+--- !u!114 &9102848439210920286
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 854398992739223227}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f88ec0ef622d4170b112a9d23d757b48, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Game::_Scripts.UI.ButtonScaleView
+  _button: {fileID: 2563038651277975599}
+  _insideLayoutGroup: 1
+  _hoverScale: 1.1
+  _pressedScale: 0.92
+  _squashAmount: 0.08
+  _pressDipY: 4
+  _hoverTiltZ: 0
+  _pressTiltZ: 0
+  _hoverDuration: 0.15
+  _hoverEase: 12
+  _pressDuration: 0.06
+  _pressEase: 6
+  _releaseDuration: 0.25
+  _releaseEase: 27
 --- !u!1 &1745116048043173072
 GameObject:
   m_ObjectHideFlags: 0

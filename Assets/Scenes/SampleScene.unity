@@ -2296,10 +2296,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Game::_Scripts.UI.ButtonScaleView
   _button: {fileID: 700538651}
+  _insideLayoutGroup: 0
   _hoverScale: 1.08
-  _pressedScale: 0.95
-  _duration: 0.3
-  _ease: 15
+  _pressedScale: 0.92
+  _squashAmount: 0.08
+  _pressDipY: 4
+  _hoverTiltZ: 0
+  _pressTiltZ: 0
+  _hoverDuration: 0.15
+  _hoverEase: 12
+  _pressDuration: 0.06
+  _pressEase: 6
+  _releaseDuration: 0.25
+  _releaseEase: 27
 --- !u!1001 &742257314
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4133,10 +4142,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Game::_Scripts.UI.ButtonScaleView
   _button: {fileID: 1264832204}
+  _insideLayoutGroup: 0
   _hoverScale: 1.08
-  _pressedScale: 0.95
-  _duration: 0.3
-  _ease: 15
+  _pressedScale: 0.92
+  _squashAmount: 0.08
+  _pressDipY: 4
+  _hoverTiltZ: 0
+  _pressTiltZ: 0
+  _hoverDuration: 0.15
+  _hoverEase: 12
+  _pressDuration: 0.06
+  _pressEase: 6
+  _releaseDuration: 0.25
+  _releaseEase: 27
 --- !u!1 &1302761376
 GameObject:
   m_ObjectHideFlags: 0
@@ -7525,6 +7543,7 @@ GameObject:
   - component: {fileID: 4766072142203490346}
   - component: {fileID: 3402945276324101633}
   - component: {fileID: 2667743774738961264}
+  - component: {fileID: 4766072142203490347}
   m_Layer: 5
   m_Name: (Button) SelectAll
   m_TagString: Untagged
@@ -15954,6 +15973,7 @@ GameObject:
   - component: {fileID: 8100981695526615942}
   - component: {fileID: 8468077373986500354}
   - component: {fileID: 2914641550648192865}
+  - component: {fileID: 8468077373986500355}
   m_Layer: 5
   m_Name: (Button) Close
   m_TagString: Untagged
@@ -19621,6 +19641,32 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 100767837857273217}
   m_CullTransparentMesh: 1
+--- !u!114 &4766072142203490347
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 100767837857273217}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f88ec0ef622d4170b112a9d23d757b48, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Game::_Scripts.UI.ButtonScaleView
+  _button: {fileID: 2667743774738961264}
+  _insideLayoutGroup: 1
+  _hoverScale: 1.08
+  _pressedScale: 0.92
+  _squashAmount: 0.08
+  _pressDipY: 4
+  _hoverTiltZ: 1.5
+  _pressTiltZ: 3
+  _hoverDuration: 0.15
+  _hoverEase: 12
+  _pressDuration: 0.06
+  _pressEase: 6
+  _releaseDuration: 0.25
+  _releaseEase: 27
 --- !u!224 &4773085872419476321
 RectTransform:
   m_ObjectHideFlags: 0
@@ -23299,6 +23345,7 @@ GameObject:
   - component: {fileID: 6328326164492910638}
   - component: {fileID: 6795647035361754214}
   - component: {fileID: 5632564143075996235}
+  - component: {fileID: 6795647035361754215}
   m_Layer: 5
   m_Name: (Button) DeselectAll
   m_TagString: Untagged
@@ -25235,6 +25282,32 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 15
+--- !u!114 &6795647035361754215
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6059725006534154091}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f88ec0ef622d4170b112a9d23d757b48, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Game::_Scripts.UI.ButtonScaleView
+  _button: {fileID: 5632564143075996235}
+  _insideLayoutGroup: 1
+  _hoverScale: 1.08
+  _pressedScale: 0.92
+  _squashAmount: 0.08
+  _pressDipY: 4
+  _hoverTiltZ: 1.5
+  _pressTiltZ: 3
+  _hoverDuration: 0.15
+  _hoverEase: 12
+  _pressDuration: 0.06
+  _pressEase: 6
+  _releaseDuration: 0.25
+  _releaseEase: 27
 --- !u!1 &6802710332228901241
 GameObject:
   m_ObjectHideFlags: 0
@@ -26003,6 +26076,7 @@ GameObject:
   - component: {fileID: 833190327906990077}
   - component: {fileID: 4781543373954112877}
   - component: {fileID: 4273343395522023653}
+  - component: {fileID: 7059242639972091384}
   m_Layer: 5
   m_Name: (Button) Action
   m_TagString: Untagged
@@ -26010,6 +26084,32 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &7059242639972091384
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7059242639972091383}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f88ec0ef622d4170b112a9d23d757b48, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Game::_Scripts.UI.ButtonScaleView
+  _button: {fileID: 4781543373954112877}
+  _insideLayoutGroup: 0
+  _hoverScale: 1.03
+  _pressedScale: 0.92
+  _squashAmount: 0.08
+  _pressDipY: 4
+  _hoverTiltZ: 0
+  _pressTiltZ: 0
+  _hoverDuration: 0.15
+  _hoverEase: 12
+  _pressDuration: 0.06
+  _pressEase: 6
+  _releaseDuration: 0.25
+  _releaseEase: 27
 --- !u!114 &7063673671144788564
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -29317,10 +29417,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Game::_Scripts.UI.ButtonScaleView
   _button: {fileID: 91336836374503050}
-  _hoverScale: 1.15
+  _insideLayoutGroup: 0
+  _hoverScale: 1.2
   _pressedScale: 0.7
-  _duration: 0.3
-  _ease: 15
+  _squashAmount: 0.1
+  _pressDipY: 3
+  _hoverTiltZ: 1.5
+  _pressTiltZ: 2
+  _hoverDuration: 0.15
+  _hoverEase: 12
+  _pressDuration: 0.06
+  _pressEase: 6
+  _releaseDuration: 0.5
+  _releaseEase: 27
 --- !u!1 &8164156052131063120
 GameObject:
   m_ObjectHideFlags: 0
@@ -29953,6 +30062,32 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &8468077373986500355
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3358409082648571469}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f88ec0ef622d4170b112a9d23d757b48, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Game::_Scripts.UI.ButtonScaleView
+  _button: {fileID: 2914641550648192865}
+  _insideLayoutGroup: 0
+  _hoverScale: 1.15
+  _pressedScale: 0.82
+  _squashAmount: 0.1
+  _pressDipY: 3
+  _hoverTiltZ: 1.5
+  _pressTiltZ: 3
+  _hoverDuration: 0.14
+  _hoverEase: 9
+  _pressDuration: 0.06
+  _pressEase: 6
+  _releaseDuration: 0.24
+  _releaseEase: 27
 --- !u!1 &8486055339894473169
 GameObject:
   m_ObjectHideFlags: 0
@@ -31147,10 +31282,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Game::_Scripts.UI.ButtonScaleView
   _button: {fileID: 8712645204847698274}
+  _insideLayoutGroup: 0
   _hoverScale: 1.08
-  _pressedScale: 0.95
-  _duration: 0.3
-  _ease: 15
+  _pressedScale: 0.92
+  _squashAmount: 0.1
+  _pressDipY: 3
+  _hoverTiltZ: 0
+  _pressTiltZ: 0
+  _hoverDuration: 0.15
+  _hoverEase: 12
+  _pressDuration: 0.06
+  _pressEase: 6
+  _releaseDuration: 0.25
+  _releaseEase: 27
 --- !u!222 &8922165102364129926
 CanvasRenderer:
   m_ObjectHideFlags: 0

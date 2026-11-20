@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 3348164102561811891}
   - component: {fileID: 7883512227749674949}
-  - component: {fileID: 4312689752145373710}
   - component: {fileID: 5885876437102488068}
   m_Layer: 5
   m_Name: (B) CharmView
@@ -30,7 +29,8 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 8902717056455307023}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -46,13 +46,72 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1214982661794929846}
   m_CullTransparentMesh: 1
---- !u!114 &4312689752145373710
+--- !u!114 &5885876437102488068
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1214982661794929846}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: abe8b3e038eb4c039cd94468575de097, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Game::_Scripts.Charms.CharmView
+  _iconImage: {fileID: 11228447467458346}
+--- !u!1 &8861524988279060541
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8902717056455307023}
+  - component: {fileID: 3186142757984483678}
+  - component: {fileID: 11228447467458346}
+  - component: {fileID: 7179150985691472207}
+  m_Layer: 5
+  m_Name: Image
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &8902717056455307023
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8861524988279060541}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3348164102561811891}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!222 &3186142757984483678
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8861524988279060541}
+  m_CullTransparentMesh: 1
+--- !u!114 &11228447467458346
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8861524988279060541}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
@@ -76,16 +135,19 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &5885876437102488068
+--- !u!114 &7179150985691472207
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1214982661794929846}
+  m_GameObject: {fileID: 8861524988279060541}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: abe8b3e038eb4c039cd94468575de097, type: 3}
+  m_Script: {fileID: 11500000, guid: ac52b52b63aa4663b1a3ff78ac56dba2, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Game::_Scripts.Charms.CharmView
-  _iconImage: {fileID: 4312689752145373710}
+  m_EditorClassIdentifier: Game::_Scripts.UI.HoverScaleView
+  _insideLayoutGroup: 0
+  _hoverScale: 1.15
+  _duration: 0.14
+  _ease: 9
