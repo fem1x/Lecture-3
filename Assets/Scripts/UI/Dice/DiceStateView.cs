@@ -16,13 +16,12 @@ namespace _Scripts.UI
 
         [Header("Views")]
         [SerializeField] private DurabilityView _durabilityView;
-        [SerializeField] private DiceRepairView _repairView;
         [SerializeField] private DiceDamageView _damageView;
 
         [Header("Face & Animation")]
         [SerializeField] private Image _diceImage;
         [SerializeField] private Sprite _unrolledSprite;
-        [SerializeField] private List<Sprite> _diceSprites;
+        [SerializeField] private List<Sprite> _diceSprites = new();
         [SerializeField] private float _flipDuration = 0.4f;
 
         [Header("Selection")]
@@ -36,12 +35,8 @@ namespace _Scripts.UI
         private Tween _flipTween;
 
         [Inject]
-        public void Construct(ISfxPlayer sfxPlayer)
-        {
-            _sfxPlayer = sfxPlayer;
-        }
+        public void Construct(ISfxPlayer sfxPlayer) => _sfxPlayer = sfxPlayer;
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
-
         private void Awake()
         {
             _defaultBorderColor = _border.color;
@@ -49,12 +44,9 @@ namespace _Scripts.UI
                 _inspectButton.onClick.AddListener(() => OnInspectRequested?.Invoke(_data));
         }
 
-        public void SetRepairMode(bool enable) => _repairView.SetRepairMode(enable);
-
         public void Bind(IReadOnlyDiceData data)
         {
             _data = data;
-            _repairView.Bind(data);
 
             _data.OnDataChanged += RefreshAll;
             _data.OnLockChanged += RefreshBorder;
@@ -81,7 +73,7 @@ namespace _Scripts.UI
             _durabilityView.SetDurability(_data.CurrentDurability, _data.MaxDurability);
         }
 
-        private void RefreshBorder(bool isLocked) => 
+        private void RefreshBorder(bool isLocked) =>
             _border.color = isLocked ? _selectedBorderColor : _defaultBorderColor;
 
         private void RefreshDiceFace(int oldValue, int newValue)
@@ -97,7 +89,7 @@ namespace _Scripts.UI
             );
         }
 
-        private Sprite GetFaceSprite(int value) => 
+        private Sprite GetFaceSprite(int value) =>
             value == -1 ? _unrolledSprite : _diceSprites[value];
     }
 }

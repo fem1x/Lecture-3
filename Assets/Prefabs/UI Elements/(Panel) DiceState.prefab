@@ -469,7 +469,6 @@ GameObject:
   - component: {fileID: 4245702733014173903}
   - component: {fileID: 5089167012538465161}
   - component: {fileID: 1607742502310377636}
-  - component: {fileID: 473179247197109620}
   m_Layer: 5
   m_Name: (Panel) DiceState
   m_TagString: Untagged
@@ -594,7 +593,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Game::_Scripts.UI.DiceStateView
   _durabilityView: {fileID: 1607742502310377636}
-  _repairView: {fileID: 473179247197109620}
   _damageView: {fileID: 5089167012538465161}
   _diceImage: {fileID: 214671664991932621}
   _unrolledSprite: {fileID: 1973030140, guid: 140a94c4ea4433948ba2e3be95eda15e, type: 3}
@@ -646,24 +644,6 @@ MonoBehaviour:
   _heavyCrackSprite: {fileID: 1439195297, guid: 6cbc55d5b35640140ae9bb368d4e02f9, type: 3}
   _lightCrackAlpha: 0.5
   _heavyCrackAlpha: 0.7
---- !u!114 &473179247197109620
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9013700237388054691}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ca813b9a79c8457fbdfedc8c6f7fbb6b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Game::_Scripts.UI.DiceRepairView
-  _repairButton: {fileID: 8747934290158801192}
-  _canvasGroup: {fileID: 4989069791772186937}
-  _fadeInDuration: 0.35
-  _fadeOutDuration: 0.15
-  _easeIn: 6
-  _easeOut: 5
 --- !u!1 &9127133691794699000
 GameObject:
   m_ObjectHideFlags: 0
