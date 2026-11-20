@@ -30,6 +30,7 @@ public class GameLifetimeScope : LifetimeScope
     [SerializeField] private ColorsConfig _colorsConfig;
     [SerializeField] private GameSpeedConfig _gameSpeedConfig;
     [SerializeField] private DiceUpgradeConfig _diceUpgradeConfig;
+    [SerializeField] private DiceAtlasConfig _diceAtlasConfig;
     
     [Header("Scene")]
     [SerializeField] private Camera _mainCamera;
@@ -72,6 +73,7 @@ public class GameLifetimeScope : LifetimeScope
         builder.RegisterInstance(_colorsConfig);
         builder.RegisterInstance(_gameSpeedConfig);
         builder.RegisterInstance(_diceUpgradeConfig);
+        builder.RegisterInstance(_diceAtlasConfig);
     }
 
     private void RegisterSceneObjects(IContainerBuilder builder)
