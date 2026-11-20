@@ -14,19 +14,15 @@ namespace _Scripts.UI
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
         [Header("References")]
         [SerializeField] private SlidingPanelView _slidingPanel;
+        [SerializeField] private WorkshopSequenceController _sequenceController;
         [SerializeField] private Button _nextLevelButton;
         [SerializeField] private Button _upgradeToggleButton;
 
-        [Header("Panels")]
-        [SerializeField] private DiceRepairPanelView _diceRepairPanel;
-        [SerializeField] private UpgradePanelView _upgradePanel;
+        [Header("Panels & Timings")]
         [SerializeField] private CharmConveyorView _charmConveyor;
-
-        [Header("Slides")]
-        [SerializeField] private SlidingPanelView _diceRepairSlide;
-        [SerializeField] private SlidingPanelView _charmConveyorSlide;
-        [SerializeField] private SlidingPanelView _nextLevelSlide;
-        [SerializeField] private SlidingPanelView _upgradeSlide;
+        [SerializeField] private UpgradePanelView _upgradePanel;
+        [SerializeField] private float _upgradeAppearDelay = 0.15f;
+        [SerializeField] private float _mainAppearDelay = 0.15f;
 
         [Header("Dice Anchor")]
         [SerializeField] private RectTransform _diceSlotRect;
@@ -74,10 +70,8 @@ namespace _Scripts.UI
         public async UniTask ShowAsync(CancellationToken ct)
         {
             _isUpgradeMode = false;
-            _upgradeSlide.HideInstant();
-            _charmConveyorSlide.HideInstant();
-            _diceRepairSlide.HideInstant();
-            _nextLevelSlide.HideInstant();
+            _sequenceController.HideUpgradeInstant();
+            _sequenceController.HideMainInstant();
 
             _charmConveyor.InstantCloseShutter();
             _nextLevelButton.interactable = false;
@@ -95,9 +89,7 @@ namespace _Scripts.UI
             InitializeConveyorPanel();
             _dicePanelView.SetRepairMode(true);
 
-            await _charmConveyorSlide.ShowAsync();
-            await _diceRepairSlide.ShowAsync();
-            await _nextLevelSlide.ShowAsync();
+            await _sequenceController.ShowMainAsync(ct);
         }
 
         public async UniTask HideAsync(CancellationToken ct)
@@ -108,7 +100,7 @@ namespace _Scripts.UI
             _charmConveyor.InstantCloseShutter();
             _charmConveyor.ClearConveyorView();
             _dicePanelView.SetRepairMode(false);
-            _upgradeSlide.HideInstant();
+            _sequenceController.HideUpgradeInstant();
 
             var panelTask = _slidingPanel.HideAsync();
 
@@ -124,7 +116,7 @@ namespace _Scripts.UI
         public void HideInstant()
         {
             _slidingPanel.HideInstant();
-            _upgradeSlide.HideInstant();
+            _sequenceController.HideUpgradeInstant();
         }
 
         private void HandleNextLevelButtonClick() => OnNextLevelRequested?.Invoke();
@@ -152,27 +144,26 @@ namespace _Scripts.UI
                 {
                     _dicePanelView.SetRepairMode(false);
                     _charmConveyor.InstantCloseShutter();
-
-                    await _charmConveyorSlide.HideAsync();
-                    await _diceRepairSlide.HideAsync();
-                    await _nextLevelSlide.HideAsync();
-
-                    ct.ThrowIfCancellationRequested();
                     _upgradePanel.BindSections();
-                    await _upgradeSlide.ShowAsync();
+
+                    await RunOverlappingAsync(
+                        () => _sequenceController.HideMainAsync(ct),
+                        () => _sequenceController.ShowUpgradeAsync(ct),
+                        _upgradeAppearDelay,
+                        ct);
+
                     _isUpgradeMode = true;
                 }
                 else
                 {
-                    await _upgradeSlide.HideAsync();
-                    ct.ThrowIfCancellationRequested();
-
                     InitializeConveyorPanel();
                     _dicePanelView.SetRepairMode(true);
 
-                    await _charmConveyorSlide.ShowAsync();
-                    await _diceRepairSlide.ShowAsync();
-                    await _nextLevelSlide.ShowAsync();
+                    await RunOverlappingAsync(
+                        () => _sequenceController.HideUpgradeAsync(ct),
+                        () => _sequenceController.ShowMainAsync(ct),
+                        _mainAppearDelay,
+                        ct);
 
                     _isUpgradeMode = false;
                 }
@@ -183,6 +174,27 @@ namespace _Scripts.UI
                 _upgradeToggleButton.interactable = true;
                 _isTransitioning = false;
             }
+        }
+
+        private async UniTask RunOverlappingAsync(
+            Func<UniTask> firstTaskFactory,
+            Func<UniTask> secondTaskFactory,
+            float secondDelay,
+            CancellationToken ct)
+        {
+            var firstTask = firstTaskFactory();
+            var secondTask = StartDelayedAsync(secondTaskFactory, secondDelay, ct);
+
+            await UniTask.WhenAll(firstTask, secondTask);
+        }
+
+        private async UniTask StartDelayedAsync(Func<UniTask> taskFactory, float delay, CancellationToken ct)
+        {
+            if (delay > 0f)
+                await UniTask.Delay(TimeSpan.FromSeconds(delay), ignoreTimeScale: true, cancellationToken: ct);
+
+            ct.ThrowIfCancellationRequested();
+            await taskFactory();
         }
 
         private void InitializeConveyorPanel()
