@@ -315,11 +315,11 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1969022677760040435}
-  - {fileID: 6476526309812450225}
-  - {fileID: 2609961173181908570}
   - {fileID: 8255845946351345101}
   - {fileID: 40358649622584983}
   - {fileID: 5056054397190365474}
+  - {fileID: 2609961173181908570}
+  - {fileID: 6476526309812450225}
   m_Father: {fileID: 9095161517886508808}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -1197,7 +1197,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2221796910973781557, guid: d0c2b8ad513b8e04f802dfc8a78c8f8b, type: 3}
       propertyPath: m_Name
-      value: FaceInfo (3)
+      value: FaceInfo 2
       objectReference: {fileID: 0}
     - target: {fileID: 8135789956678267208, guid: d0c2b8ad513b8e04f802dfc8a78c8f8b, type: 3}
       propertyPath: m_Pivot.x
@@ -1310,7 +1310,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2221796910973781557, guid: d0c2b8ad513b8e04f802dfc8a78c8f8b, type: 3}
       propertyPath: m_Name
-      value: FaceInfo (1)
+      value: FaceInfo 6
       objectReference: {fileID: 0}
     - target: {fileID: 8135789956678267208, guid: d0c2b8ad513b8e04f802dfc8a78c8f8b, type: 3}
       propertyPath: m_Pivot.x
@@ -1423,7 +1423,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2221796910973781557, guid: d0c2b8ad513b8e04f802dfc8a78c8f8b, type: 3}
       propertyPath: m_Name
-      value: FaceInfo (5)
+      value: FaceInfo 4
       objectReference: {fileID: 0}
     - target: {fileID: 8135789956678267208, guid: d0c2b8ad513b8e04f802dfc8a78c8f8b, type: 3}
       propertyPath: m_Pivot.x
@@ -1536,7 +1536,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2221796910973781557, guid: d0c2b8ad513b8e04f802dfc8a78c8f8b, type: 3}
       propertyPath: m_Name
-      value: FaceInfo (2)
+      value: FaceInfo 5
       objectReference: {fileID: 0}
     - target: {fileID: 8135789956678267208, guid: d0c2b8ad513b8e04f802dfc8a78c8f8b, type: 3}
       propertyPath: m_Pivot.x
@@ -1649,7 +1649,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2221796910973781557, guid: d0c2b8ad513b8e04f802dfc8a78c8f8b, type: 3}
       propertyPath: m_Name
-      value: FaceInfo
+      value: FaceInfo 1
       objectReference: {fileID: 0}
     - target: {fileID: 8135789956678267208, guid: d0c2b8ad513b8e04f802dfc8a78c8f8b, type: 3}
       propertyPath: m_Pivot.x
@@ -1762,7 +1762,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2221796910973781557, guid: d0c2b8ad513b8e04f802dfc8a78c8f8b, type: 3}
       propertyPath: m_Name
-      value: FaceInfo (4)
+      value: FaceInfo 3
       objectReference: {fileID: 0}
     - target: {fileID: 8135789956678267208, guid: d0c2b8ad513b8e04f802dfc8a78c8f8b, type: 3}
       propertyPath: m_Pivot.x
