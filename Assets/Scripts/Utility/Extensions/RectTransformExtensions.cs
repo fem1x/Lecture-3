@@ -5,21 +5,27 @@ namespace _Scripts.Utility.Extensions
 {
     public static class RectTransformExtensions
     {
-        public static Vector2 GetHiddenPosition(this RectTransform rect, SlideDirection direction, Vector2 shownAnchoredPos)
+        public static Vector2 GetHiddenPosition(
+            this RectTransform rect,
+            SlideDirection direction,
+            Vector2 shownAnchoredPos,
+            RectTransform boundsRect = null)
         {
             Canvas.ForceUpdateCanvases();
 
-            var canvas = rect.GetComponentInParent<Canvas>(true);
-            if (canvas == null) return shownAnchoredPos;
+            var referenceRect = boundsRect;
+            if (referenceRect == null)
+            {
+                var canvas = rect.GetComponentInParent<Canvas>(true);
+                referenceRect = canvas.rootCanvas.GetComponent<RectTransform>();
+            }
 
-            var rootCanvas = canvas.rootCanvas;
-            var canvasRect = rootCanvas.GetComponent<RectTransform>();
             var parentRect = rect.parent as RectTransform;
 
             var prevPos = rect.anchoredPosition;
             rect.anchoredPosition = shownAnchoredPos;
 
-            var panelBounds = RectTransformUtility.CalculateRelativeRectTransformBounds(canvasRect, rect);
+            var panelBounds = RectTransformUtility.CalculateRelativeRectTransformBounds(referenceRect, rect);
             rect.anchoredPosition = prevPos;
 
             var shiftX = 0f;
@@ -28,22 +34,22 @@ namespace _Scripts.Utility.Extensions
             switch (direction)
             {
                 case SlideDirection.Right:
-                    shiftX = canvasRect.rect.xMax - panelBounds.min.x;
+                    shiftX = referenceRect.rect.xMax - panelBounds.min.x;
                     break;
                 case SlideDirection.Left:
-                    shiftX = canvasRect.rect.xMin - panelBounds.max.x;
+                    shiftX = referenceRect.rect.xMin - panelBounds.max.x;
                     break;
                 case SlideDirection.Top:
-                    shiftY = canvasRect.rect.yMax - panelBounds.min.y;
+                    shiftY = referenceRect.rect.yMax - panelBounds.min.y;
                     break;
                 case SlideDirection.Bottom:
-                    shiftY = canvasRect.rect.yMin - panelBounds.max.y;
+                    shiftY = referenceRect.rect.yMin - panelBounds.max.y;
                     break;
             }
 
             var scaleRatio = new Vector2(
-                parentRect.lossyScale.x / canvasRect.lossyScale.x,
-                parentRect.lossyScale.y / canvasRect.lossyScale.y
+                parentRect.lossyScale.x / referenceRect.lossyScale.x,
+                parentRect.lossyScale.y / referenceRect.lossyScale.y
             );
 
             return shownAnchoredPos + new Vector2(shiftX / scaleRatio.x, shiftY / scaleRatio.y);

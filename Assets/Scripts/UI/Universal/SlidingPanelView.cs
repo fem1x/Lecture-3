@@ -16,6 +16,7 @@ namespace _Scripts.UI
         [SerializeField] private SlideDirection _direction;
         [SerializeField] private RectTransform _rect;
         [SerializeField] private CanvasGroup _cg;
+        [SerializeField] private RectTransform _boundsRect;
         
         [Header("Show")]
         [SerializeField] private float _showTime = 0.5f;
@@ -28,7 +29,6 @@ namespace _Scripts.UI
         private Vector2 _shownPos;
         private bool _isInitialized;
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
-
         private void Awake()
         {
             EnsureInitialized();
@@ -42,7 +42,7 @@ namespace _Scripts.UI
             EnsureInitialized();
             _rect.DOKill();
 
-            _rect.anchoredPosition = _rect.GetHiddenPosition(_direction, _shownPos);
+            _rect.anchoredPosition = _rect.GetHiddenPosition(_direction, _shownPos, _boundsRect);
             _cg.Show();
 
             await _rect.DOAnchorPos(_shownPos, _showTime)
@@ -55,7 +55,7 @@ namespace _Scripts.UI
             EnsureInitialized();
             _rect.DOKill();
 
-            var hiddenPos = _rect.GetHiddenPosition(_direction, _shownPos);
+            var hiddenPos = _rect.GetHiddenPosition(_direction, _shownPos, _boundsRect);
 
             await _rect.DOAnchorPos(hiddenPos, _hideTime)
                 .SetEase(_hideEase)
@@ -69,7 +69,7 @@ namespace _Scripts.UI
             EnsureInitialized();
             _rect.DOKill();
 
-            _rect.anchoredPosition = _rect.GetHiddenPosition(_direction, _shownPos);
+            _rect.anchoredPosition = _rect.GetHiddenPosition(_direction, _shownPos, _boundsRect);
             _cg.Hide();
         }
 
