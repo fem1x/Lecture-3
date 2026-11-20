@@ -11,17 +11,17 @@ namespace _Scripts.UI
     {
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
         [SerializeField] private bool _startsHidden = true;
-        
+
         [Header("Slide Animation")]
         [SerializeField] private SlideDirection _direction;
         [SerializeField] private RectTransform _rect;
         [SerializeField] private CanvasGroup _cg;
         [SerializeField] private RectTransform _boundsRect;
-        
+
         [Header("Show")]
         [SerializeField] private float _showTime = 0.5f;
         [SerializeField] private Ease _showEase = Ease.OutCubic;
-        
+
         [Header("Hide")]
         [SerializeField] private float _hideTime = 0.5f;
         [SerializeField] private Ease _hideEase = Ease.OutCubic;
@@ -42,7 +42,9 @@ namespace _Scripts.UI
             EnsureInitialized();
             _rect.DOKill();
 
-            _rect.anchoredPosition = _rect.GetHiddenPosition(_direction, _shownPos, _boundsRect);
+            if (_cg.alpha <= 0.01f)
+                _rect.anchoredPosition = _rect.GetHiddenPosition(_direction, _shownPos, _boundsRect);
+
             _cg.Show();
 
             await _rect.DOAnchorPos(_shownPos, _showTime)
@@ -61,7 +63,8 @@ namespace _Scripts.UI
                 .SetEase(_hideEase)
                 .SetUpdate(true);
 
-            _cg.Hide();
+            if (Vector2.Distance(_rect.anchoredPosition, hiddenPos) <= 0.01f)
+                _cg.Hide();
         }
 
         public void HideInstant()

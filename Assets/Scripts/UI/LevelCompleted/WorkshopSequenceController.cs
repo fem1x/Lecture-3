@@ -19,22 +19,40 @@ namespace _Scripts.UI.Workshop
         [Header("Main Mode")]
         [SerializeField] private List<SlideStep> _mainShowSteps = new();
         [SerializeField] private List<SlideStep> _mainHideSteps = new();
+        [SerializeField] private float _fastReturnThreshold = 0.25f;
 
         [Header("Upgrade Mode")]
         [SerializeField] private List<SlideStep> _upgradeShowSteps = new();
         [SerializeField] private List<SlideStep> _upgradeHideSteps = new();
+
+        private float _mainHideStartTime = -1f;
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
-        public void HideMainInstant() => HideInstant(_mainShowSteps);
+        public void HideMainInstant()
+        {
+            _mainHideStartTime = -1f;
+            HideInstant(_mainShowSteps);
+        }
 
         public void HideUpgradeInstant() => HideInstant(_upgradeShowSteps);
 
-        public UniTask ShowMainAsync(CancellationToken ct) => RunStepsAsync(_mainShowSteps, show: true, ct);
+        public UniTask ShowMainAsync(CancellationToken ct)
+        {
+            var fastReturn = _mainHideStartTime >= 0f &&
+                             Time.unscaledTime - _mainHideStartTime < _fastReturnThreshold;
 
-        public UniTask HideMainAsync(CancellationToken ct) => RunStepsAsync(_mainHideSteps, show: false, ct);
+            _mainHideStartTime = -1f;
+            return RunStepsAsync(_mainShowSteps, show: true, ignoreDelays: fastReturn, ct);
+        }
 
-        public UniTask ShowUpgradeAsync(CancellationToken ct) => RunStepsAsync(_upgradeShowSteps, show: true, ct);
+        public UniTask HideMainAsync(CancellationToken ct)
+        {
+            _mainHideStartTime = Time.unscaledTime;
+            return RunStepsAsync(_mainHideSteps, show: false, ignoreDelays: false, ct);
+        }
 
-        public UniTask HideUpgradeAsync(CancellationToken ct) => RunStepsAsync(_upgradeHideSteps, show: false, ct);
+        public UniTask ShowUpgradeAsync(CancellationToken ct) => RunStepsAsync(_upgradeShowSteps, show: true, ignoreDelays: false, ct);
+
+        public UniTask HideUpgradeAsync(CancellationToken ct) => RunStepsAsync(_upgradeHideSteps, show: false, ignoreDelays: false, ct);
 
         private void HideInstant(List<SlideStep> steps)
         {
@@ -42,7 +60,7 @@ namespace _Scripts.UI.Workshop
                 steps[i].Slide.HideInstant();
         }
 
-        private async UniTask RunStepsAsync(List<SlideStep> steps, bool show, CancellationToken ct)
+        private async UniTask RunStepsAsync(List<SlideStep> steps, bool show, bool ignoreDelays, CancellationToken ct)
         {
             var tasks = new List<UniTask>(steps.Count);
 
@@ -51,7 +69,7 @@ namespace _Scripts.UI.Workshop
                 ct.ThrowIfCancellationRequested();
 
                 var step = steps[i];
-                if (step.DelayBeforeStart > 0f)
+                if (!ignoreDelays && step.DelayBeforeStart > 0f)
                     await UniTask.Delay(TimeSpan.FromSeconds(step.DelayBeforeStart), ignoreTimeScale: true, cancellationToken: ct);
 
                 ct.ThrowIfCancellationRequested();

@@ -110,10 +110,12 @@ namespace _Scripts.UI.Workshop
                 .SetEase(Ease.OutCubic);
         }
 
-        private void HandleFaceUnhovered(int _) => _rotateTween?.Kill();
+        private void HandleFaceUnhovered(int _) { }
 
         private void HandleFaceClicked(int faceIndex)
         {
+            _rotateTween?.Kill();
+
             if (_upgradeService.TryUpgradeFace(_data, faceIndex, out _))
                 Refresh();
         }

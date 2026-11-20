@@ -41,7 +41,6 @@ namespace _Scripts.UI
 
         private CancellationTokenSource _transitionCts;
         private bool _isUpgradeMode;
-        private bool _isTransitioning;
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
         private void Awake() => HideInstant();
 
@@ -62,6 +61,7 @@ namespace _Scripts.UI
 
         public async UniTask ShowAsync(CancellationToken ct)
         {
+            CancelTransition();
             _isUpgradeMode = false;
             _sequenceController.HideUpgradeInstant();
             _sequenceController.HideMainInstant();
@@ -69,12 +69,12 @@ namespace _Scripts.UI
             _charmConveyor.InstantCloseShutter();
             _nextLevelButton.interactable = false;
 
-            await _slidingPanel.ShowAsync();
-
             InitializeConveyorPanel();
             _diceRepairPanel.SetRepairMode(true);
 
-            await _sequenceController.ShowMainAsync(ct);
+            await UniTask.WhenAll(
+                _slidingPanel.ShowAsync(),
+                _sequenceController.ShowMainAsync(ct));
         }
 
         public async UniTask HideAsync(CancellationToken ct)
@@ -102,8 +102,6 @@ namespace _Scripts.UI
 
         private void HandleUpgradeToggleClick()
         {
-            if (_isTransitioning) return;
-
             CancelTransition();
             _transitionCts = new();
 
@@ -112,41 +110,29 @@ namespace _Scripts.UI
 
         private async UniTaskVoid ToggleUpgradeModeAsync(CancellationToken ct)
         {
-            _isTransitioning = true;
-            _upgradeToggleButton.interactable = false;
+            _isUpgradeMode = !_isUpgradeMode;
 
             try
             {
-                if (!_isUpgradeMode)
+                if (_isUpgradeMode)
                 {
                     _diceRepairPanel.SetRepairMode(false);
-                    _charmConveyor.InstantCloseShutter();
                     _upgradePanel.BindSections();
 
                     await UniTask.WhenAll(
                         _sequenceController.HideMainAsync(ct),
                         _sequenceController.ShowUpgradeAsync(ct));
-
-                    _isUpgradeMode = true;
                 }
                 else
                 {
-                    InitializeConveyorPanel();
                     _diceRepairPanel.SetRepairMode(true);
 
                     await UniTask.WhenAll(
                         _sequenceController.HideUpgradeAsync(ct),
                         _sequenceController.ShowMainAsync(ct));
-
-                    _isUpgradeMode = false;
                 }
             }
             catch (OperationCanceledException) { }
-            finally
-            {
-                _upgradeToggleButton.interactable = true;
-                _isTransitioning = false;
-            }
         }
 
         private void InitializeConveyorPanel()

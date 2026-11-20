@@ -382,7 +382,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Game::_Scripts.Utility.ModelRotator
   _sensitivity: 55
   _damping: 2.5
-  _camera: {fileID: 0}
+  _camera: {fileID: 8655430861855195253}
 --- !u!114 &6149571069532084864
 MonoBehaviour:
   m_ObjectHideFlags: 0
