@@ -17,6 +17,7 @@ namespace _Scripts.UI.Workshop
         [SerializeField] private DicePreviewView _previewSlot;
         [SerializeField] private List<FaceUpgradeButtonView> _faceButtons = new();
         [SerializeField] private float _rotateDuration = 0.25f;
+        [SerializeField] private Ease _rotateEase = Ease.OutQuart;
 
         private DiceData _data;
         private Tween _rotateTween;
@@ -98,12 +99,21 @@ namespace _Scripts.UI.Workshop
             _rotateTween?.Kill();
 
             var rotatorTransform = _previewSlot.Rotator.transform;
-            var localFaceDir = _data.GetFaceDirection(faceIndex).normalized;
-            var worldFaceDir = rotatorTransform.TransformDirection(localFaceDir);
-            var toCameraDir = (_previewSlot.Camera.transform.position - rotatorTransform.position).normalized;
+            var camTransform = _previewSlot.Camera.transform;
 
-            var deltaRot = Quaternion.FromToRotation(worldFaceDir, toCameraDir);
-            var targetRot = deltaRot * rotatorTransform.rotation;
+            var localFaceDir = _data.GetFaceDirection(faceIndex).normalized;
+            var localUp = Mathf.Abs(Vector3.Dot(localFaceDir, Vector3.up)) > 0.99f
+                ? Vector3.forward
+                : Vector3.up;
+            var localFaceUp = Vector3.ProjectOnPlane(localUp, localFaceDir).normalized;
+
+            var toCameraDir = (camTransform.position - rotatorTransform.position).normalized;
+            var screenUp = Vector3.ProjectOnPlane(camTransform.up, toCameraDir).normalized;
+
+            // Целевая ориентация куба в мире: нормаль грани -> к камере, её верх -> вверх экрана
+            var desiredWorldRot = Quaternion.LookRotation(toCameraDir, screenUp);
+            var localBasisRot = Quaternion.LookRotation(localFaceDir, localFaceUp);
+            var targetRot = desiredWorldRot * Quaternion.Inverse(localBasisRot);
 
             _rotateTween = rotatorTransform
                 .DORotateQuaternion(targetRot, _rotateDuration)

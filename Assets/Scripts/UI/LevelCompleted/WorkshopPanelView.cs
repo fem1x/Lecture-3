@@ -22,6 +22,7 @@ namespace _Scripts.UI
         [SerializeField] private DiceRepairPanelView _diceRepairPanel;
         [SerializeField] private CharmConveyorView _charmConveyor;
         [SerializeField] private UpgradePanelView _upgradePanel;
+        [SerializeField] private float _conveyorOpenDelay = 0.2f;
 
         #region DI
         private CharmsRewardGenerator _rewardGenerator;
@@ -41,6 +42,7 @@ namespace _Scripts.UI
 
         private CancellationTokenSource _transitionCts;
         private bool _isUpgradeMode;
+        private bool _conveyorInitializedThisVisit;
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
         private void Awake() => HideInstant();
 
@@ -63,24 +65,27 @@ namespace _Scripts.UI
         {
             CancelTransition();
             _isUpgradeMode = false;
+            _conveyorInitializedThisVisit = false;
+
             _sequenceController.HideUpgradeInstant();
             _sequenceController.HideMainInstant();
 
             _charmConveyor.InstantCloseShutter();
             _nextLevelButton.interactable = false;
 
-            InitializeConveyorPanel();
             _diceRepairPanel.SetRepairMode(true);
 
             await UniTask.WhenAll(
                 _slidingPanel.ShowAsync(),
-                _sequenceController.ShowMainAsync(ct));
+                _sequenceController.ShowMainAsync(ct),
+                InitConveyorAfterDelayAsync(ct));
         }
 
         public async UniTask HideAsync(CancellationToken ct)
         {
             CancelTransition();
             _isUpgradeMode = false;
+            _conveyorInitializedThisVisit = false;
 
             _charmConveyor.InstantCloseShutter();
             _charmConveyor.ClearConveyorView();
@@ -94,6 +99,21 @@ namespace _Scripts.UI
         {
             _slidingPanel.HideInstant();
             _sequenceController.HideUpgradeInstant();
+        }
+
+        private async UniTask InitConveyorAfterDelayAsync(CancellationToken ct)
+        {
+            if (_conveyorInitializedThisVisit) return;
+
+            if (_conveyorOpenDelay > 0f)
+                await UniTask.Delay(TimeSpan.FromSeconds(_conveyorOpenDelay), ignoreTimeScale: true, cancellationToken: ct);
+
+            ct.ThrowIfCancellationRequested();
+
+            if (_conveyorInitializedThisVisit) return;
+            _conveyorInitializedThisVisit = true;
+
+            InitializeConveyorPanel();
         }
 
         private void HandleNextLevelButtonClick() => OnNextLevelRequested?.Invoke();

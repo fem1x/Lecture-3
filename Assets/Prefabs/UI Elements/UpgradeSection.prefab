@@ -204,6 +204,7 @@ GameObject:
   - component: {fileID: 2662554228094999665}
   - component: {fileID: 215072073663143481}
   - component: {fileID: 7626294893809021203}
+  - component: {fileID: 2492811961483540534}
   m_Layer: 5
   m_Name: (Img) DiceDisplay
   m_TagString: Untagged
@@ -270,6 +271,19 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 2.01
+--- !u!114 &2492811961483540534
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1064972673652112802}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4d7085696b8640b3bff802c1e9436828, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Game::_Scripts.UI.Workshop.ModelDragArea
+  _rotator: {fileID: 0}
 --- !u!1 &2566735705124698440
 GameObject:
   m_ObjectHideFlags: 0
@@ -754,6 +768,7 @@ MonoBehaviour:
   - {fileID: 6394778574316963882}
   - {fileID: 2169334717184882591}
   _rotateDuration: 0.5
+  _rotateEase: 12
 --- !u!1 &5527828501264235365
 GameObject:
   m_ObjectHideFlags: 0
