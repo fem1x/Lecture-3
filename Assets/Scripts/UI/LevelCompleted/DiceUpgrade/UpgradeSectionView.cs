@@ -2,6 +2,7 @@
 using _Scripts.Configs;
 using _Scripts.Dices;
 using _Scripts.Managers;
+using _Scripts.Utility.Extensions;
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
@@ -21,6 +22,7 @@ namespace _Scripts.UI.Workshop
 
         private DiceData _data;
         private Tween _rotateTween;
+        private Tween _scaleTween;
 
         #region DI
         private DiceUpgradeService _upgradeService;
@@ -127,12 +129,17 @@ namespace _Scripts.UI.Workshop
             _rotateTween?.Kill();
 
             if (_upgradeService.TryUpgradeFace(_data, faceIndex, out _))
+            {
+                _scaleTween?.Kill();
+                _scaleTween = _previewSlot.DisplayView.transform.DoScalePop();
                 Refresh();
+            }
         }
 
         private void Unbind()
         {
             _rotateTween?.Kill();
+            _scaleTween?.Kill(true);
 
             if (_data != null)
                 _data.OnDataChanged -= Refresh;

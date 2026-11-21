@@ -232,7 +232,7 @@ GameObject:
   - component: {fileID: 9049658127646733500}
   - component: {fileID: 7301316086260029387}
   m_Layer: 0
-  m_Name: Outline
+  m_Name: Model
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -347,6 +347,9 @@ MonoBehaviour:
   outlineLayer:
     serializedVersion: 0
     m_Bits: 256
+  hoverOutlineLayer:
+    serializedVersion: 0
+    m_Bits: 512
 --- !u!1001 &949130720632424950
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -588,8 +588,8 @@ MonoBehaviour:
   _pressedScale: 0.92
   _squashAmount: 0.08
   _pressDipY: 0
-  _hoverTiltZ: 0
-  _pressTiltZ: 0
+  _hoverTiltZ: 1.5
+  _pressTiltZ: 2
   _hoverDuration: 0.15
   _hoverEase: 12
   _pressDuration: 0.06

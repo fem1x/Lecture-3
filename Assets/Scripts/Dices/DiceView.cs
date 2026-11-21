@@ -35,6 +35,7 @@ namespace _Scripts.Dices
         private IReadOnlyDiceData _data;
         private Tween _moveTween;
         private float _floorY = -999f;
+        private bool _isHovered;
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== 
 
         private void Awake()
@@ -49,7 +50,7 @@ namespace _Scripts.Dices
             _data.OnLockChanged += SetLockedVisual;
             _data.OnDataChanged += UpdateFaces;
             
-            _outline.SetOutline(_data.IsLocked);
+            UpdateOutline();
             UpdateFaces();
         }
         
@@ -72,9 +73,21 @@ namespace _Scripts.Dices
             }
         }
 
+        public void SetHovered(bool isHovered)
+        {
+            if (_isHovered == isHovered) return;
+            _isHovered = isHovered;
+            UpdateOutline();
+        }
+
+        private void UpdateOutline()
+        {
+            _outline.SetOutline(_data != null && _data.IsLocked, _isHovered);
+        }
+
         private void SetLockedVisual(bool isLocked)
         {
-            _outline.SetOutline(isLocked);
+            UpdateOutline();
             _moveTween?.Kill();
     
             if (isLocked)
@@ -100,6 +113,7 @@ namespace _Scripts.Dices
             _wobbler.StopSmooth(time: 0.3f);
             
             transform.localScale = InitialScale;
+            _isHovered = false;
             _outline.SetOutline(false);
             _floorY = -999f;
             _rb.isKinematic = true;

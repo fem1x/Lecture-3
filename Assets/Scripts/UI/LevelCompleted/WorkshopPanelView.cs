@@ -90,12 +90,12 @@ namespace _Scripts.UI
             _isUpgradeMode = false;
             _conveyorInitializedThisVisit = false;
 
-            _upgradeRopeButton.gameObject.SetActive(false);
             _charmConveyor.InstantCloseShutter();
             _charmConveyor.ClearConveyorView();
             _diceRepairPanel.SetRepairMode(false);
             _sequenceController.HideUpgradeInstant();
 
+            _upgradeRopeButton.RetractAsync(ct).Forget();
             await _slidingPanel.HideAsync();
         }
 

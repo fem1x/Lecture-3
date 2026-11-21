@@ -8,7 +8,7 @@ using VContainer;
 
 namespace _Scripts.Dices
 {
-    public class Dice : MonoBehaviour, IPointerClickHandler
+    public class Dice : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler
     {
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
         [field: SerializeField] public DiceView View { get; private set; }
@@ -50,6 +50,27 @@ namespace _Scripts.Dices
         {
             Data = data;
             View.Bind(data);
+        }
+
+        private bool _isPointerOver;
+
+        private void Update()
+        {
+            View.SetHovered(_isPointerOver && Data != null && CanBeSelected);
+        }
+
+        private void OnDisable()
+        {
+            _isPointerOver = false;
+            View.SetHovered(false);
+        }
+
+        public void OnPointerEnter(PointerEventData eventData) => _isPointerOver = true;
+
+        public void OnPointerExit(PointerEventData eventData)
+        {
+            _isPointerOver = false;
+            View.SetHovered(false);
         }
 
         #region Locking

@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading;
+using Cysharp.Threading.Tasks;
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -31,6 +34,13 @@ namespace _Scripts.UI.Workshop
         [Header("Pull Impulse")]
         [SerializeField] private float _pullDownImpulse = 1400f;
         [SerializeField] private float _pullSideImpulse = 320f;
+
+        [Header("Retraction")]
+        [SerializeField, Min(0.01f)] private float _retractDuration = 0.8f;
+        [SerializeField, Min(0f)] private float _retractDistance = 1200f;
+        [SerializeField] private Ease _retractEase = Ease.InCubic;
+        [SerializeField, Min(0f), Tooltip("Seconds to wait after retraction before deactivating the rope.")]
+        private float _retractHideDelay = 0.25f;
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
         public event Action OnPulled;
 
@@ -39,11 +49,16 @@ namespace _Scripts.UI.Workshop
         private readonly List<RectTransform> _segments = new();
 
         private Vector2 _lastRootPos;
+        private Vector3 _lastRootWorldPos;
         private bool _isBuilt;
         private int _pullDirSign = 1;
+        private Vector2 _anchorStartPosition;
+        private bool _isRetracting;
+        private CancellationTokenSource _retractCts;
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
         private void Awake()
         {
+            _anchorStartPosition = _anchor.anchoredPosition;
             BuildSegments();
             CollapseToAnchor();
         }
@@ -52,11 +67,17 @@ namespace _Scripts.UI.Workshop
         {
             _button.onClick.AddListener(HandleButtonClick);
             _lastRootPos = _segmentsRoot.anchoredPosition;
+            _lastRootWorldPos = _segmentsRoot.position;
         }
 
-        private void OnDisable() => _button.onClick.RemoveListener(HandleButtonClick);
+        private void OnDisable()
+        {
+            _button.onClick.RemoveListener(HandleButtonClick);
+            CancelRetraction();
+        }
 
-        private void Update()
+        // Update the chain after DOTween moves its anchor in Update.
+        private void LateUpdate()
         {
             var dt = Mathf.Min(Time.unscaledDeltaTime, 0.033f);
             if (dt <= 0f) return;
@@ -65,19 +86,50 @@ namespace _Scripts.UI.Workshop
             var rootDelta = currentRootPos - _lastRootPos;
             _lastRootPos = currentRootPos;
 
+            if (_isRetracting)
+            {
+                var localDelta = (Vector2)_segmentsRoot.InverseTransformVector(_segmentsRoot.position - _lastRootWorldPos);
+                for (var i = 0; i < _nodeCount; i++)
+                {
+                    _currentPositions[i] -= localDelta;
+                    _previousPositions[i] -= localDelta;
+                }
+            }
+            _lastRootWorldPos = _segmentsRoot.position;
+
             StepVerlet(dt, rootDelta);
             SyncVisuals();
         }
 
+        private bool CanPreviewRope => Application.isPlaying && isActiveAndEnabled && !_isRetracting;
+
+        [InspectorButton]
         [ContextMenu("Redeploy Rope")]
-        public void RedeployRope() => CollapseToAnchor();
+        public void RedeployRope()
+        {
+            if (CanPreviewRope) CollapseToAnchor();
+        }
+
+        [InspectorButton]
+        [ContextMenu("Test Rope Retraction")]
+        public void TestRopeRetraction()
+        {
+            if (!CanPreviewRope) return;
+            RetractAsync(destroyCancellationToken, hideAfter: true).Forget();
+        }
 
         public void CollapseToAnchor()
         {
+            CancelRetraction();
             BuildSegments();
+
+            _isRetracting = false;
+            _anchor.anchoredPosition = _anchorStartPosition;
+            _button.interactable = true;
 
             var anchorLocal = GetAnchorInSegmentsRootSpace();
             _lastRootPos = _segmentsRoot.anchoredPosition;
+            _lastRootWorldPos = _segmentsRoot.position;
 
             for (var i = 0; i < _nodeCount; i++)
             {
@@ -88,6 +140,52 @@ namespace _Scripts.UI.Workshop
             }
 
             SyncVisuals();
+        }
+
+        public async UniTask RetractAsync(CancellationToken ct, bool hideAfter = true)
+        {
+            if (!gameObject.activeInHierarchy) return;
+
+            CancelRetraction();
+            var retraction = CancellationTokenSource.CreateLinkedTokenSource(ct, destroyCancellationToken);
+            _retractCts = retraction;
+            ct = retraction.Token;
+            _isRetracting = true;
+            _button.interactable = false;
+            var start = _anchor.anchoredPosition;
+            try
+            {
+                var tween = _anchor.DOAnchorPos(start + Vector2.up * _retractDistance, _retractDuration)
+                    .SetEase(_retractEase)
+                    .SetUpdate(UpdateType.Normal, isIndependentUpdate: true);
+                await tween.ToUniTask(cancellationToken: ct);
+                // Let LateUpdate apply the last anchor movement before hiding the rope.
+                await UniTask.NextFrame(ct);
+                if (!hideAfter) return;
+
+                if (_retractHideDelay > 0f)
+                    await UniTask.Delay(TimeSpan.FromSeconds(_retractHideDelay), ignoreTimeScale: true, cancellationToken: ct);
+
+                ct.ThrowIfCancellationRequested();
+                gameObject.SetActive(false);
+            }
+            finally
+            {
+                if (_retractCts == retraction)
+                {
+                    _retractCts = null;
+                    _isRetracting = false;
+                }
+                retraction.Dispose();
+            }
+        }
+
+        private void CancelRetraction()
+        {
+            var retraction = _retractCts;
+            _retractCts = null;
+            _isRetracting = false;
+            retraction?.Cancel();
         }
 
         private void BuildSegments()
@@ -200,6 +298,7 @@ namespace _Scripts.UI.Workshop
 
         private void HandleButtonClick()
         {
+            if (_isRetracting) return;
             var lastIdx = _nodeCount - 1;
             var dt = Mathf.Min(Time.unscaledDeltaTime, 0.016f);
             if (dt <= 0f) dt = 0.016f;

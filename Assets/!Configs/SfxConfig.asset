@@ -368,9 +368,9 @@ MonoBehaviour:
       - {fileID: 8300000, guid: 0cd537c60c5a67d499ded80bdff3f856, type: 3}
       volume: 1
       pitch: 1
-    volume: 0.3
+    volume: 0.22
     pitch: 0.7
-    pitchRandomize: 0.1
+    pitchRandomize: 0.15
     is3D: 0
     useGlobalSpatialBlend: 0
     customSpatialBlend: 0
