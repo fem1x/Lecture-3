@@ -102,6 +102,7 @@ public class GameLifetimeScope : LifetimeScope
         builder.Register<SfxPlayer>(Lifetime.Singleton).As<ISfxPlayer>();
         builder.Register<AudioFilterController>(Lifetime.Singleton);
         builder.Register<CameraShaker>(Lifetime.Singleton).AsSelf().AsImplementedInterfaces();
+        builder.Register<DiceHoverTooltip>(Lifetime.Singleton).AsSelf().AsImplementedInterfaces();
         builder.Register<ResourceManager>(Lifetime.Singleton);
         builder.Register<DiceSpawner>(Lifetime.Singleton);
         builder.Register<DiceRoller>(Lifetime.Singleton);

@@ -2,6 +2,7 @@
 using System;
 using _Scripts.Configs;
 using _Scripts.Managers;
+using _Scripts.UI.Tooltips;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using VContainer;
@@ -29,13 +30,15 @@ namespace _Scripts.Dices
         private ISfxPlayer _sfxPlayer;
         private CameraShaker _cameraShaker;
         private DiceTableController _tableController;
+        private DiceHoverTooltip _hoverTooltip;
 
         [Inject]
-        public void Construct(ISfxPlayer sfxPlayer, CameraShaker cameraShaker, DiceTableController tableController)
+        public void Construct(ISfxPlayer sfxPlayer, CameraShaker cameraShaker, DiceTableController tableController, DiceHoverTooltip hoverTooltip)
         {
             _sfxPlayer = sfxPlayer;
             _cameraShaker = cameraShaker;
             _tableController = tableController;
+            _hoverTooltip = hoverTooltip;
         }
         #endregion
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
@@ -56,13 +59,17 @@ namespace _Scripts.Dices
 
         private void Update()
         {
-            View.SetHovered(_isPointerOver && Data != null && CanBeSelected);
+            var hovered = _isPointerOver && Data != null && CanBeSelected;
+            View.SetHovered(hovered);
+            if (hovered) _hoverTooltip.Show(this);
+            else _hoverTooltip.Hide(this);
         }
 
         private void OnDisable()
         {
             _isPointerOver = false;
             View.SetHovered(false);
+            _hoverTooltip?.Hide(this);
         }
 
         public void OnPointerEnter(PointerEventData eventData) => _isPointerOver = true;
@@ -71,6 +78,7 @@ namespace _Scripts.Dices
         {
             _isPointerOver = false;
             View.SetHovered(false);
+            _hoverTooltip?.Hide(this);
         }
 
         #region Locking
