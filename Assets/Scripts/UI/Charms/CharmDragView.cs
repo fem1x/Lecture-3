@@ -32,6 +32,7 @@ namespace _Scripts.UI.Charms
         private RectTransform _cellHolder;
         private RectTransform _dragLayer;
         private bool _isDraggable;
+        private int? _dragPointerId;
         private Tween _returnTween;
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 
@@ -61,6 +62,8 @@ namespace _Scripts.UI.Charms
 
         public void SetDraggable(bool isDraggable) => _isDraggable = isDraggable;
 
+        public bool IsDraggedBy(int pointerId) => _dragPointerId == pointerId;
+
         public void OnPointerClick(PointerEventData eventData)
         {
             if (eventData.dragging) return;
@@ -71,9 +74,10 @@ namespace _Scripts.UI.Charms
 
         public void OnBeginDrag(PointerEventData eventData)
         {
-            if (!_isDraggable) return;
+            if (!_isDraggable || _isPending || _dragPointerId.HasValue) return;
 
             _returnTween?.Kill();
+            _dragPointerId = eventData.pointerId;
             _canvasGroup.blocksRaycasts = false;
             
             _rectTransform.SetParent(_dragLayer, worldPositionStays: true);
@@ -81,15 +85,16 @@ namespace _Scripts.UI.Charms
 
         public void OnDrag(PointerEventData eventData)
         {
-            if (!_isDraggable) return;
+            if (!IsDraggedBy(eventData.pointerId)) return;
 
             _rectTransform.position = eventData.position;
         }
 
         public void OnEndDrag(PointerEventData eventData)
         {
-            if (!_isDraggable) return;
+            if (!IsDraggedBy(eventData.pointerId)) return;
 
+            _dragPointerId = null;
             _canvasGroup.blocksRaycasts = true;
 
             if (!_isPending && _rectTransform.parent == _dragLayer) 
@@ -99,8 +104,11 @@ namespace _Scripts.UI.Charms
         public void ReturnToConveyor()
         {
             _returnTween?.Kill();
-            _returnTween = _rectTransform.DOMove(_cellHolder.position, _returnTweenTime)
+            var startPosition = _rectTransform.position;
+            _returnTween = DOVirtual.Float(0f, 1f, _returnTweenTime, progress =>
+                    _rectTransform.position = Vector3.LerpUnclamped(startPosition, _cellHolder.position, progress))
                 .SetEase(_returnEase)
+                .SetLink(gameObject)
                 .OnComplete(() =>
                 {
                     _rectTransform.SetParent(_cellHolder, worldPositionStays: false);
@@ -110,6 +118,7 @@ namespace _Scripts.UI.Charms
 
         public void InstantReturnToConveyor()
         {
+            _dragPointerId = null;
             _isPending = false;
             _returnTween?.Kill();
             _canvasGroup.blocksRaycasts = true;
@@ -124,6 +133,7 @@ namespace _Scripts.UI.Charms
 
         public void OnSuccessfullyEquipped()
         {
+            _dragPointerId = null;
             _returnTween?.Kill();
             Destroy(gameObject);
         }

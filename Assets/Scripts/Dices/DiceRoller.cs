@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using _Scripts.Configs;
@@ -45,9 +45,11 @@ namespace _Scripts.Dices
         private async UniTask ExecuteRollAsync(List<Dice> dices, DiceThrowSettings settings, bool spendDice)
         {
             IsRolling = true;
-
             try
             {
+                foreach (var dice in dices)
+                    if (dice != null) dice.BeginRoll();
+
                 foreach (var dice in dices)
                 {
                     if (dice == null) continue;
@@ -61,13 +63,7 @@ namespace _Scripts.Dices
                 }
 
                 await UniTask.Delay(TimeSpan.FromSeconds(0.2f));
-                await UniTask.WaitUntil(() => dices.All(d => d == null || d.IsStopped));
-
-                foreach (var dice in dices)
-                {
-                    if (dice != null)
-                        dice.UpdateValue();
-                }
+                await UniTask.WhenAll(dices.Select(ResolveValueWhenStoppedAsync));
                 
                 OnRollCompleted?.Invoke(spendDice, dices);
             }
@@ -75,6 +71,15 @@ namespace _Scripts.Dices
             {
                 IsRolling = false;
             }
+        }
+
+        private static async UniTask ResolveValueWhenStoppedAsync(Dice dice)
+        {
+            if (dice != null && !dice.IsStopped)
+                await UniTask.WaitUntil(() => dice == null || dice.IsStopped);
+
+            if (dice != null)
+                dice.UpdateValue();
         }
 
         private void DiceThrow(Dice dice, DiceThrowSettings settings)

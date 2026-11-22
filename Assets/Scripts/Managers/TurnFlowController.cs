@@ -149,19 +149,33 @@ namespace _Scripts.Managers
 
             _isScoring = false;
             
-            if (_scoreManager.HasEnoughScore)
-            {
-                _tableController.SetInteractionLock(false);
-                _tableController.DeactivateAllDices();
-                _levelFlowController.CompleteLevel();
-                return;
-            }
+            if (TryCompleteLevel()) return;
     
             PrepareNextTurn(selectedDices);
 
             _tableController.SetInteractionLock(false);
             _levelFlowController.CheckDefeatCondition();
         }
+
+        private bool TryCompleteLevel()
+        {
+            if (!_scoreManager.HasEnoughScore) return false;
+
+            _tableController.SetInteractionLock(false);
+            _tableController.DeactivateAllDices();
+            _levelFlowController.CompleteLevel();
+            return true;
+        }
+
+#if UNITY_EDITOR
+        public void AddDebugScore(int score)
+        {
+            if (!_diceRoller.CanRoll || _diceRoller.IsRolling || _isScoring) return;
+
+            _scoreManager.AddScore(score);
+            TryCompleteLevel();
+        }
+#endif
 
         private async UniTask StandardFlow(List<Dice> selectedDices)
         {

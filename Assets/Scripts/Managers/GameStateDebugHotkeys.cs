@@ -10,12 +10,14 @@ namespace _Scripts.DebugTools
     {
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
         private GameStateManager _gameStateManager;
+        private TurnFlowController _turnFlowController;
 
         #region DI
         [Inject]
-        public void Construct(GameStateManager gameStateManager)
+        public void Construct(GameStateManager gameStateManager, TurnFlowController turnFlowController)
         {
             _gameStateManager = gameStateManager;
+            _turnFlowController = turnFlowController;
         }
         #endregion
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
@@ -30,6 +32,9 @@ namespace _Scripts.DebugTools
 
             if (Keyboard.current.f8Key.wasPressedThisFrame)
                 _gameStateManager.ChangeState(GameState.Game);
+
+            if (Keyboard.current.f11Key.wasPressedThisFrame && _gameStateManager.CurrentState == GameState.Game)
+                _turnFlowController.AddDebugScore(1000);
         }
 
         [ContextMenu("Debug / Trigger Victory")]

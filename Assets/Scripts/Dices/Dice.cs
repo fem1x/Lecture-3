@@ -18,6 +18,10 @@ namespace _Scripts.Dices
         [Header("References")]
         [SerializeField] private Rigidbody _rb;
 
+        [Header("Dice Tooltips")]
+        [SerializeField] private DiceTooltipView _diceTooltipPrefab;
+        [SerializeField] private TMPro.TMP_Text _damageIndicatorPrefab;
+
         [Header("Camera Shake")]
         [SerializeField] private CameraShakePreset _rollShake;
 
@@ -53,23 +57,66 @@ namespace _Scripts.Dices
         {
             Data = data;
             View.Bind(data);
+            _tooltipCollider = GetComponentInChildren<Collider>();
+            _tooltip = _hoverTooltip.Create(_diceTooltipPrefab, data.Id);
+            _damageIndicator = _hoverTooltip.CreateDamageIndicator(_damageIndicatorPrefab, data.Id);
         }
 
+        internal DiceTooltipView Tooltip => _tooltip;
+        internal DiceDamageIndicatorView DamageIndicator => _damageIndicator;
+        internal Bounds TooltipAnchorBounds => _tooltipCollider.bounds;
+        internal bool ShouldShowTooltip => IsRolled && !_isRolling && !_isReturning &&
+            (_hoverTooltip.AutoShow || (_isPointerOver && CanBeSelected));
+
+        private DiceTooltipView _tooltip;
+        private DiceDamageIndicatorView _damageIndicator;
+        private Collider _tooltipCollider;
         private bool _isPointerOver;
+        private bool _isRolling;
+        private bool _isReturning;
+
+        public void ShowDamageChange()
+        {
+            if (ShouldShowTooltip && Data.DamageLevel > 0)
+                _damageIndicator.ShowDamageChange(Data.DamageLevel);
+        }
+
+        public bool AreTooltipsHidden => !_tooltip.gameObject.activeSelf && !_damageIndicator.gameObject.activeSelf;
+
+        public void BeginReturn()
+        {
+            _isReturning = true;
+            _tooltip.SetVisible(false);
+            _damageIndicator.SetVisible(false);
+        }
+
+        public void CancelReturn() => _isReturning = false;
 
         private void Update()
         {
-            var hovered = _isPointerOver && Data != null && CanBeSelected;
-            View.SetHovered(hovered);
-            if (hovered) _hoverTooltip.Show(this);
-            else _hoverTooltip.Hide(this);
+            View.SetHovered(_isPointerOver && CanBeSelected);
         }
 
         private void OnDisable()
         {
             _isPointerOver = false;
             View.SetHovered(false);
-            _hoverTooltip?.Hide(this);
+            if (_tooltip != null) _tooltip.HideImmediately();
+            if (_damageIndicator != null) _damageIndicator.HideImmediately();
+        }
+
+        private void OnDestroy()
+        {
+            _hoverTooltip?.Remove(this);
+            if (_tooltip != null) Destroy(_tooltip.gameObject);
+            if (_damageIndicator != null) Destroy(_damageIndicator.gameObject);
+        }
+
+        public void BeginRoll()
+        {
+            _isRolling = true;
+            _tooltip.SetVisible(false);
+            _damageIndicator.SetVisible(false);
         }
 
         public void OnPointerEnter(PointerEventData eventData) => _isPointerOver = true;
@@ -78,7 +125,11 @@ namespace _Scripts.Dices
         {
             _isPointerOver = false;
             View.SetHovered(false);
-            _hoverTooltip?.Hide(this);
+            if (!_hoverTooltip.AutoShow)
+            {
+                _tooltip.SetVisible(false);
+                _damageIndicator.SetVisible(false);
+            }
         }
 
         #region Locking
@@ -116,7 +167,11 @@ namespace _Scripts.Dices
 
         public void PrepareForRoll()
         {
-            Data?.RoundReset();
+            _isRolling = false;
+            _isReturning = false;
+            Data.RoundReset();
+            _tooltip.SetVisible(false);
+            _damageIndicator.SetVisible(false);
             View.ResetVisual();
 
             if (!_rb.isKinematic)
@@ -162,6 +217,7 @@ namespace _Scripts.Dices
                 Data.SetRolledFace(bestFaceIndex);
 
             _rb.constraints = RigidbodyConstraints.FreezeRotation;
+            _isRolling = false;
         }
 
         private void OnCollisionEnter(Collision collision)

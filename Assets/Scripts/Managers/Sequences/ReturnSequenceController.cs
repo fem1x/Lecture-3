@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Threading;
 using _Scripts.Configs;
@@ -17,6 +17,7 @@ namespace _Scripts.Managers
         [Header("Timings")]
         [SerializeField] private float _delayPerDice = 0.045f;
         [SerializeField] private float _returnTime = 0.32f;
+        [SerializeField, Min(0f)] private float _tooltipHideDelay = 0.4f;
 
         [Header("Animation")]
         [SerializeField] private float _hopHeight = 0.45f;
@@ -99,6 +100,24 @@ namespace _Scripts.Managers
         }
 
         public async UniTask ReturnDiceAsync(Dice dice, int stepIndex = 0, CancellationToken token = default)
+        {
+            using var linkedCts = CancellationTokenSource.CreateLinkedTokenSource(token, dice.destroyCancellationToken);
+            token = linkedCts.Token;
+            try
+            {
+                await _speedConfig.DelayAsync(_tooltipHideDelay, token);
+                dice.BeginReturn();
+                await UniTask.WaitUntil(() => dice.AreTooltipsHidden, cancellationToken: token);
+                await PlayReturnAsync(dice, stepIndex, token);
+            }
+            catch (OperationCanceledException)
+            {
+                dice.CancelReturn();
+                throw;
+            }
+        }
+
+        private async UniTask PlayReturnAsync(Dice dice, int stepIndex, CancellationToken token)
         {
             var duration = _speedConfig.ScaleTime(_returnTime);
             PlayReturnSfx(dice.transform.position, stepIndex);

@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Threading;
 using _Scripts.Configs;
 using _Scripts.Data_Transfer.Contexts;
@@ -59,9 +59,13 @@ namespace _Scripts.Managers
             for (int i = 0; i < dices.Count; i++)
             {
                 var dice = dices[i];
+                var previousDamage = dice.Data.DamageLevel;
                 var step = forceDegrade
                     ? _damageService.DegradeDice(dice, restoreHp: false)
                     : _damageService.DamageDice(dice, dices);
+
+                if (dice.Data.DamageLevel != previousDamage)
+                    dice.ShowDamageChange();
 
                 tasks.Add(ProcessSingleDiceAsync(step, i, token));
 

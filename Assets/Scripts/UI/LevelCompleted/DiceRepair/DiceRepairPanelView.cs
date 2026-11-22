@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using _Scripts.Dices;
 using _Scripts.Managers;
-using TMPro;
 using UnityEngine;
 using VContainer;
 
@@ -10,7 +9,6 @@ namespace _Scripts.UI
     public class DiceRepairPanelView : MonoBehaviour
     {
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
-        [SerializeField] private TMP_Text _tokensText;
         [SerializeField] private List<DiceRepairView> _repairViews = new();
 
         private RepairTokensManager _repairTokensManager;
@@ -26,10 +24,6 @@ namespace _Scripts.UI
             _diceTableController = diceTableController;
         }
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
-        private void OnEnable() => _repairTokensManager.OnTokensCountChange += RefreshValue;
-
-        private void OnDisable() => _repairTokensManager.OnTokensCountChange -= RefreshValue;
-
         public void SetRepairMode(bool enable)
         {
             if (enable && !_isBound)
@@ -50,7 +44,5 @@ namespace _Scripts.UI
 
             _isBound = true;
         }
-
-        private void RefreshValue(int newValue) => _tokensText.text = newValue.ToString();
     }
 }

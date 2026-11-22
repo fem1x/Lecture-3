@@ -119,7 +119,9 @@ namespace _Scripts.UI
             AdjustContainerLayout();
             ResetConveyorPosition();
             
-            UpdateToNewCharm(0);
+            RevealCharm(0);
+            UpdateIndicators(0);
+            UpdateDraggableCharm(0);
             
             _shutter.Open();
         }
@@ -132,6 +134,9 @@ namespace _Scripts.UI
         
         public void ClearConveyorView()
         {
+            _moveTween?.Kill();
+            ResetCharmStates();
+
             foreach (var cell in _spawnedCellsList)
             {
                 if (cell.CurrentCharm != null)
@@ -147,20 +152,15 @@ namespace _Scripts.UI
         private void MoveToCharm(int charmIndex)
         {
             ResetCharmStates();
+            RevealCharm(charmIndex);
+            UpdateDraggableCharm(charmIndex);
             
             _moveTween?.Kill();
             var targetX = -_spawnedCellsList[charmIndex].transform.localPosition.x;
             _moveTween = _containerRect
                 .DOAnchorPosX(targetX, _moveDuration)
                 .SetEase(_moveEase)
-                .OnComplete(() => UpdateToNewCharm(charmIndex));
-        }
-
-        private void UpdateToNewCharm(int charmIndex)
-        {
-            RevealCharm(charmIndex);
-            UpdateIndicators(charmIndex);
-            UpdateDraggableCharm(charmIndex);
+                .OnComplete(() => UpdateIndicators(charmIndex));
         }
 
         private void UpdateIndicators(int activeIndex)

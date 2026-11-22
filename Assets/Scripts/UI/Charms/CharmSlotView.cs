@@ -40,6 +40,7 @@ namespace _Scripts.UI.Charms
         {
             if (eventData.pointerDrag == null) return;
             if (!eventData.pointerDrag.TryGetComponent<CharmDragView>(out var dragView)) return;
+            if (!dragView.IsDraggedBy(eventData.pointerId)) return;
             
             if (IsEmpty)
             {
@@ -59,15 +60,10 @@ namespace _Scripts.UI.Charms
 
         private void TryEquip(CharmDragView dragView)
         {
-            if (_conveyorService.TryClaim(dragView.GeneralView.Config, out var createdCharm))
-            {
-                Equip(createdCharm);
-                dragView.OnSuccessfullyEquipped();
-            }
-            else
-            {
-                dragView.ReturnToConveyor();
-            }
+            if (!_conveyorService.TryClaim(dragView.GeneralView.Config, out var createdCharm)) return;
+
+            Equip(createdCharm);
+            dragView.OnSuccessfullyEquipped();
         }
 
         private void Equip(CharmBase charm)

@@ -32,6 +32,12 @@ public class GameLifetimeScope : LifetimeScope
     [SerializeField] private DiceUpgradeConfig _diceUpgradeConfig;
     [SerializeField] private DiceAtlasConfig _diceAtlasConfig;
     
+    [Header("Dice Tooltips")]
+    [SerializeField] private RectTransform _diceTooltipsHolder;
+    [SerializeField] private RectTransform[] _diceTooltipUiObstacles = new RectTransform[0];
+    [SerializeField] private bool _autoShowDiceTooltips = true;
+    public bool AutoShowDiceTooltips => _autoShowDiceTooltips;
+
     [Header("Scene")]
     [SerializeField] private Camera _mainCamera;
     [SerializeField] private TurnFlowController _turnFlowController;
@@ -102,7 +108,10 @@ public class GameLifetimeScope : LifetimeScope
         builder.Register<SfxPlayer>(Lifetime.Singleton).As<ISfxPlayer>();
         builder.Register<AudioFilterController>(Lifetime.Singleton);
         builder.Register<CameraShaker>(Lifetime.Singleton).AsSelf().AsImplementedInterfaces();
-        builder.Register<DiceHoverTooltip>(Lifetime.Singleton).AsSelf().AsImplementedInterfaces();
+        builder.Register<DiceHoverTooltip>(
+            _ => new DiceHoverTooltip(_mainCamera, _diceTooltipsHolder, _diceTooltipUiObstacles,
+                _diceAtlasConfig, _diceTableController, this),
+            Lifetime.Singleton).AsSelf().AsImplementedInterfaces();
         builder.Register<ResourceManager>(Lifetime.Singleton);
         builder.Register<DiceSpawner>(Lifetime.Singleton);
         builder.Register<DiceRoller>(Lifetime.Singleton);
