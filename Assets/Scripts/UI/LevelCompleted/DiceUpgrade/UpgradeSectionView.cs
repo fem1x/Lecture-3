@@ -126,12 +126,10 @@ namespace _Scripts.UI.Workshop
 
         private void HandleFaceClicked(int faceIndex)
         {
-            _rotateTween?.Kill();
-
             if (_upgradeService.TryUpgradeFace(_data, faceIndex, out _))
             {
                 _scaleTween?.Kill();
-                _scaleTween = _previewSlot.DisplayView.transform.DoScalePop();
+                _scaleTween = _previewSlot.DisplayView.transform.DoScalePop(killExistingTweens: false, scaleMult: 1.5f);
                 Refresh();
             }
         }

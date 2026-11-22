@@ -15,7 +15,6 @@ namespace _Scripts.UI.Tooltips
         private const float EdgeTolerance = 8f;
         private const float RepositionDistance = 32f;
         private const float OverlapTolerance = 2f;
-        private static readonly float[] SideOffsets = { 0f, -0.5f, 0.5f, -1f, 1f };
 
         private readonly Camera _camera;
         private readonly Canvas _canvas;
@@ -26,6 +25,7 @@ namespace _Scripts.UI.Tooltips
         private readonly GameLifetimeScope _scope;
         private readonly List<(Dice Dice, Rect Bounds)> _projectedDice = new();
         private readonly List<Rect> _placedTooltips = new();
+        private readonly List<Rect> _damageIndicatorBounds = new();
         private readonly List<Rect> _blockedUiRects = new();
         private readonly Vector3[] _uiCorners = new Vector3[4];
         private sealed class Placement
@@ -107,6 +107,7 @@ namespace _Scripts.UI.Tooltips
             _layoutFrame = Time.frameCount;
             _projectedDice.Clear();
             _placedTooltips.Clear();
+            _damageIndicatorBounds.Clear();
             UpdateUiObstacles();
 
             var holderBounds = _holder.rect;
@@ -126,6 +127,14 @@ namespace _Scripts.UI.Tooltips
                     dice.DamageIndicator.SetVisible(false);
                     if (_placements.TryGetValue(dice, out var hiddenPlacement)) hiddenPlacement.Valid = false;
                 }
+            }
+
+            foreach (var (dice, bounds) in _projectedDice)
+            {
+                if (!dice.ShouldShowTooltip || dice.Data.DamageLevel <= 0) continue;
+                var size = dice.DamageIndicator.MaximumSize;
+                var center = new Vector2(bounds.xMax, bounds.yMax);
+                _damageIndicatorBounds.Add(new Rect(center - size * 0.5f, size));
             }
 
             var usableBounds = Rect.MinMaxRect(holderBounds.xMin + ScreenMargin, holderBounds.yMin + ScreenMargin,
@@ -173,7 +182,7 @@ namespace _Scripts.UI.Tooltips
                 var movedFar = (worldCenter - placement.LastWorldCenter).sqrMagnitude > 0.0025f;
                 var outside = desiredRect.xMin < usableBounds.xMin || desiredRect.xMax > usableBounds.xMax ||
                               desiredRect.yMin < usableBounds.yMin || desiredRect.yMax > usableBounds.yMax;
-                var blocked = OverlapsUi(desiredRect);
+                var blocked = OverlapsUi(desiredRect) || OverlapsDamage(desiredRect);
                 var overlapping = OverlapsDice(desiredRect) || GetOverlap(desiredRect) > placement.LastOverlap +
                     Mathf.Min(scaledFootprint.size.x, scaledFootprint.size.y) * OverlapTolerance;
                 var recalculate = !placement.Valid || !view.IsShowing || _obstaclesChanged || movedFar || outside || blocked || overlapping;
@@ -196,7 +205,9 @@ namespace _Scripts.UI.Tooltips
                     var pathMin = Vector2.Min(currentCenter, position) - halfSize;
                     var pathMax = Vector2.Max(currentCenter, position) + halfSize;
                     var path = Rect.MinMaxRect(pathMin.x, pathMin.y, pathMax.x, pathMax.y);
-                    view.MoveTo(origin, !OverlapsUi(path) && !OverlapsDice(path));
+                    var sameDirection = !placement.Valid || GetDirection(desiredCenter, bounds.center) ==
+                        GetDirection(position, bounds.center);
+                    view.MoveTo(origin, sameDirection && !OverlapsUi(path) && !OverlapsDice(path) && !OverlapsDamage(path));
                     placement.Offset = position - center;
                     placement.LastOverlap = GetOverlap(new Rect(position - halfSize, scaledFootprint.size));
                     placement.LastWorldCenter = worldCenter;
@@ -247,27 +258,26 @@ namespace _Scripts.UI.Tooltips
             var best = bounds.center;
             var bestOverlap = float.PositiveInfinity;
             var bestDistance = float.PositiveInfinity;
-            foreach (var offset in SideOffsets)
-            {
-                var y = dice.center.y + size.y * offset;
-                var x = dice.center.x + size.x * offset;
-                Consider(new Vector2(dice.xMax + Gap + half.x, y));
-                Consider(new Vector2(dice.xMin - Gap - half.x, y));
-                Consider(new Vector2(x, dice.yMax + Gap + half.y));
-                Consider(new Vector2(x, dice.yMin - Gap - half.y));
-            }
+            var bestSide = int.MaxValue;
+            Consider(new Vector2(dice.center.x, dice.yMin - Gap - half.y));
+            Consider(new Vector2(dice.xMax + Gap + half.x, dice.center.y));
+            Consider(new Vector2(dice.xMin - Gap - half.x, dice.center.y));
+            Consider(new Vector2(dice.center.x, dice.yMax + Gap + half.y));
 
             // Keep the current position through small changes in overlap or distance.
             if (previous is Vector2 current)
             {
                 var rect = new Rect(current - half, size);
-                if (rect.xMin >= bounds.xMin - 0.1f && rect.xMax <= bounds.xMax + 0.1f &&
+                var aligned = Mathf.Abs(current.x - dice.center.x) < 0.1f ||
+                              Mathf.Abs(current.y - dice.center.y) < 0.1f;
+                if (aligned && rect.xMin >= bounds.xMin - 0.1f && rect.xMax <= bounds.xMax + 0.1f &&
                     rect.yMin >= bounds.yMin - 0.1f && rect.yMax <= bounds.yMax + 0.1f &&
-                    !OverlapsUi(rect) && !OverlapsDice(rect))
+                    !OverlapsUi(rect) && !OverlapsDice(rect) && !OverlapsDamage(rect))
                 {
                     var overlap = GetOverlap(rect);
                     var distance = Vector2.Distance(current, dice.center);
-                    if (overlap <= bestOverlap + Mathf.Min(size.x, size.y) * OverlapTolerance &&
+                    var side = rect.yMax <= dice.yMin ? 0 : 1;
+                    if (side == bestSide && overlap <= bestOverlap + Mathf.Min(size.x, size.y) * OverlapTolerance &&
                         distance <= bestDistance + RepositionDistance)
                     {
                         position = current;
@@ -281,17 +291,19 @@ namespace _Scripts.UI.Tooltips
 
             void Consider(Vector2 candidate)
             {
-                var center = new Vector2(
-                    FitAxis(candidate.x, half.x, bounds.xMin, bounds.xMax),
-                    FitAxis(candidate.y, half.y, bounds.yMin, bounds.yMax));
+                var center = candidate;
                 var rect = new Rect(center - half, size);
-                if (OverlapsUi(rect) || OverlapsDice(rect)) return;
+                if (rect.xMin < bounds.xMin || rect.xMax > bounds.xMax ||
+                    rect.yMin < bounds.yMin || rect.yMax > bounds.yMax) return;
+                if (OverlapsUi(rect) || OverlapsDice(rect) || OverlapsDamage(rect)) return;
                 var overlap = GetOverlap(rect);
-
+                var side = rect.yMax <= dice.yMin ? 0 : 1;
                 var distance = (center - dice.center).magnitude + (center - candidate).magnitude * 2f;
-                if (overlap > bestOverlap || (overlap == bestOverlap && distance >= bestDistance)) return;
+                if (overlap > bestOverlap ||
+                    (overlap == bestOverlap && (side > bestSide || (side == bestSide && distance >= bestDistance)))) return;
                 best = center;
                 bestOverlap = overlap;
+                bestSide = side;
                 bestDistance = distance;
             }
         }
@@ -307,6 +319,13 @@ namespace _Scripts.UI.Tooltips
         {
             foreach (var (_, diceBounds) in _projectedDice)
                 if (rect.Overlaps(diceBounds)) return true;
+            return false;
+        }
+
+        private bool OverlapsDamage(Rect rect)
+        {
+            foreach (var damageBounds in _damageIndicatorBounds)
+                if (rect.Overlaps(damageBounds)) return true;
             return false;
         }
 
@@ -344,8 +363,12 @@ namespace _Scripts.UI.Tooltips
             return projected;
         }
 
-        private static float FitAxis(float position, float halfSize, float min, float max) =>
-            halfSize * 2f <= max - min ? Mathf.Clamp(position, min + halfSize, max - halfSize) : (min + max) * 0.5f;
+        private static int GetDirection(Vector2 tooltip, Vector2 dice)
+        {
+            var offset = tooltip - dice;
+            if (Mathf.Abs(offset.x) < 0.1f) return offset.y < 0f ? 0 : 1;
+            return offset.x < 0f ? 2 : 3;
+        }
 
         private static float OverlapArea(Rect a, Rect b) =>
             Mathf.Max(0f, Mathf.Min(a.xMax, b.xMax) - Mathf.Max(a.xMin, b.xMin)) *

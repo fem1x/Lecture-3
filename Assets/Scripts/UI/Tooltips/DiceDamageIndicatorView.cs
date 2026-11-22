@@ -32,6 +32,8 @@ namespace _Scripts.UI.Tooltips
         private int _lastDamage = int.MinValue;
 
         public bool IsShowing => _showing;
+        public Vector2 MaximumSize => Vector2.Scale(((RectTransform)transform).rect.size,
+            (Vector2)_restScale) * Mathf.Max(1f, _damagePopScale);
 
         public void InitializeHidden()
         {

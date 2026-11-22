@@ -26,11 +26,13 @@ namespace _Scripts.Utility.Extensions
             this Transform target, 
             float scaleMult = 1.3f, 
             float inTime = 0.07f, 
-            float outTime = 0.5f)
+            float outTime = 0.5f,
+            bool killExistingTweens = true)
         {
             var baseScale = _initialScales.GetValue(target, t => new ScaleCache(t.localScale)).InitialScale;
 
-            target.DOKill();
+            if (killExistingTweens)
+                target.DOKill();
             target.localScale = baseScale;
 
             return DOTween.Sequence()
