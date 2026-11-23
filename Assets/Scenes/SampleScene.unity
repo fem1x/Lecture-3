@@ -7449,7 +7449,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.EventSystems.PhysicsRaycaster
   m_EventMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 59
   m_MaxRayIntersections: 0
 --- !u!224 &163055051338056879
 RectTransform:
@@ -28661,7 +28661,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1699571138994149337}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Walls
   m_TagString: Untagged
   m_Icon: {fileID: 0}
