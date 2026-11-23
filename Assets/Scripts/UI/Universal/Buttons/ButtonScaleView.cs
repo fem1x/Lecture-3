@@ -45,6 +45,12 @@ namespace _Scripts.UI
         private bool _isHovered;
         private bool _isPressed;
         private int _tiltSign = 1;
+        private RectTransform _pressHitArea;
+        private Vector3 _pressHitPosition;
+        private Quaternion _pressHitRotation;
+        private Vector3 _pressHitScale;
+
+        // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 
         private void Reset() => _button = GetComponent<Button>();
 
@@ -65,6 +71,8 @@ namespace _Scripts.UI
             _feedbackSeq?.Kill();
             _isHovered = false;
             _isPressed = false;
+            if (_pressHitArea != null)
+                _pressHitArea.gameObject.SetActive(false);
 
             transform.localScale = _defaultScale;
             _rectTransform.localRotation = Quaternion.Euler(0f, 0f, _defaultZRot);
@@ -74,6 +82,20 @@ namespace _Scripts.UI
         }
 
         private void OnDestroy() => _feedbackSeq?.Kill();
+
+        private void LateUpdate()
+        {
+            if (!_isPressed) return;
+
+            _pressHitArea.SetPositionAndRotation(_pressHitPosition, _pressHitRotation);
+            var parentScale = _rectTransform.lossyScale;
+            _pressHitArea.localScale = new Vector3(
+                _pressHitScale.x / parentScale.x,
+                _pressHitScale.y / parentScale.y,
+                _pressHitScale.z / parentScale.z);
+        }
+
+        // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 
         public void OnPointerEnter(PointerEventData eventData)
         {
@@ -91,6 +113,7 @@ namespace _Scripts.UI
         {
             if (!_button.interactable) return;
 
+            PreparePressHitArea();
             _isPressed = true;
             _tiltSign = -_tiltSign;
             PlayFeedback(isRelease: false);
@@ -101,7 +124,33 @@ namespace _Scripts.UI
             if (!_isPressed) return;
 
             _isPressed = false;
+            _pressHitArea.gameObject.SetActive(false);
             PlayFeedback(isRelease: true);
+        }
+
+        private void PreparePressHitArea()
+        {
+            if (_pressHitArea == null)
+            {
+                var hitArea = new GameObject("Press Hit Area", typeof(RectTransform), typeof(CanvasRenderer), typeof(Image));
+                hitArea.layer = gameObject.layer;
+                _pressHitArea = (RectTransform)hitArea.transform;
+                _pressHitArea.SetParent(_rectTransform, false);
+                var image = hitArea.GetComponent<Image>();
+                image.color = Color.clear;
+            }
+
+            _pressHitArea.anchorMin = _rectTransform.pivot;
+            _pressHitArea.anchorMax = _rectTransform.pivot;
+            _pressHitArea.pivot = _rectTransform.pivot;
+            _pressHitArea.anchoredPosition = Vector2.zero;
+            _pressHitArea.sizeDelta = _rectTransform.rect.size;
+            _pressHitArea.localRotation = Quaternion.identity;
+            _pressHitArea.localScale = Vector3.one;
+            _pressHitPosition = _pressHitArea.position;
+            _pressHitRotation = _pressHitArea.rotation;
+            _pressHitScale = _pressHitArea.lossyScale;
+            _pressHitArea.gameObject.SetActive(true);
         }
 
         private void CenterPivot()

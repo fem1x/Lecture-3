@@ -64,6 +64,12 @@ namespace _Scripts.UI
 
         public async UniTask ShowAsync(CancellationToken ct)
         {
+            _sequenceController.gameObject.SetActive(true);
+            gameObject.SetActive(true);
+
+            foreach (Transform panel in transform)
+                panel.gameObject.SetActive(true);
+
             CancelTransition();
             _isUpgradeMode = false;
             _conveyorInitializedThisVisit = false;

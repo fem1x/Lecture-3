@@ -14,6 +14,7 @@ namespace _Scripts.Dices
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
         [field: SerializeField] public DiceView View { get; private set; }
         public DiceData Data { get; private set; }
+        public event Action<Dice, Collider> RollCollisionEntered;
 
         [Header("References")]
         [SerializeField] private Rigidbody _rb;
@@ -222,6 +223,9 @@ namespace _Scripts.Dices
 
         private void OnCollisionEnter(Collision collision)
         {
+            if (_isRolling && !_rb.isKinematic)
+                RollCollisionEntered?.Invoke(this, collision.collider);
+
             var contactPoint = collision.contacts.Length > 0
                 ? collision.contacts[0].point
                 : transform.position;

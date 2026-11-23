@@ -18,6 +18,10 @@ namespace _Scripts.Managers
         [Header("Input")]
         [SerializeField] private InputActionReference _rollAction;
 
+        [Header("Dice Table")]
+        [SerializeField] private GameObject _retainingWall;
+        [SerializeField] private Collider _tableSurface;
+
         [Header("SFX")]
         [SerializeField] private string _submitSfx;
         
@@ -76,6 +80,12 @@ namespace _Scripts.Managers
         #endregion
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== 
 
+        private void Awake()
+        {
+            if (_retainingWall != null)
+                _retainingWall.SetActive(false);
+        }
+
         private void OnEnable()
         {
             if (_rollAction == null) return;
@@ -104,8 +114,7 @@ namespace _Scripts.Managers
         {
             if (_tableController.HasPendingDices)
             {
-                var dicesToThrow = _tableController.ExtractPendingDices();
-                await _diceRoller.ThrowAsync(dicesToThrow);
+                await ThrowPendingDicesAsync(_tableController.ExtractPendingDices());
             }
             else
             {
@@ -119,10 +128,40 @@ namespace _Scripts.Managers
 
                 await _diceRoller.RerollAsync(_tableController.GetUnlockedDices());
             }
+        }
 
-            var activeRolledDices = _tableController.AllDices
-                .Where(d => d != null && d.Data.RolledValue > 0)
-                .ToList();
+        private async UniTask ThrowPendingDicesAsync(List<Dice> dices)
+        {
+            if (_retainingWall == null)
+            {
+                await _diceRoller.ThrowAsync(dices);
+                return;
+            }
+
+            var awaitingLanding = new HashSet<Dice>(dices.Where(dice => dice != null));
+            _retainingWall.SetActive(false);
+
+            foreach (var dice in awaitingLanding)
+                dice.RollCollisionEntered += OnRollCollisionEntered;
+
+            try
+            {
+                await _diceRoller.ThrowAsync(dices);
+            }
+            finally
+            {
+                foreach (var dice in awaitingLanding)
+                    dice.RollCollisionEntered -= OnRollCollisionEntered;
+            }
+
+            void OnRollCollisionEntered(Dice dice, Collider collider)
+            {
+                if (collider != _tableSurface || !awaitingLanding.Remove(dice)) return;
+
+                dice.RollCollisionEntered -= OnRollCollisionEntered;
+                if (awaitingLanding.Count == 0 && this != null && isActiveAndEnabled && _retainingWall != null)
+                    _retainingWall.SetActive(true);
+            }
         }
         
         public void OnScoreButtonClicked()
