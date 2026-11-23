@@ -4,11 +4,12 @@ using System.Threading;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace _Scripts.UI.Workshop
 {
-    public class RopeButtonView : MonoBehaviour
+    public class RopeButtonView : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
     {
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
         [Header("References")]
@@ -30,6 +31,16 @@ namespace _Scripts.UI.Workshop
         [SerializeField, Range(0.05f, 1f)] private float _elasticity = 0.35f;
         [SerializeField] private float _restSpringPull = 12f;
         [SerializeField] private float _inertiaMultiplier = 0.7f;
+
+        [Header("Dragging")]
+        [SerializeField, Min(0.01f), Tooltip("How long the button takes to follow the pointer. Higher values feel heavier.")]
+        private float _dragSmoothTime = 0.18f;
+        [SerializeField, Min(0f), Tooltip("Maximum button speed while dragging, in UI units per second.")]
+        private float _dragMaxSpeed = 600f;
+        [SerializeField, Range(0f, 1f), Tooltip("Chain velocity retained per 60 Hz frame while dragging.")]
+        private float _dragDamping = 0.85f;
+        [SerializeField, Range(0f, 1f), Tooltip("Fraction of drag velocity retained when the button is released.")]
+        private float _releaseVelocityMultiplier = 0.35f;
 
         [Header("Pull Impulse")]
         [SerializeField] private float _pullDownImpulse = 1400f;
@@ -55,6 +66,11 @@ namespace _Scripts.UI.Workshop
         private Vector2 _anchorStartPosition;
         private bool _isRetracting;
         private CancellationTokenSource _retractCts;
+        private int? _dragPointerId;
+        private Vector2 _dragOffset;
+        private Vector2 _dragTarget;
+        private Vector2 _dragVelocity;
+        private Vector2 _dragSmoothVelocity;
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
         private void Awake()
         {
@@ -74,6 +90,7 @@ namespace _Scripts.UI.Workshop
         {
             _button.onClick.RemoveListener(HandleButtonClick);
             CancelRetraction();
+            EndDrag();
         }
 
         // Update the chain after DOTween moves its anchor in Update.
@@ -121,6 +138,7 @@ namespace _Scripts.UI.Workshop
         public void CollapseToAnchor()
         {
             CancelRetraction();
+            EndDrag();
             BuildSegments();
 
             _isRetracting = false;
@@ -151,6 +169,7 @@ namespace _Scripts.UI.Workshop
             _retractCts = retraction;
             ct = retraction.Token;
             _isRetracting = true;
+            EndDrag();
             _button.interactable = false;
             var start = _anchor.anchoredPosition;
             try
@@ -214,6 +233,49 @@ namespace _Scripts.UI.Workshop
             _isBuilt = true;
         }
 
+        public void OnBeginDrag(PointerEventData eventData)
+        {
+            if (_isRetracting || !_button.IsInteractable() || _dragPointerId.HasValue ||
+                eventData.button != PointerEventData.InputButton.Left || eventData.pointerPress != _button.gameObject)
+                return;
+
+            if (!RectTransformUtility.ScreenPointToLocalPointInRectangle(
+                    _segmentsRoot, eventData.pressPosition, eventData.pressEventCamera, out var pointerPosition))
+                return;
+
+            _dragPointerId = eventData.pointerId;
+            _dragTarget = _currentPositions[_nodeCount - 1];
+            _dragOffset = _dragTarget - pointerPosition;
+            _dragVelocity = Vector2.zero;
+            _dragSmoothVelocity = Vector2.zero;
+            OnDrag(eventData);
+        }
+
+        public void OnDrag(PointerEventData eventData)
+        {
+            if (_dragPointerId != eventData.pointerId) return;
+            if (RectTransformUtility.ScreenPointToLocalPointInRectangle(
+                    _segmentsRoot, eventData.position, eventData.pressEventCamera, out var pointerPosition))
+                _dragTarget = pointerPosition + _dragOffset;
+        }
+
+        public void OnEndDrag(PointerEventData eventData)
+        {
+            if (_dragPointerId == eventData.pointerId) EndDrag();
+        }
+
+        private void EndDrag()
+        {
+            if (!_dragPointerId.HasValue) return;
+
+            _dragPointerId = null;
+            var lastIndex = _nodeCount - 1;
+            _previousPositions[lastIndex] = _currentPositions[lastIndex] - _dragVelocity * _releaseVelocityMultiplier;
+            _dragVelocity = Vector2.zero;
+            _dragSmoothVelocity = Vector2.zero;
+        }
+
+        // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
         private void StepVerlet(float dt, Vector2 rootDelta)
         {
             var anchorLocal = GetAnchorInSegmentsRootSpace();
@@ -225,6 +287,8 @@ namespace _Scripts.UI.Workshop
                 var prev = _previousPositions[i] - rootDelta * _inertiaMultiplier;
 
                 var velocity = (curr - prev) * _damping;
+                if (_dragPointerId.HasValue)
+                    velocity *= Mathf.Pow(_dragDamping, dt * 60f);
                 var springToRest = i > 0
                     ? new Vector2((anchorLocal.x - curr.x) * _restSpringPull, 0f)
                     : Vector2.zero;
@@ -234,6 +298,18 @@ namespace _Scripts.UI.Workshop
 
                 _previousPositions[i] = curr;
                 _currentPositions[i] = next;
+            }
+
+            if (_dragPointerId.HasValue)
+            {
+                var lastIndex = _nodeCount - 1;
+                var target = anchorLocal + Vector2.ClampMagnitude(
+                    _dragTarget - anchorLocal, _segmentLength * (_nodeCount - 1));
+                var current = _previousPositions[lastIndex];
+                var position = Vector2.SmoothDamp(current, target, ref _dragSmoothVelocity,
+                    _dragSmoothTime, _dragMaxSpeed, dt);
+                _dragVelocity = position - current;
+                _currentPositions[lastIndex] = position;
             }
 
             for (var iter = 0; iter < _solverIterations; iter++)
@@ -254,6 +330,10 @@ namespace _Scripts.UI.Workshop
                     if (i == 0)
                     {
                         _currentPositions[i + 1] = b - delta * diff;
+                    }
+                    else if (_dragPointerId.HasValue && i + 1 == _nodeCount - 1)
+                    {
+                        _currentPositions[i] = a + delta * diff;
                     }
                     else
                     {

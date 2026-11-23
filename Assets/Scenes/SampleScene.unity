@@ -5815,8 +5815,12 @@ MonoBehaviour:
   _damping: 0.99
   _solverIterations: 100
   _elasticity: 0.746
-  _restSpringPull: 54
-  _inertiaMultiplier: 1
+  _restSpringPull: 1
+  _inertiaMultiplier: 0.5
+  _dragSmoothTime: 0.2
+  _dragMaxSpeed: 1800
+  _dragDamping: 0.648
+  _releaseVelocityMultiplier: 1
   _pullDownImpulse: 2500
   _pullSideImpulse: 777
   _retractDuration: 0.64
@@ -20595,8 +20599,8 @@ RectTransform:
   - {fileID: 1121594195}
   - {fileID: 624298179}
   - {fileID: 6888405479565151071}
-  - {fileID: 3183372124859299134}
   - {fileID: 9199581629831817235}
+  - {fileID: 3183372124859299134}
   - {fileID: 4583547239806378189}
   - {fileID: 465377124}
   - {fileID: 3071107046138591914}
