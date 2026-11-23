@@ -4,6 +4,7 @@ using _Scripts.Utility.Extensions;
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using VContainer;
 
 namespace _Scripts.UI.Charms
 {
@@ -34,7 +35,18 @@ namespace _Scripts.UI.Charms
         private bool _isDraggable;
         private int? _dragPointerId;
         private Tween _returnTween;
+        private CharmDragState _dragState;
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
+
+        [Inject]
+        public void Construct(CharmDragState dragState) => _dragState = dragState;
+
+        private void OnDisable()
+        {
+            _dragState?.End(this);
+            _dragPointerId = null;
+            _canvasGroup.blocksRaycasts = true;
+        }
 
         private void Start()
         {
@@ -60,7 +72,11 @@ namespace _Scripts.UI.Charms
             GeneralView.SetIconSprite(sprite);
         }
 
-        public void SetDraggable(bool isDraggable) => _isDraggable = isDraggable;
+        public void SetDraggable(bool isDraggable)
+        {
+            _isDraggable = isDraggable;
+            if (!isDraggable) _dragState.End(this);
+        }
 
         public bool IsDraggedBy(int pointerId) => _dragPointerId == pointerId;
 
@@ -75,6 +91,7 @@ namespace _Scripts.UI.Charms
         public void OnBeginDrag(PointerEventData eventData)
         {
             if (!_isDraggable || _isPending || _dragPointerId.HasValue) return;
+            if (!_dragState.TryBegin(this)) return;
 
             _returnTween?.Kill();
             _dragPointerId = eventData.pointerId;
@@ -94,6 +111,7 @@ namespace _Scripts.UI.Charms
         {
             if (!IsDraggedBy(eventData.pointerId)) return;
 
+            _dragState.End(this);
             _dragPointerId = null;
             _canvasGroup.blocksRaycasts = true;
 
@@ -118,6 +136,7 @@ namespace _Scripts.UI.Charms
 
         public void InstantReturnToConveyor()
         {
+            _dragState.End(this);
             _dragPointerId = null;
             _isPending = false;
             _returnTween?.Kill();
@@ -133,6 +152,7 @@ namespace _Scripts.UI.Charms
 
         public void OnSuccessfullyEquipped()
         {
+            _dragState.End(this);
             _dragPointerId = null;
             _returnTween?.Kill();
             Destroy(gameObject);
@@ -140,6 +160,7 @@ namespace _Scripts.UI.Charms
 
         public void StartPending()
         {
+            _dragState.End(this);
             _isPending = true;
             _returnTween?.Kill();
             transform.DoScaleOut(time: 0.2f);

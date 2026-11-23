@@ -169,6 +169,12 @@ MonoBehaviour:
   _charmPrefab: {fileID: -3575081561266522832, guid: fb2bf6508bceb2b4b937f38d1db232c9, type: 3}
   _charmHolder: {fileID: 1568001936268085546}
   _emptyPlaceholder: {fileID: 851615654986586482}
+  _highlightColor: {r: 0.8588236, g: 0.72156864, b: 0.9607844, a: 1}
+  _highlightScale: 1.35
+  _highlightTransitionTime: 0.3
+  _highlightPulseTime: 0.9
+  _highlightPulseRiseTime: 0.12
+  _highlightStaggerDelay: 0.06
 --- !u!1 &5985463126475578342
 GameObject:
   m_ObjectHideFlags: 0
