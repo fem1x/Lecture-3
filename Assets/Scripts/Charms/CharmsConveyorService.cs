@@ -11,7 +11,7 @@ namespace _Scripts.Charms
         //Constants
         private const int MaxCharmsCount = 3;
         private const int ReverseCost = 1;
-        private const int ScrapReward = 2;
+        private const int ScrapReward = 3;
         
         //Events
         public event Action OnConveyorInitialized;
