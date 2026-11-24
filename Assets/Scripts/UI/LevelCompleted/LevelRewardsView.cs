@@ -24,6 +24,8 @@ namespace _Scripts.UI
         [Header("Buttons")]
         [SerializeField] private Button _workshopButton;
 
+        internal RectTransform WorkshopButtonRect => (RectTransform)_workshopButton.transform;
+
         public event Action OnWorkshopRequested;
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 
@@ -53,19 +55,13 @@ namespace _Scripts.UI
             _workshopButton.interactable = _canvasGroup.interactable;
         }
 
-        public UniTask HideAsync(CancellationToken ct)
-        {
-            LockInteraction();
-            return _slidingPanel.HideAsync(ct);
-        }
-
         public void HideInstant()
         {
             LockInteraction();
             _slidingPanel.HideInstant();
         }
 
-        private void LockInteraction()
+        internal void LockInteraction()
         {
             _workshopButton.interactable = false;
             _canvasGroup.blocksRaycasts = false;

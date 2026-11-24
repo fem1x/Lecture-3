@@ -39,6 +39,8 @@ namespace _Scripts.UI
         }
         #endregion
 
+        internal SlidingPanelView FirstMainSlide => _sequenceController.FirstMainSlide;
+
         public event Action OnNextLevelRequested;
 
         private CancellationTokenSource _transitionCts;
@@ -62,7 +64,7 @@ namespace _Scripts.UI
             CancelTransition();
         }
 
-        public async UniTask ShowAsync(CancellationToken ct)
+        internal void PrepareOpening()
         {
             _sequenceController.gameObject.SetActive(true);
             gameObject.SetActive(true);
@@ -82,15 +84,33 @@ namespace _Scripts.UI
             _nextLevelButton.interactable = false;
 
             _diceRepairPanel.SetRepairMode(true);
+            _slidingPanel.ShowInstant();
+        }
 
-            await UniTask.WhenAll(
-                _slidingPanel.ShowAsync(),
+        internal UniTask RevealContentsAsync(float openingDuration, CancellationToken ct)
+        {
+            return UniTask.WhenAll(
                 _sequenceController.ShowMainAsync(ct),
-                InitConveyorAfterDelayAsync(ct),
-                ShowRopeAfterDelayAsync(ct));
+                InitConveyorAfterDelayAsync(Mathf.Min(_conveyorOpenDelay, openingDuration * 0.72f), ct),
+                ShowRopeAfterDelayAsync(Mathf.Min(_ropeShowDelay, openingDuration * 0.88f), ct)).AttachExternalCancellation(ct);
         }
 
         public async UniTask HideAsync(CancellationToken ct)
+        {
+            ResetVisit();
+            _sequenceController.HideUpgradeInstant();
+            _upgradeRopeButton.RetractAsync(ct).Forget();
+            await _slidingPanel.HideAsync(ct);
+        }
+
+        internal void CancelOpening()
+        {
+            ResetVisit();
+            _sequenceController.HideMainInstant();
+            HideInstant();
+        }
+
+        private void ResetVisit()
         {
             CancelTransition();
             _isUpgradeMode = false;
@@ -99,10 +119,6 @@ namespace _Scripts.UI
             _charmConveyor.InstantCloseShutter();
             _charmConveyor.ClearConveyorView();
             _diceRepairPanel.SetRepairMode(false);
-            _sequenceController.HideUpgradeInstant();
-
-            _upgradeRopeButton.RetractAsync(ct).Forget();
-            await _slidingPanel.HideAsync();
         }
 
         public void HideInstant()
@@ -112,10 +128,10 @@ namespace _Scripts.UI
             _sequenceController.HideUpgradeInstant();
         }
 
-        private async UniTask ShowRopeAfterDelayAsync(CancellationToken ct)
+        private async UniTask ShowRopeAfterDelayAsync(float delay, CancellationToken ct)
         {
-            if (_ropeShowDelay > 0f)
-                await UniTask.Delay(TimeSpan.FromSeconds(_ropeShowDelay), ignoreTimeScale: true, cancellationToken: ct);
+            if (delay > 0f)
+                await UniTask.Delay(TimeSpan.FromSeconds(delay), ignoreTimeScale: true, cancellationToken: ct);
 
             ct.ThrowIfCancellationRequested();
 
@@ -123,12 +139,12 @@ namespace _Scripts.UI
             _upgradeRopeButton.CollapseToAnchor();
         }
 
-        private async UniTask InitConveyorAfterDelayAsync(CancellationToken ct)
+        private async UniTask InitConveyorAfterDelayAsync(float delay, CancellationToken ct)
         {
             if (_conveyorInitializedThisVisit) return;
 
-            if (_conveyorOpenDelay > 0f)
-                await UniTask.Delay(TimeSpan.FromSeconds(_conveyorOpenDelay), ignoreTimeScale: true, cancellationToken: ct);
+            if (delay > 0f)
+                await UniTask.Delay(TimeSpan.FromSeconds(delay), ignoreTimeScale: true, cancellationToken: ct);
 
             ct.ThrowIfCancellationRequested();
 

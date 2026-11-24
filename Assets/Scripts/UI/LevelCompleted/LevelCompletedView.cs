@@ -1,3 +1,4 @@
+using System.Threading;
 using _Scripts.Dices;
 using _Scripts.Managers;
 using _Scripts.UI;
@@ -14,6 +15,7 @@ public class LevelCompletedView : MonoBehaviour
     [Header("Panels")]
     [SerializeField] private LevelRewardsView _rewardsView;
     [SerializeField] private WorkshopPanelView _workshopView;
+    [SerializeField] private RewardsWorkshopTransition _workshopTransition;
 
     [Header("Backdrop")]
     [SerializeField] private BackdropView _backdropView;
@@ -29,6 +31,8 @@ public class LevelCompletedView : MonoBehaviour
         _mapService = mapService;
     }
     #endregion
+
+    private CancellationTokenSource _workshopOpening;
     // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 
     private void Awake() => HideInstant();
@@ -45,6 +49,7 @@ public class LevelCompletedView : MonoBehaviour
         _levelFlowController.OnLevelCompleted -= HandleLevelCompleted;
         _rewardsView.OnWorkshopRequested -= HandleWorkshopRequested;
         _workshopView.OnNextLevelRequested -= HandleNextLevelRequested;
+        _workshopOpening?.Cancel();
     }
 
     private void HandleLevelCompleted(TokenRewardData rewardData)
@@ -69,10 +74,50 @@ public class LevelCompletedView : MonoBehaviour
 
     private async UniTaskVoid SwitchToWorkshopAsync()
     {
-        var ct = destroyCancellationToken;
+        if (_workshopOpening != null) return;
 
-        await _rewardsView.HideAsync(ct);
-        await _workshopView.ShowAsync(ct);
+        using var opening = CancellationTokenSource.CreateLinkedTokenSource(destroyCancellationToken);
+        _workshopOpening = opening;
+        _rewardsView.LockInteraction();
+        SetPanelInteraction(false);
+
+        try
+        {
+            _workshopView.PrepareOpening();
+            await UniTask.WhenAll(
+                MorphIntoWorkshopAsync(opening.Token),
+                _workshopView.RevealContentsAsync(_workshopTransition.Duration, opening.Token));
+        }
+        catch
+        {
+            opening.Cancel();
+            if (_workshopView)
+                _workshopView.CancelOpening();
+            if (_rewardsView)
+                _rewardsView.HideInstant();
+            if (_backdropView)
+                _backdropView.HideInstant();
+            if (_cg)
+                _cg.Hide();
+            throw;
+        }
+        finally
+        {
+            _workshopOpening = null;
+        }
+    }
+
+    private async UniTask MorphIntoWorkshopAsync(CancellationToken ct)
+    {
+        await _workshopTransition.PlayAsync(_rewardsView.WorkshopButtonRect, _workshopView.FirstMainSlide, ct);
+        _rewardsView.HideInstant();
+        SetPanelInteraction(true);
+    }
+
+    private void SetPanelInteraction(bool enabled)
+    {
+        _cg.interactable = enabled;
+        _cg.blocksRaycasts = enabled;
     }
 
     private async UniTaskVoid CompleteAndHideAsync()

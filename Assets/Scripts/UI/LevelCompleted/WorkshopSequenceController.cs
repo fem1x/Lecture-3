@@ -26,6 +26,8 @@ namespace _Scripts.UI.Workshop
         [SerializeField] private List<SlideStep> _upgradeHideSteps = new();
 
         private float _mainHideStartTime = -1f;
+
+        internal SlidingPanelView FirstMainSlide => _mainShowSteps[0].Slide;
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
         public void HideMainInstant()
         {

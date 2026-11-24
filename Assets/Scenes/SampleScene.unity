@@ -15774,6 +15774,7 @@ GameObject:
   - component: {fileID: 8801070836751947339}
   - component: {fileID: 8801070836751947338}
   - component: {fileID: 987654321012345678}
+  - component: {fileID: 4966847332158099471}
   m_Layer: 5
   m_Name: (Img) Tokens
   m_TagString: Untagged
@@ -16035,6 +16036,7 @@ MonoBehaviour:
   _cg: {fileID: 5626564193082099337}
   _rewardsView: {fileID: 8429229551936062072}
   _workshopView: {fileID: 2237242729158396009}
+  _workshopTransition: {fileID: 4966847332158099470}
   _backdropView: {fileID: 624298182}
 --- !u!1 &2844902575706336721
 GameObject:
@@ -17786,6 +17788,7 @@ GameObject:
   - component: {fileID: 5626564193082099337}
   - component: {fileID: 97996508418465064}
   - component: {fileID: 2834018484966130292}
+  - component: {fileID: 4966847332158099470}
   m_Layer: 5
   m_Name: (Panel) LevelCompleted
   m_TagString: Untagged
@@ -31139,27 +31142,6 @@ MonoBehaviour:
   _throwsTokensText: {fileID: 2140401015156307118}
   _rerollsTokensText: {fileID: 7947183463293552167}
   _workshopButton: {fileID: 5182845156480488633}
---- !u!114 &8907485372817503612
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6658377938982058384}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f80a00c044854bf09c6ff06a49d77395, type: 3}
-  m_Name:
-  m_EditorClassIdentifier: Game::_Scripts.UI.SlidingPanelView
-  _startsHidden: 1
-  _direction: 1
-  _rect: {fileID: 8676949277007676752}
-  _cg: {fileID: 7746143331039985791}
-  _boundsRect: {fileID: 0}
-  _showTime: 1.8
-  _showEase: 15
-  _hideTime: 0.52
-  _hideEase: 5
 --- !u!114 &8437217524301434205
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -32575,6 +32557,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 46b76b6bcab24a489792343a3a62a92b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Game::_Scripts.DebugTools.GameStateDebugHotkeys
+--- !u!114 &8907485372817503612
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6658377938982058384}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f80a00c044854bf09c6ff06a49d77395, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Game::_Scripts.UI.SlidingPanelView
+  _startsHidden: 1
+  _direction: 1
+  _rect: {fileID: 8676949277007676752}
+  _cg: {fileID: 7746143331039985791}
+  _boundsRect: {fileID: 0}
+  _showTime: 1.4
+  _showEase: 15
+  _hideTime: 0.6
+  _hideEase: 8
 --- !u!114 &8912552902430776607
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -33470,6 +33473,39 @@ MonoBehaviour:
   _delayBetweenPanels: 0.3
   _selectionPanelFadeTime: 0.4
   _delayBeforeMap: 0.71
+--- !u!114 &4966847332158099470
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3525542398528469111}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d1dd69a86fa945d9bbe0aa2af2d6b925, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Game::_Scripts.UI.RewardsWorkshopTransition
+  _rewardsFrame: {fileID: 331681479681671460}
+  _rewardsHeader: {fileID: 4246573242497158927}
+  _rewardsContent: {fileID: 7746143331039985791}
+  _rewardsDetails: {fileID: 1791650312916221796}
+  _rewardToken: {fileID: 1340931104636666505}
+  _workshopFrame: {fileID: 9075667879014176670}
+  _workshopTitle: {fileID: 6454099946006484240}
+  _workshopBalance: {fileID: 4966847332158099471}
+  _balanceToken: {fileID: 7005810695779279841}
+--- !u!225 &4966847332158099471
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2754669846594941265}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

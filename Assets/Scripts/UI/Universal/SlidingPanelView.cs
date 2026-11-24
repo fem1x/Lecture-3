@@ -72,6 +72,14 @@ namespace _Scripts.UI
                 _cg.Hide();
         }
 
+        public void ShowInstant()
+        {
+            EnsureInitialized();
+            _rect.DOKill();
+            _rect.anchoredPosition = _shownPos;
+            _cg.Show();
+        }
+
         public void HideInstant()
         {
             EnsureInitialized();
