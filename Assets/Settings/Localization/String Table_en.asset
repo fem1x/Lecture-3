@@ -378,7 +378,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 418204264288288
-    m_Localized: "Gives <style=xmult>{xMultiplier} X-Mult</style> and limits durability damage to one random die when playing <style=combo>Triad</style>, <style=combo>Quad</style>, or <style=combo>Singularity</style>"
+    m_Localized: "Gives <style=xmult>{xMultiplier} X-Mult</style> for <style=combo>Triad</style>, <style=combo>Quad</style>, or <style=combo>Singularity</style>. Only one random die loses durability"
     m_Metadata:
       m_Items:
       - rid: 420518586740899945
@@ -387,7 +387,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 418204264288290
-    m_Localized: "Adds the die value multiplied by the number of played dice to <style=mult>Mult</style> when playing <style=combo>Triad</style>, <style=combo>Quad</style>, or <style=combo>Singularity</style>"
+    m_Localized: "Adds the sum of played dice values to <style=mult>Mult</style> when playing <style=combo>Triad</style>, <style=combo>Quad</style>, or <style=combo>Singularity</style>"
     m_Metadata:
       m_Items: []
   references:
