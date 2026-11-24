@@ -72,6 +72,8 @@ namespace _Scripts.UI
                 _cg.Hide();
         }
 
+        internal void StopSlide() => _rect.DOKill();
+
         public void ShowInstant()
         {
             EnsureInitialized();

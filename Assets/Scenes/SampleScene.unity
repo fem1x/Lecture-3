@@ -7462,7 +7462,7 @@ MonoBehaviour:
   _impactScale: 0.25
   _fragmentCount: 15
   _fragmentDistance: 220
-  _fragmentSpeedMultiplier: 1.2
+  _fragmentSpeedMultiplier: 1
   _fragmentSizeMultiplier: 3
   _fragmentPrimaryColor: {r: 1, g: 0.46274513, b: 0.44705886, a: 1}
   _fragmentSecondaryColor: {r: 1, g: 0.27058825, b: 0.32941177, a: 1}
@@ -15120,9 +15120,9 @@ RectTransform:
   - {fileID: 7736228243311288825}
   m_Father: {fileID: 8676949277007676752}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0}
-  m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: -0.000030517578, y: 69.649994}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -0.000030517578, y: -203.35}
   m_SizeDelta: {x: 396.3346, y: 77.29999}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2599735924721032504
@@ -21475,6 +21475,9 @@ MonoBehaviour:
   _rewardsSlideDuration: 0.53
   _panelSlideEase: 7
   _tokenFlightEase: 13
+  _buttonSlideDelay: 0
+  _buttonSlideDuration: 0.24
+  _buttonSlideEase: 8
   _titleEraseDuration: 1.7
   _titleEraseEase: 8
   _titleTypeDuration: 3

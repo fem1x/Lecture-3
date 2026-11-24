@@ -48,11 +48,17 @@ namespace _Scripts.UI
             _rerollsTokensText.text = data.RerollsTokens.ToString();
         }
 
-        public async UniTask ShowAsync(CancellationToken ct)
+        public UniTask ShowAsync(CancellationToken ct)
         {
-            _workshopButton.interactable = false;
-            await _slidingPanel.ShowAsync(ct);
-            _workshopButton.interactable = _canvasGroup.interactable;
+            ct.ThrowIfCancellationRequested();
+            _workshopButton.interactable = true;
+            return _slidingPanel.ShowAsync(ct);
+        }
+
+        internal void BeginWorkshopTransition()
+        {
+            LockInteraction();
+            _slidingPanel.StopSlide();
         }
 
         public void HideInstant()
@@ -61,7 +67,7 @@ namespace _Scripts.UI
             _slidingPanel.HideInstant();
         }
 
-        internal void LockInteraction()
+        private void LockInteraction()
         {
             _workshopButton.interactable = false;
             _canvasGroup.blocksRaycasts = false;

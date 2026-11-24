@@ -78,7 +78,7 @@ public class LevelCompletedView : MonoBehaviour
 
         using var opening = CancellationTokenSource.CreateLinkedTokenSource(destroyCancellationToken);
         _workshopOpening = opening;
-        _rewardsView.LockInteraction();
+        _rewardsView.BeginWorkshopTransition();
         SetPanelInteraction(false);
 
         try

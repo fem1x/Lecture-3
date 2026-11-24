@@ -33,6 +33,11 @@ namespace _Scripts.UI
         [SerializeField] private Ease _panelSlideEase = Ease.InOutSine;
         [SerializeField] private Ease _tokenFlightEase = Ease.InOutSine;
 
+        [Header("Workshop Button Slide")]
+        [SerializeField, Min(0f)] private float _buttonSlideDelay = 0.08f;
+        [SerializeField, Min(0.01f)] private float _buttonSlideDuration = 0.42f;
+        [SerializeField] private Ease _buttonSlideEase = Ease.InOutSine;
+
         [Header("Title Animation")]
         [SerializeField, Min(0.01f)] private float _titleEraseDuration = 0.19f;
         [SerializeField] private Ease _titleEraseEase = Ease.Linear;
@@ -52,14 +57,12 @@ namespace _Scripts.UI
             var workshopPose = new FramePose(_workshopFrame.sizeDelta, _workshopFrame.anchoredPosition);
             var rewardsEnd = FramePose.Match(rewards, _workshopFrame);
             var workshopStart = FramePose.Match(_workshopFrame, rewards);
-            var detailsStart = _rewardsDetails.anchoredPosition;
-            var detailsAnchorMin = _rewardsDetails.anchorMin;
-            var detailsAnchorMax = _rewardsDetails.anchorMax;
+            var detailsOrder = _rewardsDetails.GetSiblingIndex();
+            var buttonOrder = rewardsButton.GetSiblingIndex();
             var conveyorHolder = (RectTransform)firstWorkshopSlide.transform;
             var conveyorStart = conveyorHolder.anchoredPosition;
             var conveyorAnchorMin = conveyorHolder.anchorMin;
             var conveyorAnchorMax = conveyorHolder.anchorMax;
-            var buttonStart = rewardsButton.anchoredPosition;
             var rewardsHeader = _rewardsHeader.rectTransform;
             var rewardsTitle = _rewardsHeader.GetComponentInChildren<TMP_Text>();
             var rewardsTitleRect = rewardsTitle.rectTransform;
@@ -76,9 +79,6 @@ namespace _Scripts.UI
             var rewardsTitleLength = Mathf.Min(rewardsTitle.textInfo.characterCount, rewardsTitleVisibility);
             var workshopTitleLength = Mathf.Min(_workshopTitle.textInfo.characterCount, workshopTitleVisibility);
             var balanceAlpha = _workshopBalance.alpha;
-
-            var detailsExitX = _rewardsDetails.GetHiddenPosition(SlideDirection.Left, detailsStart, rewards).x;
-            var buttonExitY = -rewardsButton.rect.yMax - 1f;
 
             var token = Instantiate(_rewardToken, space);
             token.name = "Flying reward token";
@@ -99,8 +99,15 @@ namespace _Scripts.UI
             var canvas = (RectTransform)_rewardsFrame.canvas.rootCanvas.transform;
             var headerClipHeight = SizeIn(canvas, rewardsHeader).y;
 
-            // Keep both panels aligned with the upper edge as their frames expand.
-            PinToTop(_rewardsDetails);
+            var outgoingBody = CreateSlideParent(rewards, "Outgoing rewards", 1f);
+            MoveToParent(_rewardsDetails, outgoingBody);
+            var bodyExitX = outgoingBody.GetHiddenPosition(SlideDirection.Left, outgoingBody.anchoredPosition, rewards).x;
+
+            // Move the container so button feedback can still animate the button itself.
+            var buttonSlide = CreateSlideParent(rewards, "Outgoing workshop button", 0f);
+            MoveToParent(rewardsButton, buttonSlide);
+            var buttonTop = RectTransformUtility.CalculateRelativeRectTransformBounds(rewards, rewardsButton).max.y;
+            var buttonExitY = buttonSlide.anchoredPosition.y + rewards.rect.yMin - buttonTop - 8f;
             PinToTop(conveyorHolder);
 
             // Keep the shared header above both sets of panels during the handoff.
@@ -121,6 +128,9 @@ namespace _Scripts.UI
             var balanceScale = balanceRect.localScale;
             var panelSlideStart = _duration * 0.08f;
             var panelSlideDuration = Mathf.Min(_rewardsSlideDuration, _duration - panelSlideStart);
+            var buttonSlideTimeScale = Mathf.Min(1f, _duration / (_buttonSlideDelay + _buttonSlideDuration));
+            var buttonSlideStart = _buttonSlideDelay * buttonSlideTimeScale;
+            var buttonSlideDuration = _buttonSlideDuration * buttonSlideTimeScale;
             var titleEraseStart = _duration * 0.13f;
             var titleTimeScale = Mathf.Min(1f, (_duration - titleEraseStart) / (_titleEraseDuration + _titleTypeDuration));
             var titleEraseDuration = _titleEraseDuration * titleTimeScale;
@@ -134,8 +144,8 @@ namespace _Scripts.UI
                     FramePose.Lerp(workshopStart, workshopPose, progress).Apply(_workshopFrame);
                     FramePose.Lerp(rewardsPose, rewardsEnd, progress).Apply(rewards);
                 }).SetEase(_frameEase))
-                .Insert(panelSlideStart, _rewardsDetails.DOAnchorPosX(detailsExitX, panelSlideDuration).SetEase(_panelSlideEase))
-                .Insert(0f, rewardsButton.DOAnchorPosY(buttonExitY, _duration * 0.44f).SetEase(_panelSlideEase))
+                .Insert(panelSlideStart, outgoingBody.DOAnchorPosX(bodyExitX, panelSlideDuration).SetEase(_panelSlideEase))
+                .Insert(buttonSlideStart, buttonSlide.DOAnchorPosY(buttonExitY, buttonSlideDuration).SetEase(_buttonSlideEase))
                 .Insert(titleEraseStart, TweenTitle(rewardsTitle, 0, rewardsTitleLength, titleEraseDuration, _titleEraseEase))
                 .Insert(titleEraseStart + titleEraseDuration, TweenTitle(_workshopTitle, workshopTitleLength, workshopTitleLength,
                     titleTypeDuration, _titleTypeEase))
@@ -176,10 +186,12 @@ namespace _Scripts.UI
                 {
                     _rewardsContent.alpha = 0f;
                     rewardsPose.Apply(rewards);
-                    _rewardsDetails.anchorMin = detailsAnchorMin;
-                    _rewardsDetails.anchorMax = detailsAnchorMax;
-                    _rewardsDetails.anchoredPosition = detailsStart;
-                    rewardsButton.anchoredPosition = buttonStart;
+                    MoveToParent(_rewardsDetails, rewards);
+                    MoveToParent(rewardsButton, rewards);
+                    _rewardsDetails.SetSiblingIndex(detailsOrder);
+                    rewardsButton.SetSiblingIndex(buttonOrder);
+                    Destroy(outgoingBody.gameObject);
+                    Destroy(buttonSlide.gameObject);
                     rewardsTitleRect.SetParent(rewardsHeader, false);
                     rewardsTitleRect.anchoredPosition = rewardsTitlePosition;
                     rewardsTitleRect.SetSiblingIndex(rewardsTitleOrder);
@@ -210,6 +222,26 @@ namespace _Scripts.UI
             return DOTween.To(() => title.maxVisibleCharacters,
                     value => title.maxVisibleCharacters = Mathf.Clamp(value, 0, characterCount), visibleCount, duration)
                 .SetEase(ease);
+        }
+
+        private static RectTransform CreateSlideParent(RectTransform rewards, string name, float anchorY)
+        {
+            var body = (RectTransform)new GameObject(name, typeof(RectTransform)).transform;
+            body.gameObject.layer = rewards.gameObject.layer;
+            body.SetParent(rewards, false);
+            body.anchorMin = new Vector2(0f, anchorY);
+            body.anchorMax = new Vector2(1f, anchorY);
+            body.pivot = rewards.pivot;
+            body.sizeDelta = new Vector2(0f, rewards.rect.height);
+            body.anchoredPosition = Vector2.up * (rewards.rect.height * (body.pivot.y - anchorY));
+            return body;
+        }
+
+        private static void MoveToParent(RectTransform rect, RectTransform parent)
+        {
+            var position = rect.anchoredPosition;
+            rect.SetParent(parent, false);
+            rect.anchoredPosition = position;
         }
 
         private static void PinToTop(RectTransform panel)
