@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using _Scripts.Charms;
 using _Scripts.Combinations;
 using _Scripts.Dices;
 
@@ -8,10 +9,12 @@ namespace _Scripts.Managers
     {
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
         private readonly ActiveCombinationsService _activeCombinationsService;
+        private readonly CharmsService _charmsService;
 
-        public CombinationEvaluator(ActiveCombinationsService activeCombinationsService)
+        public CombinationEvaluator(ActiveCombinationsService activeCombinationsService, CharmsService charmsService)
         {
             _activeCombinationsService = activeCombinationsService;
+            _charmsService = charmsService;
         }
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 
@@ -25,6 +28,12 @@ namespace _Scripts.Managers
             {
                 if (config.Matches(selectedDices))
                     return config;
+
+                foreach (var charm in _charmsService.ActiveCharms)
+                {
+                    if (charm.MatchesCombination(config, selectedDices))
+                        return config;
+                }
             }
 
             return null;

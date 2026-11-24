@@ -312,6 +312,40 @@ MonoBehaviour:
     m_Localized: Triad & Duplet
     m_Metadata:
       m_Items: []
+  - m_Id: 418204264288273
+    m_Localized: "Domino"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 418204264288274
+    m_Localized: "Allows you to play <style=combo>Sequence</style> with 4 dice instead of 5."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 418204264288275
+    m_Localized: "Jigsaw"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 418204264288276
+    m_Localized: "Allows you to play <style=combo>Mono</style> with 4 dice instead of 5"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 418204264288277
+    m_Localized: "Prism"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 418204264288278
+    m_Localized: "Gives <style=xmult>{xMultiplier} X-Mult</style> if all played dice have different values"
+    m_Metadata:
+      m_Items:
+      - rid: 420518586740899945
+  - m_Id: 418204264288279
+    m_Localized: "Metronome"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 418204264288280
+    m_Localized: "Gives <style=mult>+{evenBonusMultiplier} Mult</style> for each played die if all played dice are even. Gives <style=points>+{oddBonusPoints} Points</style> for each played die if all played dice are odd"
+    m_Metadata:
+      m_Items:
+      - rid: 420518586740899945
   references:
     version: 2
     RefIds:
@@ -329,3 +363,5 @@ MonoBehaviour:
         - id: 418204264288270
         - id: 418204264288272
         - id: 418204264288258
+        - id: 418204264288278
+        - id: 418204264288280

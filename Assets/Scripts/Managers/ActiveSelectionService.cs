@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
+using _Scripts.Charms;
 using _Scripts.Combinations;
 using _Scripts.Dices;
 using VContainer;
@@ -14,14 +14,21 @@ namespace _Scripts.Managers
         
         private readonly DiceTableController _diceTableController;
         private readonly CombinationEvaluator _combinationEvaluator;
+        private readonly CharmsService _charmsService;
 
         [Inject]
-        public ActiveSelectionService(DiceTableController diceTableController, CombinationEvaluator combinationEvaluator)
+        public ActiveSelectionService(
+            DiceTableController diceTableController,
+            CombinationEvaluator combinationEvaluator,
+            CharmsService charmsService)
         {
             _diceTableController = diceTableController;
             _combinationEvaluator = combinationEvaluator;
+            _charmsService = charmsService;
 
             _diceTableController.OnSelectionChanged += HandleSelectionChanged;
+            _charmsService.OnCharmAdded += HandleCharmChanged;
+            _charmsService.OnCharmRemoved += HandleCharmChanged;
         }
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
         
@@ -39,10 +46,15 @@ namespace _Scripts.Managers
             OnSelectionEvaluated?.Invoke(selectedDices, combination);
         }
 
+        private void HandleCharmChanged(CharmBase charm) => HandleSelectionChanged();
+
         public void Dispose()
         {
             if (_diceTableController != null)
                 _diceTableController.OnSelectionChanged -= HandleSelectionChanged;
+
+            _charmsService.OnCharmAdded -= HandleCharmChanged;
+            _charmsService.OnCharmRemoved -= HandleCharmChanged;
         }
     }
 }

@@ -312,6 +312,40 @@ MonoBehaviour:
     m_Localized: "Tr\xEDada & Duplete"
     m_Metadata:
       m_Items: []
+  - m_Id: 418204264288273
+    m_Localized: "Domin\u00F3"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 418204264288274
+    m_Localized: "Permite formar una <style=combo>Secuencia</style> con 4 dados en vez de 5."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 418204264288275
+    m_Localized: "Jigsaw"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 418204264288276
+    m_Localized: "Permite formar <style=combo>Mono</style> con 4 dados en vez de 5"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 418204264288277
+    m_Localized: "Prism"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 418204264288278
+    m_Localized: "Otorga <style=xmult>{xMultiplier} X-Mult</style> si todos los dados jugados tienen valores distintos"
+    m_Metadata:
+      m_Items:
+      - rid: 420518586740899946
+  - m_Id: 418204264288279
+    m_Localized: "Metronome"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 418204264288280
+    m_Localized: "Otorga <style=mult>+{evenBonusMultiplier} Mult</style> por cada dado jugado si todos los dados jugados son pares. Otorga <style=points>+{oddBonusPoints} Puntos</style> por cada dado jugado si todos son impares"
+    m_Metadata:
+      m_Items:
+      - rid: 420518586740899946
   references:
     version: 2
     RefIds:
@@ -329,3 +363,5 @@ MonoBehaviour:
         - id: 418204264288270
         - id: 418204264288272
         - id: 418204264288258
+        - id: 418204264288278
+        - id: 418204264288280

@@ -56,7 +56,7 @@ public class ScoreCalculator : IScoreCalculator
             }
 
             // Charms
-            var context = new DiceScoreContext(dice, combination);
+            var context = new DiceScoreContext(dice, combination, selectedDices);
             foreach (var charm in _charmsService.ActiveCharms)
                 charm.OnDiceScored(context);
 

@@ -1,4 +1,5 @@
-﻿using _Scripts.Combinations;
+﻿using System.Collections.Generic;
+using _Scripts.Combinations;
 using _Scripts.Data_Transfer.Contexts;
 using _Scripts.Dices;
 using _Scripts.UI.Charms;
@@ -7,6 +8,7 @@ namespace _Scripts.Charms
 {
     public abstract class CharmBase
     {
+        // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
         public CharmConfigBase Config { get; }
         public CharmEquippedView View { get; private set; }
         
@@ -19,6 +21,7 @@ namespace _Scripts.Charms
         public void DetachView() => View = null;
         
         public virtual void OnRoll() { }
+        public virtual bool MatchesCombination(CombinationConfig combination, IReadOnlyList<Dice> dices) => false;
         public virtual void OnDiceScored(DiceScoreContext context) { }
         public virtual void OnCombinationScored(CombinationScoreContext context) { }
         public virtual void OnFinalizeScore(FinalizeScoreContext context) { }

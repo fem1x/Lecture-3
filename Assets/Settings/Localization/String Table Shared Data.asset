@@ -255,6 +255,38 @@ MonoBehaviour:
     m_Key: charm_velvet_glove_desc
     m_Metadata:
       m_Items: []
+  - m_Id: 418204264288273
+    m_Key: charm_domino_name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 418204264288274
+    m_Key: charm_domino_desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 418204264288275
+    m_Key: charm_jigsaw_name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 418204264288276
+    m_Key: charm_jigsaw_desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 418204264288277
+    m_Key: charm_prism_name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 418204264288278
+    m_Key: charm_prism_desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 418204264288279
+    m_Key: charm_metronome_name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 418204264288280
+    m_Key: charm_metronome_desc
+    m_Metadata:
+      m_Items: []
   - m_Id: 2438422406746112
     m_Key: action_success_btn
     m_Metadata:

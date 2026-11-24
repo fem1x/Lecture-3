@@ -7,18 +7,22 @@ namespace _Scripts.Data_Transfer.Contexts
 {
     public class DiceScoreContext
     {
+        // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
         //In:
         public Dice Dice { get; }
         public CombinationConfig Combination { get; }
+        public IReadOnlyList<Dice> SelectedDices { get; }
 
         //Out:
         public int BaseDicePoints { get; }
         public List<CharmTriggerResult> Triggers { get; } = new();
+        // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 
-        public DiceScoreContext(Dice dice, CombinationConfig combination)
+        public DiceScoreContext(Dice dice, CombinationConfig combination, IReadOnlyList<Dice> selectedDices)
         {
             Dice = dice;
             Combination = combination;
+            SelectedDices = selectedDices;
             BaseDicePoints = dice.Data.RolledValue;
         }
         
