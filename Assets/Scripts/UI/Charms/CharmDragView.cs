@@ -33,6 +33,7 @@ namespace _Scripts.UI.Charms
         private RectTransform _cellHolder;
         private RectTransform _dragLayer;
         private bool _isDraggable;
+        private bool _isConsumed;
         private int? _dragPointerId;
         private Tween _returnTween;
         private CharmDragState _dragState;
@@ -136,6 +137,12 @@ namespace _Scripts.UI.Charms
 
         public void InstantReturnToConveyor()
         {
+            if (_isConsumed)
+            {
+                Destroy(gameObject);
+                return;
+            }
+
             _dragState.End(this);
             _dragPointerId = null;
             _isPending = false;
@@ -152,10 +159,65 @@ namespace _Scripts.UI.Charms
 
         public void Consume()
         {
+            FinishDragForConsumption();
+            Destroy(gameObject);
+        }
+
+        public void AnimateScrap(
+            Vector3 targetPosition,
+            float duration,
+            Ease pullEase,
+            (float Strength, float Frequency, AnimationCurve Growth) shake,
+            Ease shrinkEase,
+            float fadeStartTime,
+            float rotationAngle,
+            float rotationDuration,
+            Ease rotationEase)
+        {
+            FinishDragForConsumption();
+
+            var startRotation = _rectTransform.localRotation;
+            DOTween.Sequence()
+                .Join(CreateScrapPullTween(targetPosition, duration, pullEase, shake))
+                .Join(_rectTransform.DOScale(0f, duration).SetEase(shrinkEase))
+                .Join(DOVirtual.Float(0f, rotationAngle, rotationDuration,
+                        angle => _rectTransform.localRotation = startRotation * Quaternion.AngleAxis(angle, Vector3.forward))
+                    .SetEase(rotationEase))
+                .Insert(fadeStartTime, _canvasGroup.DOFade(0f, duration - fadeStartTime))
+                .SetUpdate(true)
+                .SetLink(gameObject)
+                .OnComplete(() => Destroy(gameObject));
+        }
+
+        private Tween CreateScrapPullTween(
+            Vector3 targetPosition,
+            float duration,
+            Ease ease,
+            (float Strength, float Frequency, AnimationCurve Growth) shake)
+        {
+            if (shake.Strength <= 0f || shake.Frequency <= 0f)
+                return _rectTransform.DOMove(targetPosition, duration).SetEase(ease);
+
+            var startPosition = _rectTransform.position;
+            return DOVirtual.Float(0f, 1f, duration, progress =>
+            {
+                var travel = DOVirtual.EasedValue(0f, 1f, progress, ease);
+                var position = Vector3.LerpUnclamped(startPosition, targetPosition, travel);
+                var phase = progress * duration * shake.Frequency * (2f * Mathf.PI);
+                var offset = new Vector3(Mathf.Sin(phase), Mathf.Sin(phase * 0.79f + 1.2f), 0f);
+                var amplitude = shake.Strength * Mathf.Clamp01(shake.Growth.Evaluate(progress));
+                _rectTransform.position = position + _dragLayer.TransformVector(offset * (amplitude * 0.707f));
+            }).SetEase(Ease.Linear);
+        }
+
+        private void FinishDragForConsumption()
+        {
+            _isConsumed = true;
+            _isDraggable = false;
             _dragState.End(this);
             _dragPointerId = null;
             _returnTween?.Kill();
-            Destroy(gameObject);
+            _canvasGroup.blocksRaycasts = false;
         }
 
         public void StartPending()
