@@ -1,4 +1,5 @@
-﻿using _Scripts.Utility.Extensions;
+﻿using System.Threading;
+using _Scripts.Utility.Extensions;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using UnityEngine;
@@ -37,8 +38,9 @@ namespace _Scripts.UI
                 HideInstant();
         }
 
-        public async UniTask ShowAsync()
+        public async UniTask ShowAsync(CancellationToken ct = default)
         {
+            ct.ThrowIfCancellationRequested();
             EnsureInitialized();
             _rect.DOKill();
 
@@ -49,11 +51,13 @@ namespace _Scripts.UI
 
             await _rect.DOAnchorPos(_shownPos, _showTime)
                 .SetEase(_showEase)
-                .SetUpdate(true);
+                .SetUpdate(true)
+                .ToUniTask(TweenCancelBehaviour.KillAndCancelAwait, ct);
         }
 
-        public async UniTask HideAsync()
+        public async UniTask HideAsync(CancellationToken ct = default)
         {
+            ct.ThrowIfCancellationRequested();
             EnsureInitialized();
             _rect.DOKill();
 
@@ -61,7 +65,8 @@ namespace _Scripts.UI
 
             await _rect.DOAnchorPos(hiddenPos, _hideTime)
                 .SetEase(_hideEase)
-                .SetUpdate(true);
+                .SetUpdate(true)
+                .ToUniTask(TweenCancelBehaviour.KillAndCancelAwait, ct);
 
             if (Vector2.Distance(_rect.anchoredPosition, hiddenPos) <= 0.01f)
                 _cg.Hide();

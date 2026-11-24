@@ -25841,6 +25841,7 @@ GameObject:
   - component: {fileID: 331681479681671460}
   - component: {fileID: 7746143331039985791}
   - component: {fileID: 8429229551936062072}
+  - component: {fileID: 8907485372817503612}
   m_Layer: 5
   m_Name: (Panel) Rewards
   m_TagString: Untagged
@@ -31130,14 +31131,35 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4c71edbe2bf145b6b598e3aa404d51d8, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Game::_Scripts.UI.TokenRewardsView
+  m_EditorClassIdentifier: Game::_Scripts.UI.LevelRewardsView
   _canvasGroup: {fileID: 7746143331039985791}
+  _slidingPanel: {fileID: 8907485372817503612}
   _totalTokensText: {fileID: 3527562690470974823}
   _levelTokensText: {fileID: 7743158304589090636}
   _throwsTokensText: {fileID: 2140401015156307118}
   _rerollsTokensText: {fileID: 7947183463293552167}
   _workshopButton: {fileID: 5182845156480488633}
-  _fadeDuration: 0.25
+--- !u!114 &8907485372817503612
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6658377938982058384}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f80a00c044854bf09c6ff06a49d77395, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Game::_Scripts.UI.SlidingPanelView
+  _startsHidden: 1
+  _direction: 1
+  _rect: {fileID: 8676949277007676752}
+  _cg: {fileID: 7746143331039985791}
+  _boundsRect: {fileID: 0}
+  _showTime: 1.8
+  _showEase: 15
+  _hideTime: 0.52
+  _hideEase: 5
 --- !u!114 &8437217524301434205
 MonoBehaviour:
   m_ObjectHideFlags: 0

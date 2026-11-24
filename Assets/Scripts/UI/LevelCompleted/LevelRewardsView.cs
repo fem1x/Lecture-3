@@ -2,7 +2,6 @@
 using System.Threading;
 using _Scripts.Dices;
 using Cysharp.Threading.Tasks;
-using DG.Tweening;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -14,6 +13,7 @@ namespace _Scripts.UI
     {
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
         [SerializeField] private CanvasGroup _canvasGroup;
+        [SerializeField] private SlidingPanelView _slidingPanel;
         
         [Header("Texts")]
         [SerializeField] private TMP_Text _totalTokensText;
@@ -24,9 +24,6 @@ namespace _Scripts.UI
         [Header("Buttons")]
         [SerializeField] private Button _workshopButton;
 
-        [Header("Fade Settings")]
-        [SerializeField] private float _fadeDuration = 0.25f;
-        
         public event Action OnWorkshopRequested;
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 
@@ -35,7 +32,11 @@ namespace _Scripts.UI
         private void OnEnable() => _workshopButton.onClick.AddListener(HandleWorkshopButtonClick);
         private void OnDisable() => _workshopButton.onClick.RemoveListener(HandleWorkshopButtonClick);
 
-        private void HandleWorkshopButtonClick() => OnWorkshopRequested?.Invoke();
+        private void HandleWorkshopButtonClick()
+        {
+            if (_workshopButton.IsInteractable())
+                OnWorkshopRequested?.Invoke();
+        }
 
         public void Setup(TokenRewardData data)
         {
@@ -47,28 +48,28 @@ namespace _Scripts.UI
 
         public async UniTask ShowAsync(CancellationToken ct)
         {
-            _canvasGroup.DOKill();
-            SetInteractable(true);
-            await _canvasGroup.DOFade(1f, _fadeDuration).SetUpdate(true).WithCancellation(ct);
+            _workshopButton.interactable = false;
+            await _slidingPanel.ShowAsync(ct);
+            _workshopButton.interactable = _canvasGroup.interactable;
         }
 
-        public async UniTask HideAsync(CancellationToken ct)
+        public UniTask HideAsync(CancellationToken ct)
         {
-            _canvasGroup.DOKill();
-            SetInteractable(false);
-            await _canvasGroup.DOFade(0f, _fadeDuration).SetUpdate(true).WithCancellation(ct);
+            LockInteraction();
+            return _slidingPanel.HideAsync(ct);
         }
 
         public void HideInstant()
         {
-            SetInteractable(false);
-            _canvasGroup.alpha = 0f;
+            LockInteraction();
+            _slidingPanel.HideInstant();
         }
 
-        private void SetInteractable(bool active)
+        private void LockInteraction()
         {
-            _canvasGroup.blocksRaycasts = active;
-            _canvasGroup.interactable = active;
+            _workshopButton.interactable = false;
+            _canvasGroup.blocksRaycasts = false;
+            _canvasGroup.interactable = false;
         }
     }
 }
