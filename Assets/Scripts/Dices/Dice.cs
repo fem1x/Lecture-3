@@ -51,7 +51,7 @@ namespace _Scripts.Dices
                                  (_rb.linearVelocity.sqrMagnitude < 0.001f && _rb.angularVelocity.sqrMagnitude < 0.001f);
 
         public bool IsRolled => Data.RolledValue != -1;
-        public bool CanBeSelected => IsRolled && !_tableController.IsInteractionLocked;
+        public bool CanBeSelected => IsRolled && !_isRolling && !_tableController.IsInteractionLocked;
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 
         public void Init(DiceData data)
@@ -116,9 +116,12 @@ namespace _Scripts.Dices
         public void BeginRoll()
         {
             _isRolling = true;
+            View.SetHovered(false);
             _tooltip.SetVisible(false);
             _damageIndicator.SetVisible(false);
         }
+
+        internal void EndRoll() => _isRolling = false;
 
         public void OnPointerEnter(PointerEventData eventData) => _isPointerOver = true;
 
@@ -218,7 +221,6 @@ namespace _Scripts.Dices
                 Data.SetRolledFace(bestFaceIndex);
 
             _rb.constraints = RigidbodyConstraints.FreezeRotation;
-            _isRolling = false;
         }
 
         private void OnCollisionEnter(Collision collision)

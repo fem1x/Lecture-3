@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using _Scripts.Dices;
+﻿using _Scripts.Dices;
 using UnityEngine;
 using UnityEngine.UI;
 using VContainer;
@@ -29,7 +28,7 @@ namespace _Scripts.UI
             _deselectAllButton.onClick.AddListener(_tableController.ClearSelection);
             
             _tableController.OnSelectionChanged += UpdateButtonsState;
-            _diceRoller.OnRollCompleted += HandleRollCompleted;
+            _diceRoller.OnRollStateChanged += UpdateButtonsState;
             
             UpdateButtonsState();
         }
@@ -40,7 +39,7 @@ namespace _Scripts.UI
             _deselectAllButton.onClick.RemoveListener(_tableController.ClearSelection);
             
             _tableController.OnSelectionChanged -= UpdateButtonsState;
-            _diceRoller.OnRollCompleted -= HandleRollCompleted;
+            _diceRoller.OnRollStateChanged -= UpdateButtonsState;
         }
         
         private void UpdateButtonsState()
@@ -48,7 +47,5 @@ namespace _Scripts.UI
             _selectAllButton.interactable = _tableController.CanSelectAll();
             _deselectAllButton.interactable = _tableController.GetSelectedDices().Count > 0;
         }
-        
-        private void HandleRollCompleted(bool isFirstThrow, List<Dice> dices) => UpdateButtonsState();
     }
 }

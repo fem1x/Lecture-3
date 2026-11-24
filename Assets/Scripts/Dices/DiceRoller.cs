@@ -14,6 +14,7 @@ namespace _Scripts.Dices
     {
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== 
         public event Action<bool, List<Dice>> OnRollCompleted; //(isFirstThrow, dices)
+        public event Action OnRollStateChanged;
         public bool IsRolling { get; private set; }
         public bool CanRoll { get; private set; } = false;
         
@@ -50,6 +51,8 @@ namespace _Scripts.Dices
                 foreach (var dice in dices)
                     if (dice != null) dice.BeginRoll();
 
+                OnRollStateChanged?.Invoke();
+
                 foreach (var dice in dices)
                 {
                     if (dice == null) continue;
@@ -64,13 +67,17 @@ namespace _Scripts.Dices
 
                 await UniTask.Delay(TimeSpan.FromSeconds(0.2f));
                 await UniTask.WhenAll(dices.Select(ResolveValueWhenStoppedAsync));
-                
-                OnRollCompleted?.Invoke(spendDice, dices);
             }
             finally
             {
+                foreach (var dice in dices)
+                    if (dice != null) dice.EndRoll();
+
                 IsRolling = false;
+                OnRollStateChanged?.Invoke();
             }
+
+            OnRollCompleted?.Invoke(spendDice, dices);
         }
 
         private static async UniTask ResolveValueWhenStoppedAsync(Dice dice)
