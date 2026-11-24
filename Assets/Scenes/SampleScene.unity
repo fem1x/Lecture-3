@@ -12470,7 +12470,7 @@ MonoBehaviour:
   m_ChildAlignment: 1
   m_StartCorner: 0
   m_StartAxis: 0
-  m_CellSize: {x: 305.8, y: 233.8}
+  m_CellSize: {x: 305.8, y: 228.1}
   m_Spacing: {x: 40.3, y: 47.6}
   m_Constraint: 1
   m_ConstraintCount: 3
@@ -31805,7 +31805,7 @@ MonoBehaviour:
   _diceRollConfig: {fileID: 11400000, guid: e220bccc4aa302a43b21ef615debf82a, type: 2}
   _diceSpawnConfig: {fileID: 11400000, guid: 2f812427752c7104cb543f0bc69b9673, type: 2}
   _resourceConfig: {fileID: 11400000, guid: d278f98f3d20f274ba1e894b275860a4, type: 2}
-  _levelsListConfig: {fileID: 11400000, guid: 5325cbf9268e6a54c9aaf8551b0c7c95, type: 2}
+  _levelsListConfig: {fileID: 11400000, guid: 89087b4361fb25c4ca9cedfcd9b8b851, type: 2}
   _sfxConfig: {fileID: 11400000, guid: 8a3d2ca175b89c442a91e1e5ff2f1243, type: 2}
   _audioFilterConfig: {fileID: 11400000, guid: 294f9b812e89f0447acfa8b6ef94a9c4, type: 2}
   _diceDataConfig: {fileID: 11400000, guid: 93460bbf828499645b858b5e17fb916c, type: 2}

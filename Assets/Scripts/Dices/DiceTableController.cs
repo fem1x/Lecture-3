@@ -18,6 +18,7 @@ namespace _Scripts.Dices
         public List<Dice> PendingDices { get; private set; } = new();
         
         public bool HasPendingDices => PendingDices.Count > 0;
+        public bool HasDicesOnTable => AllDices.Any(d => d.gameObject.activeInHierarchy && d.IsRolled);
         public bool HasUnlockedDices => GetUnlockedDices().Count > 0;
         public bool IsInteractionLocked { get; private set; }
         
@@ -46,11 +47,11 @@ namespace _Scripts.Dices
         }
         
         public Dice GetDiceById(int id) => AllDices.Find(d => d.Data.Id == id);
-        public List<Dice> GetSelectedDices() => AllDices.Where(d => d.Data.IsLocked).ToList();
-        public List<Dice> GetUnlockedDices() => AllDices.Where(d => !d.Data.IsLocked).ToList();
+        public List<Dice> GetSelectedDices() => AllDices.Where(d => d.gameObject.activeInHierarchy && d.Data.IsLocked).ToList();
+        public List<Dice> GetUnlockedDices() => AllDices.Where(d => d.gameObject.activeInHierarchy && !d.Data.IsLocked).ToList();
         public bool CanSelectAll() => 
             !IsInteractionLocked 
-            && AllDices.All(d => d.CanBeSelected) 
+            && AllDices.Where(d => d.gameObject.activeInHierarchy).All(d => d.CanBeSelected)
             && GetUnlockedDices().Count > 0;        
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== 
         public void OnRmbClick(InputValue value) => ClearSelection();

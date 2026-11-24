@@ -150,7 +150,7 @@ namespace _Scripts.UI.Charms
             }
         }
 
-        public void OnSuccessfullyEquipped()
+        public void Consume()
         {
             _dragState.End(this);
             _dragPointerId = null;

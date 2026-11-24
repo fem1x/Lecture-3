@@ -23,6 +23,8 @@ namespace _Scripts.Charms
         public List<CharmConfigBase> Charms { get; private set; } = new();
         public CharmConfigBase CurrentCharm => Charms[CurrentIndex];
 
+        private bool _isChoiceOpen;
+
         #region DI
         private readonly RepairTokensManager _tokensManager;
         private readonly CharmsService _charmsService;
@@ -40,6 +42,7 @@ namespace _Scripts.Charms
         {
             Charms = new List<CharmConfigBase>(charms);
             CurrentIndex = 0;
+            _isChoiceOpen = Charms.Count > 0;
             
             OnConveyorInitialized?.Invoke();
             OnStateChanged?.Invoke();
@@ -66,8 +69,8 @@ namespace _Scripts.Charms
             OnStateChanged?.Invoke();
         }
 
-        public bool CanMoveNext => CurrentIndex < Charms.Count - 1;
-        public bool CanMoveReverse => CurrentIndex > 0 && _tokensManager.CurrentTokens >=  ReverseCost;
+        public bool CanMoveNext => _isChoiceOpen && CurrentIndex < Charms.Count - 1;
+        public bool CanMoveReverse => _isChoiceOpen && CurrentIndex > 0 && _tokensManager.CurrentTokens >= ReverseCost;
         
         #endregion
         
@@ -78,25 +81,32 @@ namespace _Scripts.Charms
             if (!_charmsService.TryAddCharm(config, out createdCharm))
                 return false;
 
-            OnChoiceCompleted?.Invoke();
+            CompleteChoice();
             return true;
         }
 
-        public void Scrap()
+        public bool TryScrap(CharmConfigBase config)
         {
-            if (!CanScrap) return;
+            if (!_isChoiceOpen || config != CurrentCharm) return false;
+
+            _isChoiceOpen = false;
             _tokensManager.AddTokens(ScrapReward);
             OnChoiceCompleted?.Invoke();
+            return true;
         }
 
         public CharmBase Replace(CharmBase oldCharm, CharmConfigBase newCharmConfig)
         {
             var newCharm = _charmsService.ReplaceCharm(oldCharm, newCharmConfig);
-            OnChoiceCompleted?.Invoke();
+            CompleteChoice();
             return newCharm;
         }
 
-        public bool CanScrap => CurrentIndex == Charms.Count - 1;
+        private void CompleteChoice()
+        {
+            _isChoiceOpen = false;
+            OnChoiceCompleted?.Invoke();
+        }
 
         #endregion
     }

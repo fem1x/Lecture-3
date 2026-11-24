@@ -184,7 +184,7 @@ namespace _Scripts.UI.Charms
             if (!_conveyorService.TryClaim(dragView.GeneralView.Config, out var createdCharm)) return;
 
             Equip(createdCharm);
-            dragView.OnSuccessfullyEquipped();
+            dragView.Consume();
         }
 
         private void Equip(CharmBase charm)
@@ -222,7 +222,7 @@ namespace _Scripts.UI.Charms
             var newCharm = _conveyorService.Replace(oldCharm, dragView.GeneralView.Config);
             Equip(newCharm);
     
-            dragView.OnSuccessfullyEquipped();
+            dragView.Consume();
         }
     }
 }

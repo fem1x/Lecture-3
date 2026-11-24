@@ -75,7 +75,8 @@ namespace _Scripts.Managers
         
         public void CheckDefeatCondition()
         {
-            if (!_scoreManager.HasEnoughScore && _resourceManager.DiceCount <= 0 && !_tableController.HasPendingDices)
+            if (!_scoreManager.HasEnoughScore && _resourceManager.DiceCount <= 0
+                && !_tableController.HasPendingDices && !_tableController.HasDicesOnTable)
             {
                 _diceRoller.SetCanRoll(false);
                 _gameStateManager.EnterGameResultState(GameEndType.Defeat);
