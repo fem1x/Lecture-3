@@ -287,6 +287,46 @@ MonoBehaviour:
     m_Key: charm_metronome_desc
     m_Metadata:
       m_Items: []
+  - m_Id: 418204264288281
+    m_Key: charm_picture_of_you_name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 418204264288282
+    m_Key: charm_picture_of_you_desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 418204264288283
+    m_Key: charm_broken_mirror_name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 418204264288284
+    m_Key: charm_broken_mirror_desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 418204264288285
+    m_Key: charm_megaphone_name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 418204264288286
+    m_Key: charm_megaphone_desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 418204264288287
+    m_Key: charm_tuning_fork_name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 418204264288288
+    m_Key: charm_tuning_fork_desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 418204264288289
+    m_Key: charm_matryoshka_name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 418204264288290
+    m_Key: charm_matryoshka_desc
+    m_Metadata:
+      m_Items: []
   - m_Id: 2438422406746112
     m_Key: action_success_btn
     m_Metadata:

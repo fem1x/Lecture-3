@@ -26,6 +26,7 @@ namespace _Scripts.Charms
         public virtual void OnCombinationScored(CombinationScoreContext context) { }
         public virtual void OnFinalizeScore(FinalizeScoreContext context) { }
         public virtual void OnRoundEnd() { }
+        public virtual Dice SelectDurabilityDamageTarget(CombinationConfig combination, IReadOnlyList<Dice> dice) => null;
         public virtual void OnPreTakeDamage(DiceDamageContext context) { }
         public virtual void OnDiceDegrading(DiceDegradeContext context) { }
     }

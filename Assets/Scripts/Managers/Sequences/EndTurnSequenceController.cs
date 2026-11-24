@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Threading;
+using _Scripts.Combinations;
 using _Scripts.Configs;
 using _Scripts.Data_Transfer.Contexts;
 using _Scripts.Dices;
@@ -50,9 +51,17 @@ namespace _Scripts.Managers
         #endregion
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 
-        public async UniTask ProcessAllDicesAsync(IReadOnlyList<Dice> dices, bool forceDegrade, CancellationToken token = default)
+        public async UniTask ProcessAllDicesAsync(
+            IReadOnlyList<Dice> dices,
+            bool forceDegrade,
+            CancellationToken token = default,
+            CombinationConfig scoredCombination = null)
         {
             if (dices == null || dices.Count == 0) return;
+
+            var damageTarget = !forceDegrade && scoredCombination != null
+                ? _damageService.SelectDurabilityDamageTarget(scoredCombination, dices)
+                : null;
 
             var tasks = new List<UniTask>(dices.Count);
 
@@ -60,9 +69,10 @@ namespace _Scripts.Managers
             {
                 var dice = dices[i];
                 var previousDamage = dice.Data.DamageLevel;
+                var damageAmount = damageTarget == null || dice == damageTarget ? 1 : 0;
                 var step = forceDegrade
                     ? _damageService.DegradeDice(dice, restoreHp: false)
-                    : _damageService.DamageDice(dice, dices);
+                    : _damageService.DamageDice(dice, dices, damageAmount);
 
                 if (dice.Data.DamageLevel != previousDamage)
                     dice.ShowDamageChange();

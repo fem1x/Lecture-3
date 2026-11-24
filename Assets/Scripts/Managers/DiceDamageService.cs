@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using _Scripts.Charms;
+using _Scripts.Combinations;
 using _Scripts.Data_Transfer.Contexts;
 using _Scripts.Dices;
 using VContainer;
@@ -18,6 +19,18 @@ namespace _Scripts.Managers
         }
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== 
 
+        public Dice SelectDurabilityDamageTarget(CombinationConfig combination, IReadOnlyList<Dice> dice)
+        {
+            foreach (var charm in _charmsService.ActiveCharms)
+            {
+                var target = charm.SelectDurabilityDamageTarget(combination, dice);
+                if (target != null)
+                    return target;
+            }
+
+            return null;
+        }
+
         public DamageStep DamageDice(Dice dice, IReadOnlyList<Dice> allScoredDices, int amount = 1)
         {
             var damageContext = new DiceDamageContext(dice, amount, allScoredDices);
@@ -32,11 +45,11 @@ namespace _Scripts.Managers
                     : new DamageStep(dice, DamageOutcome.Blocked);
             }
 
-            if (damageContext.IsCancelled)
-                return new DamageStep(dice, DamageOutcome.Blocked);
-
             if (damageContext.DamageAmount <= 0)
                 return new DamageStep(dice, DamageOutcome.None);
+
+            if (damageContext.IsCancelled)
+                return new DamageStep(dice, DamageOutcome.Blocked);
 
             var data = dice.Data;
             if (data.CurrentDurability - damageContext.DamageAmount <= 0)

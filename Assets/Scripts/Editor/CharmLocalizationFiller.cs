@@ -26,17 +26,22 @@ namespace _Scripts.Editor
         private static readonly Dictionary<string, LocalizationPair> KeyMapping = new()
         {
             { nameof(AirbagCharmConfig), new("charm_airbag_name", "charm_airbag_desc") },
+            { nameof(BrokenMirrorCharmConfig), new("charm_broken_mirror_name", "charm_broken_mirror_desc") },
             { nameof(CassetteTapeCharmConfig), new("charm_cassette_tape_name", "charm_cassette_tape_desc") },
             { nameof(DominoCharmConfig), new("charm_domino_name", "charm_domino_desc") },
             { nameof(HeartShapedBoxCharmConfig), new("charm_heart_shaped_box_name", "charm_heart_shaped_box_desc") },
             { nameof(HourglassCharmConfig), new("charm_hourglass_name", "charm_hourglass_desc") },
             { nameof(JigsawCharmConfig), new("charm_jigsaw_name", "charm_jigsaw_desc") },
             { nameof(LuckyDimeCharmConfig), new("charm_lucky_dime_name", "charm_lucky_dime_desc") },
+            { nameof(MatryoshkaCharmConfig), new("charm_matryoshka_name", "charm_matryoshka_desc") },
+            { nameof(MegaphoneCharmConfig), new("charm_megaphone_name", "charm_megaphone_desc") },
             { nameof(MetronomeCharmConfig), new("charm_metronome_name", "charm_metronome_desc") },
+            { nameof(PictureOfYouCharmConfig), new("charm_picture_of_you_name", "charm_picture_of_you_desc") },
             { nameof(PorcelainCharmConfig), new("charm_porcelain_name", "charm_porcelain_desc") },
             { nameof(PrismCharmConfig), new("charm_prism_name", "charm_prism_desc") },
             { nameof(SafetyPinCharmConfig), new("charm_safety_pin_name", "charm_safety_pin_desc") },
             { nameof(TeddyPickerCharmConfig), new("charm_teddy_picker_name", "charm_teddy_picker_desc") },
+            { nameof(TuningForkCharmConfig), new("charm_tuning_fork_name", "charm_tuning_fork_desc") },
             { nameof(VelvetGloveCharmConfig), new("charm_velvet_glove_name", "charm_velvet_glove_desc") }
         };
 

@@ -346,6 +346,50 @@ MonoBehaviour:
     m_Metadata:
       m_Items:
       - rid: 420518586740899946
+  - m_Id: 418204264288281
+    m_Localized: "Picture of You"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 418204264288282
+    m_Localized: "Otorga <style=xmult>{xMultiplier} X-Mult</style> si no quedan relanzamientos"
+    m_Metadata:
+      m_Items:
+      - rid: 420518586740899946
+  - m_Id: 418204264288283
+    m_Localized: "Broken Mirror"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 418204264288284
+    m_Localized: "Otorga <style=points>+{bonusPoints} Puntos</style> y <style=xmult>{xMultiplier} X-Mult</style> por cada dado jugado con 1 punto de durabilidad"
+    m_Metadata:
+      m_Items:
+      - rid: 420518586740899946
+  - m_Id: 418204264288285
+    m_Localized: "Megaphone"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 418204264288286
+    m_Localized: "Otorga <style=xmult>{xMultiplierPerStep} X-Mult</style> por cada punto de la suma por encima de {sumThreshold} al jugar <style=combo>Sobrecarga</style>"
+    m_Metadata:
+      m_Items:
+      - rid: 420518586740899946
+  - m_Id: 418204264288287
+    m_Localized: "Tuning Fork"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 418204264288288
+    m_Localized: "Otorga <style=xmult>{xMultiplier} X-Mult</style> y limita el da\u00F1o de durabilidad a un dado al azar al jugar <style=combo>Tr\u00EDada</style>, <style=combo>Cuarteto</style> o <style=combo>Singularidad</style>"
+    m_Metadata:
+      m_Items:
+      - rid: 420518586740899946
+  - m_Id: 418204264288289
+    m_Localized: "Matryoshka"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 418204264288290
+    m_Localized: "A\u00F1ade a <style=mult>Mult</style> el valor del dado multiplicado por el n\u00FAmero de dados jugados al jugar <style=combo>Tr\u00EDada</style>, <style=combo>Cuarteto</style> o <style=combo>Singularidad</style>"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:
@@ -365,3 +409,7 @@ MonoBehaviour:
         - id: 418204264288258
         - id: 418204264288278
         - id: 418204264288280
+        - id: 418204264288282
+        - id: 418204264288284
+        - id: 418204264288286
+        - id: 418204264288288

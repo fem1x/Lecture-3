@@ -222,7 +222,8 @@ namespace _Scripts.Managers
             OnScoreCalculated?.Invoke(scoreSequence, selectedDices);
     
             await _scoreSequenceController.PlaySequenceAsync(scoreSequence);
-            await _endTurnSequenceController.ProcessAllDicesAsync(selectedDices, forceDegrade: false, destroyCancellationToken);
+            await _endTurnSequenceController.ProcessAllDicesAsync(
+                selectedDices, forceDegrade: false, destroyCancellationToken, scoreSequence.Combination);
         }
 
         private async UniTask CodeLockFlow(List<Dice> selectedDices)

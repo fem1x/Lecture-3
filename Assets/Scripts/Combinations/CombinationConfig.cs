@@ -35,6 +35,8 @@ namespace _Scripts.Combinations
         [field: SubclassSelector]
         [field: SerializeReference] public ICombinationRule Rule { get; private set; }
 
+        public bool IsSet => Id is "triad" or "quad" or "singularity";
+
         public bool Matches(IReadOnlyList<Dice> dices)
         {
             if (Rule == null || dices == null)

@@ -346,6 +346,50 @@ MonoBehaviour:
     m_Metadata:
       m_Items:
       - rid: 420518586740899945
+  - m_Id: 418204264288281
+    m_Localized: "Picture of You"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 418204264288282
+    m_Localized: "Gives <style=xmult>{xMultiplier} X-Mult</style> if no rerolls remain"
+    m_Metadata:
+      m_Items:
+      - rid: 420518586740899945
+  - m_Id: 418204264288283
+    m_Localized: "Broken Mirror"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 418204264288284
+    m_Localized: "Gives <style=points>+{bonusPoints} Points</style> and <style=xmult>{xMultiplier} X-Mult</style> for each played die with 1 HP"
+    m_Metadata:
+      m_Items:
+      - rid: 420518586740899945
+  - m_Id: 418204264288285
+    m_Localized: "Megaphone"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 418204264288286
+    m_Localized: "Gives <style=xmult>{xMultiplierPerStep} X-Mult</style> for each point by which the sum exceeds {sumThreshold} when playing <style=combo>Overload</style>"
+    m_Metadata:
+      m_Items:
+      - rid: 420518586740899945
+  - m_Id: 418204264288287
+    m_Localized: "Tuning Fork"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 418204264288288
+    m_Localized: "Gives <style=xmult>{xMultiplier} X-Mult</style> and limits durability damage to one random die when playing <style=combo>Triad</style>, <style=combo>Quad</style>, or <style=combo>Singularity</style>"
+    m_Metadata:
+      m_Items:
+      - rid: 420518586740899945
+  - m_Id: 418204264288289
+    m_Localized: "Matryoshka"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 418204264288290
+    m_Localized: "Adds the die value multiplied by the number of played dice to <style=mult>Mult</style> when playing <style=combo>Triad</style>, <style=combo>Quad</style>, or <style=combo>Singularity</style>"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:
@@ -365,3 +409,7 @@ MonoBehaviour:
         - id: 418204264288258
         - id: 418204264288278
         - id: 418204264288280
+        - id: 418204264288282
+        - id: 418204264288284
+        - id: 418204264288286
+        - id: 418204264288288
