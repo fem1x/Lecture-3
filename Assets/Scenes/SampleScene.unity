@@ -4614,24 +4614,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f12d11bfb9b91fe4b9354c5e3a72f870, type: 3}
---- !u!1001 &1261651545
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 5172114655225139958}
-    m_Modifications: []
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: aa8859c2fc5b3074281ac6944c5fbb8a, type: 3}
---- !u!224 &1261651542 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 4566992827275387637, guid: aa8859c2fc5b3074281ac6944c5fbb8a, type: 3}
-  m_PrefabInstance: {fileID: 1261651545}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1264832201
 GameObject:
   m_ObjectHideFlags: 0
@@ -7400,6 +7382,7 @@ GameObject:
   - component: {fileID: 1817247427}
   - component: {fileID: 1817247426}
   - component: {fileID: 1817247425}
+  - component: {fileID: 1817247428}
   m_Layer: 5
   m_Name: ScrapZone
   m_TagString: Untagged
@@ -7522,6 +7505,33 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1817247423}
   m_CullTransparentMesh: 1
+--- !u!114 &1817247428
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1817247423}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 12d4882af6134a0b85c6dbd2c0d5afec, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Game::_Scripts.UI.Tooltips.BasicTooltipTrigger
+  _prefab: {fileID: 7818079974194006116, guid: aa8859c2fc5b3074281ac6944c5fbb8a, type: 3}
+  _text:
+    m_TableReference:
+      m_TableCollectionName: GUID:9f9c89d5b6ad399428ec5a9fe072ff95
+    m_TableEntryReference:
+      m_KeyId: 13353517863403520
+      m_Key:
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  _side: 0
+  _gap: 24
+  references:
+    version: 2
+    RefIds: []
 --- !u!1 &1860889706
 GameObject:
   m_ObjectHideFlags: 0
@@ -21608,7 +21618,6 @@ RectTransform:
   - {fileID: 1321656064399790051}
   - {fileID: 603186521110947631}
   - {fileID: 1596471778614167788}
-  - {fileID: 1261651542}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}

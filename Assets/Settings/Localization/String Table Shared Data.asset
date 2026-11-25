@@ -371,6 +371,10 @@ MonoBehaviour:
     m_Key: replace_desc
     m_Metadata:
       m_Items: []
+  - m_Id: 13353517863403520
+    m_Key: workshop_scrap_tooltip
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

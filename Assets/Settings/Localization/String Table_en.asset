@@ -390,6 +390,10 @@ MonoBehaviour:
     m_Localized: "Adds the sum of played dice values to <style=mult>Mult</style> when playing <style=combo>Triad</style>, <style=combo>Quad</style>, or <style=combo>Singularity</style>"
     m_Metadata:
       m_Items: []
+  - m_Id: 13353517863403520
+    m_Localized: "Drag a charm here to scrap it for Repair Tokens"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:
