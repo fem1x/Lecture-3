@@ -13,6 +13,7 @@ namespace _Scripts.UI
     {
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
         [SerializeField] private Button _button;
+        [SerializeField] private Selectable _selectable;
         [SerializeField] private bool _insideLayoutGroup;
 
         [Header("Scale & Squash")]
@@ -49,6 +50,7 @@ namespace _Scripts.UI
         private Vector3 _pressHitPosition;
         private Quaternion _pressHitRotation;
         private Vector3 _pressHitScale;
+        private bool CanInteract => _selectable != null ? _selectable.IsInteractable() : _button.interactable;
 
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 
@@ -111,7 +113,7 @@ namespace _Scripts.UI
 
         public void OnPointerDown(PointerEventData eventData)
         {
-            if (!_button.interactable) return;
+            if (!CanInteract) return;
 
             PreparePressHitArea();
             _isPressed = true;
@@ -167,7 +169,7 @@ namespace _Scripts.UI
 
         private void PlayFeedback(bool isRelease)
         {
-            var canInteract = _button.interactable;
+            var canInteract = CanInteract;
 
             var targetScale = GetTargetScale(canInteract);
 

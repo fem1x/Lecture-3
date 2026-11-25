@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using _Scripts.Configs;
 using _Scripts.Scriptable_Objects.Configs;
 using UnityEngine;
@@ -12,8 +14,11 @@ namespace _Scripts.Managers
     public sealed class GameSettingsService : IStartable, IDisposable
     {
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
+        internal const int VolumeStepPercent = 5;
         private const string Prefix = "Settings.";
         private const string ShakePercentKey = Prefix + "ShakePercent";
+        private const string WidthKey = Prefix + "ResolutionWidth";
+        private const string HeightKey = Prefix + "ResolutionHeight";
         private const int ShakeStepPercent = 25;
         private const int MaxShakeSteps = 8;
         private static readonly string[] VolumeParameters = { "MasterVolume", "MusicVolume", "SfxVolume", "AmbienceVolume" };
@@ -37,6 +42,8 @@ namespace _Scripts.Managers
         public int ShakePercent => ShakeSteps * ShakeStepPercent;
         public float SequenceSpeed => Speeds[_speedIndex];
         public FullScreenMode DisplayMode => DisplayModes[_displayIndex];
+        public IReadOnlyList<Vector2Int> Resolutions { get; private set; }
+        public int ResolutionIndex { get; private set; }
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 
         public GameSettingsService(AudioFilterConfig audioConfig, CameraShaker cameraShaker, GameSpeedConfig speedConfig)
@@ -53,7 +60,7 @@ namespace _Scripts.Managers
             for (var i = 0; i < _volumes.Length; i++)
             {
                 var defaultVolume = i == (int)VolumeChannel.Master ? 50 : 100;
-                _volumes[i] = Mathf.Clamp(PlayerPrefs.GetInt(Prefix + VolumeParameters[i], defaultVolume), 0, 100);
+                _volumes[i] = SnapVolume(PlayerPrefs.GetInt(Prefix + VolumeParameters[i], defaultVolume));
                 ApplyVolume((VolumeChannel)i);
             }
             Application.focusChanged += HandleFocusChanged;
@@ -65,8 +72,7 @@ namespace _Scripts.Managers
             _displayIndex = Array.IndexOf(DisplayModes, savedMode);
             if (_displayIndex < 0)
                 _displayIndex = Array.IndexOf(DisplayModes, FullScreenMode.FullScreenWindow);
-            if (Screen.fullScreenMode != DisplayMode)
-                Screen.fullScreenMode = DisplayMode;
+            InitializeResolution();
 
             var legacyPercent = Mathf.Clamp(PlayerPrefs.GetInt(Prefix + nameof(ShakeSteps), 10), 0, 20) * 10;
             var savedPercent = PlayerPrefs.GetInt(ShakePercentKey, legacyPercent);
@@ -93,10 +99,13 @@ namespace _Scripts.Managers
         internal void SetVolume(VolumeChannel channel, int percent)
         {
             var index = (int)channel;
-            _volumes[index] = Mathf.Clamp(percent, 0, 100);
+            _volumes[index] = SnapVolume(percent);
             ApplyVolume(channel);
             PlayerPrefs.SetInt(Prefix + VolumeParameters[index], _volumes[index]);
         }
+
+        private static int SnapVolume(int percent) =>
+            Mathf.RoundToInt(Mathf.Clamp(percent, 0, 100) / (float)VolumeStepPercent) * VolumeStepPercent;
 
         public void SetMuteWhenUnfocused(bool enabled)
         {
@@ -117,9 +126,46 @@ namespace _Scripts.Managers
         public void CycleDisplayMode()
         {
             _displayIndex = (_displayIndex + 1) % DisplayModes.Length;
-            Screen.fullScreenMode = DisplayMode;
+            ApplyResolution();
             PlayerPrefs.SetInt(Prefix + nameof(DisplayMode), (int)DisplayMode);
             PlayerPrefs.Save();
+        }
+
+        public void SetResolution(int index)
+        {
+            ResolutionIndex = index;
+            ApplyResolution();
+            var size = Resolutions[index];
+            PlayerPrefs.SetInt(WidthKey, size.x);
+            PlayerPrefs.SetInt(HeightKey, size.y);
+            PlayerPrefs.Save();
+        }
+
+        private void InitializeResolution()
+        {
+            var current = new Vector2Int(Screen.width, Screen.height);
+            var options = Screen.resolutions
+                .Select(mode => new Vector2Int(mode.width, mode.height))
+                .Append(current)
+                .Distinct()
+                .OrderByDescending(size => size.x)
+                .ThenByDescending(size => size.y)
+                .ToArray();
+            Resolutions = options;
+
+            var saved = new Vector2Int(PlayerPrefs.GetInt(WidthKey, current.x), PlayerPrefs.GetInt(HeightKey, current.y));
+            ResolutionIndex = Array.IndexOf(options, saved);
+            if (ResolutionIndex < 0)
+                ResolutionIndex = Array.IndexOf(options, current);
+
+            if (options[ResolutionIndex] != current || Screen.fullScreenMode != DisplayMode)
+                ApplyResolution();
+        }
+
+        private void ApplyResolution()
+        {
+            var size = Resolutions[ResolutionIndex];
+            Screen.SetResolution(size.x, size.y, DisplayMode);
         }
 
         public void SetShakeSteps(int steps)

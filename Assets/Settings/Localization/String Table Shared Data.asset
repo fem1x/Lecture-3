@@ -451,6 +451,22 @@ MonoBehaviour:
     m_Key: settings_borderless
     m_Metadata:
       m_Items: []
+  - m_Id: 13400000000000119
+    m_Key: settings_resolution
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13400000000000120
+    m_Key: settings_locale_russian
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13400000000000121
+    m_Key: settings_locale_english
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13400000000000122
+    m_Key: settings_locale_spanish
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

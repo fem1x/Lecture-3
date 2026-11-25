@@ -431,7 +431,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 13400000000000109
-    m_Localized: "\u0412\u0435\u0440\u0442\u0438\u043a\u0430\u043b\u044c\u043d\u0430\u044f \u0441\u0438\u043d\u0445\u0440\u043e\u043d\u0438\u0437\u0430\u0446\u0438\u044f"
+    m_Localized: V-Sync
     m_Metadata:
       m_Items: []
   - m_Id: 13400000000000110
@@ -468,6 +468,22 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 13400000000000118
     m_Localized: "\u0411\u0435\u0437 \u0440\u0430\u043c\u043e\u043a"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13400000000000119
+    m_Localized: "\u0420\u0430\u0437\u0440\u0435\u0448\u0435\u043d\u0438\u0435"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13400000000000120
+    m_Localized: "\u0420\u0443\u0441\u0441\u043a\u0438\u0439"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13400000000000121
+    m_Localized: "English"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13400000000000122
+    m_Localized: "Espa\u00f1ol"
     m_Metadata:
       m_Items: []
   references:

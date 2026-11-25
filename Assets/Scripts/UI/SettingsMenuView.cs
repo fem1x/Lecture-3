@@ -1,4 +1,7 @@
 using System;
+using System.Collections.Generic;
+using System.Globalization;
+using System.Linq;
 using System.Threading;
 using _Scripts.Managers;
 using Cysharp.Threading.Tasks;
@@ -25,6 +28,7 @@ namespace _Scripts.UI
             public Button Button;
             public Image Accent;
             public CanvasGroup Page;
+            public Vector2 ShownPosition { get; set; }
         }
 
         [Serializable]
@@ -35,9 +39,7 @@ namespace _Scripts.UI
         }
 
         private const string LocalePreference = "Settings.Locale";
-        private static readonly Color ActiveTabColor = new Color32(85, 57, 106, 255);
-        private static readonly Color InactiveTabColor = new Color32(45, 35, 55, 255);
-        private static readonly Color OffSwitchColor = new Color32(125, 27, 50, 255);
+        private static readonly Guid StringTable = new("9f9c89d5b6ad399428ec5a9fe072ff95");
 
         [SerializeField] private SlidingPanelView _slide;
         [SerializeField] private CanvasGroup _panel;
@@ -49,23 +51,26 @@ namespace _Scripts.UI
         [Header("Backdrop")]
         [SerializeField, Min(0f)] private float _backdropFadeInTime = 0.22f;
         [SerializeField, Min(0f)] private float _backdropFadeOutTime = 0.2f;
+        [SerializeField] private Ease _backdropFadeInEase = Ease.OutCubic;
+        [SerializeField] private Ease _backdropFadeOutEase = Ease.OutCubic;
         [SerializeField, Range(0f, 1f)] private float _backdropOpacity = 0.62f;
 
         [Header("Sound")]
         [SerializeField] private SliderField[] _volumeFields;
-        [SerializeField] private Button _muteButton;
-        [SerializeField] private LocalizeStringEvent _muteValue;
-        [SerializeField] private TMP_Text _muteLabel;
+        [SerializeField] private Toggle _muteToggle;
+        [SerializeField] private CheckboxFeedbackView _muteFeedback;
 
         [Header("Display")]
-        [SerializeField] private Button _vSyncButton;
-        [SerializeField] private LocalizeStringEvent _vSyncValue;
-        [SerializeField] private TMP_Text _vSyncLabel;
+        [SerializeField] private Toggle _vSyncToggle;
+        [SerializeField] private CheckboxFeedbackView _vSyncFeedback;
         [SerializeField] private Button _displayButton;
         [SerializeField] private LocalizeStringEvent _displayValue;
+        [SerializeField] private TMP_Text _displayLabel;
+        [SerializeField] private TMP_Dropdown _resolutionDropdown;
+        [SerializeField] private TMP_Text _resolutionValue;
 
         [Header("Game")]
-        [SerializeField] private Button _languageButton;
+        [SerializeField] private TMP_Dropdown _languageDropdown;
         [SerializeField] private TMP_Text _languageValue;
         [SerializeField] private Locale[] _locales;
         [SerializeField] private SliderField _shakeField;
@@ -73,12 +78,12 @@ namespace _Scripts.UI
         [SerializeField] private TMP_Text _speedValue;
 
         private GameSettingsService _settings;
+        private ISfxPlayer _sfxPlayer;
         private UnityAction<float>[] _volumeListeners;
         private CancellationTokenSource _transition;
         private Tween _backdropTween;
         private Tween _tabTween;
-        private Tween _muteTween;
-        private Tween _vSyncTween;
+        private readonly Dictionary<TMP_Text, (Vector2 Position, Vector3 Scale)> _valueRestPoses = new();
         private GameObject _previousSelection;
         private int _activeTab;
         private bool _wantsOpen;
@@ -86,16 +91,26 @@ namespace _Scripts.UI
         public static bool BlocksGameplayInput { get; private set; }
 
         [Inject]
-        public void Construct(GameSettingsService settings) => _settings = settings;
+        public void Construct(GameSettingsService settings, ISfxPlayer sfxPlayer)
+        {
+            _settings = settings;
+            _sfxPlayer = sfxPlayer;
+        }
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 
         private void Awake()
         {
+            foreach (var tab in _tabs)
+                tab.ShownPosition = ((RectTransform)tab.Page.transform).anchoredPosition;
+
+            foreach (var label in new[] { _displayLabel, _resolutionValue, _languageValue, _speedValue })
+                _valueRestPoses.Add(label, (label.rectTransform.anchoredPosition, label.rectTransform.localScale));
+
             _volumeListeners = new UnityAction<float>[_volumeFields.Length];
             for (var i = 0; i < _volumeListeners.Length; i++)
             {
                 var channel = (VolumeChannel)i;
-                _volumeListeners[i] = value => ChangeVolume(channel, (int)value);
+                _volumeListeners[i] = step => ChangeVolume(channel, (int)step * GameSettingsService.VolumeStepPercent);
             }
         }
 
@@ -103,13 +118,14 @@ namespace _Scripts.UI
         {
             _backdropButton.onClick.AddListener(Hide);
             _closeButton.onClick.AddListener(Hide);
-            _tabs[0].Button.onClick.AddListener(ShowSoundTab);
+            _tabs[0].Button.onClick.AddListener(ShowGameTab);
             _tabs[1].Button.onClick.AddListener(ShowDisplayTab);
-            _tabs[2].Button.onClick.AddListener(ShowGameTab);
-            _muteButton.onClick.AddListener(ToggleMute);
-            _vSyncButton.onClick.AddListener(ToggleVSync);
+            _tabs[2].Button.onClick.AddListener(ShowSoundTab);
+            _muteToggle.onValueChanged.AddListener(ToggleMute);
+            _vSyncToggle.onValueChanged.AddListener(ToggleVSync);
             _displayButton.onClick.AddListener(CycleDisplayMode);
-            _languageButton.onClick.AddListener(CycleLanguage);
+            _resolutionDropdown.onValueChanged.AddListener(ChangeResolution);
+            _languageDropdown.onValueChanged.AddListener(ChangeLanguage);
             _shakeField.Slider.onValueChanged.AddListener(ChangeShake);
             _speedButton.onClick.AddListener(CycleSpeed);
             for (var i = 0; i < _volumeFields.Length; i++)
@@ -121,13 +137,14 @@ namespace _Scripts.UI
         {
             _backdropButton.onClick.RemoveListener(Hide);
             _closeButton.onClick.RemoveListener(Hide);
-            _tabs[0].Button.onClick.RemoveListener(ShowSoundTab);
+            _tabs[0].Button.onClick.RemoveListener(ShowGameTab);
             _tabs[1].Button.onClick.RemoveListener(ShowDisplayTab);
-            _tabs[2].Button.onClick.RemoveListener(ShowGameTab);
-            _muteButton.onClick.RemoveListener(ToggleMute);
-            _vSyncButton.onClick.RemoveListener(ToggleVSync);
+            _tabs[2].Button.onClick.RemoveListener(ShowSoundTab);
+            _muteToggle.onValueChanged.RemoveListener(ToggleMute);
+            _vSyncToggle.onValueChanged.RemoveListener(ToggleVSync);
             _displayButton.onClick.RemoveListener(CycleDisplayMode);
-            _languageButton.onClick.RemoveListener(CycleLanguage);
+            _resolutionDropdown.onValueChanged.RemoveListener(ChangeResolution);
+            _languageDropdown.onValueChanged.RemoveListener(ChangeLanguage);
             _shakeField.Slider.onValueChanged.RemoveListener(ChangeShake);
             _speedButton.onClick.RemoveListener(CycleSpeed);
             for (var i = 0; i < _volumeFields.Length; i++)
@@ -136,8 +153,7 @@ namespace _Scripts.UI
 
             CancelTransition();
             _tabTween?.Kill();
-            _muteTween?.Kill();
-            _vSyncTween?.Kill();
+            StopValueAnimations();
             _wantsOpen = false;
             if (BlocksGameplayInput)
             {
@@ -180,6 +196,10 @@ namespace _Scripts.UI
             if (!_wantsOpen) return;
 
             _wantsOpen = false;
+            if (_resolutionDropdown.IsExpanded)
+                _resolutionDropdown.Hide();
+            if (_languageDropdown.IsExpanded)
+                _languageDropdown.Hide();
             _panel.interactable = false;
             _panel.blocksRaycasts = false;
             _backdrop.interactable = false;
@@ -194,20 +214,15 @@ namespace _Scripts.UI
             var token = _transition.Token;
             _backdropTween = _backdrop.DOFade(visible ? _backdropOpacity : 0f,
                     visible ? _backdropFadeInTime : _backdropFadeOutTime)
-                .SetEase(Ease.OutCubic).SetUpdate(true);
+                .SetEase(visible ? _backdropFadeInEase : _backdropFadeOutEase).SetUpdate(true);
 
             if (visible)
             {
                 var slide = _slide.ShowAsync(token);
-                _panel.interactable = false;
-                _panel.blocksRaycasts = false;
-                if (await slide.SuppressCancellationThrow() || token.IsCancellationRequested) return;
-
-                _panel.interactable = true;
-                _panel.blocksRaycasts = true;
                 _backdrop.interactable = true;
                 if (EventSystem.current != null)
                     EventSystem.current.SetSelectedGameObject(_tabs[_activeTab].Button.gameObject);
+                await slide.SuppressCancellationThrow();
             }
             else
             {
@@ -254,9 +269,9 @@ namespace _Scripts.UI
 
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 
-        private void ShowSoundTab() => SelectTab(0, animate: true);
+        private void ShowGameTab() => SelectTab(0, animate: true);
         private void ShowDisplayTab() => SelectTab(1, animate: true);
-        private void ShowGameTab() => SelectTab(2, animate: true);
+        private void ShowSoundTab() => SelectTab(2, animate: true);
 
         private void SelectTab(int index, bool animate)
         {
@@ -268,109 +283,139 @@ namespace _Scripts.UI
             {
                 var selected = i == index;
                 var tab = _tabs[i];
-                tab.Button.image.color = selected ? ActiveTabColor : InactiveTabColor;
                 tab.Accent.enabled = selected;
                 tab.Page.gameObject.SetActive(selected);
             }
 
-            var page = _tabs[index].Page;
+            var tabToShow = _tabs[index];
+            var page = tabToShow.Page;
             var rect = (RectTransform)page.transform;
             page.alpha = animate ? 0f : 1f;
-            rect.anchoredPosition = animate ? Vector2.down * 10f : Vector2.zero;
+            rect.anchoredPosition = tabToShow.ShownPosition + (animate ? Vector2.down * 10f : Vector2.zero);
             if (animate)
                 _tabTween = DOTween.Sequence().SetUpdate(true)
                     .Join(page.DOFade(1f, 0.18f).SetEase(Ease.OutQuad))
-                    .Join(rect.DOAnchorPos(Vector2.zero, 0.22f).SetEase(Ease.OutCubic));
+                    .Join(rect.DOAnchorPos(tabToShow.ShownPosition, 0.22f).SetEase(Ease.OutCubic));
         }
 
         private void RefreshControls()
         {
+            StopValueAnimations();
+            var locale = LocalizationSettings.SelectedLocale;
             for (var i = 0; i < _volumeFields.Length; i++)
             {
                 var value = _settings.GetVolume((VolumeChannel)i);
-                _volumeFields[i].Slider.SetValueWithoutNotify(value);
-                _volumeFields[i].Value.text = $"{value}%";
+                _volumeFields[i].Slider.SetValueWithoutNotify(value / GameSettingsService.VolumeStepPercent);
+                _volumeFields[i].Value.text = PercentText(value);
             }
 
             _shakeField.Slider.SetValueWithoutNotify(_settings.ShakeSteps);
-            _shakeField.Value.text = $"{_settings.ShakePercent}%";
-            _muteTween?.Kill();
-            _vSyncTween?.Kill();
-            SetSwitchInstant(_muteButton, _muteValue, _muteLabel, _settings.MuteWhenUnfocused);
-            SetSwitchInstant(_vSyncButton, _vSyncValue, _vSyncLabel, _settings.VSync);
-            RefreshDisplayMode();
-            UpdateLanguage(LocalizationSettings.SelectedLocale);
+            _shakeField.Value.text = PercentText(_settings.ShakePercent);
+            _muteFeedback.SetValueWithoutNotify(_settings.MuteWhenUnfocused);
+            _vSyncFeedback.SetValueWithoutNotify(_settings.VSync);
+            _displayValue.SetEntry(DisplayModeKey());
+            _resolutionDropdown.ClearOptions();
+            _resolutionDropdown.AddOptions(_settings.Resolutions.Select(ResolutionText).ToList());
+            _resolutionDropdown.SetValueWithoutNotify(_settings.ResolutionIndex);
+            _resolutionValue.text = _resolutionDropdown.options[_settings.ResolutionIndex].text;
+
+            _languageDropdown.ClearOptions();
+            _languageDropdown.AddOptions(_locales.Select(LanguageName).ToList());
+            _languageDropdown.SetValueWithoutNotify(Array.IndexOf(_locales, locale));
+            _languageValue.text = LanguageName(locale);
+            _speedValue.text = SpeedText();
         }
 
         private void ChangeVolume(VolumeChannel channel, int value)
         {
             _settings.SetVolume(channel, value);
-            _volumeFields[(int)channel].Value.text = $"{value}%";
+            _volumeFields[(int)channel].Value.text = PercentText(value);
         }
 
         private void ChangeShake(float steps)
         {
             _settings.SetShakeSteps((int)steps);
-            _shakeField.Value.text = $"{_settings.ShakePercent}%";
+            _shakeField.Value.text = PercentText(_settings.ShakePercent);
         }
 
-        private void ToggleMute()
+        private void ToggleMute(bool enabled)
         {
-            _settings.SetMuteWhenUnfocused(!_settings.MuteWhenUnfocused);
-            _muteTween?.Kill();
-            _muteTween = AnimateSwitch(_muteButton, _muteValue, _muteLabel, _settings.MuteWhenUnfocused);
+            _settings.SetMuteWhenUnfocused(enabled);
+            _sfxPlayer.Play("ButtonClick");
         }
 
-        private void ToggleVSync()
+        private void ToggleVSync(bool enabled)
         {
-            _settings.SetVSync(!_settings.VSync);
-            _vSyncTween?.Kill();
-            _vSyncTween = AnimateSwitch(_vSyncButton, _vSyncValue, _vSyncLabel, _settings.VSync);
+            _settings.SetVSync(enabled);
+            _sfxPlayer.Play("ButtonClick");
         }
 
         private void CycleDisplayMode()
         {
             _settings.CycleDisplayMode();
-            RefreshDisplayMode();
+            var key = DisplayModeKey();
+            AnimateValue(_displayLabel, () => _displayValue.SetEntry(key));
+        }
+
+        private void ChangeResolution(int index)
+        {
+            _settings.SetResolution(index);
+            var value = _resolutionDropdown.options[index].text;
+            AnimateValue(_resolutionValue, () => _resolutionValue.text = value);
         }
 
         private void CycleSpeed()
         {
             _settings.CycleSequenceSpeed();
-            UpdateSpeedLabel(LocalizationSettings.SelectedLocale);
+            var value = SpeedText();
+            AnimateValue(_speedValue, () => _speedValue.text = value);
         }
 
-        private static void SetSwitchInstant(Button button, LocalizeStringEvent value, TMP_Text label, bool enabled)
+        private void AnimateValue(TMP_Text label, TweenCallback update)
         {
-            button.image.color = enabled ? ActiveTabColor : OffSwitchColor;
-            value.SetEntry(enabled ? "settings_on" : "settings_off");
-            label.alpha = 1f;
+            label.DOKill();
+            var rect = label.rectTransform;
+            var (position, scale) = _valueRestPoses[label];
+            DOTween.Sequence().SetTarget(label).SetUpdate(true)
+                .Append(rect.DOAnchorPos(position + Vector2.up * 8f, 0.07f).SetEase(Ease.InQuad))
+                .Join(rect.DOScale(scale * 0.9f, 0.07f).SetEase(Ease.InQuad))
+                .AppendCallback(() =>
+                {
+                    update();
+                    rect.anchoredPosition = position + Vector2.down * 8f;
+                    rect.localScale = scale * 0.86f;
+                })
+                .Append(rect.DOAnchorPos(position, 0.19f).SetEase(Ease.OutCubic))
+                .Join(rect.DOScale(scale, 0.19f).SetEase(Ease.OutBack));
         }
 
-        private static Tween AnimateSwitch(Button button, LocalizeStringEvent value, TMP_Text label, bool enabled)
+        private void StopValueAnimations()
         {
-            return DOTween.Sequence().SetUpdate(true)
-                .Join(button.image.DOColor(enabled ? ActiveTabColor : OffSwitchColor, 0.22f).SetEase(Ease.OutCubic))
-                .Join(DOTween.Sequence()
-                    .Append(DOTween.To(() => label.alpha, alpha => label.alpha = alpha, 0f, 0.08f))
-                    .AppendCallback(() => value.SetEntry(enabled ? "settings_on" : "settings_off"))
-                    .Append(DOTween.To(() => label.alpha, alpha => label.alpha = alpha, 1f, 0.14f)));
+            ResetValue(_displayLabel);
+            ResetValue(_resolutionValue);
+            ResetValue(_languageValue);
+            ResetValue(_speedValue);
         }
 
-        private void RefreshDisplayMode()
+        private void ResetValue(TMP_Text label)
         {
-            _displayValue.SetEntry(_settings.DisplayMode switch
+            label.DOKill();
+            var (position, scale) = _valueRestPoses[label];
+            label.rectTransform.anchoredPosition = position;
+            label.rectTransform.localScale = scale;
+        }
+
+        private string DisplayModeKey() =>
+            _settings.DisplayMode switch
             {
                 FullScreenMode.ExclusiveFullScreen => "settings_fullscreen",
                 FullScreenMode.Windowed => "settings_windowed",
                 _ => "settings_borderless"
-            });
-        }
+            };
 
-        private void CycleLanguage()
+        private void ChangeLanguage(int index)
         {
-            var index = Array.IndexOf(_locales, LocalizationSettings.SelectedLocale);
-            var locale = _locales[(index + 1) % _locales.Length];
+            var locale = _locales[index];
             LocalizationSettings.SelectedLocale = locale;
             PlayerPrefs.SetString(LocalePreference, locale.Identifier.Code);
             PlayerPrefs.Save();
@@ -378,16 +423,37 @@ namespace _Scripts.UI
 
         private void UpdateLanguage(Locale locale)
         {
-            var culture = locale?.Identifier.CultureInfo;
-            var name = culture?.NativeName ?? locale?.LocaleName ?? string.Empty;
-            _languageValue.text = name.Length == 0
-                ? name
-                : (culture?.TextInfo.ToUpper(name[0]) ?? char.ToUpperInvariant(name[0])) + name.Substring(1);
-            if (_settings != null)
-                UpdateSpeedLabel(locale);
+            if (!_wantsOpen) return;
+
+            _languageDropdown.SetValueWithoutNotify(Array.IndexOf(_locales, locale));
+            var language = LanguageName(locale);
+            AnimateValue(_languageValue, () => _languageValue.text = language);
         }
 
-        private void UpdateSpeedLabel(Locale locale) =>
-            _speedValue.text = "×" + _settings.SequenceSpeed.ToString("0.##", locale?.Identifier.CultureInfo);
+        private static string LanguageName(Locale locale)
+        {
+            var key = locale?.Identifier.Code switch
+            {
+                "ru" => "settings_locale_russian",
+                "en" => "settings_locale_english",
+                "es" => "settings_locale_spanish",
+                _ => null
+            };
+            if (key != null)
+                return MenuString(key);
+
+            var culture = locale?.Identifier.CultureInfo;
+            var name = culture?.NativeName ?? locale?.LocaleName ?? string.Empty;
+            return name.Length == 0
+                ? name
+                : (culture?.TextInfo.ToUpper(name[0]) ?? char.ToUpperInvariant(name[0])) + name.Substring(1);
+        }
+
+        private static string MenuString(string key) =>
+            LocalizationSettings.StringDatabase.GetLocalizedString(StringTable, key);
+
+        private static string PercentText(int value) => $"{value}%";
+        private static string ResolutionText(Vector2Int size) => $"{size.x} × {size.y}";
+        private string SpeedText() => "×" + _settings.SequenceSpeed.ToString("0.##", CultureInfo.InvariantCulture);
     }
 }
