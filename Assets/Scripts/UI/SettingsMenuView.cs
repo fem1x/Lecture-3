@@ -40,6 +40,14 @@ namespace _Scripts.UI
             public TMP_Text Value;
         }
 
+        private sealed class EntranceItem
+        {
+            public RectTransform Rect;
+            public CanvasGroup Group;
+            public Vector3 Scale;
+            public float Alpha;
+        }
+
         private const string LocalePreference = "Settings.Locale";
 
         [SerializeField] private SlidingPanelView _slide;
@@ -87,6 +95,12 @@ namespace _Scripts.UI
         private CancellationTokenSource _transition;
         private Tween _backdropTween;
         private Tween _tabTween;
+        private Sequence _entranceTween;
+        private TMP_Text _title;
+        private int _titleVisibleCharacters;
+        private EntranceItem _closeEntrance;
+        private EntranceItem[] _tabEntrances;
+        private EntranceItem[][] _pageEntrances;
         private readonly Dictionary<TMP_Text, (Vector2 Position, Vector3 Scale)> _valueRestPoses = new();
         private GameObject _previousSelection;
         private int _activeTab;
@@ -110,6 +124,13 @@ namespace _Scripts.UI
                 tab.BaseColor = tab.Button.image.color;
                 tab.AccentView = tab.Accent.GetComponent<SettingsTabAccentView>();
             }
+
+            _title = _panel.transform.Find("(Panel) Header/(Text) PanelName").GetComponent<TMP_Text>();
+            _titleVisibleCharacters = _title.maxVisibleCharacters;
+            _closeEntrance = CreateEntranceItem((RectTransform)_closeButton.transform);
+            _tabEntrances = _tabs.Select(tab => CreateEntranceItem((RectTransform)tab.Button.transform)).ToArray();
+            _pageEntrances = _tabs.Select(tab =>
+                tab.Page.transform.Cast<Transform>().Select(child => CreateEntranceItem((RectTransform)child)).ToArray()).ToArray();
 
             foreach (var label in new[] { _displayLabel, _resolutionValue, _languageValue, _speedValue })
                 _valueRestPoses.Add(label, (label.rectTransform.anchoredPosition, label.rectTransform.localScale));
@@ -235,10 +256,13 @@ namespace _Scripts.UI
             if (visible)
             {
                 var slide = _slide.ShowAsync(token);
+                PlayEntrance();
                 _backdrop.interactable = true;
                 if (EventSystem.current != null)
                     EventSystem.current.SetSelectedGameObject(_tabs[_activeTab].Button.gameObject);
-                await slide.SuppressCancellationThrow();
+                await UniTask.WhenAll(
+                    slide.SuppressCancellationThrow(),
+                    _entranceTween.ToUniTask(TweenCancelBehaviour.KillAndCancelAwait, token).SuppressCancellationThrow());
             }
             else
             {
@@ -256,6 +280,62 @@ namespace _Scripts.UI
             _transition?.Dispose();
             _transition = null;
             _backdropTween?.Kill();
+            ResetEntrance();
+        }
+
+        private static EntranceItem CreateEntranceItem(RectTransform rect)
+        {
+            var group = rect.GetComponent<CanvasGroup>();
+            if (group == null)
+                group = rect.gameObject.AddComponent<CanvasGroup>();
+
+            return new EntranceItem { Rect = rect, Group = group, Scale = rect.localScale, Alpha = group.alpha };
+        }
+
+        private void PlayEntrance()
+        {
+            _entranceTween = DOTween.Sequence().SetUpdate(true);
+            _title.ForceMeshUpdate();
+            _title.maxVisibleCharacters = 0;
+            var titleProgress = 0f;
+            _entranceTween.Insert(0.12f, DOTween.To(() => titleProgress, value =>
+            {
+                titleProgress = value;
+                _title.maxVisibleCharacters = Mathf.CeilToInt(value * _title.textInfo.characterCount);
+            }, 1f, 0.4f).SetEase(Ease.Linear));
+            _entranceTween.InsertCallback(0.52f, () => _title.maxVisibleCharacters = _titleVisibleCharacters);
+            AddEntrance(_closeEntrance, 0.12f);
+            for (var i = 0; i < _tabEntrances.Length; i++)
+                AddEntrance(_tabEntrances[i], 0.2f + i * 0.055f);
+            for (var i = 0; i < _pageEntrances[_activeTab].Length; i++)
+                AddEntrance(_pageEntrances[_activeTab][i], 0.28f + i * 0.055f);
+        }
+
+        private void AddEntrance(EntranceItem item, float delay)
+        {
+            item.Group.alpha = 0f;
+            item.Rect.localScale = item.Scale * 0.96f;
+            _entranceTween.Insert(delay, item.Group.DOFade(item.Alpha, 0.24f).SetEase(Ease.OutQuad));
+            _entranceTween.Insert(delay, item.Rect.DOScale(item.Scale, 0.32f).SetEase(Ease.OutCubic));
+        }
+
+        private void ResetEntrance()
+        {
+            _entranceTween?.Kill();
+            _entranceTween = null;
+            _title.maxVisibleCharacters = _titleVisibleCharacters;
+            ResetEntranceItem(_closeEntrance);
+            foreach (var item in _tabEntrances)
+                ResetEntranceItem(item);
+            foreach (var page in _pageEntrances)
+                foreach (var item in page)
+                    ResetEntranceItem(item);
+        }
+
+        private static void ResetEntranceItem(EntranceItem item)
+        {
+            item.Group.alpha = item.Alpha;
+            item.Rect.localScale = item.Scale;
         }
 
         private void CaptureSelection()
