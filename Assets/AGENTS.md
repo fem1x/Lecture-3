@@ -15,10 +15,11 @@ This Unity project is a dice game. Inspect the relevant scene, prefab, and confi
 
 ## Working conventions
 
+- Do not use Auto Size for text components. Set font sizes explicitly.
+
 - Use the section divider `// ===== ===== ===== ===== ===== ===== ===== ===== ===== =====` in scripts to mark meaningful boundaries between member groups. Put one after the class opening before the first group of fields/properties, and another after that group before the next logical section (for example, fields before lifecycle methods, injected dependencies before public behavior, or events before related state). Add further dividers only when they make a substantial section change easier to scan; do not put one between every method or small related group. Keep the divider on its own line and match the surrounding indentation.
 - Do not add unnecessary null checks for required references or dependencies. Let configuration and programming errors surface as exceptions; use null checks only when absence is a valid state or required by object lifecycle.
 
 - Follow existing C# naming, namespaces, event patterns, and dependency injection conventions in the code being changed. Subscribe and unsubscribe to events and input actions with matching lifetimes.
 - Review callers and listeners when changing data mutations or events. In particular, `DiceData` exposes separate notifications for data, lock, and value changes; face bonuses are accounted for separately in scoring.
 - Preserve the ordering of score and charm effects unless the requested change explicitly alters it.
-- Validate changes in Unity when available, including compilation and the relevant gameplay flow. If Unity or suitable automated tests are unavailable, state what was not verified rather than claiming a runtime check.

@@ -127,7 +127,7 @@ namespace _Scripts.UI
         private void TurnArrow(bool expanded)
         {
             _arrowTween?.Kill();
-            var rotation = expanded ? _closedArrowRotation * Quaternion.Euler(0f, 0f, -90f) : _closedArrowRotation;
+            var rotation = expanded ? _closedArrowRotation * Quaternion.Euler(0f, 0f, 180f) : _closedArrowRotation;
             _arrowTween = _arrow.DOLocalRotateQuaternion(rotation, _arrowTime)
                 .SetEase(Ease.OutCubic).SetUpdate(true);
         }

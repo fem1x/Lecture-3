@@ -88,6 +88,8 @@ GameObject:
   - component: {fileID: 2595563190080365153}
   - component: {fileID: 3492181435071639847}
   - component: {fileID: 8696812900803625348}
+  - component: {fileID: 812400000000000001}
+  - component: {fileID: 812400000000000002}
   m_Layer: 5
   m_Name: (Toggle) Settings Checkbox
   m_TagString: Untagged
@@ -218,7 +220,7 @@ MonoBehaviour:
   _checkedColor: {r: 0.33333334, g: 0.22352941, b: 0.41568628, a: 1}
   _backgroundTime: 0.2
   _restScale: 0.72
-  _peakScale: 1.28
+  _peakScale: 1.4
   _peakTime: 0.065
   _settleTime: 0.24
   _appearTime: 0.045
@@ -226,3 +228,45 @@ MonoBehaviour:
   _settleEase: 12
   _disappearTime: 0.065
   _disappearEase: 5
+--- !u!114 &812400000000000001
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6427067218820196057}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f88ec0ef622d4170b112a9d23d757b48, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Game::_Scripts.UI.ButtonScaleView
+  _button: {fileID: 0}
+  _selectable: {fileID: 3492181435071639847}
+  _insideLayoutGroup: 0
+  _hoverScale: 1.11
+  _pressedScale: 0.98
+  _squashAmount: 0.025
+  _pressDipY: 2
+  _hoverTiltZ: 0
+  _pressTiltZ: 0
+  _hoverDuration: 0.15
+  _hoverEase: 12
+  _pressDuration: 0.06
+  _pressEase: 6
+  _releaseDuration: 0.22
+  _releaseEase: 27
+--- !u!114 &812400000000000002
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6427067218820196057}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c72604d57ba4c1e94fe913ee59de728, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Game::_Scripts.UI.ToggleSfxView
+  _toggle: {fileID: 3492181435071639847}
+  _hoverSfx: ButtonHover
+  _disabledClickSfx: ButtonDisabledClick

@@ -123,9 +123,9 @@ namespace _Scripts.Managers
             PlayerPrefs.Save();
         }
 
-        public void CycleDisplayMode()
+        public void CycleDisplayMode(int direction = 1)
         {
-            _displayIndex = (_displayIndex + 1) % DisplayModes.Length;
+            _displayIndex = (_displayIndex + direction + DisplayModes.Length) % DisplayModes.Length;
             ApplyResolution();
             PlayerPrefs.SetInt(Prefix + nameof(DisplayMode), (int)DisplayMode);
             PlayerPrefs.Save();
@@ -175,9 +175,9 @@ namespace _Scripts.Managers
             PlayerPrefs.SetInt(ShakePercentKey, ShakePercent);
         }
 
-        public void CycleSequenceSpeed()
+        public void CycleSequenceSpeed(int direction = 1)
         {
-            _speedIndex = (_speedIndex + 1) % Speeds.Length;
+            _speedIndex = (_speedIndex + direction + Speeds.Length) % Speeds.Length;
             _speedConfig.PlayerMultiplier = SequenceSpeed;
             PlayerPrefs.SetInt(Prefix + nameof(SequenceSpeed), _speedIndex);
             PlayerPrefs.Save();

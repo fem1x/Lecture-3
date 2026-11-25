@@ -131,10 +131,14 @@ namespace _Scripts.UI
             _muteToggle.onValueChanged.AddListener(ToggleMute);
             _vSyncToggle.onValueChanged.AddListener(ToggleVSync);
             _displayButton.onClick.AddListener(CycleDisplayMode);
+            _displayButton.transform.Find("(Button) Next Hit Area").GetComponent<Button>().onClick.AddListener(CycleDisplayMode);
+            _displayButton.transform.Find("(Button) Previous Hit Area").GetComponent<Button>().onClick.AddListener(PreviousDisplayMode);
             _resolutionDropdown.onValueChanged.AddListener(ChangeResolution);
             _languageDropdown.onValueChanged.AddListener(ChangeLanguage);
             _shakeField.Slider.onValueChanged.AddListener(ChangeShake);
             _speedButton.onClick.AddListener(CycleSpeed);
+            _speedButton.transform.Find("(Button) Next Hit Area").GetComponent<Button>().onClick.AddListener(CycleSpeed);
+            _speedButton.transform.Find("(Button) Previous Hit Area").GetComponent<Button>().onClick.AddListener(PreviousSpeed);
             for (var i = 0; i < _volumeFields.Length; i++)
                 _volumeFields[i].Slider.onValueChanged.AddListener(_volumeListeners[i]);
             LocalizationSettings.SelectedLocaleChanged += UpdateLanguage;
@@ -150,10 +154,14 @@ namespace _Scripts.UI
             _muteToggle.onValueChanged.RemoveListener(ToggleMute);
             _vSyncToggle.onValueChanged.RemoveListener(ToggleVSync);
             _displayButton.onClick.RemoveListener(CycleDisplayMode);
+            _displayButton.transform.Find("(Button) Next Hit Area").GetComponent<Button>().onClick.RemoveListener(CycleDisplayMode);
+            _displayButton.transform.Find("(Button) Previous Hit Area").GetComponent<Button>().onClick.RemoveListener(PreviousDisplayMode);
             _resolutionDropdown.onValueChanged.RemoveListener(ChangeResolution);
             _languageDropdown.onValueChanged.RemoveListener(ChangeLanguage);
             _shakeField.Slider.onValueChanged.RemoveListener(ChangeShake);
             _speedButton.onClick.RemoveListener(CycleSpeed);
+            _speedButton.transform.Find("(Button) Next Hit Area").GetComponent<Button>().onClick.RemoveListener(CycleSpeed);
+            _speedButton.transform.Find("(Button) Previous Hit Area").GetComponent<Button>().onClick.RemoveListener(PreviousSpeed);
             for (var i = 0; i < _volumeFields.Length; i++)
                 _volumeFields[i].Slider.onValueChanged.RemoveListener(_volumeListeners[i]);
             LocalizationSettings.SelectedLocaleChanged -= UpdateLanguage;
@@ -360,11 +368,15 @@ namespace _Scripts.UI
             _sfxPlayer.Play("ButtonClick");
         }
 
-        private void CycleDisplayMode()
+        private void CycleDisplayMode() => ChangeDisplayMode(1);
+
+        private void PreviousDisplayMode() => ChangeDisplayMode(-1);
+
+        private void ChangeDisplayMode(int direction)
         {
-            _settings.CycleDisplayMode();
+            _settings.CycleDisplayMode(direction);
             var key = DisplayModeKey();
-            AnimateValue(_displayLabel, () => _displayValue.SetEntry(key));
+            AnimateCycleValue(_displayLabel, () => _displayValue.SetEntry(key), direction);
         }
 
         private void ChangeResolution(int index)
@@ -374,11 +386,33 @@ namespace _Scripts.UI
             AnimateValue(_resolutionValue, () => _resolutionValue.text = value);
         }
 
-        private void CycleSpeed()
+        private void CycleSpeed() => ChangeSpeed(1);
+
+        private void PreviousSpeed() => ChangeSpeed(-1);
+
+        private void ChangeSpeed(int direction)
         {
-            _settings.CycleSequenceSpeed();
+            _settings.CycleSequenceSpeed(direction);
             var value = SpeedText();
-            AnimateValue(_speedValue, () => _speedValue.text = value);
+            AnimateCycleValue(_speedValue, () => _speedValue.text = value, direction);
+        }
+
+        private void AnimateCycleValue(TMP_Text label, TweenCallback update, int direction)
+        {
+            label.DOKill();
+            var rect = label.rectTransform;
+            var (position, scale) = _valueRestPoses[label];
+            rect.anchoredPosition = position;
+            rect.localScale = scale;
+            var offset = Vector2.right * (direction * rect.rect.width);
+            DOTween.Sequence().SetTarget(label).SetUpdate(true)
+                .Append(rect.DOAnchorPos(position - offset, 0.1f).SetEase(Ease.InQuad))
+                .AppendCallback(() =>
+                {
+                    update();
+                    rect.anchoredPosition = position + offset;
+                })
+                .Append(rect.DOAnchorPos(position, 0.18f).SetEase(Ease.OutCubic));
         }
 
         private void AnimateValue(TMP_Text label, TweenCallback update)
