@@ -4,7 +4,6 @@ using _Scripts.Utility;
 using _Scripts.Utility.Extensions;
 using DG.Tweening;
 using UnityEngine;
-using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 namespace _Scripts.UI
@@ -65,12 +64,6 @@ namespace _Scripts.UI
         private Tween _backdropFadeTween;
         private Tween _panelUnfoldTween;
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
-
-        private void Update()
-        {
-            if (Keyboard.current != null && Keyboard.current.escapeKey.wasPressedThisFrame)
-                Close();
-        }
 
         private void OnDestroy()
         {

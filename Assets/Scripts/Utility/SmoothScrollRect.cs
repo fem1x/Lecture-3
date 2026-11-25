@@ -25,7 +25,7 @@ public class SmoothScrollRect : MonoBehaviour
 
     private void Update()
     {
-        if (Mouse.current == null) return;
+        if (_Scripts.UI.SettingsMenuView.BlocksGameplayInput || Mouse.current == null) return;
 
         float scrollDelta = Mouse.current.scroll.ReadValue().y;
         

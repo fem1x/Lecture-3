@@ -61,7 +61,7 @@ namespace _Scripts.UI
 
         private void OnMouseDown()
         {
-            if (_isRolling) return;
+            if (_isRolling || SettingsMenuView.BlocksGameplayInput) return;
 
             var randomValue = UnityEngine.Random.Range(1, 7);
             RollToValue(randomValue);

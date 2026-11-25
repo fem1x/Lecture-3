@@ -54,7 +54,11 @@ namespace _Scripts.Dices
             && AllDices.Where(d => d.gameObject.activeInHierarchy).All(d => d.CanBeSelected)
             && GetUnlockedDices().Count > 0;        
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== 
-        public void OnRmbClick(InputValue value) => ClearSelection();
+        public void OnRmbClick(InputValue value)
+        {
+            if (SettingsMenuView.BlocksGameplayInput) return;
+            ClearSelection();
+        }
         
         public void InitDiceList(List<Dice> dices)
         {

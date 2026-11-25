@@ -14,6 +14,7 @@ namespace _Scripts.Managers
         
         private Tween _posTween;
         private Tween _rotTween;
+        private float _intensity = 1f;
         
         public CameraShaker(Camera camera)
         {
@@ -23,13 +24,21 @@ namespace _Scripts.Managers
         }
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 
+        public void SetIntensity(float intensity)
+        {
+            _intensity = intensity;
+            if (_intensity == 0f)
+                Stop();
+        }
+
         public void DoShake(CameraShakePreset preset)
         {
+            if (_intensity == 0f) return;
             Stop();
 
             _posTween = _cameraTransform.DOShakePosition(
                     preset.Duration,
-                    preset.Strength,
+                    preset.Strength * _intensity,
                     preset.Vibrato,
                     preset.Randomness,
                     snapping: false,
@@ -42,7 +51,7 @@ namespace _Scripts.Managers
 
             _rotTween = _cameraTransform.DOShakeRotation(
                     preset.Duration,
-                    preset.RotStrength,
+                    preset.RotStrength * _intensity,
                     preset.RotVibrato,
                     preset.Randomness,
                     fadeOut: true)
@@ -53,9 +62,10 @@ namespace _Scripts.Managers
 
         public void DoShake(float duration, float strength, int vibrato = 10)
         {
+            if (_intensity == 0f) return;
             Stop();
 
-            _posTween = _cameraTransform.DOShakePosition(duration, strength, vibrato)
+            _posTween = _cameraTransform.DOShakePosition(duration, strength * _intensity, vibrato)
                 .SetTarget(_cameraTransform)
                 .OnKill(ResetPosition)
                 .OnComplete(ResetPosition);

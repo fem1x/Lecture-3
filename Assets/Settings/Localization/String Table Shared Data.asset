@@ -375,6 +375,82 @@ MonoBehaviour:
     m_Key: workshop_scrap_tooltip
     m_Metadata:
       m_Items: []
+  - m_Id: 13400000000000100
+    m_Key: settings_title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13400000000000101
+    m_Key: settings_sound
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13400000000000102
+    m_Key: settings_display
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13400000000000103
+    m_Key: settings_game
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13400000000000104
+    m_Key: settings_master_volume
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13400000000000105
+    m_Key: settings_music_volume
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13400000000000106
+    m_Key: settings_sfx_volume
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13400000000000107
+    m_Key: settings_ambience_volume
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13400000000000108
+    m_Key: settings_mute_unfocused
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13400000000000109
+    m_Key: settings_vsync
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13400000000000110
+    m_Key: settings_display_mode
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13400000000000111
+    m_Key: settings_language
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13400000000000112
+    m_Key: settings_shake
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13400000000000113
+    m_Key: settings_speed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13400000000000114
+    m_Key: settings_on
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13400000000000115
+    m_Key: settings_off
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13400000000000116
+    m_Key: settings_fullscreen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13400000000000117
+    m_Key: settings_windowed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13400000000000118
+    m_Key: settings_borderless
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

@@ -394,6 +394,82 @@ MonoBehaviour:
     m_Localized: "Arrastra un amuleto aqu\u00ed para desguazarlo y obtener fichas de reparaci\u00f3n"
     m_Metadata:
       m_Items: []
+  - m_Id: 13400000000000100
+    m_Localized: "AJUSTES"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13400000000000101
+    m_Localized: "AUDIO"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13400000000000102
+    m_Localized: "PANTALLA"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13400000000000103
+    m_Localized: "JUEGO"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13400000000000104
+    m_Localized: "Volumen general"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13400000000000105
+    m_Localized: "M\u00fasica"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13400000000000106
+    m_Localized: "Efectos de sonido"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13400000000000107
+    m_Localized: "Ambiente"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13400000000000108
+    m_Localized: "Silenciar sin foco"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13400000000000109
+    m_Localized: "Sincronizaci\u00f3n vertical"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13400000000000110
+    m_Localized: "Modo de pantalla"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13400000000000111
+    m_Localized: "Idioma"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13400000000000112
+    m_Localized: "Vibraci\u00f3n de pantalla"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13400000000000113
+    m_Localized: "Velocidad del juego"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13400000000000114
+    m_Localized: "S\u00cd"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13400000000000115
+    m_Localized: "NO"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13400000000000116
+    m_Localized: "Pantalla completa"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13400000000000117
+    m_Localized: "Ventana"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13400000000000118
+    m_Localized: "Sin bordes"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

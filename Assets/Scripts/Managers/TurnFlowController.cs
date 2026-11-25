@@ -104,6 +104,7 @@ namespace _Scripts.Managers
 
         private void HandleRollPerformed(InputAction.CallbackContext ctx)
         {
+            if (SettingsMenuView.BlocksGameplayInput) return;
             if (!_diceRoller.CanRoll) return;
             if (_diceRoller.IsRolling || _isScoring) return;
             

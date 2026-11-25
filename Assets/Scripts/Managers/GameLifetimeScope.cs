@@ -55,6 +55,7 @@ public class GameLifetimeScope : LifetimeScope
     [SerializeField] private DiceInspectorView _diceInspectorView;
     [SerializeField] private ReturnSequenceController _returnSequenceController;
     [SerializeField] private EndTurnSequenceController _endTurnSequenceController;
+    [SerializeField] private SettingsMenuView _settingsMenuView;
     // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
     
     protected override void Configure(IContainerBuilder builder)
@@ -100,6 +101,7 @@ public class GameLifetimeScope : LifetimeScope
         builder.RegisterComponent(_diceInspectorView);
         builder.RegisterComponent(_endTurnSequenceController);
         builder.RegisterComponent(_returnSequenceController);
+        builder.RegisterComponent(_settingsMenuView);
     }
     
     private void RegisterServices(IContainerBuilder builder)
@@ -139,6 +141,7 @@ public class GameLifetimeScope : LifetimeScope
         builder.Register<DiceUpgradeService>(Lifetime.Singleton);
         
         //Entry Point
+        builder.RegisterEntryPoint<GameSettingsService>(Lifetime.Singleton).AsSelf();
         builder.RegisterEntryPoint<Bootstrap>().AsSelf();
     }
 }

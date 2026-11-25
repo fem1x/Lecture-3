@@ -394,6 +394,82 @@ MonoBehaviour:
     m_Localized: "Drag a charm here to scrap it for Repair Tokens"
     m_Metadata:
       m_Items: []
+  - m_Id: 13400000000000100
+    m_Localized: "SETTINGS"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13400000000000101
+    m_Localized: "AUDIO"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13400000000000102
+    m_Localized: "DISPLAY"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13400000000000103
+    m_Localized: "GAME"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13400000000000104
+    m_Localized: "Master volume"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13400000000000105
+    m_Localized: "Music"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13400000000000106
+    m_Localized: "Sound effects"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13400000000000107
+    m_Localized: "Ambience"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13400000000000108
+    m_Localized: "Mute when unfocused"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13400000000000109
+    m_Localized: "Vertical sync"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13400000000000110
+    m_Localized: "Display mode"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13400000000000111
+    m_Localized: "Language"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13400000000000112
+    m_Localized: "Screen shake"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13400000000000113
+    m_Localized: "Game speed"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13400000000000114
+    m_Localized: "ON"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13400000000000115
+    m_Localized: "OFF"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13400000000000116
+    m_Localized: "Fullscreen"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13400000000000117
+    m_Localized: "Windowed"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13400000000000118
+    m_Localized: "Borderless"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

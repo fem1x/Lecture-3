@@ -8,9 +8,11 @@ namespace _Scripts.Configs
     [CreateAssetMenu(fileName = "GameSpeedConfig", menuName = "Configs/Game Speed")]
     public class GameSpeedConfig : ScriptableObject
     {
+        // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
         [field: SerializeField, Range(0.5f, 8f)] public float SpeedMultiplier { get; set; } = 1f;
-
-        public float Multiplier => Mathf.Max(0.1f, SpeedMultiplier);
+        internal float? PlayerMultiplier { get; set; }
+        public float Multiplier => Mathf.Max(0.1f, PlayerMultiplier ?? SpeedMultiplier);
+        // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 
         public float ScaleTime(float baseTime) => baseTime / Multiplier;
 
