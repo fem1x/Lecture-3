@@ -29,6 +29,7 @@ namespace _Scripts.UI
             public Image Accent;
             public CanvasGroup Page;
             public Vector2 ShownPosition { get; set; }
+            public Color BaseColor { get; set; }
         }
 
         [Serializable]
@@ -46,7 +47,10 @@ namespace _Scripts.UI
         [SerializeField] private CanvasGroup _backdrop;
         [SerializeField] private Button _backdropButton;
         [SerializeField] private Button _closeButton;
+
+        [Header("Tabs")]
         [SerializeField] private Tab[] _tabs;
+        [SerializeField, Range(0f, 1f)] private float _inactiveTabDarkening = 0.2f;
 
         [Header("Backdrop")]
         [SerializeField, Min(0f)] private float _backdropFadeInTime = 0.22f;
@@ -101,7 +105,10 @@ namespace _Scripts.UI
         private void Awake()
         {
             foreach (var tab in _tabs)
+            {
                 tab.ShownPosition = ((RectTransform)tab.Page.transform).anchoredPosition;
+                tab.BaseColor = tab.Button.image.color;
+            }
 
             foreach (var label in new[] { _displayLabel, _resolutionValue, _languageValue, _speedValue })
                 _valueRestPoses.Add(label, (label.rectTransform.anchoredPosition, label.rectTransform.localScale));
@@ -283,6 +290,9 @@ namespace _Scripts.UI
             {
                 var selected = i == index;
                 var tab = _tabs[i];
+                var brightness = selected ? 1f : 1f - _inactiveTabDarkening;
+                var color = tab.BaseColor;
+                tab.Button.image.color = new Color(color.r * brightness, color.g * brightness, color.b * brightness, color.a);
                 tab.Accent.enabled = selected;
                 tab.Page.gameObject.SetActive(selected);
             }
