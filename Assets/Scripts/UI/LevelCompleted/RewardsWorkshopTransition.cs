@@ -36,10 +36,16 @@ namespace _Scripts.UI
         [SerializeField, Min(0.01f), Tooltip("Seconds from the end of the windup to the landing.")]
         private float _tokenFlightDuration = 0.72f;
         [SerializeField] private Ease _tokenFlightEase = Ease.InOutSine;
+        [SerializeField, Range(0f, 45f), Tooltip("Rotation strength in degrees for the flight sway and the brief landing recoil.")]
+        private float _tokenWobbleStrength = 23f;
+        [SerializeField, Range(0.5f, 3f), Tooltip("Higher values damp the flight sway and landing recoil faster. 1 uses the original speed.")]
+        private float _tokenWobbleDamping = 1f;
         [SerializeField, Min(1f), Tooltip("Distance in Canvas units from the token to the balance icon that triggers landing.")]
         private float _tokenLandingRadius = 20f;
         [SerializeField, Min(0f)] private float _tokenArcOffset = 52f;
         [SerializeField, Range(0f, 0.5f)] private float _tokenLandingStrength = 0.09f;
+        [SerializeField, Min(0.01f), Tooltip("Seconds for the landing echo to fade out.")]
+        private float _tokenEchoFadeDuration = 0.38f;
 
         [Header("Workshop Button Slide")]
         [SerializeField, Min(0f)] private float _buttonSlideDelay = 0.08f;
@@ -97,6 +103,8 @@ namespace _Scripts.UI
             tokenRect.localScale = Vector3.one;
             var tokenStart = CenterIn(space, _rewardToken.rectTransform);
             var tokenLaunch = tokenStart;
+            var wobbleScale = _tokenWobbleStrength / 23f;
+            var launchAngle = -12f * wobbleScale;
             var tokenStartSize = SizeIn(space, _rewardToken.rectTransform);
             tokenRect.localPosition = tokenStart;
             tokenRect.sizeDelta = tokenStartSize;
@@ -136,6 +144,7 @@ namespace _Scripts.UI
             var balanceScale = balanceRect.localScale;
             var iconRect = _balanceToken.rectTransform;
             var iconScale = iconRect.localScale;
+            var iconRotation = iconRect.localRotation;
             var balanceTokenColor = _balanceToken.color;
             var landingTint = Color.Lerp(balanceTokenColor, new Color(1f, 1f, 1f, balanceTokenColor.a), _tokenLandingStrength * 5f);
             var panelSlideStart = _duration * 0.08f;
@@ -161,15 +170,18 @@ namespace _Scripts.UI
 
                 const float feedbackDuration = 0.26f;
                 const float reboundTime = 0.14f;
-                const float echoDuration = 0.38f;
+                var echoExpansionDuration = Mathf.Min(0.38f, _tokenEchoFadeDuration);
+                var impactRotationDuration = 0.18f / _tokenWobbleDamping;
 
+                var impactDirection = Mathf.Sign(tokenStart.x - tokenLaunch.x);
+                var impactAngle = impactDirection * _tokenWobbleStrength * 0.25f * Mathf.Clamp01(_tokenLandingStrength * 10f);
                 var echoSize = SizeIn(space, iconRect);
                 var echoColor = landingTint;
                 echoColor.a *= Mathf.Min(0.6f, _tokenLandingStrength * 3f);
 
                 // Reuse the flying icon as a brief expanding echo at the point of impact.
                 tokenRect.localPosition = CenterIn(space, iconRect);
-                tokenRect.localRotation = Quaternion.identity;
+                tokenRect.localRotation = Quaternion.Euler(0f, 0f, impactAngle * 0.6f);
                 tokenRect.localScale = Vector3.one;
                 tokenRect.sizeDelta = echoSize;
                 token.color = echoColor;
@@ -179,6 +191,7 @@ namespace _Scripts.UI
                 _balanceToken.color = landingTint;
                 _balanceToken.enabled = true;
                 iconRect.localScale = iconScale * (1f + Mathf.Min(0.32f, _tokenLandingStrength * 1.8f));
+                iconRect.localRotation = iconRotation * Quaternion.Euler(0f, 0f, impactAngle);
 
                 balanceRect.localScale = Vector3.Scale(balanceScale,
                     new Vector3(1f + _tokenLandingStrength * 1.25f, 1f - _tokenLandingStrength * 0.65f, 1f));
@@ -190,12 +203,16 @@ namespace _Scripts.UI
                     .Append(balanceRect.DOScale(balanceScale, feedbackDuration - reboundTime).SetEase(Ease.InOutSine))
                     .Insert(0f, _balanceToken.DOColor(balanceTokenColor, feedbackDuration).SetEase(Ease.InOutSine))
                     .Insert(0f, iconRect.DOScale(iconScale, feedbackDuration).SetEase(Ease.OutCubic))
-                    .Insert(0f, token.DOFade(0f, echoDuration).SetEase(Ease.InOutSine))
-                    .Insert(0f, DOVirtual.Float(0f, 1f, echoDuration, progress =>
+                    .Insert(0f, iconRect.DOLocalRotateQuaternion(iconRotation, impactRotationDuration).SetEase(Ease.OutCubic))
+                    .Insert(0f, tokenRect.DOLocalRotateQuaternion(Quaternion.identity, impactRotationDuration).SetEase(Ease.OutCubic))
+                    .Insert(0f, token.DOFade(0f, _tokenEchoFadeDuration).SetEase(Ease.InOutSine))
+                    .Insert(0f, DOVirtual.Float(0f, _tokenEchoFadeDuration, _tokenEchoFadeDuration, elapsed =>
                     {
+                        var expansion = Mathf.Clamp01(elapsed / echoExpansionDuration);
+                        var easedExpansion = DOVirtual.EasedValue(0f, 1f, expansion, Ease.OutCubic);
                         tokenRect.localPosition = CenterIn(space, iconRect);
-                        tokenRect.sizeDelta = echoSize * (1f + progress * (0.35f + _tokenLandingStrength));
-                    }).SetEase(Ease.OutCubic))
+                        tokenRect.sizeDelta = echoSize * (1f + easedExpansion * (0.35f + _tokenLandingStrength));
+                    }).SetEase(Ease.Linear))
                     .OnComplete(() => token.enabled = false);
             }
 
@@ -219,7 +236,8 @@ namespace _Scripts.UI
                 {
                     tokenStart = CenterIn(space, _rewardToken.rectTransform);
                     var destination = CenterIn(space, _balanceToken.rectTransform);
-                    tokenLaunch = tokenStart - (destination - tokenStart).normalized * 12f;
+                    var direction = destination - tokenStart;
+                    tokenLaunch = tokenStart - direction.normalized * 12f;
                     tokenRect.localPosition = tokenStart;
                     _rewardToken.enabled = false;
                     token.enabled = true;
@@ -235,7 +253,7 @@ namespace _Scripts.UI
                 {
                     tokenRect.localPosition = Vector2.LerpUnclamped(tokenStart, tokenLaunch, progress);
                     tokenRect.sizeDelta = tokenStartSize * (1f + 0.05f * progress);
-                    tokenRect.localRotation = Quaternion.Euler(0f, 0f, -12f * progress);
+                    tokenRect.localRotation = Quaternion.Euler(0f, 0f, launchAngle * progress);
                 }).SetEase(Ease.OutSine))
                 .Insert(tokenLaunchTime, DOVirtual.Float(0f, 1f, tokenLandTime - tokenLaunchTime, flightTime =>
                 {
@@ -263,9 +281,13 @@ namespace _Scripts.UI
                     tokenRect.sizeDelta = Vector2.Scale(size, new Vector2(1f - lift * 0.05f, 1f + lift * 0.16f));
 
                     var tangent = exit - entry;
-                    var lean = Mathf.Clamp(-Mathf.Atan2(tangent.x, tangent.y) * Mathf.Rad2Deg, -24f, 24f);
-                    var sway = Mathf.Sin(flightTime * 4f * Mathf.PI) * Mathf.Sin(flightTime * Mathf.PI) * 23f;
-                    tokenRect.localRotation = Quaternion.Euler(0f, 0f, -12f * (1f - progress) + lift * lean + sway);
+                    var lean = Mathf.Clamp(-Mathf.Atan2(tangent.x, tangent.y) * Mathf.Rad2Deg, -24f, 24f) * wobbleScale;
+                    var swayEnvelope = Mathf.Max(0f, Mathf.Sin(flightTime * Mathf.PI));
+                    if (flightTime > 0.5f)
+                        swayEnvelope = Mathf.Pow(swayEnvelope, _tokenWobbleDamping);
+
+                    var sway = Mathf.Sin(flightTime * 4f * Mathf.PI) * swayEnvelope * _tokenWobbleStrength;
+                    tokenRect.localRotation = Quaternion.Euler(0f, 0f, launchAngle * (1f - progress) + lift * lean + sway);
                 }).SetEase(Ease.Linear))
                 .InsertCallback(tokenLandTime, LandToken);
 
@@ -314,6 +336,7 @@ namespace _Scripts.UI
                     _workshopBalance.alpha = balanceAlpha;
                     balanceRect.localScale = balanceScale;
                     iconRect.localScale = iconScale;
+                    iconRect.localRotation = iconRotation;
                     _balanceToken.color = balanceTokenColor;
                     _balanceToken.enabled = true;
                 }
