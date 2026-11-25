@@ -270,6 +270,7 @@ GameObject:
   - component: {fileID: 7508798741494357426}
   - component: {fileID: 7818079974194006110}
   - component: {fileID: 7818079974194006116}
+  - component: {fileID: 7818079974194006117}
   m_Layer: 5
   m_Name: BasicTooltip
   m_TagString: Untagged
@@ -353,6 +354,27 @@ MonoBehaviour:
   m_EditorClassIdentifier: Game::_Scripts.UI.Tooltips.BasicTooltipView
   _content: {fileID: 8055616531025026879}
   _arrow: {fileID: 6856804226874233607}
+  _canvasGroup: {fileID: 7818079974194006117}
+  _showDuration: 0.52
+  _showScaleEase: 18
+  _showSlideEase: 18
+  _showFadeEase: 6
+  _hideDuration: 0.11
+  _hideScaleEase: 5
+  _hideSlideEase: 8
+  _hideFadeEase: 5
+--- !u!225 &7818079974194006117
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5200829992275379647}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 0
+  m_BlocksRaycasts: 0
+  m_IgnoreParentGroups: 0
 --- !u!1 &7818079974194006111
 GameObject:
   m_ObjectHideFlags: 0

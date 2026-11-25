@@ -37,7 +37,12 @@ namespace _Scripts.UI.Tooltips
                 UpdatePosition();
         }
 
-        private void OnDisable() => Hide();
+        private void OnDisable()
+        {
+            StopListening();
+            if (_view != null)
+                _view.HideImmediately();
+        }
 
         private void OnDestroy()
         {
@@ -55,7 +60,12 @@ namespace _Scripts.UI.Tooltips
             _text.StringChanged += OnTextChanged;
         }
 
-        public void OnPointerExit(PointerEventData eventData) => Hide();
+        public void OnPointerExit(PointerEventData eventData)
+        {
+            StopListening();
+            if (_view != null)
+                _view.Hide();
+        }
 
         private void OnTextChanged(string text)
         {
@@ -64,7 +74,7 @@ namespace _Scripts.UI.Tooltips
             if (string.IsNullOrWhiteSpace(text))
             {
                 if (_view != null)
-                    _view.gameObject.SetActive(false);
+                    _view.HideImmediately();
                 return;
             }
 
@@ -76,20 +86,15 @@ namespace _Scripts.UI.Tooltips
 
             _view.SetContent(text, GetDirection());
             UpdatePosition();
-            _view.transform.SetAsLastSibling();
-            _view.gameObject.SetActive(true);
+            _view.Show();
         }
 
-        private void Hide()
+        private void StopListening()
         {
-            if (_isListening)
-            {
-                _isListening = false;
-                _text.StringChanged -= OnTextChanged;
-            }
+            if (!_isListening) return;
 
-            if (_view != null)
-                _view.gameObject.SetActive(false);
+            _isListening = false;
+            _text.StringChanged -= OnTextChanged;
         }
 
         private void UpdatePosition()
@@ -99,7 +104,7 @@ namespace _Scripts.UI.Tooltips
             var edge = rect.center + Vector2.Scale(rect.size * 0.5f, direction);
             var parent = _view.transform.parent;
             var position = (Vector2)parent.InverseTransformPoint(_target.TransformPoint(edge));
-            _view.transform.localPosition = position + direction * _gap;
+            _view.SetPosition(position + direction * _gap);
         }
 
         private Vector2 GetDirection() => _side switch
