@@ -6,6 +6,8 @@ using _Scripts.Utility.Extensions;
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Localization;
+using UnityEngine.Localization.Settings;
 using VContainer;
 
 namespace _Scripts.UI.Workshop
@@ -19,6 +21,8 @@ namespace _Scripts.UI.Workshop
         [SerializeField] private List<FaceUpgradeButtonView> _faceButtons = new();
         [SerializeField] private float _rotateDuration = 0.25f;
         [SerializeField] private Ease _rotateEase = Ease.OutQuart;
+
+        private readonly LocalizedString _diceTitle = new("String Table", "upgrade_die_name");
 
         private DiceData _data;
         private Tween _rotateTween;
@@ -52,6 +56,10 @@ namespace _Scripts.UI.Workshop
             }
         }
 
+        private void OnEnable() => LocalizationSettings.SelectedLocaleChanged += HandleLocaleChanged;
+
+        private void OnDisable() => LocalizationSettings.SelectedLocaleChanged -= HandleLocaleChanged;
+
         private void OnDestroy()
         {
             Unbind();
@@ -82,7 +90,7 @@ namespace _Scripts.UI.Workshop
             var cost = _upgradeService.GetUpgradeCost(_data);
             var canAfford = _tokensManager.CurrentTokens >= cost;
 
-            _diceTitleText.text = $"Кубик #{_data.Id + 1}";
+            UpdateDiceTitle();
             _costText.text = cost.ToString();
 
             for (var i = 0; i < _faceButtons.Count; i++)
@@ -91,6 +99,14 @@ namespace _Scripts.UI.Workshop
                 var sprite = _atlasConfig.GetSprite(faceValue);
                 _faceButtons[i].Refresh(sprite, _data.GetFaceBonus(i), canAfford);
             }
+        }
+
+        private void UpdateDiceTitle() => _diceTitleText.text = _diceTitle.GetLocalizedString(_data.Id + 1);
+
+        private void HandleLocaleChanged(Locale _)
+        {
+            if (_data != null)
+                UpdateDiceTitle();
         }
 
         private void HandleTokensChanged(int _) => Refresh();

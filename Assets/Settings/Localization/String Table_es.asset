@@ -474,6 +474,26 @@ MonoBehaviour:
     m_Localized: "Resoluci\u00f3n"
     m_Metadata:
       m_Items: []
+  - m_Id: 13400000000000120
+    m_Localized: "Mapa de niveles"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13400000000000121
+    m_Localized: "Empezar"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13400000000000122
+    m_Localized: "- Temple de caras -"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13400000000000123
+    m_Localized: "PRECIO:"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13400000000000124
+    m_Localized: "Dado n.\u00ba {0}"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

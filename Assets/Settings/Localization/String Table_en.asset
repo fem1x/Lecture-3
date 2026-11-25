@@ -474,6 +474,26 @@ MonoBehaviour:
     m_Localized: "Resolution"
     m_Metadata:
       m_Items: []
+  - m_Id: 13400000000000120
+    m_Localized: "Level Map"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13400000000000121
+    m_Localized: "Start"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13400000000000122
+    m_Localized: "- Face Tempering -"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13400000000000123
+    m_Localized: "PRICE:"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13400000000000124
+    m_Localized: "Die #{0}"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

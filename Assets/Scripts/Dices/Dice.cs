@@ -195,6 +195,7 @@ namespace _Scripts.Dices
             _rb.AddForce(force, ForceMode.Impulse);
             _rb.AddTorque(torque, ForceMode.Impulse);
 
+            
             //FX
             _sfxPlayer.Play(_throwSfx, transform.position);
             _cameraShaker.DoShake(_rollShake);

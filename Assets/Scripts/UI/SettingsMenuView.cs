@@ -30,6 +30,7 @@ namespace _Scripts.UI
             public CanvasGroup Page;
             public Vector2 ShownPosition { get; set; }
             public Color BaseColor { get; set; }
+            public SettingsTabAccentView AccentView { get; set; }
         }
 
         [Serializable]
@@ -107,6 +108,7 @@ namespace _Scripts.UI
             {
                 tab.ShownPosition = ((RectTransform)tab.Page.transform).anchoredPosition;
                 tab.BaseColor = tab.Button.image.color;
+                tab.AccentView = tab.Accent.GetComponent<SettingsTabAccentView>();
             }
 
             foreach (var label in new[] { _displayLabel, _resolutionValue, _languageValue, _speedValue })
@@ -300,7 +302,7 @@ namespace _Scripts.UI
                 var brightness = selected ? 1f : 1f - _inactiveTabDarkening;
                 var color = tab.BaseColor;
                 tab.Button.image.color = new Color(color.r * brightness, color.g * brightness, color.b * brightness, color.a);
-                tab.Accent.enabled = selected;
+                tab.AccentView.SetSelected(selected, animate);
                 tab.Page.gameObject.SetActive(selected);
             }
 

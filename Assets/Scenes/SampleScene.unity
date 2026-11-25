@@ -5324,17 +5324,17 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1339724528}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 56eb0353ae6e5124bb35b17aff880f16, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Unity.Localization::UnityEngine.Localization.Components.LocalizeStringEvent
   m_StringReference:
     m_TableReference:
-      m_TableCollectionName: GUID:9f9c89d5b6ad399428ec5a9fe072ff95
+      m_TableCollectionName: String Table
     m_TableEntryReference:
-      m_KeyId: 2179253260288
-      m_Key: 
+      m_KeyId: 0
+      m_Key: upgrade_title
     m_FallbackState: 0
     m_WaitForCompletion: 0
     m_LocalVariables: []
@@ -12316,15 +12316,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6226811512041644437, guid: 57332af6afd6497eb46eebaef7dd59aa, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6226811512041644437, guid: 57332af6afd6497eb46eebaef7dd59aa, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6226811512041644437, guid: 57332af6afd6497eb46eebaef7dd59aa, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0.22500014
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7139748092099095097, guid: 57332af6afd6497eb46eebaef7dd59aa, type: 3}
       propertyPath: m_Pivot.x
@@ -12384,19 +12384,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8875080267527181397, guid: 57332af6afd6497eb46eebaef7dd59aa, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8875080267527181397, guid: 57332af6afd6497eb46eebaef7dd59aa, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8875080267527181397, guid: 57332af6afd6497eb46eebaef7dd59aa, type: 3}
       propertyPath: m_SizeDelta.x
-      value: -16
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8931419831777792481, guid: 57332af6afd6497eb46eebaef7dd59aa, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 150.66
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -14400,7 +14400,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &2011151225514083244
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15102,17 +15102,17 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4318710695602384214}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 56eb0353ae6e5124bb35b17aff880f16, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Unity.Localization::UnityEngine.Localization.Components.LocalizeStringEvent
   m_StringReference:
     m_TableReference:
-      m_TableCollectionName: GUID:9f9c89d5b6ad399428ec5a9fe072ff95
+      m_TableCollectionName: String Table
     m_TableEntryReference:
-      m_KeyId: 2284140220416
-      m_Key: 
+      m_KeyId: 0
+      m_Key: map_start_button
     m_FallbackState: 0
     m_WaitForCompletion: 0
     m_LocalVariables: []
@@ -16722,7 +16722,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\u0432\u043F\u0435\u0440\u0451\u0434"
+  m_text: "\u043D\u0430\u0447\u0430\u0442\u044C"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 6cb24a902fe7ce046bdfdc9be2cc3fbf, type: 2}
   m_sharedMaterial: {fileID: -1065539734941738680, guid: 6cb24a902fe7ce046bdfdc9be2cc3fbf, type: 2}
@@ -17097,7 +17097,7 @@ MonoBehaviour:
   - Button: {fileID: 7714524058173029114}
     Accent: {fileID: 4558437294773970382}
     Page: {fileID: 634245993288425434}
-  _inactiveTabDarkening: 0.28
+  _inactiveTabDarkening: 0.35
   _backdropFadeInTime: 0.67
   _backdropFadeOutTime: 0.4
   _backdropFadeInEase: 12
@@ -17124,8 +17124,8 @@ MonoBehaviour:
   _languageDropdown: {fileID: 1845000336}
   _languageValue: {fileID: 1845000342}
   _locales:
-  - {fileID: 11400000, guid: 9680370653ba9174c983074baaa7c107, type: 2}
   - {fileID: 11400000, guid: 64bba478075a6f540b5f4497559f89b8, type: 2}
+  - {fileID: 11400000, guid: 9680370653ba9174c983074baaa7c107, type: 2}
   - {fileID: 11400000, guid: 2d3a7af736a7a5046b83c694632b3cb7, type: 2}
   - {fileID: 11400000, guid: 5ced0e06685e4db19cca3bc761d49747, type: 2}
   - {fileID: 11400000, guid: cf3043f2551d4e798626644661f41f26, type: 2}
@@ -20202,11 +20202,11 @@ PrefabInstance:
       objectReference: {fileID: 2431487730216560408}
     - target: {fileID: 7516972201926624753, guid: 63f5f0f2c485461cb40233e8be9636b6, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 161.6619
+      value: 154.4203
       objectReference: {fileID: 0}
     - target: {fileID: 7516972201926624753, guid: 63f5f0f2c485461cb40233e8be9636b6, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -138
+      value: -106.70117
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -24400,17 +24400,17 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 233657474292329321}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 56eb0353ae6e5124bb35b17aff880f16, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Unity.Localization::UnityEngine.Localization.Components.LocalizeStringEvent
   m_StringReference:
     m_TableReference:
-      m_TableCollectionName: GUID:9f9c89d5b6ad399428ec5a9fe072ff95
+      m_TableCollectionName: String Table
     m_TableEntryReference:
-      m_KeyId: 41997077172224
-      m_Key: 
+      m_KeyId: 0
+      m_Key: map_title
     m_FallbackState: 0
     m_WaitForCompletion: 0
     m_LocalVariables: []
@@ -29005,11 +29005,11 @@ PrefabInstance:
       objectReference: {fileID: 7173934910765897885}
     - target: {fileID: 6226811512041644437, guid: 57332af6afd6497eb46eebaef7dd59aa, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6226811512041644437, guid: 57332af6afd6497eb46eebaef7dd59aa, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7139748092099095097, guid: 57332af6afd6497eb46eebaef7dd59aa, type: 3}
       propertyPath: m_Pivot.x
@@ -29069,19 +29069,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8875080267527181397, guid: 57332af6afd6497eb46eebaef7dd59aa, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8875080267527181397, guid: 57332af6afd6497eb46eebaef7dd59aa, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8875080267527181397, guid: 57332af6afd6497eb46eebaef7dd59aa, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: -16
       objectReference: {fileID: 0}
     - target: {fileID: 8931419831777792481, guid: 57332af6afd6497eb46eebaef7dd59aa, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: 150.66
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -29347,7 +29347,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &6956561332986193052
 GameObject:
   m_ObjectHideFlags: 0
@@ -32554,6 +32554,10 @@ PrefabInstance:
     - target: {fileID: 4271429384225746127, guid: c7b2d26514e1469580e10fbca4f0eadf, type: 3}
       propertyPath: m_Name
       value: (Button) GameTab
+      objectReference: {fileID: 0}
+    - target: {fileID: 4271429384225746127, guid: c7b2d26514e1469580e10fbca4f0eadf, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5290951649713965851, guid: c7b2d26514e1469580e10fbca4f0eadf, type: 3}
       propertyPath: m_IsActive

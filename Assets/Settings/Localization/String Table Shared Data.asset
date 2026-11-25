@@ -455,6 +455,26 @@ MonoBehaviour:
     m_Key: settings_resolution
     m_Metadata:
       m_Items: []
+  - m_Id: 13400000000000120
+    m_Key: map_title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13400000000000121
+    m_Key: map_start_button
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13400000000000122
+    m_Key: upgrade_title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13400000000000123
+    m_Key: upgrade_price
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13400000000000124
+    m_Key: upgrade_die_name
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

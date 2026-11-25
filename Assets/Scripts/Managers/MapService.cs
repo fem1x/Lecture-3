@@ -46,6 +46,10 @@ namespace _Scripts.Managers
             OnSectionChanged?.Invoke(SelectedSection);
         }
         
-        public void RequestMap() => OnMapRequested?.Invoke(SelectedSection);
+        public void RequestMap()
+        {
+            SelectedSection = _levelService.CurrentSectionIndex;
+            OnMapRequested?.Invoke(SelectedSection);
+        }
     }
 }
