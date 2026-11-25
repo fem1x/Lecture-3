@@ -356,7 +356,6 @@ MonoBehaviour:
   _arrow: {fileID: 6856804226874233607}
   _canvasGroup: {fileID: 7818079974194006117}
   _showDuration: 0.52
-  _showScaleEase: 18
   _showSlideEase: 18
   _showFadeEase: 6
   _hideDuration: 0.11

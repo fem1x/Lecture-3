@@ -9,8 +9,9 @@ namespace _Scripts.UI.Tooltips
     {
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 
-        private const float ShowFadeDurationRatio = 0.12f / 0.22f;
-        private const float SlideDistance = 12f;
+        private const float ShowFadeDurationRatio = 0.36f;
+        private const float ShowSlideDistance = 18f;
+        private const float HideSlideDistance = 12f;
 
         [SerializeField] private TMP_Text _content;
         [SerializeField] private RectTransform _arrow;
@@ -18,7 +19,6 @@ namespace _Scripts.UI.Tooltips
 
         [Header("Show Animation")]
         [SerializeField, Min(0f)] private float _showDuration = 0.22f;
-        [SerializeField] private Ease _showScaleEase = Ease.OutBack;
         [SerializeField] private Ease _showSlideEase = Ease.OutCubic;
         [SerializeField] private Ease _showFadeEase = Ease.OutQuad;
 
@@ -88,16 +88,19 @@ namespace _Scripts.UI.Tooltips
             if (_transition == null)
             {
                 _canvasGroup.alpha = 0f;
-                transform.localScale = _restScale * 0.88f;
-                SetSlideOffset(SlideDistance);
+                transform.localScale = _restScale;
+                SetSlideOffset(ShowSlideDistance);
             }
 
             _transition?.Kill();
-            _transition = DOTween.Sequence().SetUpdate(true)
-                .Join(transform.DOScale(_restScale, _showDuration).SetEase(_showScaleEase, 2f))
+            var animation = DOTween.Sequence().SetUpdate(true)
                 .Join(DOTween.To(() => _slideOffset, SetSlideOffset, 0f, _showDuration).SetEase(_showSlideEase))
-                .Join(_canvasGroup.DOFade(1f, _showDuration * ShowFadeDurationRatio).SetEase(_showFadeEase))
-                .OnComplete(() => _transition = null);
+                .Join(_canvasGroup.DOFade(1f, _showDuration * ShowFadeDurationRatio).SetEase(_showFadeEase));
+
+            if (transform.localScale != _restScale)
+                animation.Join(transform.DOScale(_restScale, _showDuration).SetEase(Ease.OutCubic));
+
+            _transition = animation.OnComplete(() => _transition = null);
         }
 
         public void Hide()
@@ -114,7 +117,7 @@ namespace _Scripts.UI.Tooltips
             _transition?.Kill();
             _transition = DOTween.Sequence().SetUpdate(true)
                 .Join(transform.DOScale(_restScale * 0.93f, _hideDuration).SetEase(_hideScaleEase))
-                .Join(DOTween.To(() => _slideOffset, SetSlideOffset, SlideDistance, _hideDuration).SetEase(_hideSlideEase))
+                .Join(DOTween.To(() => _slideOffset, SetSlideOffset, HideSlideDistance, _hideDuration).SetEase(_hideSlideEase))
                 .Join(_canvasGroup.DOFade(0f, _hideDuration).SetEase(_hideFadeEase))
                 .OnComplete(() =>
                 {
