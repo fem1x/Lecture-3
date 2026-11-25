@@ -31,7 +31,15 @@ namespace _Scripts.UI
         [SerializeField, Min(0.01f), Tooltip("Seconds for the rewards panel to slide out, limited by the overall transition duration.")]
         private float _rewardsSlideDuration = 0.59f;
         [SerializeField] private Ease _panelSlideEase = Ease.InOutSine;
+
+        [Header("Token Flight")]
+        [SerializeField, Min(0.01f), Tooltip("Seconds from the end of the windup to the landing.")]
+        private float _tokenFlightDuration = 0.72f;
         [SerializeField] private Ease _tokenFlightEase = Ease.InOutSine;
+        [SerializeField, Min(1f), Tooltip("Distance in Canvas units from the token to the balance icon that triggers landing.")]
+        private float _tokenLandingRadius = 20f;
+        [SerializeField, Min(0f)] private float _tokenArcOffset = 52f;
+        [SerializeField, Range(0f, 0.5f)] private float _tokenLandingStrength = 0.09f;
 
         [Header("Workshop Button Slide")]
         [SerializeField, Min(0f)] private float _buttonSlideDelay = 0.08f;
@@ -88,8 +96,8 @@ namespace _Scripts.UI
             tokenRect.pivot = new Vector2(0.5f, 0.5f);
             tokenRect.localScale = Vector3.one;
             var tokenStart = CenterIn(space, _rewardToken.rectTransform);
+            var tokenLaunch = tokenStart;
             var tokenStartSize = SizeIn(space, _rewardToken.rectTransform);
-            var tokenEndSize = SizeIn(space, _balanceToken.rectTransform);
             tokenRect.localPosition = tokenStart;
             tokenRect.sizeDelta = tokenStartSize;
 
@@ -126,6 +134,8 @@ namespace _Scripts.UI
 
             var balanceRect = _workshopBalance.transform;
             var balanceScale = balanceRect.localScale;
+            var balanceTokenColor = _balanceToken.color;
+            var landingTint = Color.Lerp(balanceTokenColor, new Color(1f, 1f, 1f, balanceTokenColor.a), _tokenLandingStrength * 5f);
             var panelSlideStart = _duration * 0.08f;
             var panelSlideDuration = Mathf.Min(_rewardsSlideDuration, _duration - panelSlideStart);
             var buttonSlideTimeScale = Mathf.Min(1f, _duration / (_buttonSlideDelay + _buttonSlideDuration));
@@ -135,9 +145,32 @@ namespace _Scripts.UI
             var titleTimeScale = Mathf.Min(1f, (_duration - titleEraseStart) / (_titleEraseDuration + _titleTypeDuration));
             var titleEraseDuration = _titleEraseDuration * titleTimeScale;
             var titleTypeDuration = _titleTypeDuration * titleTimeScale;
-            var tokenLiftTime = _duration * 0.12f;
-            var tokenLandTime = _duration * 0.84f;
-            var balanceRevealTime = _duration * 0.62f;
+            var tokenLiftTime = panelSlideStart;
+            var tokenLaunchTime = tokenLiftTime + _duration * 0.09f;
+            var tokenLandTime = Mathf.Min(tokenLaunchTime + _tokenFlightDuration, _duration);
+            var pulseDuration = Mathf.Min(0.14f, tokenLandTime - tokenLiftTime);
+            var pulseRiseTime = pulseDuration * 0.35f;
+            var balanceRevealTime = Mathf.Max(0f, tokenLandTime - _duration * 0.2f);
+            var landingRadiusSquared = _tokenLandingRadius * _tokenLandingRadius;
+            Sequence landingFeedback = null;
+
+            void LandToken()
+            {
+                if (landingFeedback != null) return;
+
+                token.enabled = false;
+                _workshopBalance.alpha = balanceAlpha;
+                _balanceToken.color = landingTint;
+                _balanceToken.enabled = true;
+
+                var impactScale = Vector3.Scale(balanceScale,
+                    new Vector3(1f + _tokenLandingStrength, 1f - _tokenLandingStrength * 0.65f, 1f));
+                landingFeedback = DOTween.Sequence().SetUpdate(true)
+                    .Append(balanceRect.DOScale(impactScale, 0.045f).SetEase(Ease.OutQuad))
+                    .Append(balanceRect.DOScale(balanceScale, 0.135f).SetEase(Ease.OutBack))
+                    .Insert(0f, _balanceToken.DOColor(balanceTokenColor, 0.18f).SetEase(Ease.OutQuad));
+            }
+
             var sequence = DOTween.Sequence().SetUpdate(true)
                 .Insert(0f, DOVirtual.Float(0f, 1f, _duration, progress =>
                 {
@@ -149,34 +182,63 @@ namespace _Scripts.UI
                 .Insert(titleEraseStart, TweenTitle(rewardsTitle, 0, rewardsTitleLength, titleEraseDuration, _titleEraseEase))
                 .Insert(titleEraseStart + titleEraseDuration, TweenTitle(_workshopTitle, workshopTitleLength, workshopTitleLength,
                     titleTypeDuration, _titleTypeEase))
-                .Insert(balanceRevealTime, _workshopBalance.DOFade(balanceAlpha, tokenLandTime - balanceRevealTime).SetEase(Ease.OutCubic))
+                .Insert(balanceRevealTime, DOVirtual.Float(0f, balanceAlpha, tokenLandTime - balanceRevealTime, alpha =>
+                {
+                    if (landingFeedback == null)
+                        _workshopBalance.alpha = alpha;
+                }).SetEase(Ease.OutCubic))
                 .InsertCallback(tokenLiftTime, () =>
                 {
                     tokenStart = CenterIn(space, _rewardToken.rectTransform);
+                    var destination = CenterIn(space, _balanceToken.rectTransform);
+                    tokenLaunch = tokenStart - (destination - tokenStart).normalized * 12f;
                     tokenRect.localPosition = tokenStart;
                     _rewardToken.enabled = false;
                     token.enabled = true;
                 })
-                .Insert(tokenLiftTime, DOVirtual.Float(0f, 1f, tokenLandTime - tokenLiftTime, progress =>
+                .Insert(tokenLiftTime, tokenRect.DOScale(1.12f, pulseRiseTime).SetEase(Ease.OutQuad))
+                .Insert(tokenLiftTime + pulseRiseTime, tokenRect.DOScale(1f, pulseDuration - pulseRiseTime).SetEase(Ease.InOutSine))
+                .Insert(tokenLiftTime, DOVirtual.Float(0f, 1f, tokenLaunchTime - tokenLiftTime, progress =>
                 {
-                    var arc = Mathf.Sin(progress * Mathf.PI);
+                    tokenRect.localPosition = Vector2.LerpUnclamped(tokenStart, tokenLaunch, progress);
+                    tokenRect.sizeDelta = tokenStartSize * (1f + 0.05f * progress);
+                    tokenRect.localRotation = Quaternion.Euler(0f, 0f, -12f * progress);
+                }).SetEase(Ease.OutSine))
+                .Insert(tokenLaunchTime, DOVirtual.Float(0f, 1f, tokenLandTime - tokenLaunchTime, progress =>
+                {
+                    if (landingFeedback != null) return;
+
                     var destination = CenterIn(space, _balanceToken.rectTransform);
-                    tokenRect.localPosition = Vector2.LerpUnclamped(tokenStart, destination, progress) + Vector2.up * (arc * 16f);
-                    tokenRect.sizeDelta = Vector2.LerpUnclamped(tokenStartSize, tokenEndSize, progress);
+                    var travel = destination - tokenLaunch;
+                    var side = new Vector2(travel.y, -travel.x).normalized;
+                    var control = (tokenLaunch + destination) * 0.5f + side * _tokenArcOffset;
+                    var entry = Vector2.LerpUnclamped(tokenLaunch, control, progress);
+                    var exit = Vector2.LerpUnclamped(control, destination, progress);
+                    var lift = Mathf.Sin(Mathf.Clamp01(progress) * Mathf.PI);
+
+                    var position = Vector2.LerpUnclamped(entry, exit, progress);
+                    if ((position - destination).sqrMagnitude <= landingRadiusSquared)
+                    {
+                        LandToken();
+                        return;
+                    }
+
+                    tokenRect.localPosition = position;
+                    var destinationSize = SizeIn(space, _balanceToken.rectTransform);
+                    tokenRect.sizeDelta = Vector2.LerpUnclamped(tokenStartSize * 1.05f, destinationSize, progress) * (1f + lift * 0.06f);
+                    tokenRect.localRotation = Quaternion.Euler(0f, 0f, -12f * (1f - progress) + lift * 18f);
                 }).SetEase(_tokenFlightEase))
-                .InsertCallback(tokenLandTime, () =>
-                {
-                    token.enabled = false;
-                    _balanceToken.enabled = true;
-                })
-                .Insert(tokenLandTime, balanceRect.DOPunchScale(balanceScale * 0.045f, _duration - tokenLandTime, 2, 0.5f));
+                .InsertCallback(tokenLandTime, LandToken);
 
             try
             {
                 await sequence.ToUniTask(TweenCancelBehaviour.KillAndCancelAwait, ct);
+                if (landingFeedback != null && landingFeedback.IsActive())
+                    await landingFeedback.ToUniTask(TweenCancelBehaviour.KillAndCancelAwait, ct);
             }
             finally
             {
+                landingFeedback?.Kill();
                 if (token)
                 {
                     token.enabled = false;
@@ -212,6 +274,7 @@ namespace _Scripts.UI
                     workshopHeader.SetSiblingIndex(workshopHeaderOrder);
                     _workshopBalance.alpha = balanceAlpha;
                     balanceRect.localScale = balanceScale;
+                    _balanceToken.color = balanceTokenColor;
                     _balanceToken.enabled = true;
                 }
             }
