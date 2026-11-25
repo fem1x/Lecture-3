@@ -14076,8 +14076,8 @@ MonoBehaviour:
   _diceRepairPanel: {fileID: 6930939574239212050}
   _charmConveyor: {fileID: 3085717410000845724}
   _upgradePanel: {fileID: 7928083}
-  _conveyorOpenDelay: 0.7
-  _ropeShowDelay: 1.4
+  _conveyorOpenDelay: 0.9
+  _ropeShowDelay: 1.81
 --- !u!114 &2241554493797539298
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -21065,10 +21065,14 @@ MonoBehaviour:
   _workshopBalance: {fileID: 4966847332158099471}
   _balanceToken: {fileID: 7005810695779279841}
   _duration: 1.2
-  _frameEase: 6
+  _frameEase: 12
   _rewardsSlideDuration: 0.53
   _panelSlideEase: 7
+  _tokenFlightDuration: 2.46
   _tokenFlightEase: 13
+  _tokenLandingRadius: 5
+  _tokenArcOffset: 90
+  _tokenLandingStrength: 0.2
   _buttonSlideDelay: 0
   _buttonSlideDuration: 0.24
   _buttonSlideEase: 8
