@@ -40,7 +40,6 @@ namespace _Scripts.UI
         }
 
         private const string LocalePreference = "Settings.Locale";
-        private static readonly Guid StringTable = new("9f9c89d5b6ad399428ec5a9fe072ff95");
 
         [SerializeField] private SlidingPanelView _slide;
         [SerializeField] private CanvasGroup _panel;
@@ -476,25 +475,12 @@ namespace _Scripts.UI
 
         private static string LanguageName(Locale locale)
         {
-            var key = locale?.Identifier.Code switch
-            {
-                "ru" => "settings_locale_russian",
-                "en" => "settings_locale_english",
-                "es" => "settings_locale_spanish",
-                _ => null
-            };
-            if (key != null)
-                return MenuString(key);
-
             var culture = locale?.Identifier.CultureInfo;
             var name = culture?.NativeName ?? locale?.LocaleName ?? string.Empty;
             return name.Length == 0
                 ? name
                 : (culture?.TextInfo.ToUpper(name[0]) ?? char.ToUpperInvariant(name[0])) + name.Substring(1);
         }
-
-        private static string MenuString(string key) =>
-            LocalizationSettings.StringDatabase.GetLocalizedString(StringTable, key);
 
         private static string PercentText(int value) => $"{value}%";
         private static string ResolutionText(Vector2Int size) => $"{size.x} × {size.y}";

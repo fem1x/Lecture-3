@@ -17127,6 +17127,9 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 9680370653ba9174c983074baaa7c107, type: 2}
   - {fileID: 11400000, guid: 64bba478075a6f540b5f4497559f89b8, type: 2}
   - {fileID: 11400000, guid: 2d3a7af736a7a5046b83c694632b3cb7, type: 2}
+  - {fileID: 11400000, guid: 5ced0e06685e4db19cca3bc761d49747, type: 2}
+  - {fileID: 11400000, guid: cf3043f2551d4e798626644661f41f26, type: 2}
+  - {fileID: 11400000, guid: 8516b0ff06dd42ae87d51974ce862956, type: 2}
   _shakeField:
     Slider: {fileID: 2431487730216560408}
     Value: {fileID: 6398812255302800423}
