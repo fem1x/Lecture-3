@@ -87,6 +87,8 @@ public class LevelCompletedView : MonoBehaviour
             await UniTask.WhenAll(
                 MorphIntoWorkshopAsync(opening.Token),
                 _workshopView.RevealContentsAsync(_workshopTransition.Duration, opening.Token));
+            opening.Token.ThrowIfCancellationRequested();
+            _workshopView.ShowOpeningTooltips();
         }
         catch
         {

@@ -27,6 +27,11 @@ namespace _Scripts.UI
         [SerializeField] private float _conveyorOpenDelay = 0.2f;
         [SerializeField] private float _ropeShowDelay = 0.15f;
 
+        [Header("Panel Tooltips")]
+        [SerializeField] private BasicTooltipTrigger _conveyorTooltip;
+        [SerializeField] private BasicTooltipTrigger _repairTooltip;
+        [SerializeField] private BasicTooltipTrigger _upgradeTooltip;
+
         #region DI
         private CharmsRewardGenerator _rewardGenerator;
         private CharmsConveyorService _conveyorService;
@@ -46,6 +51,7 @@ namespace _Scripts.UI
         public event Action OnNextLevelRequested;
 
         private CancellationTokenSource _transitionCts;
+        private bool _isVisitOpen;
         private bool _isUpgradeMode;
         private bool _conveyorInitializedThisVisit;
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
@@ -64,6 +70,8 @@ namespace _Scripts.UI
             _upgradeRopeButton.OnPulled -= HandleUpgradeToggleClick;
             _conveyorService.OnChoiceCompleted -= HandleChoiceCompleted;
             CancelTransition();
+            _isVisitOpen = false;
+            HidePanelTooltips();
         }
 
         internal void PrepareOpening()
@@ -75,6 +83,7 @@ namespace _Scripts.UI
                 panel.gameObject.SetActive(true);
 
             CancelTransition();
+            _isVisitOpen = true;
             _isUpgradeMode = false;
             _conveyorInitializedThisVisit = false;
 
@@ -97,6 +106,20 @@ namespace _Scripts.UI
                 ShowRopeAfterDelayAsync(Mathf.Min(_ropeShowDelay, openingDuration * 0.88f), ct)).AttachExternalCancellation(ct);
         }
 
+        internal void ShowOpeningTooltips()
+        {
+            if (_transitionCts == null)
+                ShowMainTooltipsOnFirstVisit();
+        }
+
+        private void ShowMainTooltipsOnFirstVisit()
+        {
+            if (!_isVisitOpen || _isUpgradeMode) return;
+
+            _conveyorTooltip.ShowOnFirstVisit();
+            _repairTooltip.ShowOnFirstVisit();
+        }
+
         public async UniTask HideAsync(CancellationToken ct)
         {
             ResetVisit();
@@ -115,6 +138,8 @@ namespace _Scripts.UI
         private void ResetVisit()
         {
             CancelTransition();
+            _isVisitOpen = false;
+            HidePanelTooltips();
             _isUpgradeMode = false;
             _conveyorInitializedThisVisit = false;
 
@@ -125,6 +150,8 @@ namespace _Scripts.UI
 
         public void HideInstant()
         {
+            _isVisitOpen = false;
+            HidePanelTooltips();
             _upgradeRopeButton.gameObject.SetActive(false);
             _slidingPanel.HideInstant();
             _sequenceController.HideUpgradeInstant();
@@ -176,6 +203,7 @@ namespace _Scripts.UI
 
         private async UniTaskVoid ToggleUpgradeModeAsync(CancellationToken ct)
         {
+            HidePanelTooltips();
             _isUpgradeMode = !_isUpgradeMode;
 
             try
@@ -188,6 +216,8 @@ namespace _Scripts.UI
                     await UniTask.WhenAll(
                         _sequenceController.HideMainAsync(ct),
                         _sequenceController.ShowUpgradeAsync(_upgradePanel, ct));
+                    ct.ThrowIfCancellationRequested();
+                    _upgradeTooltip.ShowOnFirstVisit();
                 }
                 else
                 {
@@ -196,9 +226,18 @@ namespace _Scripts.UI
                     await UniTask.WhenAll(
                         _sequenceController.HideUpgradeAsync(ct),
                         _sequenceController.ShowMainAsync(_diceRepairPanel, ct));
+                    ct.ThrowIfCancellationRequested();
+                    ShowMainTooltipsOnFirstVisit();
                 }
             }
             catch (OperationCanceledException) { }
+        }
+
+        private void HidePanelTooltips()
+        {
+            _conveyorTooltip.HideImmediately();
+            _repairTooltip.HideImmediately();
+            _upgradeTooltip.HideImmediately();
         }
 
         private void InitializeConveyorPanel()

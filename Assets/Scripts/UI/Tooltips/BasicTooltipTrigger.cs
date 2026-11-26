@@ -7,7 +7,7 @@ namespace _Scripts.UI.Tooltips
 {
     [DisallowMultipleComponent]
     [RequireComponent(typeof(RectTransform))]
-    public sealed class BasicTooltipTrigger : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+    public sealed class BasicTooltipTrigger : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
     {
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 
@@ -27,6 +27,9 @@ namespace _Scripts.UI.Tooltips
         private RectTransform _target;
         private BasicTooltipView _view;
         private bool _isListening;
+        private bool _isHovered;
+        private bool _isPinned;
+        private string _pendingFirstShowKey;
 
         public Func<string, string> TextFormatter { get; set; }
 
@@ -48,34 +51,92 @@ namespace _Scripts.UI.Tooltips
                 UpdatePosition();
         }
 
-        private void OnDisable()
-        {
-            StopListening();
-            if (_view != null)
-                _view.HideImmediately();
-        }
+        private void OnDisable() => HideImmediately();
 
         private void OnDestroy()
         {
             if (_view != null)
+            {
+                _view.DismissRequested -= DismissAutoTooltip;
                 Destroy(_view.gameObject);
+            }
         }
 
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 
         public void OnPointerEnter(PointerEventData eventData)
         {
-            if (_isListening || _text.IsEmpty) return;
+            if (!isActiveAndEnabled) return;
 
-            _isListening = true;
-            _text.StringChanged += OnTextChanged;
+            _isHovered = true;
+            StartListening();
         }
 
         public void OnPointerExit(PointerEventData eventData)
         {
+            _isHovered = false;
+            HideIfUnrequested();
+        }
+
+        public void OnPointerClick(PointerEventData eventData)
+        {
+            if (eventData.button == PointerEventData.InputButton.Left)
+                DismissAutoTooltip();
+        }
+
+        internal void ShowOnFirstVisit()
+        {
+            if (!isActiveAndEnabled || _text.IsEmpty || _pendingFirstShowKey != null) return;
+
+            var key = $"DiceVice.TooltipSeen.{_text.TableReference.TableCollectionNameGuid:N}.{_text.TableEntryReference.KeyId}";
+            if (PlayerPrefs.GetInt(key) != 0) return;
+
+            _pendingFirstShowKey = key;
+            if (_isListening && _view != null && _view.gameObject.activeSelf)
+                RecordFirstShow();
+            else
+                StartListening();
+        }
+
+        internal void HideImmediately()
+        {
+            ResetRequests();
+            if (_view != null)
+                _view.HideImmediately();
+        }
+
+        private void DismissAutoTooltip()
+        {
+            if (!_isPinned && _pendingFirstShowKey == null) return;
+
+            ResetRequests();
+            if (_view != null)
+                _view.Hide();
+        }
+
+        private void ResetRequests()
+        {
+            _isHovered = false;
+            _isPinned = false;
+            _pendingFirstShowKey = null;
+            StopListening();
+        }
+
+        private void HideIfUnrequested()
+        {
+            if (_isHovered || _isPinned || _pendingFirstShowKey != null) return;
+
             StopListening();
             if (_view != null)
                 _view.Hide();
+        }
+
+        private void StartListening()
+        {
+            if (_isListening || _text.IsEmpty) return;
+
+            _isListening = true;
+            _text.StringChanged += OnTextChanged;
         }
 
         private void OnTextChanged(string text)
@@ -93,11 +154,26 @@ namespace _Scripts.UI.Tooltips
             {
                 var canvas = GetComponentInParent<Canvas>().rootCanvas;
                 _view = Instantiate(_prefab, canvas.transform, false);
+                _view.DismissRequested += DismissAutoTooltip;
             }
 
             _view.SetContent(TextFormatter != null ? TextFormatter(text) : text, GetDirection());
             UpdatePosition();
             _view.Show();
+
+            if (_pendingFirstShowKey != null)
+                RecordFirstShow();
+            else
+                _view.SetDismissible(_isPinned);
+        }
+
+        private void RecordFirstShow()
+        {
+            PlayerPrefs.SetInt(_pendingFirstShowKey, 1);
+            PlayerPrefs.Save();
+            _pendingFirstShowKey = null;
+            _isPinned = true;
+            _view.SetDismissible(true);
         }
 
         private void StopListening()

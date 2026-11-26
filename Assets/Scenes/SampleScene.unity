@@ -14528,6 +14528,9 @@ MonoBehaviour:
   _upgradePanel: {fileID: 7928083}
   _conveyorOpenDelay: 0.9
   _ropeShowDelay: 1.81
+  _conveyorTooltip: {fileID: 9200000000000000901}
+  _repairTooltip: {fileID: 9200000000000000902}
+  _upgradeTooltip: {fileID: 9200000000000000903}
 --- !u!114 &2241554493797539298
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -35085,6 +35088,39 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 12d4882af6134a0b85c6dbd2c0d5afec, type: 3}
   m_Name: 
+  m_EditorClassIdentifier: Game::_Scripts.UI.Tooltips.BasicTooltipTrigger
+--- !u!114 &9200000000000000901 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7403000000000000090, guid: 4a21ad731a7e4084a789e6a532ebaeca, type: 3}
+  m_PrefabInstance: {fileID: 9210000000000000121}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 12d4882af6134a0b85c6dbd2c0d5afec, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Game::_Scripts.UI.Tooltips.BasicTooltipTrigger
+--- !u!114 &9200000000000000902 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7403000000000000090, guid: 4a21ad731a7e4084a789e6a532ebaeca, type: 3}
+  m_PrefabInstance: {fileID: 9210000000000000123}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 12d4882af6134a0b85c6dbd2c0d5afec, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Game::_Scripts.UI.Tooltips.BasicTooltipTrigger
+--- !u!114 &9200000000000000903 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7403000000000000090, guid: 4a21ad731a7e4084a789e6a532ebaeca, type: 3}
+  m_PrefabInstance: {fileID: 9210000000000000120}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 12d4882af6134a0b85c6dbd2c0d5afec, type: 3}
+  m_Name:
   m_EditorClassIdentifier: Game::_Scripts.UI.Tooltips.BasicTooltipTrigger
 --- !u!1 &9200440769128181033
 GameObject:

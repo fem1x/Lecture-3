@@ -56,6 +56,7 @@ namespace _Scripts.UI
         {
             _workshopButton.onClick.RemoveListener(HandleWorkshopButtonClick);
             StopTitleEntrance();
+            _rewardsTooltip.HideImmediately();
         }
 
         private void HandleWorkshopButtonClick()
@@ -92,6 +93,9 @@ namespace _Scripts.UI
                     _title.Restore();
                 }
             }
+
+            if (isActiveAndEnabled && _workshopButton.IsInteractable())
+                _rewardsTooltip.ShowOnFirstVisit();
         }
 
         internal void BeginWorkshopTransition()
@@ -120,6 +124,7 @@ namespace _Scripts.UI
 
         private void LockInteraction()
         {
+            _rewardsTooltip.HideImmediately();
             _workshopButton.interactable = false;
             _canvasGroup.blocksRaycasts = false;
             _canvasGroup.interactable = false;

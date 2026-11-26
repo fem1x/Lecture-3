@@ -1,12 +1,14 @@
+using System;
 using System.Collections.Generic;
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 namespace _Scripts.UI.Tooltips
 {
     [RequireComponent(typeof(CanvasGroup))]
-    public sealed class BasicTooltipView : MonoBehaviour
+    public sealed class BasicTooltipView : MonoBehaviour, IPointerClickHandler
     {
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 
@@ -36,6 +38,8 @@ namespace _Scripts.UI.Tooltips
         private Tween _transition;
         private bool _isShowing;
 
+        internal event Action DismissRequested;
+
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 
         private void Awake()
@@ -58,11 +62,20 @@ namespace _Scripts.UI.Tooltips
         private void OnDisable()
         {
             _isShowing = false;
+            SetDismissible(false);
             _transition?.Kill();
             _transition = null;
         }
 
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
+
+        internal void SetDismissible(bool dismissible) => _canvasGroup.blocksRaycasts = dismissible;
+
+        public void OnPointerClick(PointerEventData eventData)
+        {
+            if (_canvasGroup.blocksRaycasts && eventData.button == PointerEventData.InputButton.Left)
+                DismissRequested?.Invoke();
+        }
 
         public void SetContent(string text, Vector2 direction)
         {
@@ -124,6 +137,7 @@ namespace _Scripts.UI.Tooltips
             if (!_isShowing) return;
 
             _isShowing = false;
+            SetDismissible(false);
             if (_hideDuration <= 0f)
             {
                 HideImmediately();
