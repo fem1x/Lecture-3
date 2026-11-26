@@ -20,7 +20,7 @@ using VContainer.Unity;
 
 namespace _Scripts.UI
 {
-    public sealed class SettingsMenuView : MonoBehaviour
+    public sealed class SettingsMenuView : MonoBehaviour, IPointerClickHandler
     {
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
         [Serializable]
@@ -56,7 +56,19 @@ namespace _Scripts.UI
         [SerializeField] private CanvasGroup _backdrop;
         [SerializeField] private Button _backdropButton;
         [SerializeField] private Button _closeButton;
+        [SerializeField] private Button _applyButton;
         [SerializeField] private TextRevealView _title;
+
+        [Header("Close Confirmation")]
+        [SerializeField] private GameObject _closeConfirmation;
+        [SerializeField] private CanvasGroup _confirmationGroup;
+        [SerializeField] private RectTransform _confirmationCard;
+        [SerializeField, Min(0.01f)] private float _confirmationShowTime = 0.24f;
+        [SerializeField, Min(0.01f)] private float _confirmationHideTime = 0.16f;
+        [SerializeField, Min(0f)] private float _confirmationOffset = 16f;
+        [SerializeField] private Button _stayButton;
+        [SerializeField] private Button _discardButton;
+        [SerializeField] private Button _applyAndCloseButton;
 
         [Header("Tabs")]
         [SerializeField] private Tab[] _tabs;
@@ -96,16 +108,22 @@ namespace _Scripts.UI
         private GameSettingsService _settings;
         private ISfxPlayer _sfxPlayer;
         private UnityAction<float>[] _volumeListeners;
+        private Selectable[] _lastTabControls;
         private CancellationTokenSource _transition;
         private Tween _backdropTween;
         private Tween _tabTween;
         private Sequence _entranceTween;
+        private Sequence _confirmationTween;
+        private Vector2 _confirmationRestPosition;
+        private bool _dismissingConfirmation;
         private EntranceItem _closeEntrance;
         private EntranceItem[] _tabEntrances;
         private EntranceItem[][] _pageEntrances;
         private readonly Dictionary<TMP_Text, (Vector2 Position, Vector3 Scale)> _valueRestPoses = new();
         private readonly LocalizedString _unlimitedFpsLabel = new("String Table", "settings_fps_unlimited");
         private GameObject _previousSelection;
+        private GameObject _selectionBeforeConfirmation;
+        private (int Display, int Resolution, bool VSync, int Fps, int Shake, int Speed, Locale Language) _pending;
         private int _activeTab;
         private bool _wantsOpen;
 
@@ -121,6 +139,7 @@ namespace _Scripts.UI
 
         private void Awake()
         {
+            _confirmationRestPosition = _confirmationCard.anchoredPosition;
             foreach (var tab in _tabs)
             {
                 tab.ShownPosition = ((RectTransform)tab.Page.transform).anchoredPosition;
@@ -136,6 +155,7 @@ namespace _Scripts.UI
             foreach (var label in new[] { _displayLabel, _resolutionValue, _fpsLimitValue, _languageValue, _speedValue })
                 _valueRestPoses.Add(label, (label.rectTransform.anchoredPosition, label.rectTransform.localScale));
 
+            _lastTabControls = new Selectable[] { _speedButton, _vSyncToggle, _muteToggle };
             _volumeListeners = new UnityAction<float>[_volumeFields.Length];
             for (var i = 0; i < _volumeListeners.Length; i++)
             {
@@ -146,8 +166,12 @@ namespace _Scripts.UI
 
         private void OnEnable()
         {
-            _backdropButton.onClick.AddListener(Hide);
+            _backdropButton.onClick.AddListener(HandleBackdropClick);
             _closeButton.onClick.AddListener(Hide);
+            _applyButton.onClick.AddListener(Apply);
+            _stayButton.onClick.AddListener(CancelClose);
+            _discardButton.onClick.AddListener(DiscardAndClose);
+            _applyAndCloseButton.onClick.AddListener(ApplyAndClose);
             _tabs[0].Button.onClick.AddListener(ShowGameTab);
             _tabs[1].Button.onClick.AddListener(ShowDisplayTab);
             _tabs[2].Button.onClick.AddListener(ShowSoundTab);
@@ -170,8 +194,12 @@ namespace _Scripts.UI
 
         private void OnDisable()
         {
-            _backdropButton.onClick.RemoveListener(Hide);
+            _backdropButton.onClick.RemoveListener(HandleBackdropClick);
             _closeButton.onClick.RemoveListener(Hide);
+            _applyButton.onClick.RemoveListener(Apply);
+            _stayButton.onClick.RemoveListener(CancelClose);
+            _discardButton.onClick.RemoveListener(DiscardAndClose);
+            _applyAndCloseButton.onClick.RemoveListener(ApplyAndClose);
             _tabs[0].Button.onClick.RemoveListener(ShowGameTab);
             _tabs[1].Button.onClick.RemoveListener(ShowDisplayTab);
             _tabs[2].Button.onClick.RemoveListener(ShowSoundTab);
@@ -194,10 +222,15 @@ namespace _Scripts.UI
             CancelTransition();
             _tabTween?.Kill();
             StopValueAnimations();
+            _confirmationTween?.Kill();
+            _confirmationTween = null;
+            _closeConfirmation.SetActive(false);
+            _selectionBeforeConfirmation = null;
+            _dismissingConfirmation = false;
             _wantsOpen = false;
             if (BlocksGameplayInput)
             {
-                PlayerPrefs.Save();
+                _settings.RestoreSound();
                 FinishHide();
             }
         }
@@ -206,7 +239,9 @@ namespace _Scripts.UI
 
         public void Toggle()
         {
-            if (_wantsOpen)
+            if (_closeConfirmation.activeSelf)
+                CancelClose();
+            else if (_wantsOpen)
                 Hide();
             else
                 Show();
@@ -223,9 +258,10 @@ namespace _Scripts.UI
             if (!BlocksGameplayInput)
             {
                 CaptureSelection();
-                RefreshControls();
                 SelectTab(_activeTab, animate: false);
             }
+            _pending = AppliedOptions();
+            RefreshControls();
             BlocksGameplayInput = true;
             _backdrop.blocksRaycasts = true;
             SetVisibleAsync(true).Forget();
@@ -233,20 +269,127 @@ namespace _Scripts.UI
 
         public void Hide()
         {
+            if (!_wantsOpen || _closeConfirmation.activeSelf) return;
+
+            if (HasPendingChanges)
+                ConfirmClose();
+            else
+                Close();
+        }
+
+        public void OnPointerClick(PointerEventData eventData)
+        {
+            if (eventData.button == PointerEventData.InputButton.Left &&
+                eventData.pointerCurrentRaycast.gameObject == _closeConfirmation)
+                CancelClose();
+        }
+
+        private void HandleBackdropClick()
+        {
+            if (_closeConfirmation.activeSelf)
+                CancelClose();
+            else
+                Hide();
+        }
+
+        // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
+
+        private void ConfirmClose()
+        {
+            CloseDropdowns();
+            var eventSystem = EventSystem.current;
+            _selectionBeforeConfirmation = eventSystem != null ? eventSystem.currentSelectedGameObject : null;
+
+            _panel.interactable = false;
+            _confirmationGroup.alpha = 0f;
+            _confirmationGroup.interactable = true;
+            _confirmationCard.anchoredPosition = _confirmationRestPosition + Vector2.down * _confirmationOffset;
+            _closeConfirmation.SetActive(true);
+            if (eventSystem != null)
+                eventSystem.SetSelectedGameObject(_stayButton.gameObject);
+
+            _confirmationTween = DOTween.Sequence().SetUpdate(true)
+                .Join(_confirmationGroup.DOFade(1f, _confirmationShowTime).SetEase(Ease.OutQuad))
+                .Join(_confirmationCard.DOAnchorPos(_confirmationRestPosition, _confirmationShowTime).SetEase(Ease.OutCubic))
+                .OnComplete(() =>
+                {
+                    _confirmationTween = null;
+                });
+        }
+
+        private void CancelClose() => DismissConfirmation(ReturnToSettings);
+        private void DiscardAndClose() => DismissConfirmation(Close, closeImmediately: true);
+        private void ApplyAndClose() => DismissConfirmation(SaveAndClose, closeImmediately: true);
+
+        private void DismissConfirmation(Action afterDismiss, bool closeImmediately = false)
+        {
+            if (!_closeConfirmation.activeSelf || _dismissingConfirmation) return;
+
+            _dismissingConfirmation = true;
+            _confirmationTween?.Kill();
+            _confirmationGroup.interactable = false;
+            if (EventSystem.current != null)
+                EventSystem.current.SetSelectedGameObject(null);
+
+            var exitPosition = _confirmationRestPosition + Vector2.down * (_confirmationOffset * 0.5f);
+            _confirmationTween = DOTween.Sequence().SetUpdate(true)
+                .Join(_confirmationGroup.DOFade(0f, _confirmationHideTime).SetEase(Ease.InQuad))
+                .Join(_confirmationCard.DOAnchorPos(exitPosition, _confirmationHideTime).SetEase(Ease.InQuad))
+                .OnComplete(() =>
+                {
+                    _confirmationTween = null;
+                    _closeConfirmation.SetActive(false);
+                    _dismissingConfirmation = false;
+                    if (!closeImmediately)
+                        afterDismiss();
+                    _selectionBeforeConfirmation = null;
+                });
+
+            if (closeImmediately)
+                afterDismiss();
+        }
+
+        private void ReturnToSettings()
+        {
+            _panel.interactable = true;
+            _backdrop.interactable = true;
+
+            if (EventSystem.current != null)
+                EventSystem.current.SetSelectedGameObject(
+                    _selectionBeforeConfirmation != null && _selectionBeforeConfirmation.activeInHierarchy
+                        ? _selectionBeforeConfirmation
+                        : _tabs[_activeTab].Button.gameObject);
+        }
+
+        private void SaveAndClose()
+        {
+            Apply();
+            Close();
+        }
+
+        // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
+
+        private void Close()
+        {
             if (!_wantsOpen) return;
 
             _wantsOpen = false;
+            CloseDropdowns();
+            _panel.interactable = false;
+            _panel.blocksRaycasts = false;
+            _backdrop.interactable = false;
+            _settings.RestoreSound();
+            SetVisibleAsync(false).Forget();
+        }
+
+        private void CloseDropdowns()
+        {
             if (_resolutionDropdown.IsExpanded)
                 _resolutionDropdown.Hide();
             if (_fpsLimitDropdown.IsExpanded)
                 _fpsLimitDropdown.Hide();
             if (_languageDropdown.IsExpanded)
                 _languageDropdown.Hide();
-            _panel.interactable = false;
-            _panel.blocksRaycasts = false;
-            _backdrop.interactable = false;
-            PlayerPrefs.Save();
-            SetVisibleAsync(false).Forget();
         }
 
         private async UniTask SetVisibleAsync(bool visible)
@@ -374,6 +517,9 @@ namespace _Scripts.UI
 
             _tabTween?.Kill();
             _activeTab = index;
+            var applyNavigation = _applyButton.navigation;
+            applyNavigation.selectOnUp = _lastTabControls[index];
+            _applyButton.navigation = applyNavigation;
             for (var i = 0; i < _tabs.Length; i++)
             {
                 var selected = i == index;
@@ -399,7 +545,7 @@ namespace _Scripts.UI
         private void RefreshControls()
         {
             StopValueAnimations();
-            var locale = LocalizationSettings.SelectedLocale;
+            var locale = _pending.Language;
             for (var i = 0; i < _volumeFields.Length; i++)
             {
                 var value = _settings.GetVolume((VolumeChannel)i);
@@ -424,36 +570,86 @@ namespace _Scripts.UI
             _languageDropdown.SetValueWithoutNotify(Array.IndexOf(_locales, locale));
             _languageValue.text = LanguageName(locale);
             _speedValue.text = SpeedText();
+            RefreshApplyButton();
+        }
+
+        private (int Display, int Resolution, bool VSync, int Fps, int Shake, int Speed, Locale Language) AppliedOptions() =>
+            (_settings.DisplayIndex, _settings.ResolutionIndex, _settings.VSync, _settings.FpsLimitIndex,
+                _settings.ShakeSteps, _settings.SpeedIndex, LocalizationSettings.SelectedLocale);
+
+        private bool HasPendingChanges => _pending != AppliedOptions() || _settings.HasSoundChanges;
+
+        private void RefreshApplyButton()
+        {
+            var hasChanges = HasPendingChanges;
+            _applyButton.interactable = hasChanges;
+            foreach (var control in _lastTabControls)
+            {
+                var navigation = control.navigation;
+                navigation.selectOnDown = hasChanges ? _applyButton : null;
+                control.navigation = navigation;
+            }
+
+            if (!hasChanges && EventSystem.current != null &&
+                EventSystem.current.currentSelectedGameObject == _applyButton.gameObject)
+                EventSystem.current.SetSelectedGameObject(_lastTabControls[_activeTab].gameObject);
+        }
+
+        private void Apply()
+        {
+            if (!_wantsOpen || !HasPendingChanges) return;
+
+            _settings.SetDisplay(_pending.Display, _pending.Resolution);
+            _settings.SetVSync(_pending.VSync);
+            _settings.SetFpsLimit(_pending.Fps);
+            _settings.SetShakeSteps(_pending.Shake);
+            _settings.SetSequenceSpeed(_pending.Speed);
+            if (_settings.HasSoundChanges)
+                _settings.SaveSound();
+
+            var locale = _pending.Language;
+            if (locale != LocalizationSettings.SelectedLocale)
+            {
+                LocalizationSettings.SelectedLocale = locale;
+                PlayerPrefs.SetString(LocalePreference, locale.Identifier.Code);
+            }
+
+            PlayerPrefs.Save();
+            RefreshApplyButton();
         }
 
         private void ChangeVolume(VolumeChannel channel, int value)
         {
-            _settings.SetVolume(channel, value);
+            _settings.PreviewVolume(channel, value);
             _volumeFields[(int)channel].Value.text = PercentText(value);
+            RefreshApplyButton();
         }
 
         private void ChangeShake(float steps)
         {
-            _settings.SetShakeSteps((int)steps);
-            _shakeField.Value.text = PercentText(_settings.ShakePercent);
+            _pending.Shake = (int)steps;
+            _shakeField.Value.text = PercentText(_pending.Shake * GameSettingsService.ShakeStepPercent);
+            RefreshApplyButton();
         }
 
         private void ToggleMute(bool enabled)
         {
-            _settings.SetMuteWhenUnfocused(enabled);
+            _settings.PreviewMuteWhenUnfocused(enabled);
+            RefreshApplyButton();
             _sfxPlayer.Play("ButtonClick");
         }
 
         private void ToggleVSync(bool enabled)
         {
-            _settings.SetVSync(enabled);
+            _pending.VSync = enabled;
             RefreshFpsLimitAvailability();
+            RefreshApplyButton();
             _sfxPlayer.Play("ButtonClick");
         }
 
         private void RefreshFpsLimitAvailability()
         {
-            var available = _settings.IsFpsLimitAvailable;
+            var available = GameSettingsService.IsFpsLimitAvailable(_pending.VSync);
             _fpsLimitDropdown.interactable = available;
             var navigation = _resolutionDropdown.navigation;
             navigation.selectOnDown = available ? _fpsLimitDropdown : _vSyncToggle;
@@ -467,7 +663,7 @@ namespace _Scripts.UI
         {
             var unlimited = _unlimitedFpsLabel.GetLocalizedString();
             var options = _settings.FpsLimits.Select(fps => fps > 0 ? $"{fps} FPS" : unlimited).ToList();
-            var index = _settings.FpsLimitIndex;
+            var index = _pending.Fps;
             _fpsLimitDropdown.ClearOptions();
             _fpsLimitDropdown.AddOptions(options);
             _fpsLimitDropdown.SetValueWithoutNotify(index);
@@ -480,21 +676,25 @@ namespace _Scripts.UI
 
         private void ChangeDisplayMode(int direction)
         {
-            _settings.CycleDisplayMode(direction);
+            var count = GameSettingsService.ScreenModes.Count;
+            _pending.Display = (_pending.Display + direction + count) % count;
+            RefreshApplyButton();
             var key = DisplayModeKey();
             AnimateCycleValue(_displayLabel, () => _displayValue.SetEntry(key), direction);
         }
 
         private void ChangeResolution(int index)
         {
-            _settings.SetResolution(index);
+            _pending.Resolution = index;
+            RefreshApplyButton();
             var value = _resolutionDropdown.options[index].text;
             AnimateValue(_resolutionValue, () => _resolutionValue.text = value);
         }
 
         private void ChangeFpsLimit(int index)
         {
-            _settings.SetFpsLimit(index);
+            _pending.Fps = index;
+            RefreshApplyButton();
             var value = _fpsLimitDropdown.options[index].text;
             AnimateValue(_fpsLimitValue, () => _fpsLimitValue.text = value);
         }
@@ -505,7 +705,9 @@ namespace _Scripts.UI
 
         private void ChangeSpeed(int direction)
         {
-            _settings.CycleSequenceSpeed(direction);
+            var count = GameSettingsService.SequenceSpeeds.Count;
+            _pending.Speed = (_pending.Speed + direction + count) % count;
+            RefreshApplyButton();
             var value = SpeedText();
             AnimateCycleValue(_speedValue, () => _speedValue.text = value, direction);
         }
@@ -564,7 +766,7 @@ namespace _Scripts.UI
         }
 
         private string DisplayModeKey() =>
-            _settings.DisplayMode switch
+            GameSettingsService.ScreenModes[_pending.Display] switch
             {
                 FullScreenMode.ExclusiveFullScreen => "settings_fullscreen",
                 FullScreenMode.Windowed => "settings_windowed",
@@ -573,21 +775,19 @@ namespace _Scripts.UI
 
         private void ChangeLanguage(int index)
         {
-            var locale = _locales[index];
-            LocalizationSettings.SelectedLocale = locale;
-            PlayerPrefs.SetString(LocalePreference, locale.Identifier.Code);
-            PlayerPrefs.Save();
+            _pending.Language = _locales[index];
+            var language = LanguageName(_pending.Language);
+            AnimateValue(_languageValue, () => _languageValue.text = language);
+            RefreshApplyButton();
         }
 
-        private void UpdateLanguage(Locale locale)
+        private void UpdateLanguage(Locale _)
         {
             if (!_wantsOpen) return;
 
             ResetValue(_fpsLimitValue);
             RefreshFpsLimitOptions();
-            _languageDropdown.SetValueWithoutNotify(Array.IndexOf(_locales, locale));
-            var language = LanguageName(locale);
-            AnimateValue(_languageValue, () => _languageValue.text = language);
+            RefreshApplyButton();
         }
 
         private static string LanguageName(Locale locale)
@@ -601,7 +801,8 @@ namespace _Scripts.UI
 
         private static string PercentText(int value) => $"{value}%";
         private static string ResolutionText(Vector2Int size) => $"{size.x} × {size.y}";
-        private string SpeedText() => "×" + _settings.SequenceSpeed.ToString("0.##", CultureInfo.InvariantCulture);
+        private string SpeedText() =>
+            "×" + GameSettingsService.SequenceSpeeds[_pending.Speed].ToString("0.##", CultureInfo.InvariantCulture);
     }
 
     public sealed class SettingsMenuInput : ITickable

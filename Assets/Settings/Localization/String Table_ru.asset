@@ -391,27 +391,27 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 13353517863403520
-    m_Localized: "\u041f\u0435\u0440\u0435\u0442\u0430\u0449\u0438 \u0441\u044e\u0434\u0430 \u0447\u0430\u0440\u043c: <nobr>+3 <sprite name=\"repair_token\"></nobr>. \u041a\u043e\u043d\u0432\u0435\u0439\u0435\u0440 \u0437\u0430\u043a\u0440\u043e\u0435\u0442\u0441\u044f."
+    m_Localized: "\u041F\u0435\u0440\u0435\u0442\u0430\u0449\u0438 \u0441\u044E\u0434\u0430 \u0447\u0430\u0440\u043C: <nobr>+3 <sprite name=\"repair_token\"></nobr>. \u041A\u043E\u043D\u0432\u0435\u0439\u0435\u0440 \u0437\u0430\u043A\u0440\u043E\u0435\u0442\u0441\u044F."
     m_Metadata:
       m_Items: []
   - m_Id: 13400000000000125
-    m_Localized: "\u0421\u043d\u0430\u0447\u0430\u043b\u0430 \u0437\u0430\u0431\u0435\u0440\u0438 \u0438\u043b\u0438 \u0440\u0430\u0437\u0431\u0435\u0440\u0438 \u0447\u0430\u0440\u043c"
+    m_Localized: "\u0421\u043D\u0430\u0447\u0430\u043B\u0430 \u0437\u0430\u0431\u0435\u0440\u0438 \u0438\u043B\u0438 \u0440\u0430\u0437\u0431\u0435\u0440\u0438 \u0447\u0430\u0440\u043C"
     m_Metadata:
       m_Items: []
   - m_Id: 13400000000000126
-    m_Localized: "\u0434\u043b\u044f \u043e\u043f\u0438\u0441\u0430\u043d\u0438\u044f"
+    m_Localized: "\u0434\u043B\u044F \u043E\u043F\u0438\u0441\u0430\u043D\u0438\u044F"
     m_Metadata:
       m_Items: []
   - m_Id: 13400000000000128
-    m_Localized: "\u041d\u0410\u0416\u041c\u0418"
+    m_Localized: "\u041D\u0410\u0416\u041C\u0418"
     m_Metadata:
       m_Items: []
   - m_Id: 13400000000000127
-    m_Localized: "\u0432 \u0441\u043b\u043e\u0442"
+    m_Localized: "\u0432 \u0441\u043B\u043E\u0442"
     m_Metadata:
       m_Items: []
   - m_Id: 13400000000000129
-    m_Localized: "\u041f\u0415\u0420\u0415\u0422\u0410\u0429\u0418"
+    m_Localized: "\u041F\u0415\u0420\u0415\u0422\u0410\u0429\u0418"
     m_Metadata:
       m_Items: []
   - m_Id: 13400000000000100
@@ -515,27 +515,47 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 13400000000000135
-    m_Localized: "\u0412\u044b\u0431\u0435\u0440\u0438 \u043e\u0434\u0438\u043d \u0447\u0430\u0440\u043c \u0438\u043b\u0438 \u0440\u0430\u0437\u0431\u0435\u0440\u0438 \u0435\u0433\u043e. \u041f\u043e\u0441\u043b\u0435 \u044d\u0442\u043e\u0433\u043e \u043a\u043e\u043d\u0432\u0435\u0439\u0435\u0440 \u0437\u0430\u043a\u0440\u043e\u0435\u0442\u0441\u044f."
+    m_Localized: "\u0412\u044B\u0431\u0435\u0440\u0438 \u043E\u0434\u0438\u043D \u0447\u0430\u0440\u043C \u0438\u043B\u0438 \u0440\u0430\u0437\u0431\u0435\u0440\u0438 \u0435\u0433\u043E. \u041F\u043E\u0441\u043B\u0435 \u044D\u0442\u043E\u0433\u043E \u043A\u043E\u043D\u0432\u0435\u0439\u0435\u0440 \u0437\u0430\u043A\u0440\u043E\u0435\u0442\u0441\u044F."
     m_Metadata:
       m_Items: []
   - m_Id: 13400000000000136
-    m_Localized: "\u0418\u0441\u043f\u043e\u043b\u044c\u0437\u0443\u0439 <sprite name=\"repair_token\">, \u0447\u0442\u043e\u0431\u044b \u043f\u043e\u0447\u0438\u043d\u0438\u0442\u044c \u043f\u043e\u0432\u0440\u0435\u0436\u0434\u0451\u043d\u043d\u044b\u0435 \u043a\u0443\u0431\u0438\u043a\u0438 \u0438 \u0441\u043d\u0438\u0437\u0438\u0442\u044c <style=wear>\u0418\u0437\u043d\u043e\u0441</style>."
+    m_Localized: "\u0418\u0441\u043F\u043E\u043B\u044C\u0437\u0443\u0439 <sprite name=\"repair_token\">, \u0447\u0442\u043E\u0431\u044B \u043F\u043E\u0447\u0438\u043D\u0438\u0442\u044C \u043F\u043E\u0432\u0440\u0435\u0436\u0434\u0451\u043D\u043D\u044B\u0435 \u043A\u0443\u0431\u0438\u043A\u0438 \u0438 \u0441\u043D\u0438\u0437\u0438\u0442\u044C <style=wear>\u0418\u0437\u043D\u043E\u0441</style>."
     m_Metadata:
       m_Items: []
   - m_Id: 13400000000000137
-    m_Localized: "\u0417\u0430\u043a\u0430\u043b\u0438 \u0433\u0440\u0430\u043d\u044c: \u043f\u043e\u0441\u0442\u043e\u044f\u043d\u043d\u044b\u0439 \u0431\u043e\u043d\u0443\u0441 \u043a <style=points>\u043e\u0447\u043a\u0430\u043c</style>. \u041a\u0430\u0436\u0434\u0430\u044f \u0437\u0430\u043a\u0430\u043b\u043a\u0430 \u043a\u0443\u0431\u0438\u043a\u0430 \u0434\u043e\u0440\u043e\u0436\u0435."
+    m_Localized: "\u0417\u0430\u043A\u0430\u043B\u0438 \u0433\u0440\u0430\u043D\u044C: \u043F\u043E\u0441\u0442\u043E\u044F\u043D\u043D\u044B\u0439 \u0431\u043E\u043D\u0443\u0441 \u043A <style=points>\u043E\u0447\u043A\u0430\u043C</style>. \u041A\u0430\u0436\u0434\u0430\u044F \u0437\u0430\u043A\u0430\u043B\u043A\u0430 \u043A\u0443\u0431\u0438\u043A\u0430 \u0434\u043E\u0440\u043E\u0436\u0435."
     m_Metadata:
       m_Items: []
   - m_Id: 13400000000000138
-    m_Localized: "\u0417\u0430 \u043e\u0441\u0442\u0430\u0432\u0448\u0438\u0435\u0441\u044f \u0440\u0435\u0441\u0443\u0440\u0441\u044b:\n\u2022 \u041a\u0430\u0436\u0434\u044b\u0435 {throwsPerToken} <color=#FFB18D><sprite name=\"throw_counter\" tint=1></color> \u2192 +1 <sprite name=\"repair_token\">\n\u2022 \u041a\u0430\u0436\u0434\u044b\u0435 {rerollsPerToken} <color=#FFB18D><sprite name=\"reroll_counter\" tint=1></color> \u2192 +1 <sprite name=\"repair_token\">"
+    m_Localized: "\u0417\u0430 \u043E\u0441\u0442\u0430\u0432\u0448\u0438\u0435\u0441\u044F \u0440\u0435\u0441\u0443\u0440\u0441\u044B:\n\u2022 \u041A\u0430\u0436\u0434\u044B\u0435 {throwsPerToken} <color=#FFB18D><sprite name=\"throw_counter\" tint=1></color> \u2192 +1 <color=#FFB28D><sprite name=\"repair_token\" tint=1></color>\n\u2022 \u041A\u0430\u0436\u0434\u044B\u0435 {rerollsPerToken} <color=#FFB18D><sprite name=\"reroll_counter\" tint=1></color> \u2192 +1 <color=#FFB28D><sprite name=\"repair_token\" tint=1></color>"
     m_Metadata:
       m_Items: []
   - m_Id: 13400000000000139
-    m_Localized: "\u041b\u0438\u043c\u0438\u0442 FPS"
+    m_Localized: "\u041B\u0438\u043C\u0438\u0442 FPS"
     m_Metadata:
       m_Items: []
   - m_Id: 13400000000000140
-    m_Localized: "\u0411\u0435\u0437 \u043b\u0438\u043c\u0438\u0442\u0430"
+    m_Localized: "\u0411\u0435\u0437 \u043B\u0438\u043C\u0438\u0442\u0430"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13400000000000141
+    m_Localized: "\u041F\u0420\u0418\u041C\u0415\u041D\u0418\u0422\u042C"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13400000000000142
+    m_Localized: "\u0421\u043E\u0445\u0440\u0430\u043D\u0438\u0442\u044C \u043F\u0435\u0440\u0435\u0434 \u0432\u044B\u0445\u043E\u0434\u043E\u043C?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13400000000000143
+    m_Localized: "\u041E\u0421\u0422\u0410\u0422\u042C\u0421\u042F"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13400000000000144
+    m_Localized: "\u0421\u0411\u0420\u041E\u0421\u0418\u0422\u042C"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13400000000000145
+    m_Localized: "\u0421\u041E\u0425\u0420\u0410\u041D\u0418\u0422\u042C"
     m_Metadata:
       m_Items: []
   references:

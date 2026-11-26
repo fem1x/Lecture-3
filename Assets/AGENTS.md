@@ -15,6 +15,8 @@ This Unity project is a dice game. Inspect the relevant scene, prefab, and confi
 
 ## Working conventions
 
+- For localization edits, use the local Unity import queue described below.
+
 - Do not run tests or checks in Unity unless the task requires them or the user explicitly requests them.
 - Do not use Auto Size for text components. Set font sizes explicitly.
 - Use `Scripts/UI/Universal/TextRevealView.cs` for reusable character-by-character text reveal and erase animations.
@@ -26,3 +28,10 @@ This Unity project is a dice game. Inspect the relevant scene, prefab, and confi
 - Follow existing C# naming, namespaces, event patterns, and dependency injection conventions in the code being changed. Subscribe and unsubscribe to events and input actions with matching lifetimes.
 - Review callers and listeners when changing data mutations or events. In particular, `DiceData` exposes separate notifications for data, lock, and value changes; face bonuses are accounted for separately in scoring.
 - Preserve the ordering of score and charm effects unless the requested change explicitly alters it.
+
+## Local localization workflow
+
+- Read existing keys and translations from `Settings/Localization`. For string changes, queue a UTF-8 JSON file named `LocalizationChanges.json` at the Unity project root, next to `Assets`. Let Unity write the string table assets.
+- The file has the shape `{"entries":[{"key":"example_key","en":"…","ru":"…","es":"…","ja":"…","ko":"…","zhHans":"…"}]}`. Include only new or changed keys, with all six texts for each row. Preserve placeholders, rich-text tags, and sprite names where applicable. Add `"smart":true` for new Smart String entries.
+- Publish the patch by writing a temporary sibling file and renaming it into place when complete. Check for a pending file first and preserve its edits. The editor merges the patch automatically in Edit Mode. `Tools → Localization → Apply Local Changes` retries a failed patch on demand.
+- A successful import moves the patch to `Library/AppliedLocalization` and logs a receipt. Check the receipt and the diff of the Unity assets. If Unity is closed or still in Play Mode, report that the patch is pending. Commit the resulting Unity table assets.

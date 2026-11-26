@@ -19,7 +19,7 @@ namespace _Scripts.Managers
         private const string ShakePercentKey = Prefix + "ShakePercent";
         private const string WidthKey = Prefix + "ResolutionWidth";
         private const string HeightKey = Prefix + "ResolutionHeight";
-        private const int ShakeStepPercent = 25;
+        internal const int ShakeStepPercent = 25;
         private const int MaxShakeSteps = 8;
         private const int FallbackFpsLimit = 144;
         private const int UnlimitedFps = -1;
@@ -36,6 +36,8 @@ namespace _Scripts.Managers
         private readonly CameraShaker _cameraShaker;
         private readonly GameSpeedConfig _speedConfig;
         private readonly int[] _volumes = new int[VolumeParameters.Length];
+        private readonly int[] _savedVolumes = new int[VolumeParameters.Length];
+        private bool _savedMuteWhenUnfocused;
         private int[] _fpsLimits;
         private int _speedIndex;
         private int _displayIndex;
@@ -44,7 +46,13 @@ namespace _Scripts.Managers
         public bool VSync { get; private set; }
         internal IReadOnlyList<int> FpsLimits => _fpsLimits;
         internal int FpsLimitIndex { get; private set; }
-        internal bool IsFpsLimitAvailable => !VSync || UsesMobileFramePacing;
+        internal static IReadOnlyList<float> SequenceSpeeds { get; } = Array.AsReadOnly(Speeds);
+        internal static IReadOnlyList<FullScreenMode> ScreenModes { get; } = Array.AsReadOnly(DisplayModes);
+        internal int SpeedIndex => _speedIndex;
+        internal int DisplayIndex => _displayIndex;
+        internal static bool IsFpsLimitAvailable(bool vSync) => !vSync || UsesMobileFramePacing;
+        internal bool HasSoundChanges => MuteWhenUnfocused != _savedMuteWhenUnfocused ||
+            !_volumes.SequenceEqual(_savedVolumes);
         private int FpsLimit => _fpsLimits[FpsLimitIndex];
         private static bool UsesMobileFramePacing =>
             Application.platform is RuntimePlatform.Android or RuntimePlatform.IPhonePlayer;
@@ -74,6 +82,8 @@ namespace _Scripts.Managers
                 _volumes[i] = SnapVolume(PlayerPrefs.GetInt(Prefix + VolumeParameters[i], defaultVolume));
                 ApplyVolume((VolumeChannel)i);
             }
+            Array.Copy(_volumes, _savedVolumes, _volumes.Length);
+            _savedMuteWhenUnfocused = MuteWhenUnfocused;
             Application.focusChanged += HandleFocusChanged;
 
             InitializeDisplaySettings();
@@ -100,39 +110,57 @@ namespace _Scripts.Managers
 
         internal int GetVolume(VolumeChannel channel) => _volumes[(int)channel];
 
-        internal void SetVolume(VolumeChannel channel, int percent)
+        internal void PreviewVolume(VolumeChannel channel, int percent)
         {
             var index = (int)channel;
             _volumes[index] = SnapVolume(percent);
             ApplyVolume(channel);
-            PlayerPrefs.SetInt(Prefix + VolumeParameters[index], _volumes[index]);
+        }
+
+        internal void SaveSound()
+        {
+            for (var i = 0; i < _volumes.Length; i++)
+                PlayerPrefs.SetInt(Prefix + VolumeParameters[i], _volumes[i]);
+            PlayerPrefs.SetInt(Prefix + nameof(MuteWhenUnfocused), MuteWhenUnfocused ? 1 : 0);
+            Array.Copy(_volumes, _savedVolumes, _volumes.Length);
+            _savedMuteWhenUnfocused = MuteWhenUnfocused;
+        }
+
+        internal void RestoreSound()
+        {
+            if (!HasSoundChanges) return;
+
+            MuteWhenUnfocused = _savedMuteWhenUnfocused;
+            Array.Copy(_savedVolumes, _volumes, _volumes.Length);
+            for (var i = 0; i < _volumes.Length; i++)
+                ApplyVolume((VolumeChannel)i);
         }
 
         private static int SnapVolume(int percent) =>
             Mathf.RoundToInt(Mathf.Clamp(percent, 0, 100) / (float)VolumeStepPercent) * VolumeStepPercent;
 
-        public void SetMuteWhenUnfocused(bool enabled)
+        internal void PreviewMuteWhenUnfocused(bool enabled)
         {
             MuteWhenUnfocused = enabled;
             ApplyVolume(VolumeChannel.Master);
-            PlayerPrefs.SetInt(Prefix + nameof(MuteWhenUnfocused), enabled ? 1 : 0);
-            PlayerPrefs.Save();
         }
 
-        public void SetVSync(bool enabled)
+        internal void SetVSync(bool enabled)
         {
+            if (VSync == enabled) return;
+
             VSync = enabled;
             QualitySettings.vSyncCount = enabled ? 1 : 0;
             PlayerPrefs.SetInt(Prefix + nameof(VSync), enabled ? 1 : 0);
-            PlayerPrefs.Save();
         }
 
         internal void SetFpsLimit(int index)
         {
+            if (FpsLimitIndex == index) return;
+
             FpsLimitIndex = index;
             ApplyFpsLimit();
             PlayerPrefs.SetInt(Prefix + nameof(FpsLimit), FpsLimit);
-            PlayerPrefs.Save();
         }
 
         private void ApplyFpsLimit()
@@ -143,22 +171,17 @@ namespace _Scripts.Managers
                 : FpsLimit;
         }
 
-        public void CycleDisplayMode(int direction = 1)
+        internal void SetDisplay(int modeIndex, int resolutionIndex)
         {
-            _displayIndex = (_displayIndex + direction + DisplayModes.Length) % DisplayModes.Length;
-            ApplyResolution();
-            PlayerPrefs.SetInt(Prefix + nameof(DisplayMode), (int)DisplayMode);
-            PlayerPrefs.Save();
-        }
+            if (_displayIndex == modeIndex && ResolutionIndex == resolutionIndex) return;
 
-        public void SetResolution(int index)
-        {
-            ResolutionIndex = index;
+            _displayIndex = modeIndex;
+            ResolutionIndex = resolutionIndex;
             ApplyResolution();
-            var size = Resolutions[index];
+            var size = Resolutions[resolutionIndex];
+            PlayerPrefs.SetInt(Prefix + nameof(DisplayMode), (int)DisplayMode);
             PlayerPrefs.SetInt(WidthKey, size.x);
             PlayerPrefs.SetInt(HeightKey, size.y);
-            PlayerPrefs.Save();
         }
 
         private void InitializeDisplaySettings()
@@ -231,27 +254,29 @@ namespace _Scripts.Managers
             Screen.SetResolution(size.x, size.y, DisplayMode);
         }
 
-        public void SetShakeSteps(int steps)
+        internal void SetShakeSteps(int steps)
         {
-            ShakeSteps = Mathf.Clamp(steps, 0, MaxShakeSteps);
+            steps = Mathf.Clamp(steps, 0, MaxShakeSteps);
+            if (ShakeSteps == steps) return;
+
+            ShakeSteps = steps;
             _cameraShaker.SetIntensity(ShakePercent / 100f);
             PlayerPrefs.SetInt(ShakePercentKey, ShakePercent);
         }
 
-        public void CycleSequenceSpeed(int direction = 1)
+        internal void SetSequenceSpeed(int index)
         {
-            _speedIndex = (_speedIndex + direction + Speeds.Length) % Speeds.Length;
+            if (_speedIndex == index) return;
+
+            _speedIndex = index;
             _speedConfig.PlayerMultiplier = SequenceSpeed;
             PlayerPrefs.SetInt(Prefix + nameof(SequenceSpeed), _speedIndex);
-            PlayerPrefs.Save();
         }
 
         private void HandleFocusChanged(bool hasFocus)
         {
             _hasFocus = hasFocus;
             ApplyVolume(VolumeChannel.Master);
-            if (!hasFocus)
-                PlayerPrefs.Save();
         }
 
         private void ApplyVolume(VolumeChannel channel)
