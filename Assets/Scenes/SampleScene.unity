@@ -9646,6 +9646,7 @@ GameObject:
   - component: {fileID: 8648935272299763754}
   - component: {fileID: 6030161935612981034}
   - component: {fileID: 5351719283147814545}
+  - component: {fileID: 1975333761826384004}
   m_Layer: 5
   m_Name: (Text) Title
   m_TagString: Untagged
@@ -9694,6 +9695,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Game::_Scripts.UI.MapView
   _slidingPanelView: {fileID: 5554588018537832728}
   _backdrop: {fileID: 624298182}
+  _title: {fileID: 1975333761826384004}
   _cg: {fileID: 3929353487299094049}
   _containerRect: {fileID: 5797673620548666832}
   _sectionPrefab: {fileID: 3845736695945718720, guid: 1747723ab5056004f8cf1795ab3501ae, type: 3}
@@ -14362,10 +14364,77 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Game::_Scripts.UI.TextRevealView
   _text: {fileID: 3564517814662716609}
-  _showDuration: 0.5
+  _showDuration: 1
+  _showEase: 12
+  _hideDuration: 0.2
+  _hideEase: 8
+  _characterDurationFraction: 0.2
+  _riseInGlyphHeights: 0.35
+  _startScale: 0.25
+  _characterEase: 27
+--- !u!114 &1975333761826384002
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7545831266510397797}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc999df181c447e5baf5ad04b6406856, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Game::_Scripts.UI.TextRevealView
+  _text: {fileID: 707612350440649651}
+  _showDuration: 1
+  _showEase: 12
+  _hideDuration: 1.7
+  _hideEase: 8
+  _characterDurationFraction: 0.2
+  _riseInGlyphHeights: 0.35
+  _startScale: 0.25
+  _characterEase: 27
+--- !u!114 &1975333761826384003
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8689464122158239582}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc999df181c447e5baf5ad04b6406856, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Game::_Scripts.UI.TextRevealView
+  _text: {fileID: 6454099946006484240}
+  _showDuration: 3
   _showEase: 9
   _hideDuration: 0.2
   _hideEase: 8
+  _characterDurationFraction: 0.2
+  _riseInGlyphHeights: 0.35
+  _startScale: 0.25
+  _characterEase: 27
+--- !u!114 &1975333761826384004
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 233657474292329321}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc999df181c447e5baf5ad04b6406856, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Game::_Scripts.UI.TextRevealView
+  _text: {fileID: 6030161935612981034}
+  _showDuration: 0.86
+  _showEase: 10
+  _hideDuration: 0.2
+  _hideEase: 8
+  _characterDurationFraction: 0.2
+  _riseInGlyphHeights: 0.35
+  _startScale: 0.25
+  _characterEase: 27
 --- !u!222 &1978442851062642505
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -23194,11 +23263,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: Game::_Scripts.UI.RewardsWorkshopTransition
   _rewardsFrame: {fileID: 331681479681671460}
   _rewardsHeader: {fileID: 4246573242497158927}
+  _rewardsTitle: {fileID: 1975333761826384002}
   _rewardsContent: {fileID: 7746143331039985791}
   _rewardsDetails: {fileID: 1791650312916221796}
   _rewardToken: {fileID: 1340931104636666505}
   _workshopFrame: {fileID: 9075667879014176670}
-  _workshopTitle: {fileID: 6454099946006484240}
+  _workshopTitle: {fileID: 1975333761826384003}
   _workshopBalance: {fileID: 4966847332158099471}
   _balanceToken: {fileID: 7005810695779279841}
   _duration: 1.2
@@ -23216,10 +23286,6 @@ MonoBehaviour:
   _buttonSlideDelay: 0
   _buttonSlideDuration: 0.24
   _buttonSlideEase: 8
-  _titleEraseDuration: 1.7
-  _titleEraseEase: 8
-  _titleTypeDuration: 3
-  _titleTypeEase: 9
 --- !u!225 &4966847332158099471
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -25055,7 +25121,7 @@ MonoBehaviour:
   _rect: {fileID: 8085849136502977423}
   _cg: {fileID: 3929353487299094049}
   _boundsRect: {fileID: 0}
-  _showTime: 1.45
+  _showTime: 1.2
   _showEase: 18
   _hideTime: 0.7
   _hideEase: 15
@@ -29301,6 +29367,11 @@ MonoBehaviour:
   - {fileID: 218395700}
   - {fileID: 951271647}
   - {fileID: 77892404}
+  _revealStartPercent: 15.1
+  _revealDuration: 0.79
+  _revealStagger: 0.07
+  _revealFadeEase: 9
+  _revealScaleEase: 27
 --- !u!224 &6936130343898785497
 RectTransform:
   m_ObjectHideFlags: 0
@@ -31248,6 +31319,7 @@ GameObject:
   - component: {fileID: 3329784622579429756}
   - component: {fileID: 707612350440649651}
   - component: {fileID: 8057740512039865368}
+  - component: {fileID: 1975333761826384002}
   m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
@@ -33949,6 +34021,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Game::_Scripts.UI.LevelRewardsView
   _canvasGroup: {fileID: 7746143331039985791}
   _slidingPanel: {fileID: 8907485372817503612}
+  _title: {fileID: 1975333761826384002}
   _totalTokensText: {fileID: 3527562690470974823}
   _levelTokensText: {fileID: 7743158304589090636}
   _throwsTokensText: {fileID: 2140401015156307118}
@@ -34777,6 +34850,7 @@ GameObject:
   - component: {fileID: 731178874939670811}
   - component: {fileID: 6454099946006484240}
   - component: {fileID: 3980014285557002256}
+  - component: {fileID: 1975333761826384003}
   m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
@@ -35731,7 +35805,7 @@ MonoBehaviour:
   _cg: {fileID: 7746143331039985791}
   _boundsRect: {fileID: 0}
   _showTime: 1.4
-  _showEase: 15
+  _showEase: 18
   _hideTime: 0.6
   _hideEase: 8
 --- !u!114 &8912552902430776607

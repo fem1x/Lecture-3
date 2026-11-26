@@ -90,7 +90,7 @@ namespace _Scripts.UI
         internal UniTask RevealContentsAsync(float openingDuration, CancellationToken ct)
         {
             return UniTask.WhenAll(
-                _sequenceController.ShowMainAsync(ct),
+                _sequenceController.ShowMainAsync(_diceRepairPanel, ct),
                 InitConveyorAfterDelayAsync(Mathf.Min(_conveyorOpenDelay, openingDuration * 0.72f), ct),
                 ShowRopeAfterDelayAsync(Mathf.Min(_ropeShowDelay, openingDuration * 0.88f), ct)).AttachExternalCancellation(ct);
         }
@@ -187,7 +187,7 @@ namespace _Scripts.UI
 
                     await UniTask.WhenAll(
                         _sequenceController.HideUpgradeAsync(ct),
-                        _sequenceController.ShowMainAsync(ct));
+                        _sequenceController.ShowMainAsync(_diceRepairPanel, ct));
                 }
             }
             catch (OperationCanceledException) { }

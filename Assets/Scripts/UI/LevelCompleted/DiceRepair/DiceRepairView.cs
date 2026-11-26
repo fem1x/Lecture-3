@@ -29,6 +29,8 @@ namespace _Scripts.UI
         [SerializeField] private Ease _easeOut = Ease.InQuad;
 
         private Tween _fadeTween;
+        private CanvasGroup _slotCanvasGroup;
+        private Vector3 _slotScale;
         private bool _repairModeEnabled;
         private IReadOnlyDiceData _data;
         private DiceRepairService _repairService;
@@ -38,6 +40,9 @@ namespace _Scripts.UI
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
         private void Awake()
         {
+            _slotCanvasGroup = gameObject.AddComponent<CanvasGroup>();
+            _slotScale = transform.localScale;
+
             _canvasGroup.blocksRaycasts = false;
             _canvasGroup.alpha = 0f;
             _repairButton.onClick.AddListener(OnRepairClicked);
@@ -66,6 +71,25 @@ namespace _Scripts.UI
         {
             _repairModeEnabled = enable;
             RefreshState();
+        }
+
+        internal void PrepareReveal()
+        {
+            _slotCanvasGroup.alpha = 0f;
+            _slotCanvasGroup.blocksRaycasts = false;
+            _slotCanvasGroup.interactable = false;
+            transform.localScale = _slotScale * 0.85f;
+        }
+
+        internal void InsertReveal(Sequence sequence, float start, float duration, Ease fadeEase, Ease scaleEase)
+        {
+            sequence.Insert(start, _slotCanvasGroup.DOFade(1f, duration).SetEase(fadeEase));
+            sequence.Insert(start, transform.DOScale(_slotScale, duration).SetEase(scaleEase));
+            sequence.InsertCallback(start + duration, () =>
+            {
+                _slotCanvasGroup.blocksRaycasts = true;
+                _slotCanvasGroup.interactable = true;
+            });
         }
 
         private void Unbind()

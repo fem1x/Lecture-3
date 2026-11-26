@@ -18,6 +18,7 @@ namespace _Scripts.UI
         [Header("References")] 
         [SerializeField] private SlidingPanelView _slidingPanelView;
         [SerializeField] private BackdropView _backdrop;
+        [SerializeField] private TextRevealView _title;
         [Space]
         [SerializeField] private CanvasGroup _cg;
         [SerializeField] private RectTransform _containerRect;
@@ -34,6 +35,7 @@ namespace _Scripts.UI
         [SerializeField] private Ease  _moveEase = Ease.OutCubic;
         
         private Tween _moveTween;
+        private Tween _titleTween;
         private int _sectionsCount;
         private readonly List<RectTransform> _sectionsList = new();
         
@@ -78,6 +80,7 @@ namespace _Scripts.UI
         {
             if (state != GameState.Game)
             {
+                StopTitleEntrance();
                 _slidingPanelView.HideInstant();
                 _cg.Hide();
                 _backdrop.HideInstant();;
@@ -93,6 +96,7 @@ namespace _Scripts.UI
 
         private void OnDisable()
         {
+            StopTitleEntrance();
             _upButton.onClick.RemoveListener(_mapService.MoveUp);
             _downButton.onClick.RemoveListener(_mapService.MoveDown);
             _startButton.onClick.RemoveListener(HandleStartButtonPressed);
@@ -175,17 +179,28 @@ namespace _Scripts.UI
 
         private void Show(int sectionIndex)
         {
+            StopTitleEntrance();
             _cg.Show();
             MoveToSectionInstant(sectionIndex);
+            _titleTween = _title.Show().OnKill(() => _titleTween = null);
             _slidingPanelView.ShowAsync().Forget();
             _backdrop.ShowAsync().Forget();
         }
 
         private async UniTask HideAsync()
         {
+            StopTitleEntrance();
             await UniTask.WhenAll(
                 _slidingPanelView.HideAsync(), 
                 _backdrop.HideAsync());
+        }
+
+        private void StopTitleEntrance()
+        {
+            if (_titleTween == null) return;
+
+            _titleTween.Kill();
+            _title.Restore();
         }
     }
 }

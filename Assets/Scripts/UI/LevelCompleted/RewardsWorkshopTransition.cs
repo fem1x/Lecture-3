@@ -2,9 +2,7 @@ using System.Threading;
 using _Scripts.Utility.Extensions;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
-using TMPro;
 using UnityEngine;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 namespace _Scripts.UI
@@ -15,13 +13,14 @@ namespace _Scripts.UI
         [Header("Rewards")]
         [SerializeField] private Image _rewardsFrame;
         [SerializeField] private Image _rewardsHeader;
+        [SerializeField] private TextRevealView _rewardsTitle;
         [SerializeField] private CanvasGroup _rewardsContent;
         [SerializeField] private RectTransform _rewardsDetails;
         [SerializeField] private Image _rewardToken;
 
         [Header("Workshop")]
         [SerializeField] private RectTransform _workshopFrame;
-        [SerializeField] private TMP_Text _workshopTitle;
+        [SerializeField] private TextRevealView _workshopTitle;
         [SerializeField] private CanvasGroup _workshopBalance;
         [SerializeField] private Image _balanceToken;
 
@@ -52,12 +51,6 @@ namespace _Scripts.UI
         [SerializeField, Min(0.01f)] private float _buttonSlideDuration = 0.42f;
         [SerializeField] private Ease _buttonSlideEase = Ease.InOutSine;
 
-        [Header("Title Animation")]
-        [SerializeField, Min(0.01f)] private float _titleEraseDuration = 0.19f;
-        [SerializeField] private Ease _titleEraseEase = Ease.Linear;
-        [SerializeField, Min(0.01f)] private float _titleTypeDuration = 0.33f;
-        [SerializeField, FormerlySerializedAs("_titleRollEase")] private Ease _titleTypeEase = Ease.Linear;
-
         internal float Duration => _duration;
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
         internal async UniTask PlayAsync(RectTransform rewardsButton, SlidingPanelView firstWorkshopSlide, CancellationToken ct)
@@ -78,20 +71,13 @@ namespace _Scripts.UI
             var conveyorAnchorMin = conveyorHolder.anchorMin;
             var conveyorAnchorMax = conveyorHolder.anchorMax;
             var rewardsHeader = _rewardsHeader.rectTransform;
-            var rewardsTitle = _rewardsHeader.GetComponentInChildren<TMP_Text>();
-            var rewardsTitleRect = rewardsTitle.rectTransform;
+            var rewardsTitleRect = (RectTransform)_rewardsTitle.transform;
             var workshopHeader = (RectTransform)_workshopTitle.transform.parent;
             var workshopHeaderOrder = workshopHeader.GetSiblingIndex();
             var workshopBackground = _workshopFrame.GetComponent<Image>();
             var workshopBackgroundWasEnabled = workshopBackground.enabled;
             var rewardsTitleOrder = rewardsTitleRect.GetSiblingIndex();
             var rewardsTitlePosition = rewardsTitleRect.anchoredPosition;
-            var rewardsTitleVisibility = rewardsTitle.maxVisibleCharacters;
-            var workshopTitleVisibility = _workshopTitle.maxVisibleCharacters;
-            rewardsTitle.ForceMeshUpdate();
-            _workshopTitle.ForceMeshUpdate();
-            var rewardsTitleLength = Mathf.Min(rewardsTitle.textInfo.characterCount, rewardsTitleVisibility);
-            var workshopTitleLength = Mathf.Min(_workshopTitle.textInfo.characterCount, workshopTitleVisibility);
             var balanceAlpha = _workshopBalance.alpha;
 
             var token = Instantiate(_rewardToken, space);
@@ -129,8 +115,6 @@ namespace _Scripts.UI
             // Keep the shared header above both sets of panels during the handoff.
             workshopHeader.SetAsLastSibling();
             rewardsTitleRect.SetParent(workshopHeader, false);
-            rewardsTitle.maxVisibleCharacters = rewardsTitleLength;
-            _workshopTitle.maxVisibleCharacters = 0;
             bodyClip.padding = new Vector4(bodyPadding.x, bodyPadding.y, bodyPadding.z, headerClipHeight);
             bodyClip.enabled = true;
             tokenRect.SetAsLastSibling();
@@ -153,9 +137,10 @@ namespace _Scripts.UI
             var buttonSlideStart = _buttonSlideDelay * buttonSlideTimeScale;
             var buttonSlideDuration = _buttonSlideDuration * buttonSlideTimeScale;
             var titleEraseStart = _duration * 0.13f;
-            var titleTimeScale = Mathf.Min(1f, (_duration - titleEraseStart) / (_titleEraseDuration + _titleTypeDuration));
-            var titleEraseDuration = _titleEraseDuration * titleTimeScale;
-            var titleTypeDuration = _titleTypeDuration * titleTimeScale;
+            var titleDuration = _rewardsTitle.HideDuration + _workshopTitle.ShowDuration;
+            var titleTimeScale = titleDuration > 0f ? Mathf.Min(1f, (_duration - titleEraseStart) / titleDuration) : 1f;
+            var titleEraseDuration = _rewardsTitle.HideDuration * titleTimeScale;
+            var titleShowDuration = _workshopTitle.ShowDuration * titleTimeScale;
             var tokenLiftTime = panelSlideStart;
             var tokenLaunchTime = tokenLiftTime + _duration * 0.09f;
             var tokenLandTime = Mathf.Min(tokenLaunchTime + _tokenFlightDuration, _duration);
@@ -224,9 +209,8 @@ namespace _Scripts.UI
                 }).SetEase(_frameEase))
                 .Insert(panelSlideStart, outgoingBody.DOAnchorPosX(bodyExitX, panelSlideDuration).SetEase(_panelSlideEase))
                 .Insert(buttonSlideStart, buttonSlide.DOAnchorPosY(buttonExitY, buttonSlideDuration).SetEase(_buttonSlideEase))
-                .Insert(titleEraseStart, TweenTitle(rewardsTitle, 0, rewardsTitleLength, titleEraseDuration, _titleEraseEase))
-                .Insert(titleEraseStart + titleEraseDuration, TweenTitle(_workshopTitle, workshopTitleLength, workshopTitleLength,
-                    titleTypeDuration, _titleTypeEase))
+                .Insert(titleEraseStart, _rewardsTitle.Hide(titleEraseDuration))
+                .Insert(titleEraseStart + titleEraseDuration, _workshopTitle.Show(titleShowDuration))
                 .Insert(balanceRevealTime, DOVirtual.Float(0f, balanceAlpha, tokenLandTime - balanceRevealTime, alpha =>
                 {
                     if (landingFeedback == null)
@@ -318,7 +302,7 @@ namespace _Scripts.UI
                     rewardsTitleRect.SetParent(rewardsHeader, false);
                     rewardsTitleRect.anchoredPosition = rewardsTitlePosition;
                     rewardsTitleRect.SetSiblingIndex(rewardsTitleOrder);
-                    rewardsTitle.maxVisibleCharacters = rewardsTitleVisibility;
+                    _rewardsTitle.Restore();
                     bodyClip.padding = bodyPadding;
                     bodyClip.enabled = bodyClipWasEnabled;
                     _rewardsHeader.enabled = true;
@@ -331,7 +315,7 @@ namespace _Scripts.UI
                     conveyorHolder.anchorMax = conveyorAnchorMax;
                     conveyorHolder.anchoredPosition = conveyorStart;
                     workshopBackground.enabled = workshopBackgroundWasEnabled;
-                    _workshopTitle.maxVisibleCharacters = workshopTitleVisibility;
+                    _workshopTitle.Restore();
                     workshopHeader.SetSiblingIndex(workshopHeaderOrder);
                     _workshopBalance.alpha = balanceAlpha;
                     balanceRect.localScale = balanceScale;
@@ -341,13 +325,6 @@ namespace _Scripts.UI
                     _balanceToken.enabled = true;
                 }
             }
-        }
-
-        private static Tween TweenTitle(TMP_Text title, int visibleCount, int characterCount, float duration, Ease ease)
-        {
-            return DOTween.To(() => title.maxVisibleCharacters,
-                    value => title.maxVisibleCharacters = Mathf.Clamp(value, 0, characterCount), visibleCount, duration)
-                .SetEase(ease);
         }
 
         private static RectTransform CreateSlideParent(RectTransform rewards, string name, float anchorY)

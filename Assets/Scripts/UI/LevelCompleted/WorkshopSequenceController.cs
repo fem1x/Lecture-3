@@ -37,13 +37,13 @@ namespace _Scripts.UI.Workshop
 
         public void HideUpgradeInstant() => HideInstant(_upgradeShowSteps);
 
-        public UniTask ShowMainAsync(CancellationToken ct)
+        public UniTask ShowMainAsync(DiceRepairPanelView repairPanel, CancellationToken ct)
         {
             var fastReturn = _mainHideStartTime >= 0f &&
                              Time.unscaledTime - _mainHideStartTime < _fastReturnThreshold;
 
             _mainHideStartTime = -1f;
-            return RunStepsAsync(_mainShowSteps, show: true, ignoreDelays: fastReturn, ct);
+            return RunStepsAsync(_mainShowSteps, show: true, ignoreDelays: fastReturn, ct, repairPanel);
         }
 
         public UniTask HideMainAsync(CancellationToken ct)
@@ -62,7 +62,12 @@ namespace _Scripts.UI.Workshop
                 steps[i].Slide.HideInstant();
         }
 
-        private async UniTask RunStepsAsync(List<SlideStep> steps, bool show, bool ignoreDelays, CancellationToken ct)
+        private async UniTask RunStepsAsync(
+            List<SlideStep> steps,
+            bool show,
+            bool ignoreDelays,
+            CancellationToken ct,
+            DiceRepairPanelView repairPanel = null)
         {
             var tasks = new List<UniTask>(steps.Count);
 
@@ -76,6 +81,8 @@ namespace _Scripts.UI.Workshop
 
                 ct.ThrowIfCancellationRequested();
                 tasks.Add(show ? step.Slide.ShowAsync() : step.Slide.HideAsync());
+                if (repairPanel != null && step.Slide.Content == repairPanel.transform)
+                    tasks.Add(repairPanel.RevealSlotsAsync(step.Slide.ShowDuration, ct));
             }
 
             await UniTask.WhenAll(tasks);

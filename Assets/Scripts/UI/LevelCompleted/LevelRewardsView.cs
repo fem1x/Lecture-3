@@ -2,6 +2,7 @@
 using System.Threading;
 using _Scripts.Dices;
 using Cysharp.Threading.Tasks;
+using DG.Tweening;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -16,6 +17,7 @@ namespace _Scripts.UI
         [SerializeField] private SlidingPanelView _slidingPanel;
         
         [Header("Texts")]
+        [SerializeField] private TextRevealView _title;
         [SerializeField] private TMP_Text _totalTokensText;
         [SerializeField] private TMP_Text _levelTokensText;
         [SerializeField] private TMP_Text _throwsTokensText;
@@ -23,6 +25,8 @@ namespace _Scripts.UI
 
         [Header("Buttons")]
         [SerializeField] private Button _workshopButton;
+
+        private Tween _titleEntrance;
 
         internal RectTransform WorkshopButtonRect => (RectTransform)_workshopButton.transform;
 
@@ -32,7 +36,11 @@ namespace _Scripts.UI
         private void Awake() => HideInstant();
 
         private void OnEnable() => _workshopButton.onClick.AddListener(HandleWorkshopButtonClick);
-        private void OnDisable() => _workshopButton.onClick.RemoveListener(HandleWorkshopButtonClick);
+        private void OnDisable()
+        {
+            _workshopButton.onClick.RemoveListener(HandleWorkshopButtonClick);
+            StopTitleEntrance();
+        }
 
         private void HandleWorkshopButtonClick()
         {
@@ -48,23 +56,50 @@ namespace _Scripts.UI
             _rerollsTokensText.text = data.RerollsTokens.ToString();
         }
 
-        public UniTask ShowAsync(CancellationToken ct)
+        public async UniTask ShowAsync(CancellationToken ct)
         {
             ct.ThrowIfCancellationRequested();
+            StopTitleEntrance();
             _workshopButton.interactable = true;
-            return _slidingPanel.ShowAsync(ct);
+            var titleEntrance = _titleEntrance = _title.Show();
+            try
+            {
+                await UniTask.WhenAll(
+                    _slidingPanel.ShowAsync(ct),
+                    titleEntrance.ToUniTask(TweenCancelBehaviour.KillAndCancelAwait, ct));
+            }
+            finally
+            {
+                if (ReferenceEquals(_titleEntrance, titleEntrance))
+                {
+                    _titleEntrance = null;
+                    _title.Restore();
+                }
+            }
         }
 
         internal void BeginWorkshopTransition()
         {
             LockInteraction();
+            StopTitleEntrance();
             _slidingPanel.StopSlide();
         }
 
         public void HideInstant()
         {
             LockInteraction();
+            StopTitleEntrance();
             _slidingPanel.HideInstant();
+        }
+
+        private void StopTitleEntrance()
+        {
+            if (_titleEntrance == null) return;
+
+            var entrance = _titleEntrance;
+            _titleEntrance = null;
+            _title.Restore();
+            entrance.Kill();
         }
 
         private void LockInteraction()

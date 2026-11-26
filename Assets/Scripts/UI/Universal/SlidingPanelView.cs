@@ -29,6 +29,9 @@ namespace _Scripts.UI
 
         private Vector2 _shownPos;
         private bool _isInitialized;
+
+        internal RectTransform Content => _rect;
+        internal float ShowDuration => _showTime;
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
         private void Awake()
         {
