@@ -56,6 +56,7 @@ public class GameLifetimeScope : LifetimeScope
     [SerializeField] private ReturnSequenceController _returnSequenceController;
     [SerializeField] private EndTurnSequenceController _endTurnSequenceController;
     [SerializeField] private SettingsMenuView _settingsMenuView;
+    [SerializeField] private PauseMenuView _pauseMenuView;
     // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
     
     protected override void Configure(IContainerBuilder builder)
@@ -102,6 +103,7 @@ public class GameLifetimeScope : LifetimeScope
         builder.RegisterComponent(_endTurnSequenceController);
         builder.RegisterComponent(_returnSequenceController);
         builder.RegisterComponent(_settingsMenuView);
+        builder.RegisterComponent(_pauseMenuView);
     }
     
     private void RegisterServices(IContainerBuilder builder)
@@ -142,7 +144,7 @@ public class GameLifetimeScope : LifetimeScope
         
         //Entry Point
         builder.RegisterEntryPoint<GameSettingsService>(Lifetime.Singleton).AsSelf();
-        builder.RegisterEntryPoint<SettingsMenuInput>();
+        builder.RegisterEntryPoint<PauseMenuInput>();
         builder.RegisterEntryPoint<Bootstrap>().AsSelf();
     }
 }

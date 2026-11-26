@@ -27,6 +27,7 @@ namespace _Scripts.UI
             
             await _cg.DOFade(1f, time ?? _timeIn)
                 .SetEase(_easeIn)
+                .SetUpdate(true)
                 .SetLink(gameObject);
         }
 
@@ -36,6 +37,7 @@ namespace _Scripts.UI
             
             await _cg.DOFade(0f, time ?? _timeOut)
                 .SetEase(_easeOut)
+                .SetUpdate(true)
                 .SetLink(gameObject);
             
             if (this == null || _cg == null) return;

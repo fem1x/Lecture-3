@@ -13,17 +13,20 @@ namespace _Scripts.UI.MainMenu
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
         [SerializeField] private CanvasGroup _cg;
         [SerializeField] private Button _playButton;
+        [SerializeField] private Button _settingsButton;
         [SerializeField] private Button _exitButton;
         
         private GameStateManager _gameStateManager;
         private Bootstrap _bootstrap;
+        private SettingsMenuView _settings;
         
         #region DI
         [Inject]
-        public void Construct(GameStateManager gameStateManager, Bootstrap bootstrap)
+        public void Construct(GameStateManager gameStateManager, Bootstrap bootstrap, SettingsMenuView settings)
         {
             _gameStateManager = gameStateManager;
             _bootstrap = bootstrap;
+            _settings = settings;
             
             _gameStateManager.StateChanged += OnStateChanged;
             OnStateChanged(_gameStateManager.CurrentState);
@@ -33,6 +36,7 @@ namespace _Scripts.UI.MainMenu
         
         private void OnDestroy()
         {
+            _settingsButton.onClick.RemoveListener(_settings.Show);
             if (_gameStateManager != null)
                 _gameStateManager.StateChanged -= OnStateChanged;
         }
@@ -40,6 +44,7 @@ namespace _Scripts.UI.MainMenu
         private void Start()
         {
             _playButton.onClick.AddListener(_bootstrap.StartGame);
+            _settingsButton.onClick.AddListener(_settings.Show);
             _exitButton.onClick.AddListener(Application.Quit);
         }
 

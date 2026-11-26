@@ -15,8 +15,8 @@ MonoBehaviour:
   m_StartupSelectors:
   - rid: 420518558509826288
   - rid: 420518558509826315
-  - rid: 420518558509826289
   - rid: 420518558509826290
+  - rid: 420518558509826289
   m_AvailableLocales:
     rid: 420518558509826291
   m_AssetDatabase:

@@ -75,7 +75,7 @@ namespace _Scripts.Managers
         public void Start()
         {
             _hasFocus = Application.isFocused;
-            MuteWhenUnfocused = PlayerPrefs.GetInt(Prefix + nameof(MuteWhenUnfocused)) != 0;
+            MuteWhenUnfocused = PlayerPrefs.GetInt(Prefix + nameof(MuteWhenUnfocused), 1) != 0;
             for (var i = 0; i < _volumes.Length; i++)
             {
                 var defaultVolume = i == (int)VolumeChannel.Master ? 50 : 100;

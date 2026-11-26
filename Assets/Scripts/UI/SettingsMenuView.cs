@@ -10,13 +10,11 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
-using UnityEngine.InputSystem;
 using UnityEngine.Localization;
 using UnityEngine.Localization.Components;
 using UnityEngine.Localization.Settings;
 using UnityEngine.UI;
 using VContainer;
-using VContainer.Unity;
 
 namespace _Scripts.UI
 {
@@ -127,7 +125,12 @@ namespace _Scripts.UI
         private int _activeTab;
         private bool _wantsOpen;
 
-        public static bool BlocksGameplayInput { get; private set; }
+        private static bool _settingsBlockInput;
+        internal static bool PauseBlocksGameplayInput { get; set; }
+        public static bool BlocksGameplayInput => _settingsBlockInput || PauseBlocksGameplayInput;
+        public bool IsOpen => _wantsOpen;
+        public event Action Closed;
+        private bool _openedFromPause;
 
         [Inject]
         public void Construct(GameSettingsService settings, ISfxPlayer sfxPlayer)
@@ -228,7 +231,7 @@ namespace _Scripts.UI
             _selectionBeforeConfirmation = null;
             _dismissingConfirmation = false;
             _wantsOpen = false;
-            if (BlocksGameplayInput)
+            if (_settingsBlockInput)
             {
                 _settings.RestoreSound();
                 FinishHide();
@@ -255,16 +258,40 @@ namespace _Scripts.UI
             if (!isActiveAndEnabled) return;
 
             _wantsOpen = true;
-            if (!BlocksGameplayInput)
+            if (!_settingsBlockInput)
             {
                 CaptureSelection();
                 SelectTab(_activeTab, animate: false);
             }
             _pending = AppliedOptions();
             RefreshControls();
-            BlocksGameplayInput = true;
+            _settingsBlockInput = true;
             _backdrop.blocksRaycasts = true;
             SetVisibleAsync(true).Forget();
+        }
+
+        public void ShowFromPause()
+        {
+            _openedFromPause = true;
+            Show();
+        }
+
+        public void ShowBackdrop()
+        {
+            _backdropTween?.Kill();
+            _backdrop.blocksRaycasts = true;
+            _backdrop.interactable = true;
+            _backdropTween = _backdrop.DOFade(_backdropOpacity, _backdropFadeInTime)
+                .SetEase(_backdropFadeInEase).SetUpdate(true);
+        }
+
+        public void HideBackdrop()
+        {
+            _backdropTween?.Kill();
+            _backdrop.interactable = false;
+            _backdropTween = _backdrop.DOFade(0f, _backdropFadeOutTime)
+                .SetEase(_backdropFadeOutEase).SetUpdate(true)
+                .OnComplete(() => _backdrop.blocksRaycasts = false);
         }
 
         public void Hide()
@@ -397,9 +424,10 @@ namespace _Scripts.UI
             CancelTransition();
             _transition = new CancellationTokenSource();
             var token = _transition.Token;
-            _backdropTween = _backdrop.DOFade(visible ? _backdropOpacity : 0f,
-                    visible ? _backdropFadeInTime : _backdropFadeOutTime)
-                .SetEase(visible ? _backdropFadeInEase : _backdropFadeOutEase).SetUpdate(true);
+            if (!_openedFromPause)
+                _backdropTween = _backdrop.DOFade(visible ? _backdropOpacity : 0f,
+                        visible ? _backdropFadeInTime : _backdropFadeOutTime)
+                    .SetEase(visible ? _backdropFadeInEase : _backdropFadeOutEase).SetUpdate(true);
 
             if (visible)
             {
@@ -417,10 +445,15 @@ namespace _Scripts.UI
                 await UniTask.WhenAll(
                     _slide.HideAsync(token).SuppressCancellationThrow(),
                     _title.Hide().ToUniTask(TweenCancelBehaviour.KillAndCancelAwait, token).SuppressCancellationThrow(),
-                    _backdropTween.ToUniTask(TweenCancelBehaviour.KillAndCancelAwait, token).SuppressCancellationThrow());
+                    _openedFromPause ? UniTask.FromResult(false) :
+                        _backdropTween.ToUniTask(TweenCancelBehaviour.KillAndCancelAwait, token).SuppressCancellationThrow());
                 if (token.IsCancellationRequested) return;
+                var returnToPause = _openedFromPause;
                 FinishHide();
                 gameObject.SetActive(false);
+                _openedFromPause = false;
+                if (returnToPause)
+                    Closed?.Invoke();
             }
         }
 
@@ -493,10 +526,13 @@ namespace _Scripts.UI
             _panel.alpha = 0f;
             _panel.interactable = false;
             _panel.blocksRaycasts = false;
-            _backdrop.alpha = 0f;
-            _backdrop.interactable = false;
-            _backdrop.blocksRaycasts = false;
-            BlocksGameplayInput = false;
+            if (!_openedFromPause)
+            {
+                _backdrop.alpha = 0f;
+                _backdrop.interactable = false;
+                _backdrop.blocksRaycasts = false;
+            }
+            _settingsBlockInput = false;
 
             if (EventSystem.current != null)
                 EventSystem.current.SetSelectedGameObject(_previousSelection != null && _previousSelection.activeInHierarchy
@@ -803,26 +839,6 @@ namespace _Scripts.UI
         private static string ResolutionText(Vector2Int size) => $"{size.x} × {size.y}";
         private string SpeedText() =>
             "×" + GameSettingsService.SequenceSpeeds[_pending.Speed].ToString("0.##", CultureInfo.InvariantCulture);
-    }
-
-    public sealed class SettingsMenuInput : ITickable
-    {
-        // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
-        private readonly SettingsMenuView _view;
-
-        // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
-        public SettingsMenuInput(SettingsMenuView view)
-        {
-            _view = view;
-        }
-
-        public void Tick()
-        {
-            var keyboard = Keyboard.current;
-            if (keyboard == null || !keyboard.escapeKey.wasPressedThisFrame) return;
-
-            _view.Toggle();
-        }
     }
 
 }
