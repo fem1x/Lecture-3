@@ -391,7 +391,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 13353517863403520
-    m_Localized: 'Drag a charm here: <nobr>+3 <sprite name="repair_token"></nobr>. The conveyor closes.'
+    m_Localized: 'Drag a charm here: <nobr>+3 <color=#FFB28D><sprite name="repair_token" tint=1></color></nobr>. The conveyor closes.'
     m_Metadata:
       m_Items: []
   - m_Id: 13400000000000125
@@ -519,7 +519,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 13400000000000136
-    m_Localized: Use <sprite name="repair_token"> to repair damaged dice and reduce <style=wear>Wear</style>.
+    m_Localized: Use <color=#FFB28D><sprite name="repair_token" tint=1></color> to repair damaged dice and reduce <style=wear>Wear</style>.
     m_Metadata:
       m_Items: []
   - m_Id: 13400000000000137

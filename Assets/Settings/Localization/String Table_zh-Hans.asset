@@ -391,7 +391,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 13353517863403520
-    m_Localized: "\u5C06\u9B45\u9970\u62D6\u5230\u8FD9\u91CC\uFF1A<nobr>+3 <sprite name=\"repair_token\"></nobr>\u3002\u4F20\u9001\u5E26\u5C06\u5173\u95ED\u3002"
+    m_Localized: "\u5C06\u9B45\u9970\u62D6\u5230\u8FD9\u91CC\uFF1A<nobr>+3 <color=#FFB28D><sprite name=\"repair_token\" tint=1></color></nobr>\u3002\u4F20\u9001\u5E26\u5C06\u5173\u95ED\u3002"
     m_Metadata:
       m_Items: []
   - m_Id: 13400000000000125
@@ -519,7 +519,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 13400000000000136
-    m_Localized: "\u4F7F\u7528<sprite name=\"repair_token\">\u4FEE\u7406\u53D7\u635F\u9AB0\u5B50\u5E76\u51CF\u5C11<style=wear>\u78E8\u635F</style>\u3002"
+    m_Localized: "\u4F7F\u7528<color=#FFB28D><sprite name=\"repair_token\" tint=1></color>\u4FEE\u7406\u53D7\u635F\u9AB0\u5B50\u5E76\u51CF\u5C11<style=wear>\u78E8\u635F</style>\u3002"
     m_Metadata:
       m_Items: []
   - m_Id: 13400000000000137

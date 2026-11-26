@@ -391,7 +391,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 13353517863403520
-    m_Localized: "Arrastra aqu\xED un amuleto: <nobr>+3 <sprite name=\"repair_token\"></nobr>. La cinta se cerrar\xE1."
+    m_Localized: "Arrastra aqu\xED un amuleto: <nobr>+3 <color=#FFB28D><sprite name=\"repair_token\" tint=1></color></nobr>. La cinta se cerrar\xE1."
     m_Metadata:
       m_Items: []
   - m_Id: 13400000000000125
@@ -519,7 +519,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 13400000000000136
-    m_Localized: "Usa <sprite name=\"repair_token\"> para reparar dados da\xF1ados y reducir el <style=wear>Desgaste</style>."
+    m_Localized: "Usa <color=#FFB28D><sprite name=\"repair_token\" tint=1></color> para reparar dados da\xF1ados y reducir el <style=wear>Desgaste</style>."
     m_Metadata:
       m_Items: []
   - m_Id: 13400000000000137
