@@ -15137,6 +15137,7 @@ MonoBehaviour:
   _slidingPanel: {fileID: 9075667879014176671}
   _sequenceController: {fileID: 1115810952}
   _nextLevelButton: {fileID: 3395555208805525664}
+  _nextLevelLockedTooltip: {fileID: 6737091127981348847}
   _upgradeRopeButton: {fileID: 1863023900}
   _diceRepairPanel: {fileID: 6930939574239212050}
   _charmConveyor: {fileID: 3085717410000845724}
@@ -22228,6 +22229,7 @@ GameObject:
   - component: {fileID: 6737091127981348844}
   - component: {fileID: 6737091127981348845}
   - component: {fileID: 6737091127981348846}
+  - component: {fileID: 6737091127981348847}
   m_Layer: 5
   m_Name: (Btn) Next level
   m_TagString: Untagged
@@ -23303,8 +23305,8 @@ MonoBehaviour:
   _tokenLandingStrength: 0.25
   _tokenEchoFadeDuration: 0.5
   _buttonSlideDelay: 0
-  _buttonSlideDuration: 0.24
-  _buttonSlideEase: 8
+  _buttonSlideDuration: 0.33
+  _buttonSlideEase: 6
 --- !u!225 &4966847332158099471
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -28400,6 +28402,33 @@ MonoBehaviour:
   _shakeAngleZ: 0.5
   _shakeVibratoZ: 22
   _duration: 0.16
+--- !u!114 &6737091127981348847
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4612532647983908781}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 12d4882af6134a0b85c6dbd2c0d5afec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Game::_Scripts.UI.Tooltips.BasicTooltipTrigger
+  _prefab: {fileID: 7818079974194006116, guid: aa8859c2fc5b3074281ac6944c5fbb8a, type: 3}
+  _text:
+    m_TableReference:
+      m_TableCollectionName: GUID:9f9c89d5b6ad399428ec5a9fe072ff95
+    m_TableEntryReference:
+      m_KeyId: 13400000000000125
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  _side: 2
+  _gap: 24
+  references:
+    version: 2
+    RefIds: []
 --- !u!224 &6740388211066747051
 RectTransform:
   m_ObjectHideFlags: 0

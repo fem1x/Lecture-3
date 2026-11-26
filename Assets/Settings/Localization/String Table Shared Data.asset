@@ -375,6 +375,10 @@ MonoBehaviour:
     m_Key: workshop_scrap_tooltip
     m_Metadata:
       m_Items: []
+  - m_Id: 13400000000000125
+    m_Key: workshop_next_level_locked_tooltip
+    m_Metadata:
+      m_Items: []
   - m_Id: 13400000000000100
     m_Key: settings_title
     m_Metadata:

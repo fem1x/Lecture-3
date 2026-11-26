@@ -229,8 +229,8 @@ namespace _Scripts.Dices
             if (_isRolling && !_rb.isKinematic)
                 RollCollisionEntered?.Invoke(this, collision.collider);
 
-            var contactPoint = collision.contacts.Length > 0
-                ? collision.contacts[0].point
+            var contactPoint = collision.contactCount > 0
+                ? collision.GetContact(0).point
                 : transform.position;
 
             _sfxPlayer.Play(_hitSfx, contactPoint);

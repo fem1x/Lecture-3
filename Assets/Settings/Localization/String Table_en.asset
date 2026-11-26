@@ -394,6 +394,10 @@ MonoBehaviour:
     m_Localized: "Drag a charm here to scrap it for Repair Tokens"
     m_Metadata:
       m_Items: []
+  - m_Id: 13400000000000125
+    m_Localized: "Claim or scrap a charm first"
+    m_Metadata:
+      m_Items: []
   - m_Id: 13400000000000100
     m_Localized: "SETTINGS"
     m_Metadata:

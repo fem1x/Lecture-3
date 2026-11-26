@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading;
 using _Scripts.Charms;
+using _Scripts.UI.Tooltips;
 using _Scripts.UI.Workshop;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
@@ -16,6 +17,7 @@ namespace _Scripts.UI
         [SerializeField] private SlidingPanelView _slidingPanel;
         [SerializeField] private WorkshopSequenceController _sequenceController;
         [SerializeField] private Button _nextLevelButton;
+        [SerializeField] private BasicTooltipTrigger _nextLevelLockedTooltip;
         [SerializeField] private RopeButtonView _upgradeRopeButton;
 
         [Header("Panels")]
@@ -81,7 +83,7 @@ namespace _Scripts.UI
             _upgradeRopeButton.gameObject.SetActive(false);
 
             _charmConveyor.InstantCloseShutter();
-            _nextLevelButton.interactable = false;
+            SetNextLevelAvailable(false);
 
             _diceRepairPanel.SetRepairMode(true);
             _slidingPanel.ShowInstant();
@@ -156,7 +158,13 @@ namespace _Scripts.UI
 
         private void HandleNextLevelButtonClick() => OnNextLevelRequested?.Invoke();
 
-        private void HandleChoiceCompleted() => _nextLevelButton.interactable = true;
+        private void HandleChoiceCompleted() => SetNextLevelAvailable(true);
+
+        private void SetNextLevelAvailable(bool isAvailable)
+        {
+            _nextLevelButton.interactable = isAvailable;
+            _nextLevelLockedTooltip.enabled = !isAvailable;
+        }
 
         private void HandleUpgradeToggleClick()
         {

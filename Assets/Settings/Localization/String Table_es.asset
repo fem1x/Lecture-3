@@ -394,6 +394,10 @@ MonoBehaviour:
     m_Localized: "Arrastra un amuleto aqu\u00ed para desguazarlo y obtener fichas de reparaci\u00f3n"
     m_Metadata:
       m_Items: []
+  - m_Id: 13400000000000125
+    m_Localized: "Recoge o desguaza un amuleto primero"
+    m_Metadata:
+      m_Items: []
   - m_Id: 13400000000000100
     m_Localized: "AJUSTES"
     m_Metadata:

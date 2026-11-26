@@ -16,14 +16,16 @@ namespace _Scripts.Managers
             _config = config;
         }
         
-        private Dictionary<string, AudioSource> _2dSources = new();
-        private Dictionary<string, Sound> _soundLookup = new();
-        private GameObject _root2D;
+        private readonly Dictionary<string, AudioSource> _2dSources = new();
+        private readonly Dictionary<string, Sound> _soundLookup = new();
+        private readonly List<(AudioSource Source, double ReadyAt)> _spatialPool = new();
+        private readonly List<(AudioSource Source, double ReadyAt)> _extraLayerPool = new();
+        private GameObject _root;
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== 
         
         public void Initialize()
         {
-            _root2D = new GameObject("[SFXManager_2D_Root]");
+            _root = new GameObject("[SFXManager_Root]");
             foreach (Sound s in _config.Sounds)
             {
                 if (string.IsNullOrEmpty(s.name)) continue;
@@ -31,7 +33,7 @@ namespace _Scripts.Managers
                 
                 if (!s.is3D)
                 {
-                    var source = _root2D.AddComponent<AudioSource>();
+                    var source = _root.AddComponent<AudioSource>();
                 
                     if (s.layers != null && s.layers.Length > 0)
                     {
@@ -104,16 +106,7 @@ namespace _Scripts.Managers
             AudioClip layerClip = GetRandomClip(layer);
             if (layerClip == null) continue;
 
-            AudioSource layerSource = Object.Instantiate(_config.SfxObject, spawnPos, Quaternion.identity);
-
-            ConfigureAudioSource(layerSource, s, layer, layerClip, baseRandomPitch);
-            layerSource.Play();
-
-            if (!layerSource.loop)
-            {
-                float length = layerClip.length / Mathf.Abs(layerSource.pitch);
-                Object.Destroy(layerSource.gameObject, length);
-            }
+            PlayPooledLayer(s, layer, layerClip, baseRandomPitch, spawnPos);
         }
     }
 
@@ -139,16 +132,40 @@ namespace _Scripts.Managers
             AudioClip layerClip = GetRandomClip(layer);
             if (layerClip == null) continue;
 
-            AudioSource layerSource = _root2D.AddComponent<AudioSource>();
-            ConfigureAudioSource(layerSource, s, layer, layerClip, baseRandomPitch);
-            layerSource.Play();
-
-            if (!layerSource.loop)
-            {
-                float length = layerClip.length / Mathf.Abs(layerSource.pitch);
-                Object.Destroy(layerSource, length);
-            }
+            PlayPooledLayer(s, layer, layerClip, baseRandomPitch);
         }
+    }
+
+    private void PlayPooledLayer(Sound sound, SoundLayer layer, AudioClip clip, float pitch, Vector3 position = default)
+    {
+        var pool = sound.is3D ? _spatialPool : _extraLayerPool;
+        var now = AudioSettings.dspTime;
+        var freeIndex = 0;
+        for (; freeIndex < pool.Count; freeIndex++)
+        {
+            var voice = pool[freeIndex];
+            if (now >= voice.ReadyAt && !voice.Source.isPlaying)
+                break;
+        }
+
+        var source = freeIndex < pool.Count
+            ? pool[freeIndex].Source
+            : sound.is3D
+                ? Object.Instantiate(_config.SfxObject, position, Quaternion.identity, _root.transform)
+                : _root.AddComponent<AudioSource>();
+
+        if (sound.is3D)
+            source.transform.position = position;
+
+        ConfigureAudioSource(source, sound, layer, clip, pitch);
+        source.Play();
+
+        // Reserve the voice until playback has had time to start and finish on the audio clock.
+        var readyAt = source.loop ? double.PositiveInfinity : AudioSettings.dspTime + clip.length / source.pitch;
+        if (freeIndex == pool.Count)
+            pool.Add((source, readyAt));
+        else
+            pool[freeIndex] = (source, readyAt);
     }
     #endregion
 

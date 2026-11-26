@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using _Scripts.Combinations;
 using _Scripts.Utility.Extensions;
 using Cysharp.Threading.Tasks;
@@ -46,6 +47,7 @@ namespace _Scripts.UI
         private float _hiddenY;
         private Vector2 _hiddenPos;
         private readonly List<CombinationDisplayInfoView> _spawnedCards = new();
+        private CancellationTokenSource _cardSpawn;
         private ActiveCombinationsService _combinationsService;
         private AudioFilterController _audioFilterController;
 
@@ -76,25 +78,44 @@ namespace _Scripts.UI
 
         private void OnDisable()
         {
+            _cardSpawn?.Cancel();
             _backdropButton.onClick.RemoveListener(Hide);
             _hideButton.onClick.RemoveListener(Hide);
             _showButton.onClick.RemoveListener(Show);
         }
 
-        private async UniTaskVoid ShowCardsAsync()
+        private async UniTask ShowCardsAsync()
         {
-            ClearCards();
-            
-            foreach (var config in _combinationsService.ActiveCombinations.Reverse())
+            _cardSpawn?.Cancel();
+            var spawn = new CancellationTokenSource();
+            _cardSpawn = spawn;
+            var token = spawn.Token;
+
+            try
             {
-                var card = Instantiate(_cardPrefab, _container);
-                card.Setup(config);
-                _spawnedCards.Add(card);
-                
-                card.transform.DoScaleIn(time: _scaleInTime, ease: _scaleInEase).ToUniTask().Forget();
-                card.PlayShowAnimation(_scaleInTime, _fadeInEase);
-                
-                await UniTask.Delay(TimeSpan.FromSeconds(_delayPerCard));
+                ClearCards();
+
+                foreach (var config in _combinationsService.ActiveCombinations.Reverse())
+                {
+                    token.ThrowIfCancellationRequested();
+                    var card = Instantiate(_cardPrefab, _container);
+                    _spawnedCards.Add(card);
+                    card.Setup(config);
+                    card.transform.DoScaleIn(time: _scaleInTime, ease: _scaleInEase);
+                    card.PlayShowAnimation(_scaleInTime, _fadeInEase);
+
+                    await UniTask.Delay(TimeSpan.FromSeconds(_delayPerCard), cancellationToken: token);
+                }
+            }
+            catch (OperationCanceledException) when (token.IsCancellationRequested)
+            {
+            }
+            finally
+            {
+                if (_cardSpawn == spawn)
+                    _cardSpawn = null;
+
+                spawn.Dispose();
             }
         }
 
@@ -102,7 +123,7 @@ namespace _Scripts.UI
         {
             foreach (var card in _spawnedCards)
             {
-                card.DOKill();
+                card.transform.DOKill();
                 Destroy(card.gameObject);
             }
 
@@ -122,11 +143,16 @@ namespace _Scripts.UI
 
         private void Hide()
         {
+            _cardSpawn?.Cancel();
             KillTweens();
             
             _slideTween = _rect.DOAnchorPosY(_hiddenY, _hideTime).SetEase(_hideEase);
             _fadeTween = _backdropImage.DOFade(0f, _hideTime).SetEase(_hideEase)
-                .OnComplete(_cg.Hide);
+                .OnComplete(() =>
+                {
+                    _cg.Hide();
+                    ClearCards();
+                });
             
             SetButtonsInteractable(false);
             _audioFilterController.ToggleFilter(false);
@@ -134,6 +160,7 @@ namespace _Scripts.UI
 
         private void HideInstant()
         {
+            _cardSpawn?.Cancel();
             SetShownState(false);
             KillTweens();
         }
