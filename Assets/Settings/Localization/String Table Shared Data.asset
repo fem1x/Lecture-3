@@ -383,8 +383,16 @@ MonoBehaviour:
     m_Key: workshop_conveyor_inspect_hint
     m_Metadata:
       m_Items: []
+  - m_Id: 13400000000000128
+    m_Key: workshop_conveyor_inspect_action
+    m_Metadata:
+      m_Items: []
   - m_Id: 13400000000000127
     m_Key: workshop_conveyor_drag_hint
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13400000000000129
+    m_Key: workshop_conveyor_drag_action
     m_Metadata:
       m_Items: []
   - m_Id: 13400000000000100

@@ -399,11 +399,19 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 13400000000000126
-    m_Localized: "<size=17><b><color=#FFA98E>CLICK</color></b></size>\nto inspect"
+    m_Localized: "to inspect"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13400000000000128
+    m_Localized: "CLICK"
     m_Metadata:
       m_Items: []
   - m_Id: 13400000000000127
-    m_Localized: "<size=17><b><color=#FFA98E>DRAG</color></b></size>\nto take"
+    m_Localized: "to take"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13400000000000129
+    m_Localized: "DRAG"
     m_Metadata:
       m_Items: []
   - m_Id: 13400000000000100

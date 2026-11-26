@@ -168,11 +168,9 @@ namespace _Scripts.UI
             _moveTween = _containerRect
                 .DOAnchorPosX(targetX, _moveDuration)
                 .SetEase(_moveEase)
-                .OnComplete(() =>
-                {
-                    UpdateIndicators(charmIndex);
-                    ShowHintsFor(charmIndex);
-                });
+                .OnComplete(() => UpdateIndicators(charmIndex));
+
+            ShowHintsFor(charmIndex);
         }
 
         private void ShowHintsFor(int charmIndex)
@@ -235,7 +233,6 @@ namespace _Scripts.UI
 
         private void CloseConveyor()
         {
-            _moveTween?.OnComplete(() => UpdateIndicators(_conveyorService.CurrentIndex));
             HideHints();
             _nextButton.interactable = false;
             _reverseButton.interactable = false;

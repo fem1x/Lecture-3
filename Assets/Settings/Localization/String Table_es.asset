@@ -399,11 +399,19 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 13400000000000126
-    m_Localized: "<size=17><b><color=#FFA98E>HAZ CLIC</color></b></size>\npara ver el efecto"
+    m_Localized: "ver el efecto"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13400000000000128
+    m_Localized: "HAZ CLIC"
     m_Metadata:
       m_Items: []
   - m_Id: 13400000000000127
-    m_Localized: "<size=17><b><color=#FFA98E>ARRASTRA</color></b></size>\npara recoger"
+    m_Localized: "para recoger"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13400000000000129
+    m_Localized: "ARRASTRA"
     m_Metadata:
       m_Items: []
   - m_Id: 13400000000000100
