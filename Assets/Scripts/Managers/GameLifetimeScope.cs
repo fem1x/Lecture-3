@@ -142,6 +142,7 @@ public class GameLifetimeScope : LifetimeScope
         
         //Entry Point
         builder.RegisterEntryPoint<GameSettingsService>(Lifetime.Singleton).AsSelf();
+        builder.RegisterEntryPoint<SettingsMenuInput>();
         builder.RegisterEntryPoint<Bootstrap>().AsSelf();
     }
 }

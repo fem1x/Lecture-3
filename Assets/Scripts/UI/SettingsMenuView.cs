@@ -16,6 +16,7 @@ using UnityEngine.Localization.Components;
 using UnityEngine.Localization.Settings;
 using UnityEngine.UI;
 using VContainer;
+using VContainer.Unity;
 
 namespace _Scripts.UI
 {
@@ -55,6 +56,7 @@ namespace _Scripts.UI
         [SerializeField] private CanvasGroup _backdrop;
         [SerializeField] private Button _backdropButton;
         [SerializeField] private Button _closeButton;
+        [SerializeField] private TextRevealView _title;
 
         [Header("Tabs")]
         [SerializeField] private Tab[] _tabs;
@@ -96,8 +98,6 @@ namespace _Scripts.UI
         private Tween _backdropTween;
         private Tween _tabTween;
         private Sequence _entranceTween;
-        private TMP_Text _title;
-        private int _titleVisibleCharacters;
         private EntranceItem _closeEntrance;
         private EntranceItem[] _tabEntrances;
         private EntranceItem[][] _pageEntrances;
@@ -125,8 +125,6 @@ namespace _Scripts.UI
                 tab.AccentView = tab.Accent.GetComponent<SettingsTabAccentView>();
             }
 
-            _title = _panel.transform.Find("(Panel) Header/(Text) PanelName").GetComponent<TMP_Text>();
-            _titleVisibleCharacters = _title.maxVisibleCharacters;
             _closeEntrance = CreateEntranceItem((RectTransform)_closeButton.transform);
             _tabEntrances = _tabs.Select(tab => CreateEntranceItem((RectTransform)tab.Button.transform)).ToArray();
             _pageEntrances = _tabs.Select(tab =>
@@ -199,22 +197,22 @@ namespace _Scripts.UI
             }
         }
 
-        private void Update()
-        {
-            var keyboard = Keyboard.current;
-            if (keyboard == null || !keyboard.escapeKey.wasPressedThisFrame) return;
+        // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 
+        public void Toggle()
+        {
             if (_wantsOpen)
                 Hide();
             else
                 Show();
         }
 
-        // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
-
         public void Show()
         {
-            if (!isActiveAndEnabled || _wantsOpen) return;
+            if (_wantsOpen) return;
+
+            gameObject.SetActive(true);
+            if (!isActiveAndEnabled) return;
 
             _wantsOpen = true;
             if (!BlocksGameplayInput)
@@ -268,9 +266,11 @@ namespace _Scripts.UI
             {
                 await UniTask.WhenAll(
                     _slide.HideAsync(token).SuppressCancellationThrow(),
+                    _title.Hide().ToUniTask(TweenCancelBehaviour.KillAndCancelAwait, token).SuppressCancellationThrow(),
                     _backdropTween.ToUniTask(TweenCancelBehaviour.KillAndCancelAwait, token).SuppressCancellationThrow());
                 if (token.IsCancellationRequested) return;
                 FinishHide();
+                gameObject.SetActive(false);
             }
         }
 
@@ -295,15 +295,7 @@ namespace _Scripts.UI
         private void PlayEntrance()
         {
             _entranceTween = DOTween.Sequence().SetUpdate(true);
-            _title.ForceMeshUpdate();
-            _title.maxVisibleCharacters = 0;
-            var titleProgress = 0f;
-            _entranceTween.Insert(0.12f, DOTween.To(() => titleProgress, value =>
-            {
-                titleProgress = value;
-                _title.maxVisibleCharacters = Mathf.CeilToInt(value * _title.textInfo.characterCount);
-            }, 1f, 0.4f).SetEase(Ease.Linear));
-            _entranceTween.InsertCallback(0.52f, () => _title.maxVisibleCharacters = _titleVisibleCharacters);
+            _entranceTween.Insert(0.12f, _title.Show());
             AddEntrance(_closeEntrance, 0.12f);
             for (var i = 0; i < _tabEntrances.Length; i++)
                 AddEntrance(_tabEntrances[i], 0.2f + i * 0.055f);
@@ -323,7 +315,7 @@ namespace _Scripts.UI
         {
             _entranceTween?.Kill();
             _entranceTween = null;
-            _title.maxVisibleCharacters = _titleVisibleCharacters;
+            _title.Restore();
             ResetEntranceItem(_closeEntrance);
             foreach (var item in _tabEntrances)
                 ResetEntranceItem(item);
@@ -568,4 +560,25 @@ namespace _Scripts.UI
         private static string ResolutionText(Vector2Int size) => $"{size.x} × {size.y}";
         private string SpeedText() => "×" + _settings.SequenceSpeed.ToString("0.##", CultureInfo.InvariantCulture);
     }
+
+    public sealed class SettingsMenuInput : ITickable
+    {
+        // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
+        private readonly SettingsMenuView _view;
+
+        // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
+        public SettingsMenuInput(SettingsMenuView view)
+        {
+            _view = view;
+        }
+
+        public void Tick()
+        {
+            var keyboard = Keyboard.current;
+            if (keyboard == null || !keyboard.escapeKey.wasPressedThisFrame) return;
+
+            _view.Toggle();
+        }
+    }
+
 }

@@ -14349,6 +14349,23 @@ CanvasGroup:
   m_Interactable: 0
   m_BlocksRaycasts: 0
   m_IgnoreParentGroups: 0
+--- !u!114 &1975333761826384001
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5634627101367435714}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc999df181c447e5baf5ad04b6406856, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Game::_Scripts.UI.TextRevealView
+  _text: {fileID: 3564517814662716609}
+  _showDuration: 0.5
+  _showEase: 9
+  _hideDuration: 0.2
+  _hideEase: 8
 --- !u!222 &1978442851062642505
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -17087,6 +17104,7 @@ MonoBehaviour:
   _backdrop: {fileID: 1974673835823860738}
   _backdropButton: {fileID: 149308225930321166}
   _closeButton: {fileID: 3248145337455784765}
+  _title: {fileID: 1975333761826384001}
   _tabs:
   - Button: {fileID: 1522959511167065472}
     Accent: {fileID: 676330132992719412}
@@ -25327,6 +25345,7 @@ GameObject:
   - component: {fileID: 1978442851062642505}
   - component: {fileID: 3564517814662716609}
   - component: {fileID: 6492166049981745195}
+  - component: {fileID: 1975333761826384001}
   m_Layer: 5
   m_Name: (Text) PanelName
   m_TagString: Untagged
@@ -33369,7 +33388,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &8234868711022736534
 RectTransform:
   m_ObjectHideFlags: 0
