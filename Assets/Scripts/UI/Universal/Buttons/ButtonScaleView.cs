@@ -1,4 +1,4 @@
-﻿using DG.Tweening;
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -50,7 +50,7 @@ namespace _Scripts.UI
         private Vector3 _pressHitPosition;
         private Quaternion _pressHitRotation;
         private Vector3 _pressHitScale;
-        private bool CanInteract => _selectable != null ? _selectable.IsInteractable() : _button.interactable;
+        private bool CanInteract => _selectable != null ? _selectable.IsInteractable() : _button == null || _button.interactable;
 
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 

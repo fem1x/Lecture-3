@@ -514,6 +514,22 @@ MonoBehaviour:
     m_Localized: "Die #{0}"
     m_Metadata:
       m_Items: []
+  - m_Id: 13400000000000135
+    m_Localized: "Claim or scrap one charm. The conveyor then closes."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13400000000000136
+    m_Localized: "Use <sprite name=\"repair_token\"> to repair damaged dice and reduce <style=wear>Wear</style>."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13400000000000137
+    m_Localized: "Temper a face for permanent bonus <style=points>Points</style>. Each upgrade to that die costs more."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13400000000000138
+    m_Localized: "For remaining resources:\n\u2022 Every {throwsPerToken} <color=#FFB18D><sprite name=\"throw_counter\" tint=1></color> \u2192 +1 <sprite name=\"repair_token\">\n\u2022 Every {rerollsPerToken} <color=#FFB18D><sprite name=\"reroll_counter\" tint=1></color> \u2192 +1 <sprite name=\"repair_token\">"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

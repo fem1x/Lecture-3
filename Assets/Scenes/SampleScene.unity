@@ -211,53 +211,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d08f2a478db94a449cb763bb139b8b3d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Game::_Scripts.UI.Workshop.DicePreviewView
---- !u!1001 &9210000000000000120
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 700379270}
-    m_Modifications:
-    - target: {fileID: 7403000000000000001, guid: 4a21ad731a7e4084a789e6a532ebaeca, type: 3}
-      propertyPath: m_Name
-      value: (Panel) Upgrade
-      objectReference: {fileID: 0}
-    - target: {fileID: 7403000000000000002, guid: 4a21ad731a7e4084a789e6a532ebaeca, type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 838.68
-      objectReference: {fileID: 0}
-    - target: {fileID: 7403000000000000004, guid: 4a21ad731a7e4084a789e6a532ebaeca, type: 3}
-      propertyPath: _showDelay
-      value: 0.1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7403000000000000004, guid: 4a21ad731a7e4084a789e6a532ebaeca, type: 3}
-      propertyPath: _showDuration
-      value: 1.36
-      objectReference: {fileID: 0}
-    - target: {fileID: 7403000000000000014, guid: 4a21ad731a7e4084a789e6a532ebaeca, type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 428.59
-      objectReference: {fileID: 0}
-    - target: {fileID: 7403000000000000016, guid: 4a21ad731a7e4084a789e6a532ebaeca, type: 3}
-      propertyPath: m_text
-      value: "- \u0417\u0430\u043A\u0430\u043B\u043A\u0430 \u0433\u0440\u0430\u043D\u0435\u0439 -"
-      objectReference: {fileID: 0}
-    - target: {fileID: 7403000000000000017, guid: 4a21ad731a7e4084a789e6a532ebaeca, type: 3}
-      propertyPath: m_StringReference.m_TableEntryReference.m_KeyId
-      value: 13400000000000122
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects:
-    - targetCorrespondingSourceObject: {fileID: 7403000000000000002, guid: 4a21ad731a7e4084a789e6a532ebaeca, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 575784509}
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 7403000000000000001, guid: 4a21ad731a7e4084a789e6a532ebaeca, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 7928083}
-  m_SourcePrefab: {fileID: 100100000, guid: 4a21ad731a7e4084a789e6a532ebaeca, type: 3}
 --- !u!1 &7928078 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7403000000000000001, guid: 4a21ad731a7e4084a789e6a532ebaeca, type: 3}
@@ -1997,7 +1950,7 @@ MonoBehaviour:
   m_Elasticity: 0.1
   m_Inertia: 1
   m_DecelerationRate: 0.135
-  m_ScrollSensitivity: 10
+  m_ScrollSensitivity: 14
   m_Viewport: {fileID: 0}
   m_HorizontalScrollbar: {fileID: 0}
   m_VerticalScrollbar: {fileID: 0}
@@ -6959,7 +6912,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 31.575401, y: -37.03825}
-  m_SizeDelta: {x: 0, y: 30.6}
+  m_SizeDelta: {x: 30.03, y: 30.6}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!114 &1738118354
 MonoBehaviour:
@@ -9844,89 +9797,6 @@ MonoBehaviour:
   m_ShadowLayerMask: 1
   m_RenderingLayers: 1
   m_ShadowRenderingLayers: 1
---- !u!1001 &9210000000000000122
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 8676949277007676752}
-    m_Modifications:
-    - target: {fileID: 7403000000000000001, guid: 4a21ad731a7e4084a789e6a532ebaeca, type: 3}
-      propertyPath: m_Name
-      value: (Panel) Rewards Details
-      objectReference: {fileID: 0}
-    - target: {fileID: 7403000000000000002, guid: 4a21ad731a7e4084a789e6a532ebaeca, type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7403000000000000002, guid: 4a21ad731a7e4084a789e6a532ebaeca, type: 3}
-      propertyPath: m_AnchorMin.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7403000000000000002, guid: 4a21ad731a7e4084a789e6a532ebaeca, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 8.1593
-      objectReference: {fileID: 0}
-    - target: {fileID: 7403000000000000002, guid: 4a21ad731a7e4084a789e6a532ebaeca, type: 3}
-      propertyPath: m_SizeDelta.x
-      value: -66.8
-      objectReference: {fileID: 0}
-    - target: {fileID: 7403000000000000002, guid: 4a21ad731a7e4084a789e6a532ebaeca, type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 294.8277
-      objectReference: {fileID: 0}
-    - target: {fileID: 7403000000000000004, guid: 4a21ad731a7e4084a789e6a532ebaeca, type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7403000000000000013, guid: 4a21ad731a7e4084a789e6a532ebaeca, type: 3}
-      propertyPath: m_Name
-      value: (Text) Rewards
-      objectReference: {fileID: 0}
-    - target: {fileID: 7403000000000000014, guid: 4a21ad731a7e4084a789e6a532ebaeca, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 7403000000000000014, guid: 4a21ad731a7e4084a789e6a532ebaeca, type: 3}
-      propertyPath: m_AnchorMin.y
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 7403000000000000014, guid: 4a21ad731a7e4084a789e6a532ebaeca, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: -0.000030517578
-      objectReference: {fileID: 0}
-    - target: {fileID: 7403000000000000014, guid: 4a21ad731a7e4084a789e6a532ebaeca, type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 50
-      objectReference: {fileID: 0}
-    - target: {fileID: 7403000000000000016, guid: 4a21ad731a7e4084a789e6a532ebaeca, type: 3}
-      propertyPath: m_fontSize
-      value: 41
-      objectReference: {fileID: 0}
-    - target: {fileID: 7403000000000000016, guid: 4a21ad731a7e4084a789e6a532ebaeca, type: 3}
-      propertyPath: m_fontSizeBase
-      value: 41
-      objectReference: {fileID: 0}
-    - target: {fileID: 7403000000000000016, guid: 4a21ad731a7e4084a789e6a532ebaeca, type: 3}
-      propertyPath: m_text
-      value: '- Rewards -'
-      objectReference: {fileID: 0}
-    - target: {fileID: 7403000000000000017, guid: 4a21ad731a7e4084a789e6a532ebaeca, type: 3}
-      propertyPath: m_StringReference.m_TableEntryReference.m_KeyId
-      value: 41997077172225
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects:
-    - targetCorrespondingSourceObject: {fileID: 7403000000000000002, guid: 4a21ad731a7e4084a789e6a532ebaeca, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 6732986301565213972}
-    - targetCorrespondingSourceObject: {fileID: 7403000000000000002, guid: 4a21ad731a7e4084a789e6a532ebaeca, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 203016472022036093}
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 4a21ad731a7e4084a789e6a532ebaeca, type: 3}
 --- !u!81 &464824016989442467
 AudioListener:
   m_ObjectHideFlags: 0
@@ -17630,62 +17500,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7545831266510397797}
   m_CullTransparentMesh: 1
---- !u!1001 &9210000000000000121
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 291177518}
-    m_Modifications:
-    - target: {fileID: 7403000000000000001, guid: 4a21ad731a7e4084a789e6a532ebaeca, type: 3}
-      propertyPath: m_Name
-      value: (Panel) CharmConveyor
-      objectReference: {fileID: 0}
-    - target: {fileID: 7403000000000000002, guid: 4a21ad731a7e4084a789e6a532ebaeca, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: -27.375
-      objectReference: {fileID: 0}
-    - target: {fileID: 7403000000000000016, guid: 4a21ad731a7e4084a789e6a532ebaeca, type: 3}
-      propertyPath: m_text
-      value: '- Charm Conveyor -'
-      objectReference: {fileID: 0}
-    - target: {fileID: 7403000000000000017, guid: 4a21ad731a7e4084a789e6a532ebaeca, type: 3}
-      propertyPath: m_StringReference.m_TableEntryReference.m_KeyId
-      value: 1863128567808
-      objectReference: {fileID: 0}
-    - target: {fileID: 7403000000000000019, guid: 4a21ad731a7e4084a789e6a532ebaeca, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7403000000000000022, guid: 4a21ad731a7e4084a789e6a532ebaeca, type: 3}
-      propertyPath: m_text
-      value: Push your luck
-      objectReference: {fileID: 0}
-    - target: {fileID: 7403000000000000023, guid: 4a21ad731a7e4084a789e6a532ebaeca, type: 3}
-      propertyPath: m_StringReference.m_TableEntryReference.m_KeyId
-      value: 1978077663232
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects:
-    - targetCorrespondingSourceObject: {fileID: 7403000000000000002, guid: 4a21ad731a7e4084a789e6a532ebaeca, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 934868079}
-    - targetCorrespondingSourceObject: {fileID: 7403000000000000002, guid: 4a21ad731a7e4084a789e6a532ebaeca, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 4690494617683163134}
-    - targetCorrespondingSourceObject: {fileID: 7403000000000000002, guid: 4a21ad731a7e4084a789e6a532ebaeca, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 4537354795006897799}
-    - targetCorrespondingSourceObject: {fileID: 7403000000000000002, guid: 4a21ad731a7e4084a789e6a532ebaeca, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1817247424}
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 7403000000000000001, guid: 4a21ad731a7e4084a789e6a532ebaeca, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 3085717410000845724}
-  m_SourcePrefab: {fileID: 100100000, guid: 4a21ad731a7e4084a789e6a532ebaeca, type: 3}
 --- !u!1 &3333033482605648648 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7403000000000000001, guid: 4a21ad731a7e4084a789e6a532ebaeca, type: 3}
@@ -29735,7 +29549,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 31.475, y: -27.9994}
-  m_SizeDelta: {x: 0, y: 50}
+  m_SizeDelta: {x: 42.95, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &7432485018754432347
 GameObject:
@@ -32716,65 +32530,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 77, y: 77}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!1001 &9210000000000000123
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 1887199387}
-    m_Modifications:
-    - target: {fileID: 7403000000000000001, guid: 4a21ad731a7e4084a789e6a532ebaeca, type: 3}
-      propertyPath: m_Name
-      value: (Panel) DiceRepair
-      objectReference: {fileID: 0}
-    - target: {fileID: 7403000000000000002, guid: 4a21ad731a7e4084a789e6a532ebaeca, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: -9.6762
-      objectReference: {fileID: 0}
-    - target: {fileID: 7403000000000000002, guid: 4a21ad731a7e4084a789e6a532ebaeca, type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 278.8524
-      objectReference: {fileID: 0}
-    - target: {fileID: 7403000000000000016, guid: 4a21ad731a7e4084a789e6a532ebaeca, type: 3}
-      propertyPath: m_text
-      value: '- Charm Conveyor -'
-      objectReference: {fileID: 0}
-    - target: {fileID: 7403000000000000017, guid: 4a21ad731a7e4084a789e6a532ebaeca, type: 3}
-      propertyPath: m_StringReference.m_TableEntryReference.m_KeyId
-      value: 2179253260288
-      objectReference: {fileID: 0}
-    - target: {fileID: 7403000000000000019, guid: 4a21ad731a7e4084a789e6a532ebaeca, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7403000000000000020, guid: 4a21ad731a7e4084a789e6a532ebaeca, type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 739.2
-      objectReference: {fileID: 0}
-    - target: {fileID: 7403000000000000020, guid: 4a21ad731a7e4084a789e6a532ebaeca, type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 30.6
-      objectReference: {fileID: 0}
-    - target: {fileID: 7403000000000000022, guid: 4a21ad731a7e4084a789e6a532ebaeca, type: 3}
-      propertyPath: m_text
-      value: Push your luck
-      objectReference: {fileID: 0}
-    - target: {fileID: 7403000000000000023, guid: 4a21ad731a7e4084a789e6a532ebaeca, type: 3}
-      propertyPath: m_StringReference.m_TableEntryReference.m_KeyId
-      value: 2237877047296
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects:
-    - targetCorrespondingSourceObject: {fileID: 7403000000000000002, guid: 4a21ad731a7e4084a789e6a532ebaeca, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1892465643}
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 7403000000000000001, guid: 4a21ad731a7e4084a789e6a532ebaeca, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 6930939574239212050}
-  m_SourcePrefab: {fileID: 100100000, guid: 4a21ad731a7e4084a789e6a532ebaeca, type: 3}
 --- !u!1 &8424469281228776621 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7403000000000000001, guid: 4a21ad731a7e4084a789e6a532ebaeca, type: 3}
@@ -32799,6 +32554,8 @@ MonoBehaviour:
   _levelTokensText: {fileID: 7743158304589090636}
   _throwsTokensText: {fileID: 2140401015156307118}
   _rerollsTokensText: {fileID: 7947183463293552167}
+  _rewardsTooltip: {fileID: 9200000000000000900}
+  _tokenRewardConfig: {fileID: 11400000, guid: d4b4a581114c7884da82c78e976842b2, type: 2}
   _workshopButton: {fileID: 5182845156480488633}
 --- !u!114 &8437217524301434205
 MonoBehaviour:
@@ -35318,6 +35075,17 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
+--- !u!114 &9200000000000000900 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7403000000000000090, guid: 4a21ad731a7e4084a789e6a532ebaeca, type: 3}
+  m_PrefabInstance: {fileID: 9210000000000000122}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 12d4882af6134a0b85c6dbd2c0d5afec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Game::_Scripts.UI.Tooltips.BasicTooltipTrigger
 --- !u!1 &9200440769128181033
 GameObject:
   m_ObjectHideFlags: 0
@@ -35394,7 +35162,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7403000000000000004, guid: 4a21ad731a7e4084a789e6a532ebaeca, type: 3}
   m_PrefabInstance: {fileID: 9210000000000000121}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 3333033482605648648}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c012ac4e7d584488bcc2213e72b7cc46, type: 3}
@@ -35405,7 +35173,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7403000000000000004, guid: 4a21ad731a7e4084a789e6a532ebaeca, type: 3}
   m_PrefabInstance: {fileID: 9210000000000000123}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 8424469281228776621}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c012ac4e7d584488bcc2213e72b7cc46, type: 3}
@@ -35416,12 +35184,285 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7403000000000000004, guid: 4a21ad731a7e4084a789e6a532ebaeca, type: 3}
   m_PrefabInstance: {fileID: 9210000000000000120}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 7928078}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c012ac4e7d584488bcc2213e72b7cc46, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Game::_Scripts.UI.PanelRevealView
+--- !u!1001 &9210000000000000120
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 700379270}
+    m_Modifications:
+    - target: {fileID: 7403000000000000001, guid: 4a21ad731a7e4084a789e6a532ebaeca, type: 3}
+      propertyPath: m_Name
+      value: (Panel) Upgrade
+      objectReference: {fileID: 0}
+    - target: {fileID: 7403000000000000002, guid: 4a21ad731a7e4084a789e6a532ebaeca, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 838.68
+      objectReference: {fileID: 0}
+    - target: {fileID: 7403000000000000004, guid: 4a21ad731a7e4084a789e6a532ebaeca, type: 3}
+      propertyPath: _showDelay
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7403000000000000004, guid: 4a21ad731a7e4084a789e6a532ebaeca, type: 3}
+      propertyPath: _showDuration
+      value: 1.36
+      objectReference: {fileID: 0}
+    - target: {fileID: 7403000000000000014, guid: 4a21ad731a7e4084a789e6a532ebaeca, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 428.59
+      objectReference: {fileID: 0}
+    - target: {fileID: 7403000000000000016, guid: 4a21ad731a7e4084a789e6a532ebaeca, type: 3}
+      propertyPath: m_text
+      value: "- \u0417\u0430\u043A\u0430\u043B\u043A\u0430 \u0433\u0440\u0430\u043D\u0435\u0439 -"
+      objectReference: {fileID: 0}
+    - target: {fileID: 7403000000000000017, guid: 4a21ad731a7e4084a789e6a532ebaeca, type: 3}
+      propertyPath: m_StringReference.m_TableEntryReference.m_KeyId
+      value: 13400000000000122
+      objectReference: {fileID: 0}
+    - target: {fileID: 7403000000000000090, guid: 4a21ad731a7e4084a789e6a532ebaeca, type: 3}
+      propertyPath: _text.m_TableEntryReference.m_KeyId
+      value: 13400000000000137
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 7403000000000000002, guid: 4a21ad731a7e4084a789e6a532ebaeca, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 575784509}
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 7403000000000000001, guid: 4a21ad731a7e4084a789e6a532ebaeca, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7928083}
+  m_SourcePrefab: {fileID: 100100000, guid: 4a21ad731a7e4084a789e6a532ebaeca, type: 3}
+--- !u!1001 &9210000000000000121
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 291177518}
+    m_Modifications:
+    - target: {fileID: 7403000000000000001, guid: 4a21ad731a7e4084a789e6a532ebaeca, type: 3}
+      propertyPath: m_Name
+      value: (Panel) CharmConveyor
+      objectReference: {fileID: 0}
+    - target: {fileID: 7403000000000000002, guid: 4a21ad731a7e4084a789e6a532ebaeca, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -27.375
+      objectReference: {fileID: 0}
+    - target: {fileID: 7403000000000000014, guid: 4a21ad731a7e4084a789e6a532ebaeca, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7403000000000000016, guid: 4a21ad731a7e4084a789e6a532ebaeca, type: 3}
+      propertyPath: m_text
+      value: '- Charm Conveyor -'
+      objectReference: {fileID: 0}
+    - target: {fileID: 7403000000000000017, guid: 4a21ad731a7e4084a789e6a532ebaeca, type: 3}
+      propertyPath: m_StringReference.m_TableEntryReference.m_KeyId
+      value: 1863128567808
+      objectReference: {fileID: 0}
+    - target: {fileID: 7403000000000000019, guid: 4a21ad731a7e4084a789e6a532ebaeca, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7403000000000000022, guid: 4a21ad731a7e4084a789e6a532ebaeca, type: 3}
+      propertyPath: m_text
+      value: Push your luck
+      objectReference: {fileID: 0}
+    - target: {fileID: 7403000000000000023, guid: 4a21ad731a7e4084a789e6a532ebaeca, type: 3}
+      propertyPath: m_StringReference.m_TableEntryReference.m_KeyId
+      value: 1978077663232
+      objectReference: {fileID: 0}
+    - target: {fileID: 7403000000000000090, guid: 4a21ad731a7e4084a789e6a532ebaeca, type: 3}
+      propertyPath: _text.m_TableEntryReference.m_KeyId
+      value: 13400000000000135
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 7403000000000000002, guid: 4a21ad731a7e4084a789e6a532ebaeca, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 934868079}
+    - targetCorrespondingSourceObject: {fileID: 7403000000000000002, guid: 4a21ad731a7e4084a789e6a532ebaeca, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4690494617683163134}
+    - targetCorrespondingSourceObject: {fileID: 7403000000000000002, guid: 4a21ad731a7e4084a789e6a532ebaeca, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4537354795006897799}
+    - targetCorrespondingSourceObject: {fileID: 7403000000000000002, guid: 4a21ad731a7e4084a789e6a532ebaeca, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1817247424}
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 7403000000000000001, guid: 4a21ad731a7e4084a789e6a532ebaeca, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3085717410000845724}
+  m_SourcePrefab: {fileID: 100100000, guid: 4a21ad731a7e4084a789e6a532ebaeca, type: 3}
+--- !u!1001 &9210000000000000122
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 8676949277007676752}
+    m_Modifications:
+    - target: {fileID: 7403000000000000001, guid: 4a21ad731a7e4084a789e6a532ebaeca, type: 3}
+      propertyPath: m_Name
+      value: (Panel) Rewards Details
+      objectReference: {fileID: 0}
+    - target: {fileID: 7403000000000000002, guid: 4a21ad731a7e4084a789e6a532ebaeca, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7403000000000000002, guid: 4a21ad731a7e4084a789e6a532ebaeca, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7403000000000000002, guid: 4a21ad731a7e4084a789e6a532ebaeca, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: -66.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 7403000000000000002, guid: 4a21ad731a7e4084a789e6a532ebaeca, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 294.8277
+      objectReference: {fileID: 0}
+    - target: {fileID: 7403000000000000002, guid: 4a21ad731a7e4084a789e6a532ebaeca, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 8.1593
+      objectReference: {fileID: 0}
+    - target: {fileID: 7403000000000000004, guid: 4a21ad731a7e4084a789e6a532ebaeca, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7403000000000000013, guid: 4a21ad731a7e4084a789e6a532ebaeca, type: 3}
+      propertyPath: m_Name
+      value: (Text) Rewards
+      objectReference: {fileID: 0}
+    - target: {fileID: 7403000000000000014, guid: 4a21ad731a7e4084a789e6a532ebaeca, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7403000000000000014, guid: 4a21ad731a7e4084a789e6a532ebaeca, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7403000000000000014, guid: 4a21ad731a7e4084a789e6a532ebaeca, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7403000000000000014, guid: 4a21ad731a7e4084a789e6a532ebaeca, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 7403000000000000014, guid: 4a21ad731a7e4084a789e6a532ebaeca, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -0.000030517578
+      objectReference: {fileID: 0}
+    - target: {fileID: 7403000000000000016, guid: 4a21ad731a7e4084a789e6a532ebaeca, type: 3}
+      propertyPath: m_text
+      value: '- Rewards -'
+      objectReference: {fileID: 0}
+    - target: {fileID: 7403000000000000016, guid: 4a21ad731a7e4084a789e6a532ebaeca, type: 3}
+      propertyPath: m_fontSize
+      value: 41
+      objectReference: {fileID: 0}
+    - target: {fileID: 7403000000000000016, guid: 4a21ad731a7e4084a789e6a532ebaeca, type: 3}
+      propertyPath: m_fontSizeBase
+      value: 41
+      objectReference: {fileID: 0}
+    - target: {fileID: 7403000000000000017, guid: 4a21ad731a7e4084a789e6a532ebaeca, type: 3}
+      propertyPath: m_StringReference.m_TableEntryReference.m_KeyId
+      value: 41997077172225
+      objectReference: {fileID: 0}
+    - target: {fileID: 7403000000000000090, guid: 4a21ad731a7e4084a789e6a532ebaeca, type: 3}
+      propertyPath: _text.m_TableEntryReference.m_KeyId
+      value: 13400000000000138
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 7403000000000000002, guid: 4a21ad731a7e4084a789e6a532ebaeca, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6732986301565213972}
+    - targetCorrespondingSourceObject: {fileID: 7403000000000000002, guid: 4a21ad731a7e4084a789e6a532ebaeca, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 203016472022036093}
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 4a21ad731a7e4084a789e6a532ebaeca, type: 3}
+--- !u!1001 &9210000000000000123
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 1887199387}
+    m_Modifications:
+    - target: {fileID: 7403000000000000001, guid: 4a21ad731a7e4084a789e6a532ebaeca, type: 3}
+      propertyPath: m_Name
+      value: (Panel) DiceRepair
+      objectReference: {fileID: 0}
+    - target: {fileID: 7403000000000000002, guid: 4a21ad731a7e4084a789e6a532ebaeca, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 278.8524
+      objectReference: {fileID: 0}
+    - target: {fileID: 7403000000000000002, guid: 4a21ad731a7e4084a789e6a532ebaeca, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -9.6762
+      objectReference: {fileID: 0}
+    - target: {fileID: 7403000000000000014, guid: 4a21ad731a7e4084a789e6a532ebaeca, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7403000000000000016, guid: 4a21ad731a7e4084a789e6a532ebaeca, type: 3}
+      propertyPath: m_text
+      value: '- Charm Conveyor -'
+      objectReference: {fileID: 0}
+    - target: {fileID: 7403000000000000017, guid: 4a21ad731a7e4084a789e6a532ebaeca, type: 3}
+      propertyPath: m_StringReference.m_TableEntryReference.m_KeyId
+      value: 2179253260288
+      objectReference: {fileID: 0}
+    - target: {fileID: 7403000000000000019, guid: 4a21ad731a7e4084a789e6a532ebaeca, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7403000000000000020, guid: 4a21ad731a7e4084a789e6a532ebaeca, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 739.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7403000000000000020, guid: 4a21ad731a7e4084a789e6a532ebaeca, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 30.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 7403000000000000022, guid: 4a21ad731a7e4084a789e6a532ebaeca, type: 3}
+      propertyPath: m_text
+      value: Push your luck
+      objectReference: {fileID: 0}
+    - target: {fileID: 7403000000000000023, guid: 4a21ad731a7e4084a789e6a532ebaeca, type: 3}
+      propertyPath: m_StringReference.m_TableEntryReference.m_KeyId
+      value: 2237877047296
+      objectReference: {fileID: 0}
+    - target: {fileID: 7403000000000000090, guid: 4a21ad731a7e4084a789e6a532ebaeca, type: 3}
+      propertyPath: _text.m_TableEntryReference.m_KeyId
+      value: 13400000000000136
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 7403000000000000002, guid: 4a21ad731a7e4084a789e6a532ebaeca, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1892465643}
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 7403000000000000001, guid: 4a21ad731a7e4084a789e6a532ebaeca, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6930939574239212050}
+  m_SourcePrefab: {fileID: 100100000, guid: 4a21ad731a7e4084a789e6a532ebaeca, type: 3}
 --- !u!114 &9220433285674976160
 MonoBehaviour:
   m_ObjectHideFlags: 0

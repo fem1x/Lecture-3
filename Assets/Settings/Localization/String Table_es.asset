@@ -514,6 +514,22 @@ MonoBehaviour:
     m_Localized: "Dado n.\u00ba {0}"
     m_Metadata:
       m_Items: []
+  - m_Id: 13400000000000135
+    m_Localized: "Elige o desmonta un amuleto. La cinta se cerrar\u00e1 despu\u00e9s."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13400000000000136
+    m_Localized: "Usa <sprite name=\"repair_token\"> para reparar dados da\u00f1ados y reducir el <style=wear>Desgaste</style>."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13400000000000137
+    m_Localized: "Mejora una cara para obtener <style=points>Puntos</style> extra permanentes. Cada mejora del dado cuesta m\u00e1s."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13400000000000138
+    m_Localized: "Por recursos restantes:\n\u2022 Cada {throwsPerToken} <color=#FFB18D><sprite name=\"throw_counter\" tint=1></color> \u2192 +1 <sprite name=\"repair_token\">\n\u2022 Cada {rerollsPerToken} <color=#FFB18D><sprite name=\"reroll_counter\" tint=1></color> \u2192 +1 <sprite name=\"repair_token\">"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

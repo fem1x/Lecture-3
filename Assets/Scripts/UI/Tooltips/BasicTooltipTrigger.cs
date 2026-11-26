@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.Localization;
@@ -27,9 +28,19 @@ namespace _Scripts.UI.Tooltips
         private BasicTooltipView _view;
         private bool _isListening;
 
+        public Func<string, string> TextFormatter { get; set; }
+
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 
-        private void Awake() => _target = (RectTransform)transform;
+        private void Awake()
+        {
+            _target = (RectTransform)transform;
+
+            // Prefab overrides can change the serialized key after its reference type was deserialized.
+            var entry = _text.TableEntryReference;
+            entry.OnAfterDeserialize();
+            _text.TableEntryReference = entry;
+        }
 
         private void LateUpdate()
         {
@@ -84,7 +95,7 @@ namespace _Scripts.UI.Tooltips
                 _view = Instantiate(_prefab, canvas.transform, false);
             }
 
-            _view.SetContent(text, GetDirection());
+            _view.SetContent(TextFormatter != null ? TextFormatter(text) : text, GetDirection());
             UpdatePosition();
             _view.Show();
         }

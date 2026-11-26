@@ -7,6 +7,7 @@ namespace _Scripts.UI
     public class HoverScaleView : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     {
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
+        [SerializeField] private RectTransform _scaleTarget;
         [SerializeField] private bool _insideLayoutGroup;
 
         [Header("Scale")]
@@ -21,20 +22,22 @@ namespace _Scripts.UI
         private Vector3 _defaultScale;
         private Tween _scaleTween;
 
+        // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
+
         private void Awake()
         {
-            _rectTransform = (RectTransform)transform;
+            _rectTransform = _scaleTarget != null ? _scaleTarget : (RectTransform)transform;
 
             if (!_insideLayoutGroup)
                 CenterPivot();
 
-            _defaultScale = transform.localScale;
+            _defaultScale = _rectTransform.localScale;
         }
 
         private void OnDisable()
         {
             _scaleTween?.Kill();
-            transform.localScale = _defaultScale;
+            _rectTransform.localScale = _defaultScale;
         }
 
         private void OnDestroy() => _scaleTween?.Kill();
@@ -58,7 +61,7 @@ namespace _Scripts.UI
         private void AnimateScale(Vector3 targetScale)
         {
             _scaleTween?.Kill();
-            _scaleTween = transform.DOScale(targetScale, _duration)
+            _scaleTween = _rectTransform.DOScale(targetScale, _duration)
                 .SetEase(_ease)
                 .SetUpdate(true)
                 .SetLink(gameObject);

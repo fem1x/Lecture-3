@@ -514,6 +514,22 @@ MonoBehaviour:
     m_Localized: "\u30c0\u30a4\u30b9 #{0}"
     m_Metadata:
       m_Items: []
+  - m_Id: 13400000000000135
+    m_Localized: "\u30c1\u30e3\u30fc\u30e0\u30921\u3064\u7372\u5f97\u3059\u308b\u304b\u5206\u89e3\u3059\u308b\u3068\u3001\u30b3\u30f3\u30d9\u30a2\u304c\u9589\u3058\u307e\u3059\u3002"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13400000000000136
+    m_Localized: "<sprite name=\"repair_token\">\u3092\u4f7f\u3063\u3066\u50b7\u3064\u3044\u305f\u30c0\u30a4\u30b9\u3092\u4fee\u7406\u3057\u3001<style=wear>\u6469\u8017</style>\u3092\u6e1b\u3089\u3057\u307e\u3059\u3002"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13400000000000137
+    m_Localized: "\u9762\u3092\u5f37\u5316\u3057\u3066<style=points>\u30dd\u30a4\u30f3\u30c8</style>\u306b\u6c38\u7d9a\u30dc\u30fc\u30ca\u30b9\u3092\u8ffd\u52a0\u3002\u540c\u3058\u30c0\u30a4\u30b9\u306e\u5f37\u5316\u8cbb\u7528\u306f\u6bce\u56de\u4e0a\u6607\u3002"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13400000000000138
+    m_Localized: "\u6b8b\u308a\u30ea\u30bd\u30fc\u30b9\u306e\u5831\u916c\uff1a\n\u2022 {throwsPerToken} <color=#FFB18D><sprite name=\"throw_counter\" tint=1></color> \u3054\u3068\u306b \u2192 +1 <sprite name=\"repair_token\">\n\u2022 {rerollsPerToken} <color=#FFB18D><sprite name=\"reroll_counter\" tint=1></color> \u3054\u3068\u306b \u2192 +1 <sprite name=\"repair_token\">"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

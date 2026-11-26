@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 8024448054283873984}
   - component: {fileID: 7800568427666495939}
   - component: {fileID: 7701408666177472978}
-  - component: {fileID: 3190443343945072987}
   m_Layer: 5
   m_Name: Visuals
   m_TagString: Untagged
@@ -62,7 +61,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
   m_Color: {r: 0.9921569, g: 0.6039216, b: 0.59607846, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -78,33 +77,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &3190443343945072987
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 514319482156732411}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f88ec0ef622d4170b112a9d23d757b48, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Game::_Scripts.UI.ButtonScaleView
-  _button: {fileID: 0}
-  _selectable: {fileID: 0}
-  _insideLayoutGroup: 0
-  _hoverScale: 1.2
-  _pressedScale: 0.7
-  _squashAmount: 0.1
-  _pressDipY: 3
-  _hoverTiltZ: 1.5
-  _pressTiltZ: 2
-  _hoverDuration: 0.15
-  _hoverEase: 12
-  _pressDuration: 0.06
-  _pressEase: 6
-  _releaseDuration: 0.5
-  _releaseEase: 27
 --- !u!1 &1927899129639798166
 GameObject:
   m_ObjectHideFlags: 0
@@ -116,6 +88,9 @@ GameObject:
   - component: {fileID: 4696991018645206500}
   - component: {fileID: 859582249619597022}
   - component: {fileID: 5394050482274741247}
+  - component: {fileID: 7403000000000000090}
+  - component: {fileID: 7403000000000000091}
+  - component: {fileID: 7403000000000000092}
   m_Layer: 5
   m_Name: ViewInfo
   m_TagString: Untagged
@@ -181,6 +156,63 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &7403000000000000090
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1927899129639798166}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 12d4882af6134a0b85c6dbd2c0d5afec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Game::_Scripts.UI.Tooltips.BasicTooltipTrigger
+  _prefab: {fileID: 7818079974194006116, guid: aa8859c2fc5b3074281ac6944c5fbb8a, type: 3}
+  _text:
+    m_TableReference:
+      m_TableCollectionName: GUID:9f9c89d5b6ad399428ec5a9fe072ff95
+    m_TableEntryReference:
+      m_KeyId: 0
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  _side: 0
+  _gap: 24
+  references:
+    version: 2
+    RefIds: []
+--- !u!114 &7403000000000000091
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1927899129639798166}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac52b52b63aa4663b1a3ff78ac56dba2, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Game::_Scripts.UI.HoverScaleView
+  _scaleTarget: {fileID: 8024448054283873984}
+  _insideLayoutGroup: 0
+  _hoverScale: 1.2
+  _duration: 0.15
+  _ease: 12
+--- !u!114 &7403000000000000092
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1927899129639798166}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c7e8b0945354a1f90df38be0873e216, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Game::_Scripts.UI.HoverSfxView
+  _hoverSfx: ButtonHover
 --- !u!1 &2514483202907824561
 GameObject:
   m_ObjectHideFlags: 0
@@ -240,7 +272,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -377,7 +409,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
   m_Color: {r: 0.48627454, g: 0.13333334, b: 0.21960786, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
@@ -37,7 +38,22 @@ namespace _Scripts.UI.Tooltips
 
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 
-        private void Awake() => _restScale = transform.localScale;
+        private void Awake()
+        {
+            _restScale = transform.localScale;
+            InitializeSpriteAssets(_content.spriteAsset, new HashSet<TMP_SpriteAsset>());
+        }
+
+        private static void InitializeSpriteAssets(TMP_SpriteAsset asset, HashSet<TMP_SpriteAsset> initialized)
+        {
+            if (asset == null || !initialized.Add(asset)) return;
+
+            asset.UpdateLookupTables();
+            if (asset.fallbackSpriteAssets == null) return;
+
+            foreach (var fallback in asset.fallbackSpriteAssets)
+                InitializeSpriteAssets(fallback, initialized);
+        }
 
         private void OnDisable()
         {

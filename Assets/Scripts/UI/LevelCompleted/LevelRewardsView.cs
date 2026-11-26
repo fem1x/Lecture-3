@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Threading;
+using _Scripts.Configs;
 using _Scripts.Dices;
+using _Scripts.UI.Tooltips;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using TMPro;
@@ -23,6 +25,10 @@ namespace _Scripts.UI
         [SerializeField] private TMP_Text _throwsTokensText;
         [SerializeField] private TMP_Text _rerollsTokensText;
 
+        [Header("Rewards Tooltip")]
+        [SerializeField] private BasicTooltipTrigger _rewardsTooltip;
+        [SerializeField] private TokenRewardConfig _tokenRewardConfig;
+
         [Header("Buttons")]
         [SerializeField] private Button _workshopButton;
 
@@ -33,7 +39,17 @@ namespace _Scripts.UI
         public event Action OnWorkshopRequested;
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 
-        private void Awake() => HideInstant();
+        private void Awake()
+        {
+            _rewardsTooltip.TextFormatter = FormatRewardsTooltip;
+            HideInstant();
+        }
+
+        private void OnDestroy() => _rewardsTooltip.TextFormatter = null;
+
+        private string FormatRewardsTooltip(string text) => text
+            .Replace("{throwsPerToken}", _tokenRewardConfig.ThrowsPerToken.ToString())
+            .Replace("{rerollsPerToken}", _tokenRewardConfig.RerollsPerToken.ToString());
 
         private void OnEnable() => _workshopButton.onClick.AddListener(HandleWorkshopButtonClick);
         private void OnDisable()

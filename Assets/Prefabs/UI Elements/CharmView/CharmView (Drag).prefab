@@ -110,6 +110,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 1214982661794929846, guid: 4b61beccc7d12674db762c3c90a46557, type: 3}
       insertIndex: -1
       addedObject: {fileID: 3896439942729936315}
+    - targetCorrespondingSourceObject: {fileID: 8861524988279060541, guid: 4b61beccc7d12674db762c3c90a46557, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3589807405651939179}
   m_SourcePrefab: {fileID: 100100000, guid: 4b61beccc7d12674db762c3c90a46557, type: 3}
 --- !u!224 &1571717376178421694 stripped
 RectTransform:
@@ -151,6 +154,24 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
+--- !u!1 &4702526731169024560 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8861524988279060541, guid: 4b61beccc7d12674db762c3c90a46557, type: 3}
+  m_PrefabInstance: {fileID: 4303414995645182477}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &3589807405651939179
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4702526731169024560}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c7e8b0945354a1f90df38be0873e216, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Game::_Scripts.UI.HoverSfxView
+  _hoverSfx: ButtonHover
 --- !u!114 &7644324132369258505 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5885876437102488068, guid: 4b61beccc7d12674db762c3c90a46557, type: 3}
