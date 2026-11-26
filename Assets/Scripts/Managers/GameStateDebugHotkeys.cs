@@ -22,7 +22,7 @@ namespace _Scripts.DebugTools
         #endregion
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 
-#if UNITY_EDITOR
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
         private void Update()
         {
             if (Keyboard.current == null) return;
@@ -36,7 +36,9 @@ namespace _Scripts.DebugTools
             if (Keyboard.current.f11Key.wasPressedThisFrame && _gameStateManager.CurrentState == GameState.Game)
                 _turnFlowController.AddDebugScore(1000);
         }
+#endif
 
+#if UNITY_EDITOR
         [ContextMenu("Debug / Trigger Victory")]
         private void TriggerVictory() => _gameStateManager.ChangeState(GameState.GameResult, GameEndType.Victory);
 

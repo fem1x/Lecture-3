@@ -307,6 +307,11 @@ MonoBehaviour:
   - {fileID: 1887069037}
   - {fileID: 1651493686}
   - {fileID: 1613519638}
+  _revealStartPercent: 8.1
+  _revealDuration: 0.91
+  _revealStagger: 0.15
+  _revealFadeEase: 6
+  _revealScaleEase: 18
 --- !u!1 &19885421
 GameObject:
   m_ObjectHideFlags: 0

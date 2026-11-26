@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using _Scripts.Configs;
 using _Scripts.Dices;
 using _Scripts.Managers;
@@ -28,6 +29,8 @@ namespace _Scripts.UI.Workshop
         private Tween _rotateTween;
         private Tween _scaleTween;
 
+        internal StaggeredReveal FaceReveal { get; private set; }
+
         #region DI
         private DiceUpgradeService _upgradeService;
         private RepairTokensManager _tokensManager;
@@ -47,6 +50,9 @@ namespace _Scripts.UI.Workshop
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
         private void Awake()
         {
+            var facesInLayoutOrder = _faceButtons.OrderBy(face => face.transform.GetSiblingIndex()).ToArray();
+            FaceReveal = new StaggeredReveal(facesInLayoutOrder, blockInteraction: false);
+
             for (var i = 0; i < _faceButtons.Count; i++)
             {
                 _faceButtons[i].Init(i);

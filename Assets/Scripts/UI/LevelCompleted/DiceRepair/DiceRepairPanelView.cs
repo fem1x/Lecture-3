@@ -28,7 +28,7 @@ namespace _Scripts.UI
         private RepairTokensManager _repairTokensManager;
         private DiceTableController _diceTableController;
         private bool _isBound;
-        private Sequence _slotReveal;
+        private StaggeredReveal _slotReveal;
 
         [Inject]
         public void Construct(
@@ -39,50 +39,29 @@ namespace _Scripts.UI
             _diceTableController = diceTableController;
         }
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
-        private void OnDisable() => _slotReveal?.Kill();
+        private void Awake() => _slotReveal = new StaggeredReveal(_repairViews);
+
+        private void OnDisable() => _slotReveal.Cancel();
 
         public void SetRepairMode(bool enable)
         {
-            _slotReveal?.Kill();
-
             if (enable && !_isBound)
                 BindDices();
 
             if (enable)
-            {
-                foreach (var view in _repairViews)
-                    view.PrepareReveal();
-            }
+                _slotReveal.Prepare();
+            else
+                _slotReveal.Cancel();
 
             var count = Mathf.Min(_repairViews.Count, _diceTableController.AllDices.Count);
             for (var i = 0; i < count; i++)
                 _repairViews[i].SetRepairMode(enable);
         }
 
-        internal async UniTask RevealSlotsAsync(float slideDuration, CancellationToken ct)
+        internal UniTask RevealSlotsAsync(float slideDuration, CancellationToken ct)
         {
-            ct.ThrowIfCancellationRequested();
-            if (_repairViews.Count == 0)
-                return;
-
             var delay = slideDuration * (_revealStartPercent / 100f);
-            var sequence = DOTween.Sequence().SetUpdate(true);
-            _slotReveal = sequence;
-            for (var i = 0; i < _repairViews.Count; i++)
-            {
-                var start = delay + i * _revealStagger;
-                _repairViews[i].InsertReveal(sequence, start, _revealDuration, _revealFadeEase, _revealScaleEase);
-            }
-
-            try
-            {
-                await sequence.ToUniTask(TweenCancelBehaviour.KillAndCancelAwait, ct);
-            }
-            finally
-            {
-                if (_slotReveal == sequence)
-                    _slotReveal = null;
-            }
+            return _slotReveal.PlayAsync(delay, _revealDuration, _revealStagger, _revealFadeEase, _revealScaleEase, ct);
         }
 
         private void BindDices()

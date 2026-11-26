@@ -207,7 +207,7 @@ namespace _Scripts.Managers
             return true;
         }
 
-#if UNITY_EDITOR
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
         public void AddDebugScore(int score)
         {
             if (!_diceRoller.CanRoll || _diceRoller.IsRolling || _isScoring) return;

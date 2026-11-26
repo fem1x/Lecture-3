@@ -43,7 +43,8 @@ namespace _Scripts.UI.Workshop
                              Time.unscaledTime - _mainHideStartTime < _fastReturnThreshold;
 
             _mainHideStartTime = -1f;
-            return RunStepsAsync(_mainShowSteps, show: true, ignoreDelays: fastReturn, ct, repairPanel);
+            return RunStepsAsync(_mainShowSteps, show: true, ignoreDelays: fastReturn, ct,
+                repairPanel.transform, repairPanel.RevealSlotsAsync);
         }
 
         public UniTask HideMainAsync(CancellationToken ct)
@@ -52,7 +53,9 @@ namespace _Scripts.UI.Workshop
             return RunStepsAsync(_mainHideSteps, show: false, ignoreDelays: false, ct);
         }
 
-        public UniTask ShowUpgradeAsync(CancellationToken ct) => RunStepsAsync(_upgradeShowSteps, show: true, ignoreDelays: false, ct);
+        public UniTask ShowUpgradeAsync(UpgradePanelView upgradePanel, CancellationToken ct) =>
+            RunStepsAsync(_upgradeShowSteps, show: true, ignoreDelays: false, ct,
+                upgradePanel.transform, upgradePanel.RevealSectionsAsync);
 
         public UniTask HideUpgradeAsync(CancellationToken ct) => RunStepsAsync(_upgradeHideSteps, show: false, ignoreDelays: false, ct);
 
@@ -67,7 +70,8 @@ namespace _Scripts.UI.Workshop
             bool show,
             bool ignoreDelays,
             CancellationToken ct,
-            DiceRepairPanelView repairPanel = null)
+            Transform revealTarget = null,
+            Func<float, CancellationToken, UniTask> reveal = null)
         {
             var tasks = new List<UniTask>(steps.Count);
 
@@ -81,8 +85,8 @@ namespace _Scripts.UI.Workshop
 
                 ct.ThrowIfCancellationRequested();
                 tasks.Add(show ? step.Slide.ShowAsync() : step.Slide.HideAsync());
-                if (repairPanel != null && step.Slide.Content == repairPanel.transform)
-                    tasks.Add(repairPanel.RevealSlotsAsync(step.Slide.ShowDuration, ct));
+                if (reveal != null && step.Slide.Content == revealTarget)
+                    tasks.Add(reveal(step.Slide.ShowDuration, ct));
             }
 
             await UniTask.WhenAll(tasks);

@@ -179,7 +179,7 @@ namespace _Scripts.UI
 
                     await UniTask.WhenAll(
                         _sequenceController.HideMainAsync(ct),
-                        _sequenceController.ShowUpgradeAsync(ct));
+                        _sequenceController.ShowUpgradeAsync(_upgradePanel, ct));
                 }
                 else
                 {
