@@ -18,6 +18,7 @@ namespace _Scripts.UI
         [SerializeField] private RectTransform _rect;
         [SerializeField] private CanvasGroup _cg;
         [SerializeField] private RectTransform _boundsRect;
+        [SerializeField] private PanelRevealView _panelReveal;
 
         [Header("Show")]
         [SerializeField] private float _showTime = 0.5f;
@@ -52,8 +53,17 @@ namespace _Scripts.UI
 
             _cg.Show();
 
-            await _rect.DOAnchorPos(_shownPos, _showTime)
-                .SetEase(_showEase)
+            Tween animation = _rect.DOAnchorPos(_shownPos, _showTime).SetEase(_showEase);
+            if (_panelReveal != null && !_panelReveal.IsRevealed)
+            {
+                animation = DOTween.Sequence()
+                    .SetTarget(_rect)
+                    .SetLink(gameObject)
+                    .Join(animation)
+                    .Join(_panelReveal.Show());
+            }
+
+            await animation
                 .SetUpdate(true)
                 .ToUniTask(TweenCancelBehaviour.KillAndCancelAwait, ct);
         }
@@ -72,7 +82,10 @@ namespace _Scripts.UI
                 .ToUniTask(TweenCancelBehaviour.KillAndCancelAwait, ct);
 
             if (Vector2.Distance(_rect.anchoredPosition, hiddenPos) <= 0.01f)
+            {
                 _cg.Hide();
+                _panelReveal?.HideInstant();
+            }
         }
 
         internal void StopSlide() => _rect.DOKill();
@@ -82,6 +95,7 @@ namespace _Scripts.UI
             EnsureInitialized();
             _rect.DOKill();
             _rect.anchoredPosition = _shownPos;
+            _panelReveal?.ShowInstant();
             _cg.Show();
         }
 
@@ -92,6 +106,7 @@ namespace _Scripts.UI
 
             _rect.anchoredPosition = _rect.GetHiddenPosition(_direction, _shownPos, _boundsRect);
             _cg.Hide();
+            _panelReveal?.HideInstant();
         }
 
         private void EnsureInitialized()

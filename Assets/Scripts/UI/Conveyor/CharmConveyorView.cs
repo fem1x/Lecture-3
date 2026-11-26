@@ -97,7 +97,7 @@ namespace _Scripts.UI
         #endregion
 
         public void InstantCloseShutter() => _shutter.InstantClose();
-        
+
         private void InitializeConveyorView()
         {
             ClearConveyorView();

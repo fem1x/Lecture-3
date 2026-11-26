@@ -124,8 +124,26 @@ namespace _Scripts.UI.Charms
         {
             _returnTween?.Kill();
             var startPosition = _rectTransform.position;
+            var enteredHolder = false;
+            var holderEntryProgress = 0f;
+            var holderEntryPosition = Vector3.zero;
             _returnTween = DOVirtual.Float(0f, 1f, _returnTweenTime, progress =>
-                    _rectTransform.position = Vector3.LerpUnclamped(startPosition, _cellHolder.position, progress))
+                {
+                    if (!enteredHolder)
+                    {
+                        _rectTransform.position = Vector3.LerpUnclamped(startPosition, _cellHolder.position, progress);
+                        var localPosition = _cellHolder.InverseTransformPoint(_rectTransform.position);
+                        if (!_cellHolder.rect.Contains(localPosition)) return;
+
+                        _rectTransform.SetParent(_cellHolder, worldPositionStays: true);
+                        enteredHolder = true;
+                        holderEntryProgress = progress;
+                        holderEntryPosition = _rectTransform.localPosition;
+                    }
+
+                    var remainingProgress = Mathf.InverseLerp(holderEntryProgress, 1f, progress);
+                    _rectTransform.localPosition = Vector3.LerpUnclamped(holderEntryPosition, Vector3.zero, remainingProgress);
+                })
                 .SetEase(_returnEase)
                 .SetLink(gameObject)
                 .OnComplete(() =>
@@ -151,10 +169,9 @@ namespace _Scripts.UI.Charms
             transform.localScale = Vector3.one;
 
             if (_rectTransform.parent != _cellHolder)
-            {
                 _rectTransform.SetParent(_cellHolder, worldPositionStays: false);
-                _rectTransform.anchoredPosition = Vector2.zero;
-            }
+
+            _rectTransform.anchoredPosition = Vector2.zero;
         }
 
         public void Consume()

@@ -84,7 +84,7 @@ namespace _Scripts.UI.Workshop
                     await UniTask.Delay(TimeSpan.FromSeconds(step.DelayBeforeStart), ignoreTimeScale: true, cancellationToken: ct);
 
                 ct.ThrowIfCancellationRequested();
-                tasks.Add(show ? step.Slide.ShowAsync() : step.Slide.HideAsync());
+                tasks.Add(show ? step.Slide.ShowAsync(ct) : step.Slide.HideAsync(ct));
                 if (reveal != null && step.Slide.Content == revealTarget)
                     tasks.Add(reveal(step.Slide.ShowDuration, ct));
             }
