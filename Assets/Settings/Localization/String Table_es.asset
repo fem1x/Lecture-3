@@ -398,6 +398,14 @@ MonoBehaviour:
     m_Localized: "Recoge o desguaza un amuleto primero"
     m_Metadata:
       m_Items: []
+  - m_Id: 13400000000000126
+    m_Localized: "<size=17><b><color=#FFA98E>HAZ CLIC</color></b></size>\npara ver el efecto"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13400000000000127
+    m_Localized: "<size=17><b><color=#FFA98E>ARRASTRA</color></b></size>\npara recoger"
+    m_Metadata:
+      m_Items: []
   - m_Id: 13400000000000100
     m_Localized: "AJUSTES"
     m_Metadata:

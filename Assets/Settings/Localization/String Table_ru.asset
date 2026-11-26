@@ -398,6 +398,14 @@ MonoBehaviour:
     m_Localized: "\u0421\u043d\u0430\u0447\u0430\u043b\u0430 \u0437\u0430\u0431\u0435\u0440\u0438 \u0438\u043b\u0438 \u0440\u0430\u0437\u0431\u0435\u0440\u0438 \u0447\u0430\u0440\u043c"
     m_Metadata:
       m_Items: []
+  - m_Id: 13400000000000126
+    m_Localized: "<size=17><b><color=#FFA98E>\u041d\u0410\u0416\u041c\u0418</color></b></size>\n\u0434\u043b\u044f \u043e\u043f\u0438\u0441\u0430\u043d\u0438\u044f"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13400000000000127
+    m_Localized: "<size=17><b><color=#FFA98E>\u041f\u0415\u0420\u0415\u0422\u0410\u0429\u0418</color></b></size>\n\u0447\u0442\u043e\u0431\u044b \u0437\u0430\u0431\u0440\u0430\u0442\u044c"
+    m_Metadata:
+      m_Items: []
   - m_Id: 13400000000000100
     m_Localized: "\u041D\u0410\u0421\u0422\u0420\u041E\u0419\u041A\u0418"
     m_Metadata:

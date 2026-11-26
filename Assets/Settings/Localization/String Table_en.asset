@@ -398,6 +398,14 @@ MonoBehaviour:
     m_Localized: "Claim or scrap a charm first"
     m_Metadata:
       m_Items: []
+  - m_Id: 13400000000000126
+    m_Localized: "<size=17><b><color=#FFA98E>CLICK</color></b></size>\nto inspect"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13400000000000127
+    m_Localized: "<size=17><b><color=#FFA98E>DRAG</color></b></size>\nto take"
+    m_Metadata:
+      m_Items: []
   - m_Id: 13400000000000100
     m_Localized: "SETTINGS"
     m_Metadata:

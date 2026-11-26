@@ -39,21 +39,25 @@ namespace _Scripts.UI
         private readonly List<ConveyorCellView> _spawnedCellsList = new();
         private RectTransform _containerRect;
         private Tween _moveTween;
+        private ConveyorCellView _hintCell;
         
         #region DI
         private CharmsConveyorService  _conveyorService;
+        private CharmDragState _dragState;
         private IObjectResolver _resolver;
 
         [Inject]
-        public void Construct(CharmsConveyorService conveyorService, IObjectResolver resolver)
+        public void Construct(CharmsConveyorService conveyorService, CharmDragState dragState, IObjectResolver resolver)
         {
             _resolver = resolver;
             _conveyorService = conveyorService;
+            _dragState = dragState;
 
             _conveyorService.OnConveyorInitialized += InitializeConveyorView;
             _conveyorService.OnStateChanged += RefreshButtonsState;
             _conveyorService.OnConveyorMoved += MoveToCharm;
             _conveyorService.OnChoiceCompleted += CloseConveyor;
+            _dragState.OnDragChanged += HandleDragChanged;
 
             RefreshButtonsState();
         }
@@ -81,6 +85,7 @@ namespace _Scripts.UI
             _conveyorService.OnConveyorMoved -= MoveToCharm;
             _conveyorService.OnConveyorInitialized -= InitializeConveyorView;
             _conveyorService.OnChoiceCompleted -= CloseConveyor;
+            _dragState.OnDragChanged -= HandleDragChanged;
             _moveTween?.Kill();
         }
         #endregion
@@ -124,6 +129,7 @@ namespace _Scripts.UI
             UpdateDraggableCharm(0);
             
             _shutter.Open();
+            ShowHintsFor(0);
         }
 
         private void HandleCharmClicked(CharmConfigBase config)
@@ -135,6 +141,7 @@ namespace _Scripts.UI
         public void ClearConveyorView()
         {
             _moveTween?.Kill();
+            HideHints();
             ResetCharmStates();
 
             foreach (var cell in _spawnedCellsList)
@@ -151,6 +158,7 @@ namespace _Scripts.UI
 
         private void MoveToCharm(int charmIndex)
         {
+            HideHints();
             ResetCharmStates();
             RevealCharm(charmIndex);
             UpdateDraggableCharm(charmIndex);
@@ -160,8 +168,26 @@ namespace _Scripts.UI
             _moveTween = _containerRect
                 .DOAnchorPosX(targetX, _moveDuration)
                 .SetEase(_moveEase)
-                .OnComplete(() => UpdateIndicators(charmIndex));
+                .OnComplete(() =>
+                {
+                    UpdateIndicators(charmIndex);
+                    ShowHintsFor(charmIndex);
+                });
         }
+
+        private void ShowHintsFor(int charmIndex)
+        {
+            _hintCell = _spawnedCellsList[charmIndex];
+            HandleDragChanged(_dragState.IsDragging);
+        }
+
+        private void HideHints()
+        {
+            _hintCell?.SetHintsVisible(false);
+            _hintCell = null;
+        }
+
+        private void HandleDragChanged(bool isDragging) => _hintCell?.SetHintsVisible(!isDragging);
 
         private void UpdateIndicators(int activeIndex)
         {
@@ -209,6 +235,8 @@ namespace _Scripts.UI
 
         private void CloseConveyor()
         {
+            _moveTween?.OnComplete(() => UpdateIndicators(_conveyorService.CurrentIndex));
+            HideHints();
             _nextButton.interactable = false;
             _reverseButton.interactable = false;
             UpdateDraggableCharm(-1);
