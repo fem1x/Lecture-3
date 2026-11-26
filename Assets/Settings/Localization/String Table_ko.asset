@@ -391,7 +391,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 13353517863403520
-    m_Localized: "\ubd80\uc801\uc744 \uc5ec\uae30\ub85c \ub4dc\ub798\uadf8\ud574 \ubd84\ud574\ud558\uace0 \uc218\ub9ac \ud1a0\ud070 \ud68d\ub4dd"
+    m_Localized: "\ubd80\uc801\uc744 \uc5ec\uae30\ub85c \ub4dc\ub798\uadf8\ud558\uc138\uc694: <nobr>+3 <sprite name=\"repair_token\"></nobr>. \ucee8\ubca0\uc774\uc5b4\uac00 \ub2eb\ud799\ub2c8\ub2e4."
     m_Metadata:
       m_Items: []
   - m_Id: 13400000000000125

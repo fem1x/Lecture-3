@@ -391,7 +391,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 13353517863403520
-    m_Localized: "Drag a charm here to scrap it for Repair Tokens"
+    m_Localized: "Drag a charm here: <nobr>+3 <sprite name=\"repair_token\"></nobr>. The conveyor closes."
     m_Metadata:
       m_Items: []
   - m_Id: 13400000000000125

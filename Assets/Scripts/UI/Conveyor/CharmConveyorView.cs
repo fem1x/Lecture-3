@@ -21,6 +21,7 @@ namespace _Scripts.UI
         [SerializeField] private CharmCardView _charmCardView;
         
         [Header("Conveyor Movement")]
+        [SerializeField] private RawImage _belt;
         [SerializeField] private float _moveDuration = 0.8f;
         [SerializeField] private Ease  _moveEase = Ease.OutCubic;
         
@@ -38,6 +39,8 @@ namespace _Scripts.UI
 
         private readonly List<ConveyorCellView> _spawnedCellsList = new();
         private RectTransform _containerRect;
+        private Rect _beltStartUv;
+        private float _conveyorStartX;
         private Tween _moveTween;
         private ConveyorCellView _hintCell;
         
@@ -64,7 +67,11 @@ namespace _Scripts.UI
         #endregion
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 
-        private void Awake() => _containerRect = (RectTransform)_containerLayout.transform;
+        private void Awake()
+        {
+            _containerRect = (RectTransform)_containerLayout.transform;
+            _beltStartUv = _belt.uvRect;
+        }
         
         #region Event Subscriptions
         private void OnEnable()
@@ -168,6 +175,7 @@ namespace _Scripts.UI
             _moveTween = _containerRect
                 .DOAnchorPosX(targetX, _moveDuration)
                 .SetEase(_moveEase)
+                .OnUpdate(UpdateBeltPosition)
                 .OnComplete(() => UpdateIndicators(charmIndex));
 
             ShowHintsFor(charmIndex);
@@ -204,6 +212,16 @@ namespace _Scripts.UI
             _moveTween?.Kill();
             var targetX = -_spawnedCellsList[0].transform.localPosition.x;
             _containerRect.anchoredPosition = new Vector2(targetX, _containerRect.anchoredPosition.y);
+            _conveyorStartX = targetX;
+            UpdateBeltPosition();
+        }
+
+        private void UpdateBeltPosition()
+        {
+            var travel = _containerRect.anchoredPosition.x - _conveyorStartX;
+            var uv = _beltStartUv;
+            uv.x -= travel * uv.width / _belt.GetPixelAdjustedRect().width;
+            _belt.uvRect = uv;
         }
 
         private void AdjustContainerLayout()

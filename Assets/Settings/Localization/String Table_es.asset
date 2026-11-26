@@ -391,7 +391,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 13353517863403520
-    m_Localized: "Arrastra un amuleto aqu\u00ed para desguazarlo y obtener fichas de reparaci\u00f3n"
+    m_Localized: "Arrastra aqu\u00ed un amuleto: <nobr>+3 <sprite name=\"repair_token\"></nobr>. La cinta se cerrar\u00e1."
     m_Metadata:
       m_Items: []
   - m_Id: 13400000000000125
