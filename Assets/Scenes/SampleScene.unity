@@ -13911,6 +13911,7 @@ MonoBehaviour:
   _container: {fileID: 9091766210603234501}
   _cg: {fileID: 4828051432855830251}
   _rect: {fileID: 1822807901923492006}
+  _title: {fileID: 1975333761826384005}
   _backdropButton: {fileID: 2421588253475816409}
   _hideButton: {fileID: 2914641550648192865}
   _showButton: {fileID: 91336836374503050}
@@ -16590,6 +16591,27 @@ MonoBehaviour:
   _text: {fileID: 6030161935612981034}
   _showDuration: 0.86
   _showEase: 10
+  _hideDuration: 0.2
+  _hideEase: 8
+  _characterDurationFraction: 0.2
+  _riseInGlyphHeights: 0.35
+  _startScale: 0.25
+  _characterEase: 27
+--- !u!114 &1975333761826384005
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5571316405187440190}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc999df181c447e5baf5ad04b6406856, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Game::_Scripts.UI.TextRevealView
+  _text: {fileID: 7109329667197505681}
+  _showDuration: 1.27
+  _showEase: 12
   _hideDuration: 0.2
   _hideEase: 8
   _characterDurationFraction: 0.2
@@ -26768,6 +26790,7 @@ GameObject:
   - component: {fileID: 1006297681583253528}
   - component: {fileID: 7109329667197505681}
   - component: {fileID: 3095934315536778300}
+  - component: {fileID: 1975333761826384005}
   m_Layer: 5
   m_Name: (Text) Title
   m_TagString: Untagged

@@ -17,6 +17,7 @@ namespace _Scripts.UI.Tooltips
         private const float HideSlideDistance = 12f;
 
         [SerializeField] private TMP_Text _content;
+        [SerializeField] private TextRevealView _textReveal;
         [SerializeField] private RectTransform _arrow;
         [SerializeField] private CanvasGroup _canvasGroup;
 
@@ -36,6 +37,7 @@ namespace _Scripts.UI.Tooltips
         private Vector2 _direction;
         private float _slideOffset;
         private Tween _transition;
+        private Tween _textTransition;
         private bool _isShowing;
 
         internal event Action DismissRequested;
@@ -65,6 +67,8 @@ namespace _Scripts.UI.Tooltips
             SetDismissible(false);
             _transition?.Kill();
             _transition = null;
+            _textTransition?.Kill();
+            _textTransition = null;
         }
 
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
@@ -103,6 +107,8 @@ namespace _Scripts.UI.Tooltips
             gameObject.SetActive(true);
             transform.SetAsLastSibling();
             _isShowing = true;
+            _textTransition?.Kill();
+            _textTransition = _textReveal.Show().OnComplete(() => _textTransition = null);
 
             if (_showDuration <= 0f)
             {
@@ -138,6 +144,9 @@ namespace _Scripts.UI.Tooltips
 
             _isShowing = false;
             SetDismissible(false);
+            _textTransition?.Kill();
+            _textTransition = null;
+            _textReveal.Restore();
             if (_hideDuration <= 0f)
             {
                 HideImmediately();

@@ -21,6 +21,7 @@ namespace _Scripts.UI
         [SerializeField] private Transform _container;
         [SerializeField] private CanvasGroup _cg;
         [SerializeField] private RectTransform _rect;
+        [SerializeField] private TextRevealView _title;
         
         [Header("Buttons")]
         [SerializeField] private Button _backdropButton;
@@ -41,6 +42,7 @@ namespace _Scripts.UI
         [SerializeField] private Ease _scaleInEase = Ease.OutBack;
         [SerializeField] private Ease _fadeInEase = Ease.InSine;
 
+        private Tween _titleTween;
         private Tween _slideTween;
         private Tween _fadeTween;
         private float _backdropOpacity;
@@ -50,12 +52,14 @@ namespace _Scripts.UI
         private CancellationTokenSource _cardSpawn;
         private ActiveCombinationsService _combinationsService;
         private AudioFilterController _audioFilterController;
+        private ISfxPlayer _sfxPlayer;
 
         [Inject]
-        public void Construct(ActiveCombinationsService combinationsService, AudioFilterController audioFilterController)
+        public void Construct(ActiveCombinationsService combinationsService, AudioFilterController audioFilterController, ISfxPlayer sfxPlayer)
         {
             _combinationsService = combinationsService;
             _audioFilterController = audioFilterController;
+            _sfxPlayer = sfxPlayer;
         }
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== 
 
@@ -78,6 +82,8 @@ namespace _Scripts.UI
 
         private void OnDisable()
         {
+            _titleTween?.Kill();
+            _title.Restore();
             _cardSpawn?.Cancel();
             _backdropButton.onClick.RemoveListener(Hide);
             _hideButton.onClick.RemoveListener(Hide);
@@ -100,7 +106,7 @@ namespace _Scripts.UI
                     token.ThrowIfCancellationRequested();
                     var card = Instantiate(_cardPrefab, _container);
                     _spawnedCards.Add(card);
-                    card.Setup(config);
+                    card.Setup(config, _sfxPlayer);
                     card.transform.DoScaleIn(time: _scaleInTime, ease: _scaleInEase);
                     card.PlayShowAnimation(_scaleInTime, _fadeInEase);
 
@@ -135,6 +141,7 @@ namespace _Scripts.UI
             SetShownState(true);
             KillTweens();
             
+            _titleTween = _title.Show();
             _slideTween = _rect.DOAnchorPosY(0f, _showTime).SetEase(_showEase);
             _fadeTween = _backdropImage.DOFade(_backdropOpacity, _showTime).SetEase(_showEase);
             
@@ -186,6 +193,8 @@ namespace _Scripts.UI
 
         private void KillTweens()
         {
+            _titleTween?.Kill();
+            _title.Restore();
             _slideTween.Kill();
             _fadeTween.Kill();
         }

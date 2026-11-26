@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 5321293573924698147}
   - component: {fileID: 8055616531025026879}
   - component: {fileID: 7818079974194006115}
+  - component: {fileID: 7818079974194006118}
   m_Layer: 5
   m_Name: (Text) Content
   m_TagString: Untagged
@@ -160,6 +161,27 @@ MonoBehaviour:
   m_LayoutPriority: 1
   m_MaxWidth: 290
   m_MaxHeight: -1
+--- !u!114 &7818079974194006118
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1143692756706698068}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc999df181c447e5baf5ad04b6406856, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Game::_Scripts.UI.TextRevealView
+  _text: {fileID: 8055616531025026879}
+  _showDuration: 1
+  _showEase: 12
+  _hideDuration: 0.2
+  _hideEase: 6
+  _characterDurationFraction: 0.2
+  _riseInGlyphHeights: 0.35
+  _startScale: 0.25
+  _characterEase: 27
 --- !u!1 &4527028972801063995
 GameObject:
   m_ObjectHideFlags: 0
@@ -353,6 +375,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Game::_Scripts.UI.Tooltips.BasicTooltipView
   _content: {fileID: 8055616531025026879}
+  _textReveal: {fileID: 7818079974194006118}
   _arrow: {fileID: 6856804226874233607}
   _canvasGroup: {fileID: 7818079974194006117}
   _showDuration: 0.52

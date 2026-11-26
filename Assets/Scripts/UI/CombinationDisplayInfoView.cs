@@ -32,15 +32,17 @@ namespace _Scripts.UI
         [SerializeField] private float _timeBetweenDices = 0.1f;
         [SerializeField] private float _flipTime;
         
+        private ISfxPlayer _sfxPlayer;
         private CombinationConfig _config;
         private int _currentPatternIndex;
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
         
         private void OnDisable() => CancelInvoke(nameof(NextPattern));
         
-        public void Setup(CombinationConfig config)
+        public void Setup(CombinationConfig config, ISfxPlayer sfxPlayer)
         {
             _config = config;
+            _sfxPlayer = sfxPlayer;
 
             _titleText.text = _config.DisplayName.GetLocalizedString();
             _descriptionText.text = _config.Description.GetLocalizedString();
@@ -89,6 +91,7 @@ namespace _Scripts.UI
                 slot.gameObject.SetActive(true);
                 var nextSprite = _diceAtlasConfig.GetSprite(pattern.Values[i]);
                 
+                _sfxPlayer.Play("DiceFaceFlip");
                 slot.transform.DoFlipX(() => slot.sprite = nextSprite, _flipTime);
                 await UniTask.Delay(TimeSpan.FromSeconds(_timeBetweenDices), cancellationToken: token);
             }
