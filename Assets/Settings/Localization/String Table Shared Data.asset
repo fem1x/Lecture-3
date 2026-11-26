@@ -539,6 +539,22 @@ MonoBehaviour:
     m_Key: settings_apply_and_close
     m_Metadata:
       m_Items: []
+  - m_Id: 13833167742951424
+    m_Key: pause_title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13833167801671680
+    m_Key: pause_resume
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13833167801671681
+    m_Key: pause_settings
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13833167801671682
+    m_Key: pause_main_menu
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

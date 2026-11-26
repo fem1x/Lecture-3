@@ -558,6 +558,22 @@ MonoBehaviour:
     m_Localized: GUARDAR
     m_Metadata:
       m_Items: []
+  - m_Id: 13833167742951424
+    m_Localized: Pausa
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13833167801671680
+    m_Localized: Reanudar
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13833167801671681
+    m_Localized: Ajustes
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13833167801671682
+    m_Localized: "Men\xFA principal"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:
