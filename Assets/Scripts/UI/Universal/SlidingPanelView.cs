@@ -32,6 +32,7 @@ namespace _Scripts.UI
         private bool _isInitialized;
 
         internal RectTransform Content => _rect;
+        internal CanvasGroup Group => _cg;
         internal float ShowDuration => _showTime;
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
         private void Awake()

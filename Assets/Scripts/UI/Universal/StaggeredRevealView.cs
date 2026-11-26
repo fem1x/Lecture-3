@@ -41,14 +41,16 @@ namespace _Scripts.UI
         private void OnDisable() => Restore();
 
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
-        public void Show()
+        public void Show() => Show(_delay);
+
+        internal void Show(float delay)
         {
             Restore();
             _sequence = DOTween.Sequence().SetUpdate(true);
 
             for (var i = 0; i < _elements.Length; i++)
             {
-                var start = _delay + i * _revealStagger;
+                var start = delay + i * _revealStagger;
                 _groups[i].alpha = 0f;
                 _elements[i].localScale = _scales[i] * 0.96f;
                 _sequence.Insert(start, _groups[i].DOFade(_alphas[i], _revealDuration).SetEase(_revealFadeEase));

@@ -28,6 +28,8 @@ namespace _Scripts.UI
         [SerializeField, Min(0f)] private float _resumeTime = 0.3f;
         [SerializeField] private Ease _resumeEase = Ease.OutCubic;
 
+        [SerializeField] private PauseSettingsTransition _settingsTransition;
+
         private readonly LocalizedString _titleLabel = new("String Table", "pause_title");
         private readonly LocalizedString _resumeLabel = new("String Table", "pause_resume");
         private readonly LocalizedString _settingsLabel = new("String Table", "pause_settings");
@@ -41,6 +43,7 @@ namespace _Scripts.UI
         private Sequence _entranceTween;
         private bool _paused;
         private bool _settingsActive;
+        private bool _settingsMorphing;
         private bool _leaving;
         private GameObject _previousSelection;
 
@@ -74,7 +77,7 @@ namespace _Scripts.UI
             _resumeButton.onClick.AddListener(Resume);
             _settingsButton.onClick.AddListener(OpenSettings);
             _mainMenuButton.onClick.AddListener(ReturnToMenu);
-            _settings.Closed += ReturnFromSettings;
+            _settings.ClosingFromPause += ReturnFromSettings;
             _gameState.StateChanged += OnStateChanged;
         }
 
@@ -83,7 +86,7 @@ namespace _Scripts.UI
             _resumeButton.onClick.RemoveListener(Resume);
             _settingsButton.onClick.RemoveListener(OpenSettings);
             _mainMenuButton.onClick.RemoveListener(ReturnToMenu);
-            _settings.Closed -= ReturnFromSettings;
+            _settings.ClosingFromPause -= ReturnFromSettings;
             _gameState.StateChanged -= OnStateChanged;
             ResetPause();
         }
@@ -100,7 +103,7 @@ namespace _Scripts.UI
 
             if (_settingsActive)
             {
-                if (_settings.IsOpen) _settings.Toggle();
+                if (_settings.IsOpen && !_settingsMorphing) _settings.Toggle();
                 return;
             }
 
@@ -160,25 +163,37 @@ namespace _Scripts.UI
             if (!_paused || _settingsActive || _leaving) return;
 
             _settingsActive = true;
-            OpenSettingsAsync(RestartAnimation()).Forget();
-        }
-
-        private async UniTaskVoid OpenSettingsAsync(CancellationToken token)
-        {
-            PlayTitleHide();
-            await _slide.HideAsync(token).SuppressCancellationThrow();
-            if (!token.IsCancellationRequested)
-            {
-                ResetEntrance();
-                _settings.ShowFromPause();
-            }
+            MorphSettingsAsync(opening: true).Forget();
         }
 
         private void ReturnFromSettings()
         {
             if (!_paused || _leaving) return;
-            _settingsActive = false;
-            ShowPanel();
+            MorphSettingsAsync(opening: false).Forget();
+        }
+
+        private async UniTaskVoid MorphSettingsAsync(bool opening)
+        {
+            _settingsMorphing = true;
+            var token = RestartAnimation(resetEntrance: !opening);
+            _entranceTween?.Kill();
+            await _settingsTransition.PlayAsync(opening, _slide, _title, _settings, _settingsButton, OnReveal, token)
+                .SuppressCancellationThrow();
+            if (token.IsCancellationRequested) return;
+
+            _settingsMorphing = false;
+            if (opening)
+                ResetEntrance();
+
+            void OnReveal()
+            {
+                _settingsMorphing = false;
+                if (!opening)
+                {
+                    _settingsActive = false;
+                    _buttonsReveal.Show(0f);
+                }
+            }
         }
 
         private void ReturnToMenu()
@@ -209,20 +224,26 @@ namespace _Scripts.UI
             _timeTween?.Kill();
             Time.timeScale = 1f;
             _slide.HideInstant();
-            _settings.HideBackdrop();
+            if (_settings)
+            {
+                _settings.FinishClosingFromPause();
+                _settings.HideBackdrop();
+            }
             SettingsMenuView.PauseBlocksGameplayInput = false;
             _paused = false;
             _settingsActive = false;
+            _settingsMorphing = false;
             _leaving = false;
             _previousSelection = null;
             gameObject.SetActive(false);
         }
 
-        private CancellationToken RestartAnimation()
+        private CancellationToken RestartAnimation(bool resetEntrance = true)
         {
             _animation?.Cancel();
             _animation?.Dispose();
-            ResetEntrance();
+            if (resetEntrance)
+                ResetEntrance();
             _animation = CancellationTokenSource.CreateLinkedTokenSource(destroyCancellationToken);
             return _animation.Token;
         }

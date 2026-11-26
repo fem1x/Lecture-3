@@ -56,6 +56,8 @@ namespace _Scripts.UI
         [SerializeField] private Button _closeButton;
         [SerializeField] private Button _applyButton;
         [SerializeField] private TextRevealView _title;
+        [SerializeField] private Image _frame;
+        [SerializeField] private Image _header;
 
         [Header("Close Confirmation")]
         [SerializeField] private GameObject _closeConfirmation;
@@ -115,6 +117,10 @@ namespace _Scripts.UI
         private Vector2 _confirmationRestPosition;
         private bool _dismissingConfirmation;
         private EntranceItem _closeEntrance;
+        private EntranceItem _applyEntrance;
+        private Vector2 _applyRestPosition;
+        private Image _contentBackground;
+        private float _contentBackgroundAlpha;
         private EntranceItem[] _tabEntrances;
         private EntranceItem[][] _pageEntrances;
         private readonly Dictionary<TMP_Text, (Vector2 Position, Vector3 Scale)> _valueRestPoses = new();
@@ -129,7 +135,8 @@ namespace _Scripts.UI
         internal static bool PauseBlocksGameplayInput { get; set; }
         public static bool BlocksGameplayInput => _settingsBlockInput || PauseBlocksGameplayInput;
         public bool IsOpen => _wantsOpen;
-        public event Action Closed;
+        internal event Action ClosingFromPause;
+        internal PauseSettingsTransition.Panel MorphPanel => new(_frame, _header, _title, _panel);
         private bool _openedFromPause;
 
         [Inject]
@@ -151,6 +158,10 @@ namespace _Scripts.UI
             }
 
             _closeEntrance = CreateEntranceItem((RectTransform)_closeButton.transform);
+            _applyEntrance = CreateEntranceItem((RectTransform)_applyButton.transform);
+            _applyRestPosition = _applyEntrance.Rect.anchoredPosition;
+            _contentBackground = _tabs[0].Page.transform.parent.GetComponent<Image>();
+            _contentBackgroundAlpha = _contentBackground.color.a;
             _tabEntrances = _tabs.Select(tab => CreateEntranceItem((RectTransform)tab.Button.transform)).ToArray();
             _pageEntrances = _tabs.Select(tab =>
                 tab.Page.transform.Cast<Transform>().Select(child => CreateEntranceItem((RectTransform)child)).ToArray()).ToArray();
@@ -252,28 +263,70 @@ namespace _Scripts.UI
 
         public void Show()
         {
-            if (_wantsOpen) return;
+            if (PrepareToShow())
+                SetVisibleAsync(true).Forget();
+        }
+
+        internal void PrepareFromPause()
+        {
+            _openedFromPause = true;
+            PrepareToShow();
+            _slide.ShowInstant();
+            _panel.alpha = 0f;
+            _panel.interactable = false;
+            _panel.blocksRaycasts = false;
+            _backdrop.interactable = false;
+        }
+
+        internal void RevealFromPause()
+        {
+            _entranceTween = DOTween.Sequence().SetUpdate(true);
+            PlayContentEntrance(0f);
+            PlayPanelDetailsEntrance();
+
+            _panel.interactable = true;
+            _panel.blocksRaycasts = true;
+            _backdrop.interactable = true;
+            SelectActiveTabButton();
+        }
+
+        internal void FinishClosingFromPause()
+        {
+            if (!_openedFromPause) return;
+
+            if (_wantsOpen)
+                _settings.RestoreSound();
+            _slide.HideInstant();
+            FinishHide();
+            gameObject.SetActive(false);
+            _openedFromPause = false;
+        }
+
+        private bool PrepareToShow()
+        {
+            if (_wantsOpen) return false;
 
             gameObject.SetActive(true);
-            if (!isActiveAndEnabled) return;
+            if (!isActiveAndEnabled) return false;
 
             _wantsOpen = true;
             if (!_settingsBlockInput)
             {
-                CaptureSelection();
+                if (!_openedFromPause)
+                    CaptureSelection();
                 SelectTab(_activeTab, animate: false);
             }
             _pending = AppliedOptions();
             RefreshControls();
             _settingsBlockInput = true;
             _backdrop.blocksRaycasts = true;
-            SetVisibleAsync(true).Forget();
+            return true;
         }
 
-        public void ShowFromPause()
+        private void SelectActiveTabButton()
         {
-            _openedFromPause = true;
-            Show();
+            if (EventSystem.current != null)
+                EventSystem.current.SetSelectedGameObject(_tabs[_activeTab].Button.gameObject);
         }
 
         public void ShowBackdrop()
@@ -406,7 +459,10 @@ namespace _Scripts.UI
             _panel.blocksRaycasts = false;
             _backdrop.interactable = false;
             _settings.RestoreSound();
-            SetVisibleAsync(false).Forget();
+            if (_openedFromPause)
+                ClosingFromPause?.Invoke();
+            else
+                SetVisibleAsync(false).Forget();
         }
 
         private void CloseDropdowns()
@@ -424,18 +480,16 @@ namespace _Scripts.UI
             CancelTransition();
             _transition = new CancellationTokenSource();
             var token = _transition.Token;
-            if (!_openedFromPause)
-                _backdropTween = _backdrop.DOFade(visible ? _backdropOpacity : 0f,
-                        visible ? _backdropFadeInTime : _backdropFadeOutTime)
-                    .SetEase(visible ? _backdropFadeInEase : _backdropFadeOutEase).SetUpdate(true);
+            _backdropTween = _backdrop.DOFade(visible ? _backdropOpacity : 0f,
+                    visible ? _backdropFadeInTime : _backdropFadeOutTime)
+                .SetEase(visible ? _backdropFadeInEase : _backdropFadeOutEase).SetUpdate(true);
 
             if (visible)
             {
                 var slide = _slide.ShowAsync(token);
                 PlayEntrance();
                 _backdrop.interactable = true;
-                if (EventSystem.current != null)
-                    EventSystem.current.SetSelectedGameObject(_tabs[_activeTab].Button.gameObject);
+                SelectActiveTabButton();
                 await UniTask.WhenAll(
                     slide.SuppressCancellationThrow(),
                     _entranceTween.ToUniTask(TweenCancelBehaviour.KillAndCancelAwait, token).SuppressCancellationThrow());
@@ -445,15 +499,10 @@ namespace _Scripts.UI
                 await UniTask.WhenAll(
                     _slide.HideAsync(token).SuppressCancellationThrow(),
                     _title.Hide().ToUniTask(TweenCancelBehaviour.KillAndCancelAwait, token).SuppressCancellationThrow(),
-                    _openedFromPause ? UniTask.FromResult(false) :
-                        _backdropTween.ToUniTask(TweenCancelBehaviour.KillAndCancelAwait, token).SuppressCancellationThrow());
+                    _backdropTween.ToUniTask(TweenCancelBehaviour.KillAndCancelAwait, token).SuppressCancellationThrow());
                 if (token.IsCancellationRequested) return;
-                var returnToPause = _openedFromPause;
                 FinishHide();
                 gameObject.SetActive(false);
-                _openedFromPause = false;
-                if (returnToPause)
-                    Closed?.Invoke();
             }
         }
 
@@ -462,7 +511,8 @@ namespace _Scripts.UI
             _transition?.Cancel();
             _transition?.Dispose();
             _transition = null;
-            _backdropTween?.Kill();
+            if (!_openedFromPause)
+                _backdropTween?.Kill();
             ResetEntrance();
         }
 
@@ -479,11 +529,16 @@ namespace _Scripts.UI
         {
             _entranceTween = DOTween.Sequence().SetUpdate(true);
             _entranceTween.Insert(0.12f, _title.Show());
-            AddEntrance(_closeEntrance, 0.12f);
+            PlayContentEntrance(0.12f);
+        }
+
+        private void PlayContentEntrance(float start)
+        {
+            AddEntrance(_closeEntrance, start);
             for (var i = 0; i < _tabEntrances.Length; i++)
-                AddEntrance(_tabEntrances[i], 0.2f + i * 0.055f);
+                AddEntrance(_tabEntrances[i], start + 0.08f + i * 0.055f);
             for (var i = 0; i < _pageEntrances[_activeTab].Length; i++)
-                AddEntrance(_pageEntrances[_activeTab][i], 0.28f + i * 0.055f);
+                AddEntrance(_pageEntrances[_activeTab][i], start + 0.16f + i * 0.055f);
         }
 
         private void AddEntrance(EntranceItem item, float delay)
@@ -494,12 +549,34 @@ namespace _Scripts.UI
             _entranceTween.Insert(delay, item.Rect.DOScale(item.Scale, 0.32f).SetEase(Ease.OutCubic));
         }
 
+        private void PlayPanelDetailsEntrance()
+        {
+            var backgroundColor = _contentBackground.color;
+            backgroundColor.a = 0f;
+            _contentBackground.color = backgroundColor;
+            _entranceTween.Insert(0.08f, _contentBackground.DOFade(_contentBackgroundAlpha, 0.24f)
+                .SetEase(Ease.OutQuad));
+
+            const float slideDelay = 0.24f;
+            var apply = _applyEntrance.Rect;
+            apply.anchoredPosition = _applyRestPosition + Vector2.down * (apply.rect.height + 16f);
+            _applyEntrance.Group.alpha = 0f;
+            _entranceTween.Insert(slideDelay, apply.DOAnchorPos(_applyRestPosition, 0.34f).SetEase(Ease.OutCubic));
+            _entranceTween.Insert(slideDelay, _applyEntrance.Group.DOFade(_applyEntrance.Alpha, 0.18f)
+                .SetEase(Ease.OutQuad));
+        }
+
         private void ResetEntrance()
         {
             _entranceTween?.Kill();
             _entranceTween = null;
             _title.Restore();
             ResetEntranceItem(_closeEntrance);
+            _applyEntrance.Rect.anchoredPosition = _applyRestPosition;
+            _applyEntrance.Group.alpha = _applyEntrance.Alpha;
+            var backgroundColor = _contentBackground.color;
+            backgroundColor.a = _contentBackgroundAlpha;
+            _contentBackground.color = backgroundColor;
             foreach (var item in _tabEntrances)
                 ResetEntranceItem(item);
             foreach (var page in _pageEntrances)
@@ -534,7 +611,7 @@ namespace _Scripts.UI
             }
             _settingsBlockInput = false;
 
-            if (EventSystem.current != null)
+            if (!_openedFromPause && EventSystem.current != null)
                 EventSystem.current.SetSelectedGameObject(_previousSelection != null && _previousSelection.activeInHierarchy
                     ? _previousSelection
                     : null);
