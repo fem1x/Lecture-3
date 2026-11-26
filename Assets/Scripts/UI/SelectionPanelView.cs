@@ -45,7 +45,7 @@ namespace _Scripts.UI
         private void UpdateButtonsState()
         {
             _selectAllButton.interactable = _tableController.CanSelectAll();
-            _deselectAllButton.interactable = _tableController.GetSelectedDices().Count > 0;
+            _deselectAllButton.interactable = _tableController.HasSelectedDices;
         }
     }
 }

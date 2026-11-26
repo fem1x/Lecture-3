@@ -105,6 +105,30 @@ namespace _Scripts.UI.Tooltips
         {
             if (_layoutFrame == Time.frameCount) return;
             _layoutFrame = Time.frameCount;
+
+            var needsLayout = false;
+            foreach (var dice in _table.AllDices)
+            {
+                if (dice.isActiveAndEnabled && dice.ShouldShowTooltip &&
+                    (dice.Data.DamageLevel > 0 || dice.Data.RolledFaceBonus != 0))
+                {
+                    needsLayout = true;
+                    break;
+                }
+            }
+
+            if (!needsLayout)
+            {
+                foreach (var dice in _table.AllDices)
+                {
+                    if (!dice.isActiveAndEnabled) continue;
+                    dice.Tooltip.SetVisible(false);
+                    dice.DamageIndicator.SetVisible(false);
+                    if (_placements.TryGetValue(dice, out var placement)) placement.Valid = false;
+                }
+                return;
+            }
+
             _projectedDice.Clear();
             _placedTooltips.Clear();
             _damageIndicatorBounds.Clear();

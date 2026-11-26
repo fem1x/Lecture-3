@@ -19,7 +19,8 @@ namespace _Scripts.Dices
         
         public bool HasPendingDices => PendingDices.Count > 0;
         public bool HasDicesOnTable => AllDices.Any(d => d.gameObject.activeInHierarchy && d.IsRolled);
-        public bool HasUnlockedDices => GetUnlockedDices().Count > 0;
+        public bool HasUnlockedDices => AllDices.Exists(d => d.gameObject.activeInHierarchy && !d.Data.IsLocked);
+        public bool HasSelectedDices => AllDices.Exists(d => d.gameObject.activeInHierarchy && d.Data.IsLocked);
         public bool IsInteractionLocked { get; private set; }
         
         private GameStateManager _gameStateManager;
@@ -49,10 +50,20 @@ namespace _Scripts.Dices
         public Dice GetDiceById(int id) => AllDices.Find(d => d.Data.Id == id);
         public List<Dice> GetSelectedDices() => AllDices.Where(d => d.gameObject.activeInHierarchy && d.Data.IsLocked).ToList();
         public List<Dice> GetUnlockedDices() => AllDices.Where(d => d.gameObject.activeInHierarchy && !d.Data.IsLocked).ToList();
-        public bool CanSelectAll() => 
-            !IsInteractionLocked 
-            && AllDices.Where(d => d.gameObject.activeInHierarchy).All(d => d.CanBeSelected)
-            && GetUnlockedDices().Count > 0;        
+        public bool CanSelectAll()
+        {
+            if (IsInteractionLocked) return false;
+
+            var hasUnlockedDice = false;
+            foreach (var dice in AllDices)
+            {
+                if (!dice.gameObject.activeInHierarchy) continue;
+                if (!dice.CanBeSelected) return false;
+                if (!dice.Data.IsLocked) hasUnlockedDice = true;
+            }
+
+            return hasUnlockedDice;
+        }
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== 
         public void OnRmbClick(InputValue value)
         {
