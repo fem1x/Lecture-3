@@ -511,6 +511,14 @@ MonoBehaviour:
     m_Key: workshop_rewards_info
     m_Metadata:
       m_Items: []
+  - m_Id: 13400000000000139
+    m_Key: settings_fps_limit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13400000000000140
+    m_Key: settings_fps_unlimited
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

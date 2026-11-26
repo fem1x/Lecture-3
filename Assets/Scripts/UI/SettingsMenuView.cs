@@ -75,13 +75,15 @@ namespace _Scripts.UI
         [SerializeField] private CheckboxFeedbackView _muteFeedback;
 
         [Header("Display")]
-        [SerializeField] private Toggle _vSyncToggle;
-        [SerializeField] private CheckboxFeedbackView _vSyncFeedback;
         [SerializeField] private Button _displayButton;
         [SerializeField] private LocalizeStringEvent _displayValue;
         [SerializeField] private TMP_Text _displayLabel;
         [SerializeField] private TMP_Dropdown _resolutionDropdown;
         [SerializeField] private TMP_Text _resolutionValue;
+        [SerializeField] private TMP_Dropdown _fpsLimitDropdown;
+        [SerializeField] private TMP_Text _fpsLimitValue;
+        [SerializeField] private Toggle _vSyncToggle;
+        [SerializeField] private CheckboxFeedbackView _vSyncFeedback;
 
         [Header("Game")]
         [SerializeField] private TMP_Dropdown _languageDropdown;
@@ -102,6 +104,7 @@ namespace _Scripts.UI
         private EntranceItem[] _tabEntrances;
         private EntranceItem[][] _pageEntrances;
         private readonly Dictionary<TMP_Text, (Vector2 Position, Vector3 Scale)> _valueRestPoses = new();
+        private readonly LocalizedString _unlimitedFpsLabel = new("String Table", "settings_fps_unlimited");
         private GameObject _previousSelection;
         private int _activeTab;
         private bool _wantsOpen;
@@ -130,7 +133,7 @@ namespace _Scripts.UI
             _pageEntrances = _tabs.Select(tab =>
                 tab.Page.transform.Cast<Transform>().Select(child => CreateEntranceItem((RectTransform)child)).ToArray()).ToArray();
 
-            foreach (var label in new[] { _displayLabel, _resolutionValue, _languageValue, _speedValue })
+            foreach (var label in new[] { _displayLabel, _resolutionValue, _fpsLimitValue, _languageValue, _speedValue })
                 _valueRestPoses.Add(label, (label.rectTransform.anchoredPosition, label.rectTransform.localScale));
 
             _volumeListeners = new UnityAction<float>[_volumeFields.Length];
@@ -154,6 +157,7 @@ namespace _Scripts.UI
             _displayButton.transform.Find("(Button) Next Hit Area").GetComponent<Button>().onClick.AddListener(CycleDisplayMode);
             _displayButton.transform.Find("(Button) Previous Hit Area").GetComponent<Button>().onClick.AddListener(PreviousDisplayMode);
             _resolutionDropdown.onValueChanged.AddListener(ChangeResolution);
+            _fpsLimitDropdown.onValueChanged.AddListener(ChangeFpsLimit);
             _languageDropdown.onValueChanged.AddListener(ChangeLanguage);
             _shakeField.Slider.onValueChanged.AddListener(ChangeShake);
             _speedButton.onClick.AddListener(CycleSpeed);
@@ -177,6 +181,7 @@ namespace _Scripts.UI
             _displayButton.transform.Find("(Button) Next Hit Area").GetComponent<Button>().onClick.RemoveListener(CycleDisplayMode);
             _displayButton.transform.Find("(Button) Previous Hit Area").GetComponent<Button>().onClick.RemoveListener(PreviousDisplayMode);
             _resolutionDropdown.onValueChanged.RemoveListener(ChangeResolution);
+            _fpsLimitDropdown.onValueChanged.RemoveListener(ChangeFpsLimit);
             _languageDropdown.onValueChanged.RemoveListener(ChangeLanguage);
             _shakeField.Slider.onValueChanged.RemoveListener(ChangeShake);
             _speedButton.onClick.RemoveListener(CycleSpeed);
@@ -233,6 +238,8 @@ namespace _Scripts.UI
             _wantsOpen = false;
             if (_resolutionDropdown.IsExpanded)
                 _resolutionDropdown.Hide();
+            if (_fpsLimitDropdown.IsExpanded)
+                _fpsLimitDropdown.Hide();
             if (_languageDropdown.IsExpanded)
                 _languageDropdown.Hide();
             _panel.interactable = false;
@@ -409,6 +416,8 @@ namespace _Scripts.UI
             _resolutionDropdown.AddOptions(_settings.Resolutions.Select(ResolutionText).ToList());
             _resolutionDropdown.SetValueWithoutNotify(_settings.ResolutionIndex);
             _resolutionValue.text = _resolutionDropdown.options[_settings.ResolutionIndex].text;
+            RefreshFpsLimitOptions();
+            RefreshFpsLimitAvailability();
 
             _languageDropdown.ClearOptions();
             _languageDropdown.AddOptions(_locales.Select(LanguageName).ToList());
@@ -438,7 +447,31 @@ namespace _Scripts.UI
         private void ToggleVSync(bool enabled)
         {
             _settings.SetVSync(enabled);
+            RefreshFpsLimitAvailability();
             _sfxPlayer.Play("ButtonClick");
+        }
+
+        private void RefreshFpsLimitAvailability()
+        {
+            var available = _settings.IsFpsLimitAvailable;
+            _fpsLimitDropdown.interactable = available;
+            var navigation = _resolutionDropdown.navigation;
+            navigation.selectOnDown = available ? _fpsLimitDropdown : _vSyncToggle;
+            _resolutionDropdown.navigation = navigation;
+            navigation = _vSyncToggle.navigation;
+            navigation.selectOnUp = available ? _fpsLimitDropdown : _resolutionDropdown;
+            _vSyncToggle.navigation = navigation;
+        }
+
+        private void RefreshFpsLimitOptions()
+        {
+            var unlimited = _unlimitedFpsLabel.GetLocalizedString();
+            var options = _settings.FpsLimits.Select(fps => fps > 0 ? $"{fps} FPS" : unlimited).ToList();
+            var index = _settings.FpsLimitIndex;
+            _fpsLimitDropdown.ClearOptions();
+            _fpsLimitDropdown.AddOptions(options);
+            _fpsLimitDropdown.SetValueWithoutNotify(index);
+            _fpsLimitValue.text = options[index];
         }
 
         private void CycleDisplayMode() => ChangeDisplayMode(1);
@@ -457,6 +490,13 @@ namespace _Scripts.UI
             _settings.SetResolution(index);
             var value = _resolutionDropdown.options[index].text;
             AnimateValue(_resolutionValue, () => _resolutionValue.text = value);
+        }
+
+        private void ChangeFpsLimit(int index)
+        {
+            _settings.SetFpsLimit(index);
+            var value = _fpsLimitDropdown.options[index].text;
+            AnimateValue(_fpsLimitValue, () => _fpsLimitValue.text = value);
         }
 
         private void CycleSpeed() => ChangeSpeed(1);
@@ -510,6 +550,7 @@ namespace _Scripts.UI
         {
             ResetValue(_displayLabel);
             ResetValue(_resolutionValue);
+            ResetValue(_fpsLimitValue);
             ResetValue(_languageValue);
             ResetValue(_speedValue);
         }
@@ -542,6 +583,8 @@ namespace _Scripts.UI
         {
             if (!_wantsOpen) return;
 
+            ResetValue(_fpsLimitValue);
+            RefreshFpsLimitOptions();
             _languageDropdown.SetValueWithoutNotify(Array.IndexOf(_locales, locale));
             var language = LanguageName(locale);
             AnimateValue(_languageValue, () => _languageValue.text = language);

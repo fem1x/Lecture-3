@@ -530,6 +530,14 @@ MonoBehaviour:
     m_Localized: "\u5269\u4f59\u8d44\u6e90\u5956\u52b1\uff1a\n\u2022 \u6bcf {throwsPerToken} <color=#FFB18D><sprite name=\"throw_counter\" tint=1></color> \u2192 +1 <sprite name=\"repair_token\">\n\u2022 \u6bcf {rerollsPerToken} <color=#FFB18D><sprite name=\"reroll_counter\" tint=1></color> \u2192 +1 <sprite name=\"repair_token\">"
     m_Metadata:
       m_Items: []
+  - m_Id: 13400000000000139
+    m_Localized: "\u5e27\u7387\u4e0a\u9650"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13400000000000140
+    m_Localized: "\u4e0d\u9650"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

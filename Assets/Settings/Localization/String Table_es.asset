@@ -530,6 +530,14 @@ MonoBehaviour:
     m_Localized: "Por recursos restantes:\n\u2022 Cada {throwsPerToken} <color=#FFB18D><sprite name=\"throw_counter\" tint=1></color> \u2192 +1 <sprite name=\"repair_token\">\n\u2022 Cada {rerollsPerToken} <color=#FFB18D><sprite name=\"reroll_counter\" tint=1></color> \u2192 +1 <sprite name=\"repair_token\">"
     m_Metadata:
       m_Items: []
+  - m_Id: 13400000000000139
+    m_Localized: "L\u00edmite de FPS"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13400000000000140
+    m_Localized: "Sin l\u00edmite"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

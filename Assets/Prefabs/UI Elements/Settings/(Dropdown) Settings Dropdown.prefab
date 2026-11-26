@@ -203,6 +203,7 @@ GameObject:
   - component: {fileID: 1085478992371204509}
   - component: {fileID: 4143307142417090082}
   - component: {fileID: 5675235347532303318}
+  - component: {fileID: 873928231018372913}
   m_Layer: 5
   m_Name: (Dropdown) Settings Dropdown
   m_TagString: Untagged
@@ -361,6 +362,19 @@ MonoBehaviour:
   _pressEase: 6
   _releaseDuration: 0.22
   _releaseEase: 27
+--- !u!114 &873928231018372913
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2479631226862718193}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 726c01e4a79c4d259596d57a6320e5f8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Game::_Scripts.UI.DropdownVisibleItems
+  _maxVisibleItems: 7
 --- !u!1 &3024248075994474277
 GameObject:
   m_ObjectHideFlags: 0
@@ -415,7 +429,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &8638435626977731119
 RectTransform:
   m_ObjectHideFlags: 0
@@ -518,7 +532,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 6226811512041644437}
   m_Direction: 2
   m_Value: 0
-  m_Size: 1
+  m_Size: 0.775
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -757,7 +771,7 @@ RectTransform:
   m_Father: {fileID: 8639139713773970394}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 0.775}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}

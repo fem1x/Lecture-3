@@ -21,8 +21,12 @@ namespace _Scripts.Managers
         private const string HeightKey = Prefix + "ResolutionHeight";
         private const int ShakeStepPercent = 25;
         private const int MaxShakeSteps = 8;
+        private const int FallbackFpsLimit = 144;
+        private const int UnlimitedFps = -1;
+        private const FullScreenMode DefaultDisplayMode = FullScreenMode.FullScreenWindow;
         private static readonly string[] VolumeParameters = { "MasterVolume", "MusicVolume", "SfxVolume", "AmbienceVolume" };
         private static readonly float[] Speeds = { 0.5f, 1f, 1.25f, 1.5f, 2f };
+        private static readonly int[] FpsLimitPresets = { 30, 60, 120, 144, 240 };
         private static readonly FullScreenMode[] DisplayModes =
         {
             FullScreenMode.ExclusiveFullScreen, FullScreenMode.Windowed, FullScreenMode.FullScreenWindow
@@ -32,11 +36,18 @@ namespace _Scripts.Managers
         private readonly CameraShaker _cameraShaker;
         private readonly GameSpeedConfig _speedConfig;
         private readonly int[] _volumes = new int[VolumeParameters.Length];
+        private int[] _fpsLimits;
         private int _speedIndex;
         private int _displayIndex;
         private bool _hasFocus;
 
         public bool VSync { get; private set; }
+        internal IReadOnlyList<int> FpsLimits => _fpsLimits;
+        internal int FpsLimitIndex { get; private set; }
+        internal bool IsFpsLimitAvailable => !VSync || UsesMobileFramePacing;
+        private int FpsLimit => _fpsLimits[FpsLimitIndex];
+        private static bool UsesMobileFramePacing =>
+            Application.platform is RuntimePlatform.Android or RuntimePlatform.IPhonePlayer;
         public bool MuteWhenUnfocused { get; private set; }
         public int ShakeSteps { get; private set; }
         public int ShakePercent => ShakeSteps * ShakeStepPercent;
@@ -65,14 +76,7 @@ namespace _Scripts.Managers
             }
             Application.focusChanged += HandleFocusChanged;
 
-            VSync = PlayerPrefs.GetInt(Prefix + nameof(VSync), QualitySettings.vSyncCount > 0 ? 1 : 0) != 0;
-            QualitySettings.vSyncCount = VSync ? 1 : 0;
-
-            var savedMode = (FullScreenMode)PlayerPrefs.GetInt(Prefix + nameof(DisplayMode), (int)Screen.fullScreenMode);
-            _displayIndex = Array.IndexOf(DisplayModes, savedMode);
-            if (_displayIndex < 0)
-                _displayIndex = Array.IndexOf(DisplayModes, FullScreenMode.FullScreenWindow);
-            InitializeResolution();
+            InitializeDisplaySettings();
 
             var legacyPercent = Mathf.Clamp(PlayerPrefs.GetInt(Prefix + nameof(ShakeSteps), 10), 0, 20) * 10;
             var savedPercent = PlayerPrefs.GetInt(ShakePercentKey, legacyPercent);
@@ -123,6 +127,22 @@ namespace _Scripts.Managers
             PlayerPrefs.Save();
         }
 
+        internal void SetFpsLimit(int index)
+        {
+            FpsLimitIndex = index;
+            ApplyFpsLimit();
+            PlayerPrefs.SetInt(Prefix + nameof(FpsLimit), FpsLimit);
+            PlayerPrefs.Save();
+        }
+
+        private void ApplyFpsLimit()
+        {
+            // A target of -1 selects Unity's 30 FPS default on mobile.
+            Application.targetFrameRate = FpsLimit == UnlimitedFps && UsesMobileFramePacing
+                ? Mathf.RoundToInt((float)Screen.currentResolution.refreshRateRatio.value)
+                : FpsLimit;
+        }
+
         public void CycleDisplayMode(int direction = 1)
         {
             _displayIndex = (_displayIndex + direction + DisplayModes.Length) % DisplayModes.Length;
@@ -141,22 +161,65 @@ namespace _Scripts.Managers
             PlayerPrefs.Save();
         }
 
-        private void InitializeResolution()
+        private void InitializeDisplaySettings()
+        {
+            var (monitorSize, refreshRate) = GetMonitorSettings();
+            var defaultFps = refreshRate.numerator > 0 && refreshRate.denominator > 0
+                ? Mathf.Max(1, Mathf.RoundToInt((float)refreshRate.value))
+                : FallbackFpsLimit;
+            var savedFps = PlayerPrefs.GetInt(Prefix + nameof(FpsLimit), defaultFps);
+            if (savedFps <= 0 && savedFps != UnlimitedFps)
+                savedFps = defaultFps;
+
+            _fpsLimits = FpsLimitPresets
+                .Append(defaultFps)
+                .Append(savedFps)
+                .Where(fps => fps > 0)
+                .Distinct()
+                .OrderBy(fps => fps)
+                .Append(UnlimitedFps)
+                .ToArray();
+            FpsLimitIndex = Array.IndexOf(_fpsLimits, savedFps);
+
+            VSync = PlayerPrefs.GetInt(Prefix + nameof(VSync), 0) != 0;
+            QualitySettings.vSyncCount = VSync ? 1 : 0;
+            ApplyFpsLimit();
+
+            var savedMode = (FullScreenMode)PlayerPrefs.GetInt(Prefix + nameof(DisplayMode), (int)DefaultDisplayMode);
+            _displayIndex = Array.IndexOf(DisplayModes, savedMode);
+            if (_displayIndex < 0)
+                _displayIndex = Array.IndexOf(DisplayModes, DefaultDisplayMode);
+            InitializeResolution(monitorSize);
+        }
+
+        private static (Vector2Int Size, RefreshRate RefreshRate) GetMonitorSettings()
+        {
+#if UNITY_STANDALONE && !UNITY_EDITOR
+            var monitor = Screen.mainWindowDisplayInfo;
+            if (monitor.width > 0 && monitor.height > 0)
+                return (new Vector2Int(monitor.width, monitor.height), monitor.refreshRate);
+#endif
+            var resolution = Screen.currentResolution;
+            return (new Vector2Int(resolution.width, resolution.height), resolution.refreshRateRatio);
+        }
+
+        private void InitializeResolution(Vector2Int monitorSize)
         {
             var current = new Vector2Int(Screen.width, Screen.height);
             var options = Screen.resolutions
                 .Select(mode => new Vector2Int(mode.width, mode.height))
                 .Append(current)
+                .Append(monitorSize)
                 .Distinct()
                 .OrderByDescending(size => size.x)
                 .ThenByDescending(size => size.y)
                 .ToArray();
             Resolutions = options;
 
-            var saved = new Vector2Int(PlayerPrefs.GetInt(WidthKey, current.x), PlayerPrefs.GetInt(HeightKey, current.y));
+            var saved = new Vector2Int(PlayerPrefs.GetInt(WidthKey, monitorSize.x), PlayerPrefs.GetInt(HeightKey, monitorSize.y));
             ResolutionIndex = Array.IndexOf(options, saved);
             if (ResolutionIndex < 0)
-                ResolutionIndex = Array.IndexOf(options, current);
+                ResolutionIndex = Array.IndexOf(options, monitorSize);
 
             if (options[ResolutionIndex] != current || Screen.fullScreenMode != DisplayMode)
                 ApplyResolution();
