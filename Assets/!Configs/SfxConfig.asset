@@ -542,7 +542,7 @@ MonoBehaviour:
       - {fileID: 8300000, guid: 84c6f4af42784da19a491f1a9494307a, type: 3}
       volume: 1
       pitch: 1
-    volume: 0.55
+    volume: 0.494
     pitch: 1
     pitchRandomize: 0
     is3D: 1
@@ -558,7 +558,7 @@ MonoBehaviour:
       - {fileID: 8300000, guid: 6390422cdcb54d18b3603adae412fc24, type: 3}
       volume: 1
       pitch: 1
-    volume: 0.5
+    volume: 0.377
     pitch: 1
     pitchRandomize: 0
     is3D: 1
@@ -666,11 +666,12 @@ MonoBehaviour:
     source: {fileID: 0}
   - name: DiceAppear
     layers:
-    - clips: []
+    - clips:
+      - {fileID: 8300000, guid: 6a03e866592f61845b5dd840f1fac2b9, type: 3}
       volume: 1
       pitch: 1
-    volume: 0.55
-    pitch: 1
+    volume: 0.175
+    pitch: 0.83
     pitchRandomize: 0.05
     is3D: 0
     useGlobalSpatialBlend: 0
@@ -681,10 +682,15 @@ MonoBehaviour:
     source: {fileID: 0}
   - name: ElementAppear
     layers:
-    - clips: []
+    - clips:
+      - {fileID: 8300000, guid: c9a5981ce46212145bcf1022439af844, type: 3}
       volume: 1
+      pitch: 0.8
+    - clips:
+      - {fileID: 8300000, guid: 309296781c5b10e4999a13848181f4a1, type: 3}
+      volume: 0.926
       pitch: 1
-    volume: 0.4
+    volume: 0.87
     pitch: 1
     pitchRandomize: 0.05
     is3D: 0

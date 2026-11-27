@@ -611,19 +611,19 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 14096581539127296
-    m_Localized: PLAY
+    m_Localized: Play
     m_Metadata:
       m_Items: []
   - m_Id: 14096581614624768
-    m_Localized: QUIT
+    m_Localized: Quit
     m_Metadata:
       m_Items: []
   - m_Id: 14096581614624769
-    m_Localized: QUIT THE GAME?
+    m_Localized: Quit the game?
     m_Metadata:
       m_Items: []
   - m_Id: 14096581614624770
-    m_Localized: BACK
+    m_Localized: Back
     m_Metadata:
       m_Items: []
   references:

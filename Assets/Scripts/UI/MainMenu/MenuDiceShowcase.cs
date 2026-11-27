@@ -84,7 +84,7 @@ namespace _Scripts.UI.MainMenu
 
         private void OnEnable()
         {
-            if (_studio == null) CreateStudio();
+            EnsureStudioCreated();
             _studio.SetActive(true);
             _output.enabled = true;
         }
@@ -166,6 +166,9 @@ namespace _Scripts.UI.MainMenu
 
         internal void Show()
         {
+            EnsureStudioCreated();
+            _studio.SetActive(true);
+            _output.enabled = true;
             _roll?.Kill();
             _entrance?.Kill();
             ReleaseDie();
@@ -281,6 +284,11 @@ namespace _Scripts.UI.MainMenu
         }
 
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
+        private void EnsureStudioCreated()
+        {
+            if (_studio == null) CreateStudio();
+        }
+
         private void CreateStudio()
         {
             // Separating the camera by distance also keeps other preview cameras out of the studio.

@@ -611,19 +611,19 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 14096581539127296
-    m_Localized: JUGAR
+    m_Localized: Jugar
     m_Metadata:
       m_Items: []
   - m_Id: 14096581614624768
-    m_Localized: SALIR
+    m_Localized: Salir
     m_Metadata:
       m_Items: []
   - m_Id: 14096581614624769
-    m_Localized: "\xBFSALIR DEL JUEGO?"
+    m_Localized: "\xBFSalir del juego?"
     m_Metadata:
       m_Items: []
   - m_Id: 14096581614624770
-    m_Localized: VOLVER
+    m_Localized: Volver
     m_Metadata:
       m_Items: []
   references:

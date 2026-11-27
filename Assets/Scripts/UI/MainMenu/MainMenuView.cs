@@ -55,20 +55,15 @@ namespace _Scripts.UI.MainMenu
             _settings = settings;
             _screenFade = screenFade;
             _sfx = sfx;
-        }
-
-        private void Awake() => _quitCardPosition = _quitCard.anchoredPosition;
-
-        private void Start()
-        {
             _gameStateManager.StateChanged += OnStateChanged;
             _playButton.onClick.AddListener(Play);
             _settingsButton.onClick.AddListener(OpenSettings);
             _exitButton.onClick.AddListener(OpenQuit);
             _backButton.onClick.AddListener(CloseQuit);
             _confirmExitButton.onClick.AddListener(Quit);
-            OnStateChanged(_gameStateManager.CurrentState);
         }
+
+        private void Awake() => _quitCardPosition = _quitCard.anchoredPosition;
 
         private void OnDisable() => _dialogTween?.Kill();
 

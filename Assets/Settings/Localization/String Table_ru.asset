@@ -607,19 +607,19 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 14096581539127296
-    m_Localized: "\u0418\u0413\u0420\u0410\u0422\u042C"
+    m_Localized: "\u0418\u0433\u0440\u0430\u0442\u044C"
     m_Metadata:
       m_Items: []
   - m_Id: 14096581614624768
-    m_Localized: "\u0412\u042B\u0419\u0422\u0418"
+    m_Localized: "\u0412\u044B\u0439\u0442\u0438"
     m_Metadata:
       m_Items: []
   - m_Id: 14096581614624769
-    m_Localized: "\u0412\u042B\u0419\u0422\u0418 \u0418\u0417 \u0418\u0413\u0420\u042B?"
+    m_Localized: "\u0412\u044B\u0439\u0442\u0438 \u0438\u0437 \u0438\u0433\u0440\u044B"
     m_Metadata:
       m_Items: []
   - m_Id: 14096581614624770
-    m_Localized: "\u041D\u0410\u0417\u0410\u0414"
+    m_Localized: "\u041D\u0430\u0437\u0430\u0434"
     m_Metadata:
       m_Items: []
   references:

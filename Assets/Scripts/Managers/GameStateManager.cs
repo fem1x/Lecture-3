@@ -12,7 +12,13 @@ namespace _Scripts.Managers
         public GameEndType LastGameResult { get; private set; }
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
         
-        public void EnterMenuState() => ChangeState(GameState.MainMenu);
+        public void EnterMenuState()
+        {
+            if (CurrentState == GameState.MainMenu)
+                StateChanged?.Invoke(GameState.MainMenu);
+            else
+                ChangeState(GameState.MainMenu);
+        }
         public void EnterGameState() => ChangeState(GameState.Game);
 
         public void EnterGameResultState(GameEndType resultType)
