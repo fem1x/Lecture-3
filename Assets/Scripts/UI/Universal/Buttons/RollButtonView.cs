@@ -46,8 +46,6 @@ namespace _Scripts.UI
             _button.onClick.AddListener(PlayIconAccent);
             _button.onClick.AddListener(_flow.OnRollButtonClicked);
             _flow.OnRollActionChanged += RefreshAction;
-            _flow.Resources.OnDicesChanged += OnResourcesChanged;
-            _flow.Resources.OnRerollsChanged += OnResourcesChanged;
             LocalizationSettings.SelectedLocaleChanged += OnLocaleChanged;
             _showingThrow = null;
             RefreshAction();
@@ -59,8 +57,6 @@ namespace _Scripts.UI
             _button.onClick.RemoveListener(PlayIconAccent);
             _button.onClick.RemoveListener(_flow.OnRollButtonClicked);
             _flow.OnRollActionChanged -= RefreshAction;
-            _flow.Resources.OnDicesChanged -= OnResourcesChanged;
-            _flow.Resources.OnRerollsChanged -= OnResourcesChanged;
             LocalizationSettings.SelectedLocaleChanged -= OnLocaleChanged;
             _textTween?.Kill();
             _iconTween?.Kill();
@@ -88,11 +84,8 @@ namespace _Scripts.UI
         {
             var isThrow = _flow.IsThrowAction;
             var text = (isThrow ? _throwTooltip : _rerollTooltip).GetLocalizedString();
-            var count = isThrow ? _flow.Resources.DiceCount : _flow.Resources.RerollsCount;
-            return (null, text.Replace("{count}", count.ToString()));
+            return (null, text);
         }
-
-        private void OnResourcesChanged(int _) => _tooltip.RefreshContent();
 
         private void PlayIconAccent()
         {

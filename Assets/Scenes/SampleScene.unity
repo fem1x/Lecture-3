@@ -8597,6 +8597,8 @@ MonoBehaviour:
     m_LocalVariables: []
   _side: 0
   _gap: 24
+  _hoverDelay: 0
+  _showImmediatelyOnFirstHover: 0
   references:
     version: 2
     RefIds: []
@@ -29251,6 +29253,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: (Button) Roll
       objectReference: {fileID: 0}
+    - target: {fileID: 8100000000000000103, guid: 8297b91c50cdf314c97eb194167e4189, type: 3}
+      propertyPath: _side
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -30557,6 +30563,8 @@ MonoBehaviour:
     m_LocalVariables: []
   _side: 2
   _gap: 24
+  _hoverDelay: 0
+  _showImmediatelyOnFirstHover: 0
   references:
     version: 2
     RefIds: []
@@ -35176,6 +35184,84 @@ PrefabInstance:
       addedObject: {fileID: 1845000283}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3b9c6a87fedd45fd95c96dd11a09f52c, type: 3}
+--- !u!114 &8100000000000000101
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 100767837857273217}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 12d4882af6134a0b85c6dbd2c0d5afec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Game::_Scripts.UI.Tooltips.BasicTooltipTrigger
+  _prefab: {fileID: 7818079974194006116, guid: aa8859c2fc5b3074281ac6944c5fbb8a, type: 3}
+  _targetOverride: {fileID: 0}
+  _text:
+    m_TableReference:
+      m_TableCollectionName: GUID:9f9c89d5b6ad399428ec5a9fe072ff95
+    m_TableEntryReference:
+      m_KeyId: 14068008954617856
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  _title:
+    m_TableReference:
+      m_TableCollectionName: 
+    m_TableEntryReference:
+      m_KeyId: 0
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  _side: 2
+  _gap: 24
+  _hoverDelay: 0.6
+  _showImmediatelyOnFirstHover: 1
+  references:
+    version: 2
+    RefIds: []
+--- !u!114 &8100000000000000102
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6059725006534154091}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 12d4882af6134a0b85c6dbd2c0d5afec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Game::_Scripts.UI.Tooltips.BasicTooltipTrigger
+  _prefab: {fileID: 7818079974194006116, guid: aa8859c2fc5b3074281ac6944c5fbb8a, type: 3}
+  _targetOverride: {fileID: 0}
+  _text:
+    m_TableReference:
+      m_TableCollectionName: GUID:9f9c89d5b6ad399428ec5a9fe072ff95
+    m_TableEntryReference:
+      m_KeyId: 14068008967200768
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  _title:
+    m_TableReference:
+      m_TableCollectionName: 
+    m_TableEntryReference:
+      m_KeyId: 0
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  _side: 2
+  _gap: 24
+  _hoverDelay: 0.6
+  _showImmediatelyOnFirstHover: 1
+  references:
+    version: 2
+    RefIds: []
 --- !u!222 &8100981695526615942
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -39050,81 +39136,3 @@ SceneRoots:
   - {fileID: 744831673}
   - {fileID: 359502344}
   - {fileID: 1860889710}
---- !u!114 &8100000000000000101
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 100767837857273217}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 12d4882af6134a0b85c6dbd2c0d5afec, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Game::_Scripts.UI.Tooltips.BasicTooltipTrigger
-  _prefab: {fileID: 7818079974194006116, guid: aa8859c2fc5b3074281ac6944c5fbb8a, type: 3}
-  _targetOverride: {fileID: 0}
-  _text:
-    m_TableReference:
-      m_TableCollectionName: GUID:9f9c89d5b6ad399428ec5a9fe072ff95
-    m_TableEntryReference:
-      m_KeyId: 14068008954617856
-      m_Key: 
-    m_FallbackState: 0
-    m_WaitForCompletion: 0
-    m_LocalVariables: []
-  _title:
-    m_TableReference:
-      m_TableCollectionName: 
-    m_TableEntryReference:
-      m_KeyId: 0
-      m_Key: 
-    m_FallbackState: 0
-    m_WaitForCompletion: 0
-    m_LocalVariables: []
-  _side: 2
-  _gap: 24
-  _hoverDelay: 0.6
-  _showImmediatelyOnFirstHover: 1
-  references:
-    version: 2
-    RefIds: []
---- !u!114 &8100000000000000102
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6059725006534154091}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 12d4882af6134a0b85c6dbd2c0d5afec, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Game::_Scripts.UI.Tooltips.BasicTooltipTrigger
-  _prefab: {fileID: 7818079974194006116, guid: aa8859c2fc5b3074281ac6944c5fbb8a, type: 3}
-  _targetOverride: {fileID: 0}
-  _text:
-    m_TableReference:
-      m_TableCollectionName: GUID:9f9c89d5b6ad399428ec5a9fe072ff95
-    m_TableEntryReference:
-      m_KeyId: 14068008967200768
-      m_Key: 
-    m_FallbackState: 0
-    m_WaitForCompletion: 0
-    m_LocalVariables: []
-  _title:
-    m_TableReference:
-      m_TableCollectionName: 
-    m_TableEntryReference:
-      m_KeyId: 0
-      m_Key: 
-    m_FallbackState: 0
-    m_WaitForCompletion: 0
-    m_LocalVariables: []
-  _side: 2
-  _gap: 24
-  _hoverDelay: 0.6
-  _showImmediatelyOnFirstHover: 1
-  references:
-    version: 2
-    RefIds: []

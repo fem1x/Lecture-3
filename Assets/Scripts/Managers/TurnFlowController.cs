@@ -104,7 +104,6 @@ namespace _Scripts.Managers
 
         private void HandleRollPerformed(InputAction.CallbackContext ctx) => OnRollButtonClicked();
 
-        public ResourceManager Resources => _resourceManager;
         public bool IsThrowAction => _tableController.HasPendingDices;
         public event Action OnRollActionChanged
         {
