@@ -13,6 +13,7 @@ namespace _Scripts.Dices
     {
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
         public event Action OnSelectionChanged;
+        public event Action OnSelectionAvailabilityChanged;
         public event Action OnPendingDicesChanged;
         
         public List<Dice> AllDices { get; private set; } = new();
@@ -38,6 +39,13 @@ namespace _Scripts.Dices
         {
             if (_gameStateManager != null)
                 _gameStateManager.StateChanged -= OnStateChanged;
+
+            foreach (var dice in AllDices)
+            {
+                if (dice == null) continue;
+                dice.Data.OnLockChanged -= HandleDiceLockChanged;
+                dice.Data.OnValueChanged -= HandleDiceValueChanged;
+            }
         }
 
         private void OnStateChanged(GameState state)
@@ -58,13 +66,16 @@ namespace _Scripts.Dices
             var hasUnlockedDice = false;
             foreach (var dice in AllDices)
             {
-                if (!dice.gameObject.activeInHierarchy) continue;
+                if (!dice.gameObject.activeInHierarchy || dice.Data.IsLocked) continue;
                 if (!dice.CanBeSelected) return false;
-                if (!dice.Data.IsLocked) hasUnlockedDice = true;
+                hasUnlockedDice = true;
             }
 
             return hasUnlockedDice;
         }
+
+        public bool CanClearSelection() => !IsInteractionLocked &&
+            AllDices.Exists(d => d.gameObject.activeInHierarchy && d.Data.IsLocked && d.CanBeSelected);
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== 
         public void OnRmbClick(InputValue value)
         {
@@ -74,11 +85,22 @@ namespace _Scripts.Dices
         
         public void InitDiceList(List<Dice> dices)
         {
+            foreach (var dice in AllDices)
+            {
+                dice.Data.OnLockChanged -= HandleDiceLockChanged;
+                dice.Data.OnValueChanged -= HandleDiceValueChanged;
+            }
+
             AllDices = dices;
             SetPendingDices(dices);
 
             foreach (var dice in dices)
+            {
                 dice.Data.OnLockChanged += HandleDiceLockChanged;
+                dice.Data.OnValueChanged += HandleDiceValueChanged;
+            }
+
+            OnSelectionAvailabilityChanged?.Invoke();
         }
         
         public void SetPendingDices(List<Dice> dices)
@@ -132,6 +154,7 @@ namespace _Scripts.Dices
         {
             foreach (var dice in dices)
                 dice.gameObject.SetActive(true);
+            OnSelectionAvailabilityChanged?.Invoke();
         }
         
         public void DeactivateAllDices()
@@ -146,8 +169,10 @@ namespace _Scripts.Dices
                         dice.gameObject.SetActive(false);
                 }
             }
+            OnSelectionAvailabilityChanged?.Invoke();
         }
         
         private void HandleDiceLockChanged(bool _) => OnSelectionChanged?.Invoke();
+        private void HandleDiceValueChanged(int oldValue, int newValue) => OnSelectionAvailabilityChanged?.Invoke();
     }
 }

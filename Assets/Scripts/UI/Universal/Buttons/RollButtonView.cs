@@ -21,12 +21,28 @@ namespace _Scripts.UI
         [SerializeField] private Sprite _rerollIcon;
         [SerializeField, Min(0f)] private float _iconAccentDuration = 0.3f;
 
+        [Header("Rolling Dots")]
+        [SerializeField] private GameObject _rollingDots;
+        [SerializeField] private RectTransform[] _dotRects;
+        [SerializeField, Min(1f)] private float _dotFontSize = 48f;
+        [SerializeField, Min(0f)] private float _dotJumpHeight = 10f;
+        [SerializeField, Min(0.01f)] private float _dotJumpDuration = 0.4f;
+        [SerializeField, Min(0f)] private float _dotStagger = 0.14f;
+        [SerializeField, Min(0f)] private float _dotCyclePause = 0.15f;
+        [SerializeField] private Ease _dotRiseEase = Ease.OutQuad;
+        [SerializeField] private Ease _dotFallEase = Ease.InQuad;
+
+        private enum ActionState { Throw, Reroll, Rolling }
+
+        private readonly LocalizedString _rollingLabel = new("String Table", "roll_button_rolling");
         private readonly LocalizedString _throwLabel = new("String Table", "roll_button_throw");
         private readonly LocalizedString _rerollLabel = new("String Table", "roll_button_reroll");
         private readonly LocalizedString _throwTooltip = new("String Table", "controls_throw_tooltip");
         private readonly LocalizedString _rerollTooltip = new("String Table", "controls_reroll_tooltip");
         private BasicTooltipTrigger _tooltip;
-        private bool? _showingThrow;
+        private ActionState? _state;
+        private Vector2[] _dotPositions;
+        private Tween _dotsTween;
         private Tween _textTween;
         private Tween _iconTween;
         private Vector3 _iconScale;
@@ -35,6 +51,12 @@ namespace _Scripts.UI
         private void Awake()
         {
             _iconScale = _icon.transform.localScale;
+            _dotPositions = new Vector2[_dotRects.Length];
+            for (var i = 0; i < _dotRects.Length; i++)
+            {
+                _dotPositions[i] = _dotRects[i].anchoredPosition;
+                _dotRects[i].GetComponent<TMP_Text>().fontSize = _dotFontSize;
+            }
             _tooltip = GetComponent<BasicTooltipTrigger>();
             _tooltip.ContentProvider = GetTooltipContent;
             _tooltip.ConfigureButtonHover();
@@ -46,8 +68,9 @@ namespace _Scripts.UI
             _button.onClick.AddListener(PlayIconAccent);
             _button.onClick.AddListener(_flow.OnRollButtonClicked);
             _flow.OnRollActionChanged += RefreshAction;
+            _flow.OnRollStateChanged += RefreshAction;
             LocalizationSettings.SelectedLocaleChanged += OnLocaleChanged;
-            _showingThrow = null;
+            _state = null;
             RefreshAction();
         }
 
@@ -57,9 +80,11 @@ namespace _Scripts.UI
             _button.onClick.RemoveListener(PlayIconAccent);
             _button.onClick.RemoveListener(_flow.OnRollButtonClicked);
             _flow.OnRollActionChanged -= RefreshAction;
+            _flow.OnRollStateChanged -= RefreshAction;
             LocalizationSettings.SelectedLocaleChanged -= OnLocaleChanged;
             _textTween?.Kill();
             _iconTween?.Kill();
+            _dotsTween?.Kill();
             _textReveal.Restore();
             _icon.transform.localScale = _iconScale;
         }
@@ -71,17 +96,50 @@ namespace _Scripts.UI
 
         private void RefreshAction()
         {
-            var isThrow = _flow.IsThrowAction;
-            if (_showingThrow == isThrow) return;
-            _showingThrow = isThrow;
-            _icon.sprite = isThrow ? _throwIcon : _rerollIcon;
-            PlayIconAccent();
+            var state = _flow.IsRolling ? ActionState.Rolling :
+                _flow.IsThrowAction ? ActionState.Throw : ActionState.Reroll;
+            if (_state == state) return;
+            _state = state;
+            var isRolling = state == ActionState.Rolling;
+            _icon.enabled = !isRolling;
+            _rollingDots.SetActive(isRolling);
+            _dotsTween?.Kill();
+            if (isRolling)
+            {
+                _iconTween?.Kill();
+                _icon.transform.localScale = _iconScale;
+                PlayRollingDots();
+            }
+            else
+            {
+                _icon.sprite = state == ActionState.Throw ? _throwIcon : _rerollIcon;
+                PlayIconAccent();
+            }
             RefreshLabel();
             _tooltip.RefreshContent();
         }
 
+        private void PlayRollingDots()
+        {
+            var duration = Mathf.Max(0.01f, _dotJumpDuration);
+            var sequence = DOTween.Sequence().SetUpdate(true).SetLink(gameObject);
+            for (var i = 0; i < _dotRects.Length; i++)
+            {
+                var dot = _dotRects[i];
+                dot.anchoredPosition = _dotPositions[i];
+                var baseY = _dotPositions[i].y;
+                var jump = DOTween.Sequence()
+                    .Append(dot.DOAnchorPosY(baseY + _dotJumpHeight, duration * 0.5f).SetEase(_dotRiseEase))
+                    .Append(dot.DOAnchorPosY(baseY, duration * 0.5f).SetEase(_dotFallEase));
+                sequence.Insert(i * _dotStagger, jump);
+            }
+            sequence.AppendInterval(_dotCyclePause);
+            _dotsTween = sequence.SetLoops(-1);
+        }
+
         private (string title, string text) GetTooltipContent()
         {
+            if (_flow.IsRolling) return (null, null);
             var isThrow = _flow.IsThrowAction;
             var text = (isThrow ? _throwTooltip : _rerollTooltip).GetLocalizedString();
             return (null, text);
@@ -106,7 +164,8 @@ namespace _Scripts.UI
             _textReveal.Restore();
             _textTween = _textReveal.Hide().OnComplete(() =>
             {
-                _label.text = (_showingThrow == true ? _throwLabel : _rerollLabel).GetLocalizedString();
+                _label.text = (_state == ActionState.Rolling ? _rollingLabel :
+                    _state == ActionState.Throw ? _throwLabel : _rerollLabel).GetLocalizedString();
                 _textReveal.Restore();
                 _textTween = _textReveal.Show();
             });

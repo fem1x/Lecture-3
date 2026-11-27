@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using _Scripts.Data_Transfer.Contexts;
@@ -105,6 +105,12 @@ namespace _Scripts.Managers
         private void HandleRollPerformed(InputAction.CallbackContext ctx) => OnRollButtonClicked();
 
         public bool IsThrowAction => _tableController.HasPendingDices;
+        public bool IsRolling => _diceRoller.IsRolling;
+        public event Action OnRollStateChanged
+        {
+            add => _diceRoller.OnRollStateChanged += value;
+            remove => _diceRoller.OnRollStateChanged -= value;
+        }
         public event Action OnRollActionChanged
         {
             add => _tableController.OnPendingDicesChanged += value;

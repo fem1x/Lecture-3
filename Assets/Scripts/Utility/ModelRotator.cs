@@ -14,7 +14,16 @@ namespace _Scripts.Utility
 
         private Vector2 _angularVelocity;
         private bool _isDragging;
+        private bool _directPointerDrag;
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
+        internal void ConfigurePointerDrag(Camera camera, float degreesPerPixel, float damping)
+        {
+            _camera = camera;
+            _sensitivity = degreesPerPixel;
+            _damping = damping;
+            _directPointerDrag = true;
+        }
+
         public void ResetVelocity() => _angularVelocity = Vector2.zero;
 
         public void BeginDrag()
@@ -27,6 +36,15 @@ namespace _Scripts.Utility
         public void Drag(Vector2 screenDelta)
         {
             if (!_isDragging) return;
+            if (_directPointerDrag)
+            {
+                var rotation = screenDelta * _sensitivity;
+                ApplyRotation(rotation);
+                var velocity = rotation / Mathf.Max(Time.unscaledDeltaTime, 0.008f);
+                _angularVelocity = Vector2.ClampMagnitude(velocity, 480f);
+                return;
+            }
+
             _angularVelocity = new(screenDelta.x * _sensitivity, screenDelta.y * _sensitivity);
             ApplyRotation(_angularVelocity * Time.deltaTime);
         }
@@ -36,6 +54,15 @@ namespace _Scripts.Utility
         private void Update()
         {
             if (_isDragging) return;
+
+            if (_directPointerDrag)
+            {
+                var decay = 1f - Mathf.Exp(-_damping * Time.unscaledDeltaTime);
+                if (_angularVelocity.sqrMagnitude > 0.01f)
+                    ApplyRotation(_angularVelocity * (decay / _damping));
+                _angularVelocity *= 1f - decay;
+                return;
+            }
 
             _angularVelocity = Vector2.Lerp(_angularVelocity, Vector2.zero, _damping * Time.deltaTime);
 

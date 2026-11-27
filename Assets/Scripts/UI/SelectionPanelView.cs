@@ -49,6 +49,7 @@ namespace _Scripts.UI
             _deselectAllButton.onClick.AddListener(_tableController.ClearSelection);
             
             _tableController.OnSelectionChanged += UpdateButtonsState;
+            _tableController.OnSelectionAvailabilityChanged += UpdateButtonsState;
             _diceRoller.OnRollStateChanged += UpdateButtonsState;
             
             UpdateButtonsState();
@@ -60,13 +61,14 @@ namespace _Scripts.UI
             _deselectAllButton.onClick.RemoveListener(_tableController.ClearSelection);
             
             _tableController.OnSelectionChanged -= UpdateButtonsState;
+            _tableController.OnSelectionAvailabilityChanged -= UpdateButtonsState;
             _diceRoller.OnRollStateChanged -= UpdateButtonsState;
         }
         
         private void UpdateButtonsState()
         {
             _selectAllButton.interactable = _tableController.CanSelectAll();
-            _deselectAllButton.interactable = _tableController.HasSelectedDices;
+            _deselectAllButton.interactable = _tableController.CanClearSelection();
         }
     }
 }
