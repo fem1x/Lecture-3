@@ -567,6 +567,22 @@ MonoBehaviour:
     m_Key: roll_button_reroll
     m_Metadata:
       m_Items: []
+  - m_Id: 14068008954617856
+    m_Key: controls_select_all_tooltip
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14068008967200768
+    m_Key: controls_deselect_all_tooltip
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14068008967200769
+    m_Key: controls_throw_tooltip
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14068008967200770
+    m_Key: controls_reroll_tooltip
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

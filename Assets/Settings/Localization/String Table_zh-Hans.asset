@@ -586,6 +586,22 @@ MonoBehaviour:
     m_Localized: "\u91CD\u63B7"
     m_Metadata:
       m_Items: []
+  - m_Id: 14068008954617856
+    m_Localized: "<b>\u5168\u90E8\u9009\u62E9</b>\n\u9009\u62E9\u684C\u9762\u4E0A\u7684\u6240\u6709\u9AB0\u5B50\u3002"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14068008967200768
+    m_Localized: "<b>\u53D6\u6D88\u9009\u62E9</b>\n\u53D6\u6D88\u9009\u62E9\u6240\u6709\u9AB0\u5B50\u3002"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14068008967200769
+    m_Localized: "<b>\u6295\u63B7</b>\n\u5411\u684C\u9762\u6295\u63B7\u6700\u591A5\u9897\u9AB0\u5B50\u3002\n\n\u6D88\u8017\uFF1A\u6BCF\u9897\u9AB0\u5B501 <color=#FFB18D><sprite name=\"throw_counter\" tint=1></color>\n\u5269\u4F59\uFF1A{count} <color=#FFB18D><sprite name=\"throw_counter\" tint=1></color>"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14068008967200770
+    m_Localized: "<b>\u91CD\u63B7</b>\n\u91CD\u63B7\u672A\u9009\u62E9\u7684\u9AB0\u5B50\u3002\n\n\u6D88\u8017\uFF1A1 <color=#FFB18D><sprite name=\"reroll_counter\" tint=1></color>\n\u5269\u4F59\uFF1A{count} <color=#FFB18D><sprite name=\"reroll_counter\" tint=1></color>"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:
