@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using _Scripts.Data_Transfer.Contexts;
@@ -102,12 +102,23 @@ namespace _Scripts.Managers
             _rollAction.action.Disable();
         }
 
-        private void HandleRollPerformed(InputAction.CallbackContext ctx)
+        private void HandleRollPerformed(InputAction.CallbackContext ctx) => OnRollButtonClicked();
+
+        public ResourceManager Resources => _resourceManager;
+        public bool IsThrowAction => _tableController.HasPendingDices;
+        public event Action OnRollActionChanged
         {
-            if (SettingsMenuView.BlocksGameplayInput) return;
-            if (!_diceRoller.CanRoll) return;
-            if (_diceRoller.IsRolling || _isScoring) return;
-            
+            add => _tableController.OnPendingDicesChanged += value;
+            remove => _tableController.OnPendingDicesChanged -= value;
+        }
+        public bool CanPerformRoll => !SettingsMenuView.BlocksGameplayInput && _diceRoller.CanRoll &&
+            !_diceRoller.IsRolling && !_isScoring &&
+            (IsThrowAction || (_tableController.HasUnlockedDices && _resourceManager.CanReroll));
+
+        public void OnRollButtonClicked()
+        {
+            if (!CanPerformRoll) return;
+
             ExecuteRollAsync().Forget();
         }
         

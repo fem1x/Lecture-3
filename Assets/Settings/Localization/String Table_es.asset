@@ -587,21 +587,15 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 14068008954617856
-    m_Localized: '<b>Seleccionar todos</b>
-
-      Selecciona todos los dados de la mesa.'
+    m_Localized: Selecciona todos los dados de la mesa.
     m_Metadata:
       m_Items: []
   - m_Id: 14068008967200768
-    m_Localized: '<b>Deseleccionar</b>
-
-      Deselecciona todos los dados.'
+    m_Localized: Deselecciona todos los dados.
     m_Metadata:
       m_Items: []
   - m_Id: 14068008967200769
-    m_Localized: '<b>Lanzar</b>
-
-      Lanza hasta 5 dados a la mesa.
+    m_Localized: 'Lanza hasta 5 dados a la mesa.
 
 
       Coste: 1 <color=#FFB18D><sprite name="throw_counter" tint=1></color> por dado
@@ -610,9 +604,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 14068008967200770
-    m_Localized: '<b>Volver a lanzar</b>
-
-      Vuelve a lanzar los dados no seleccionados.
+    m_Localized: 'Vuelve a lanzar los dados no seleccionados.
 
 
       Coste: 1 <color=#FFB18D><sprite name="reroll_counter" tint=1></color>

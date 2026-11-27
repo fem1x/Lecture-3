@@ -587,19 +587,19 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 14068008954617856
-    m_Localized: "<b>\uBAA8\uB450 \uC120\uD0DD</b>\n\uD14C\uC774\uBE14 \uC704\uC758 \uC8FC\uC0AC\uC704\uB97C \uBAA8\uB450 \uC120\uD0DD\uD569\uB2C8\uB2E4."
+    m_Localized: "\uD14C\uC774\uBE14 \uC704\uC758 \uC8FC\uC0AC\uC704\uB97C \uBAA8\uB450 \uC120\uD0DD\uD569\uB2C8\uB2E4."
     m_Metadata:
       m_Items: []
   - m_Id: 14068008967200768
-    m_Localized: "<b>\uC120\uD0DD \uD574\uC81C</b>\n\uBAA8\uB4E0 \uC8FC\uC0AC\uC704\uC758 \uC120\uD0DD\uC744 \uD574\uC81C\uD569\uB2C8\uB2E4."
+    m_Localized: "\uBAA8\uB4E0 \uC8FC\uC0AC\uC704\uC758 \uC120\uD0DD\uC744 \uD574\uC81C\uD569\uB2C8\uB2E4."
     m_Metadata:
       m_Items: []
   - m_Id: 14068008967200769
-    m_Localized: "<b>\uB358\uC9C0\uAE30</b>\n\uC8FC\uC0AC\uC704\uB97C \uCD5C\uB300 5\uAC1C\uAE4C\uC9C0 \uD14C\uC774\uBE14\uC5D0 \uB358\uC9D1\uB2C8\uB2E4.\n\n\uBE44\uC6A9: \uC8FC\uC0AC\uC704\uB2F9 1 <color=#FFB18D><sprite name=\"throw_counter\" tint=1></color>\n\uB0A8\uC740 \uC790\uC6D0: {count} <color=#FFB18D><sprite name=\"throw_counter\" tint=1></color>"
+    m_Localized: "\uC8FC\uC0AC\uC704\uB97C \uCD5C\uB300 5\uAC1C\uAE4C\uC9C0 \uD14C\uC774\uBE14\uC5D0 \uB358\uC9D1\uB2C8\uB2E4.\n\n\uBE44\uC6A9: \uC8FC\uC0AC\uC704\uB2F9 1 <color=#FFB18D><sprite name=\"throw_counter\" tint=1></color>\n\uB0A8\uC740 \uC790\uC6D0: {count} <color=#FFB18D><sprite name=\"throw_counter\" tint=1></color>"
     m_Metadata:
       m_Items: []
   - m_Id: 14068008967200770
-    m_Localized: "<b>\uB2E4\uC2DC \uAD74\uB9AC\uAE30</b>\n\uC120\uD0DD\uD558\uC9C0 \uC54A\uC740 \uC8FC\uC0AC\uC704\uB97C \uB2E4\uC2DC \uAD74\uB9BD\uB2C8\uB2E4.\n\n\uBE44\uC6A9: 1 <color=#FFB18D><sprite name=\"reroll_counter\" tint=1></color>\n\uB0A8\uC740 \uC790\uC6D0: {count} <color=#FFB18D><sprite name=\"reroll_counter\" tint=1></color>"
+    m_Localized: "\uC120\uD0DD\uD558\uC9C0 \uC54A\uC740 \uC8FC\uC0AC\uC704\uB97C \uB2E4\uC2DC \uAD74\uB9BD\uB2C8\uB2E4.\n\n\uBE44\uC6A9: 1 <color=#FFB18D><sprite name=\"reroll_counter\" tint=1></color>\n\uB0A8\uC740 \uC790\uC6D0: {count} <color=#FFB18D><sprite name=\"reroll_counter\" tint=1></color>"
     m_Metadata:
       m_Items: []
   references:

@@ -30,6 +30,12 @@ This Unity project is a dice game. Inspect the relevant scene, prefab, and confi
 - Review callers and listeners when changing data mutations or events. In particular, `DiceData` exposes separate notifications for data, lock, and value changes; face bonuses are accounted for separately in scoring.
 - Preserve the ordering of score and charm effects unless the requested change explicitly alters it.
 
+## DOTween Rules
+
+- **Safety:** Always append `.SetLink(gameObject)` to every Tween and Sequence to prevent `MissingReferenceException` on object destruction.
+- **No Leaks:** Never create tweens inside `Update()`, `FixedUpdate()`, or `LateUpdate()`. Kill previous tweens before starting a new one on the same target (e.g., `target.DOKill()` or `tween?.Kill()`).
+- **UI & Time:** For UI and pause menus, explicitly append `.SetUpdate(true)` so animations ignore `Time.timeScale = 0`.
+
 ## Adding sound effects
 
 - Put new clips under `Audio/` in the appropriate category. Add a uniquely named entry to `!Configs/SfxConfig.asset` and assign the clips to a layer, along with the volume and the existing SFX mixer group. Each layer picks one of its clips at random.

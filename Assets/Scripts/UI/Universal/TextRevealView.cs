@@ -35,11 +35,16 @@ namespace _Scripts.UI
         private bool _isRevealing;
         private float _revealProgress;
         private TMP_MeshInfo[] _originalMesh;
+        private bool _isInitialized;
 
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
-        private void Awake()
+        private void Awake() => EnsureInitialized();
+
+        private void EnsureInitialized()
         {
+            if (_isInitialized) return;
             _originalVisibleCharacters = _text.maxVisibleCharacters;
+            _isInitialized = true;
         }
 
         private void OnDisable() => Restore();
@@ -54,7 +59,7 @@ namespace _Scripts.UI
             _text.ForceMeshUpdate();
 
             return DOVirtual.Float(0f, 1f, duration ?? _showDuration, UpdateReveal)
-                .SetEase(_showEase).SetUpdate(true)
+                .SetEase(_showEase).SetUpdate(true).SetLink(gameObject)
                 .OnComplete(Restore);
         }
 
@@ -71,6 +76,7 @@ namespace _Scripts.UI
 
         public void Restore()
         {
+            EnsureInitialized();
             var wasRevealing = _isRevealing;
             if (wasRevealing)
             {
@@ -141,7 +147,7 @@ namespace _Scripts.UI
         {
             return DOTween.To(() => _text.maxVisibleCharacters,
                     value => _text.maxVisibleCharacters = Mathf.Clamp(value, 0, count), target, duration)
-                .SetEase(ease).SetUpdate(true);
+                .SetEase(ease).SetUpdate(true).SetLink(gameObject);
         }
     }
 }

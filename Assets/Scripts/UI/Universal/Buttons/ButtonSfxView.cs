@@ -1,4 +1,4 @@
-﻿using _Scripts.Managers;
+using _Scripts.Managers;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -22,6 +22,12 @@ namespace _Scripts.UI
         [Inject]
         public void Construct(ISfxPlayer sfxPlayer) => _sfxPlayer = sfxPlayer;
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
+
+        public void Initialize(Button button, ISfxPlayer sfxPlayer)
+        {
+            _button = button;
+            _sfxPlayer = sfxPlayer;
+        }
 
         private void Reset() => _button = GetComponent<Button>();
 

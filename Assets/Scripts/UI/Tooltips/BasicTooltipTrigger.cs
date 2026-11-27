@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.Localization;
@@ -7,7 +8,7 @@ namespace _Scripts.UI.Tooltips
 {
     [DisallowMultipleComponent]
     [RequireComponent(typeof(RectTransform))]
-    public class BasicTooltipTrigger : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
+    public class BasicTooltipTrigger : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler, IPointerDownHandler
     {
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 
@@ -25,6 +26,8 @@ namespace _Scripts.UI.Tooltips
         [SerializeField] private LocalizedString _title = new();
         [SerializeField] private Side _side = Side.Right;
         [SerializeField, Min(0f)] private float _gap = 24f;
+        [SerializeField, Min(0f)] private float _hoverDelay = 0f;
+        [SerializeField] private bool _showImmediatelyOnFirstHover;
 
         private RectTransform _target;
         private BasicTooltipView _view;
@@ -33,9 +36,38 @@ namespace _Scripts.UI.Tooltips
         private bool _isPinned;
         private string _pendingFirstShowKey;
         private string _currentTitle;
+        private bool _hasHovered;
+        private bool _hideOnPointerDown;
+        private bool _suppressedUntilExit;
+        private Coroutine _hoverRoutine;
+
+        public BasicTooltipView Prefab => _prefab;
+
+        public void Configure(BasicTooltipView prefab, LocalizedString text)
+        {
+            _prefab = prefab;
+            _text = text;
+            _side = Side.Above;
+        }
+
+        public void CopyHoverSettings(BasicTooltipTrigger source)
+        {
+            _hoverDelay = source._hoverDelay;
+            _showImmediatelyOnFirstHover = source._showImmediatelyOnFirstHover;
+        }
+
+        public void ConfigureButtonHover() => _hideOnPointerDown = true;
 
         public Func<string, string> TextFormatter { get; set; }
         public Func<(string title, string text)> ContentProvider { get; set; }
+
+        public void RefreshContent()
+        {
+            if (!_isListening || ContentProvider == null) return;
+            var content = ContentProvider();
+            OnTitleChanged(content.title);
+            OnTextChanged(content.text);
+        }
 
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 
@@ -76,19 +108,58 @@ namespace _Scripts.UI.Tooltips
             if (!isActiveAndEnabled) return;
 
             _isHovered = true;
-            StartListening();
+            if (_suppressedUntilExit) return;
+            var showImmediately = _showImmediatelyOnFirstHover && !_hasHovered;
+            _hasHovered = true;
+            if (showImmediately || _hoverDelay <= 0f)
+                StartListening();
+            else
+                _hoverRoutine = StartCoroutine(ShowAfterDelay());
         }
 
         public void OnPointerExit(PointerEventData eventData)
         {
             _isHovered = false;
+            _suppressedUntilExit = false;
+            CancelHoverDelay();
             HideIfUnrequested();
+        }
+
+        public void OnPointerDown(PointerEventData eventData)
+        {
+            if (!_hideOnPointerDown || eventData.button != PointerEventData.InputButton.Left) return;
+
+            DismissButtonHover();
+        }
+
+        public void DismissButtonHover()
+        {
+            _suppressedUntilExit = _isHovered;
+            CancelHoverDelay();
+            StopListening();
+            if (_view != null)
+                _view.Hide();
         }
 
         public void OnPointerClick(PointerEventData eventData)
         {
             if (eventData.button == PointerEventData.InputButton.Left)
                 DismissAutoTooltip();
+        }
+
+        private IEnumerator ShowAfterDelay()
+        {
+            yield return new WaitForSecondsRealtime(_hoverDelay);
+            _hoverRoutine = null;
+            if (_isHovered && !_suppressedUntilExit)
+                StartListening();
+        }
+
+        private void CancelHoverDelay()
+        {
+            if (_hoverRoutine == null) return;
+            StopCoroutine(_hoverRoutine);
+            _hoverRoutine = null;
         }
 
         internal void ShowOnFirstVisit()
@@ -123,6 +194,8 @@ namespace _Scripts.UI.Tooltips
 
         private void ResetRequests()
         {
+            CancelHoverDelay();
+            _suppressedUntilExit = false;
             _isHovered = false;
             _isPinned = false;
             _pendingFirstShowKey = null;

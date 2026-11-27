@@ -17,10 +17,15 @@ namespace _Scripts.UI
         private Vector3[] _scales;
         private float[] _alphas;
         private Sequence _sequence;
+        private bool _isInitialized;
 
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
-        private void Awake()
+        private void Awake() => EnsureInitialized();
+
+        private void EnsureInitialized()
         {
+            if (_isInitialized) return;
+            _isInitialized = true;
             _groups = new CanvasGroup[_elements.Length];
             _scales = new Vector3[_elements.Length];
             _alphas = new float[_elements.Length];
@@ -46,7 +51,7 @@ namespace _Scripts.UI
         internal void Show(float delay)
         {
             Restore();
-            _sequence = DOTween.Sequence().SetUpdate(true);
+            _sequence = DOTween.Sequence().SetUpdate(true).SetLink(gameObject);
 
             for (var i = 0; i < _elements.Length; i++)
             {
@@ -60,6 +65,7 @@ namespace _Scripts.UI
 
         public void Restore()
         {
+            EnsureInitialized();
             _sequence?.Kill();
             _sequence = null;
 

@@ -587,21 +587,15 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 14068008954617856
-    m_Localized: '<b>Select all</b>
-
-      Selects all dice on the table.'
+    m_Localized: Selects all dice on the table.
     m_Metadata:
       m_Items: []
   - m_Id: 14068008967200768
-    m_Localized: '<b>Clear selection</b>
-
-      Deselects all dice.'
+    m_Localized: Deselects all dice.
     m_Metadata:
       m_Items: []
   - m_Id: 14068008967200769
-    m_Localized: '<b>Throw</b>
-
-      Throws up to 5 dice onto the table.
+    m_Localized: 'Throws up to 5 dice onto the table.
 
 
       Cost: 1 <color=#FFB18D><sprite name="throw_counter" tint=1></color> per die
@@ -610,9 +604,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 14068008967200770
-    m_Localized: '<b>Reroll</b>
-
-      Rerolls unselected dice.
+    m_Localized: 'Rerolls unselected dice.
 
 
       Cost: 1 <color=#FFB18D><sprite name="reroll_counter" tint=1></color>

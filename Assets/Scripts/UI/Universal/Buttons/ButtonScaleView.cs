@@ -1,4 +1,4 @@
-using DG.Tweening;
+﻿using DG.Tweening;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -53,6 +53,8 @@ namespace _Scripts.UI
         private bool CanInteract => _selectable != null ? _selectable.IsInteractable() : _button == null || _button.interactable;
 
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
+
+        public void Initialize(Button button) => _button = button;
 
         private void Reset() => _button = GetComponent<Button>();
 

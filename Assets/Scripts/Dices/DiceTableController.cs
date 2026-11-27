@@ -13,6 +13,7 @@ namespace _Scripts.Dices
     {
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
         public event Action OnSelectionChanged;
+        public event Action OnPendingDicesChanged;
         
         public List<Dice> AllDices { get; private set; } = new();
         public List<Dice> PendingDices { get; private set; } = new();
@@ -85,6 +86,7 @@ namespace _Scripts.Dices
             PendingDices.Clear();
             if (dices != null)
                 PendingDices.AddRange(dices);
+            OnPendingDicesChanged?.Invoke();
         }
 
         public void AddPendingDices(List<Dice> dices)
@@ -94,12 +96,14 @@ namespace _Scripts.Dices
                 if (dice != null && !PendingDices.Contains(dice))
                     PendingDices.Add(dice);
             }
+            OnPendingDicesChanged?.Invoke();
         }
         
         public List<Dice> ExtractPendingDices()
         {
             var result = new List<Dice>(PendingDices);
             PendingDices.Clear();
+            OnPendingDicesChanged?.Invoke();
             return result;
         }
         
