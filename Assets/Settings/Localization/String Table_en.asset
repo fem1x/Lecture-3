@@ -578,6 +578,14 @@ MonoBehaviour:
     m_Localized: All dice are <style=intact>Intact</style>!
     m_Metadata:
       m_Items: []
+  - m_Id: 14043493197406208
+    m_Localized: THROW
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14043493256126464
+    m_Localized: REROLL
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:
