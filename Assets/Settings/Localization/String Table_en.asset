@@ -575,7 +575,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 13894146480660480
-    m_Localized: All dice are Intact!
+    m_Localized: All dice are <style=intact>Intact</style>!
     m_Metadata:
       m_Items: []
   references:

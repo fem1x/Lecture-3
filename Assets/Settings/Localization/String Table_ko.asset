@@ -575,7 +575,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 13894146480660480
-    m_Localized: "\uBAA8\uB4E0 \uC8FC\uC0AC\uC704\uAC00 \uC628\uC804\uD569\uB2C8\uB2E4!"
+    m_Localized: "\uBAA8\uB4E0 \uC8FC\uC0AC\uC704\uAC00 <style=intact>\uC628\uC804</style>\uD569\uB2C8\uB2E4!"
     m_Metadata:
       m_Items: []
   references:

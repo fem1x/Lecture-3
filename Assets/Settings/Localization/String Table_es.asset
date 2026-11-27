@@ -575,7 +575,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 13894146480660480
-    m_Localized: "\xA1Todos los dados est\xE1n intactos!"
+    m_Localized: "\xA1Todos los dados est\xE1n <style=intact>intactos</style>!"
     m_Metadata:
       m_Items: []
   references:
