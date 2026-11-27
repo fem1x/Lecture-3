@@ -2,11 +2,9 @@ using _Scripts.Dices;
 using _Scripts.Managers;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
-using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
-using UnityEngine.Localization;
 using UnityEngine.UI;
 using VContainer;
 
@@ -28,13 +26,20 @@ namespace _Scripts.UI.MainMenu
         [SerializeField] private RectTransform _quitCard;
         [SerializeField] private Button _backButton;
         [SerializeField] private Button _confirmExitButton;
-        [SerializeField] private TMP_Text _quitTitle;
 
+        [Header("Fade transition")] 
+        [SerializeField] private float _inTime = 0.5f;
+        [SerializeField] private Ease _inEase = Ease.InOutCubic;
+        [Space]
+        [SerializeField] private float _outTime = 2f;
+        [SerializeField] private Ease _outEase = Ease.OutQuad;
+        
+        
         private GameStateManager _gameStateManager;
         private Bootstrap _bootstrap;
         private SettingsMenuView _settings;
         private ScreenFadeView _screenFade;
-        private (LocalizedString Key, LocalizedString.ChangeHandler Listener)[] _labels;
+        private ISfxPlayer _sfx;
         private Sequence _dialogTween;
         private Vector2 _quitCardPosition;
         private bool _starting;
@@ -43,27 +48,16 @@ namespace _Scripts.UI.MainMenu
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
         [Inject]
         public void Construct(GameStateManager gameStateManager, Bootstrap bootstrap,
-            SettingsMenuView settings, ScreenFadeView screenFade)
+            SettingsMenuView settings, ScreenFadeView screenFade, ISfxPlayer sfx)
         {
             _gameStateManager = gameStateManager;
             _bootstrap = bootstrap;
             _settings = settings;
             _screenFade = screenFade;
+            _sfx = sfx;
         }
 
-        private void Awake()
-        {
-            _quitCardPosition = _quitCard.anchoredPosition;
-            _labels = new[]
-            {
-                Label("main_menu_play", _playButton.GetComponentInChildren<TMP_Text>(true)),
-                Label("pause_settings", _settingsButton.GetComponentInChildren<TMP_Text>(true)),
-                Label("main_menu_quit", _exitButton.GetComponentInChildren<TMP_Text>(true)),
-                Label("main_menu_quit_title", _quitTitle),
-                Label("main_menu_back", _backButton.GetComponentInChildren<TMP_Text>(true)),
-                Label("main_menu_quit", _confirmExitButton.GetComponentInChildren<TMP_Text>(true))
-            };
-        }
+        private void Awake() => _quitCardPosition = _quitCard.anchoredPosition;
 
         private void Start()
         {
@@ -76,18 +70,7 @@ namespace _Scripts.UI.MainMenu
             OnStateChanged(_gameStateManager.CurrentState);
         }
 
-        private void OnEnable()
-        {
-            foreach (var (key, listener) in _labels)
-                key.StringChanged += listener;
-        }
-
-        private void OnDisable()
-        {
-            foreach (var (key, listener) in _labels)
-                key.StringChanged -= listener;
-            _dialogTween?.Kill();
-        }
+        private void OnDisable() => _dialogTween?.Kill();
 
         private void OnDestroy()
         {
@@ -137,7 +120,7 @@ namespace _Scripts.UI.MainMenu
             _cg.blocksRaycasts = true;
             SetActionsEnabled(true);
             _showcase.Show();
-            _entrance.Show();
+            _entrance.Show(() => _sfx.Play("ElementAppear"));
             Select(_playButton);
         }
 
@@ -155,19 +138,14 @@ namespace _Scripts.UI.MainMenu
             var token = this.GetCancellationTokenOnDestroy();
             var game = _bootstrap;
             var fade = _screenFade;
-            var roll = _showcase.PlayRoll();
-            if (await UniTask.Delay(260, ignoreTimeScale: true, cancellationToken: token).SuppressCancellationThrow())
-                return;
-            if (!isActiveAndEnabled) return;
-
-            await fade.FadeInAsync(0.24f);
+            _showcase.PlayRoll();
+            await fade.FadeInAsync(time: _inTime, ease: _inEase);
             if (token.IsCancellationRequested) return;
             if (isActiveAndEnabled && _gameStateManager.CurrentState == GameState.MainMenu)
             {
-                roll.Kill();
                 game.StartGame();
             }
-            await fade.FadeOutAsync(0.48f);
+            await fade.FadeOutAsync(time: _outTime, ease: _outEase);
         }
 
         private void OpenSettings()
@@ -237,11 +215,5 @@ namespace _Scripts.UI.MainMenu
                 EventSystem.current.SetSelectedGameObject(button != null ? button.gameObject : null);
         }
 
-        private static (LocalizedString Key, LocalizedString.ChangeHandler Listener) Label(string key, TMP_Text text)
-        {
-            var fallback = text.text;
-            return (new LocalizedString("String Table", key), value =>
-                text.text = string.IsNullOrEmpty(value) || value.StartsWith("No translation found") ? fallback : value);
-        }
     }
 }

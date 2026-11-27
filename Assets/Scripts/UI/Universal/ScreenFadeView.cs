@@ -16,27 +16,29 @@ namespace _Scripts.UI
 
         private void Awake() => _cg.alpha = 1f;
 
-        private void Start() => FadeOutAsync(time: 3f).Forget();
+        private void Start() => FadeOutAsync(time: _timeOut).Forget();
 
-        public async UniTask FadeInAsync(float? time = null)
+        public async UniTask FadeInAsync(float? time = null, Ease? ease = null)
         {
             _cg.DOKill();
             
             _cg.gameObject.SetActive(true);
             _cg.blocksRaycasts = true;
             
+            var appliedEase =  ease ?? _easeIn;
             await _cg.DOFade(1f, time ?? _timeIn)
-                .SetEase(_easeIn)
+                .SetEase(appliedEase)
                 .SetUpdate(true)
                 .SetLink(gameObject);
         }
 
-        public async UniTask FadeOutAsync(float? time = null)
+        public async UniTask FadeOutAsync(float? time = null, Ease? ease = null)
         {
             _cg.DOKill();
             
+            var appliedEase = ease ?? _easeOut;
             await _cg.DOFade(0f, time ?? _timeOut)
-                .SetEase(_easeOut)
+                .SetEase(appliedEase)
                 .SetUpdate(true)
                 .SetLink(gameObject);
             

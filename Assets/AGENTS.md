@@ -15,6 +15,7 @@ This Unity project is a dice game. Inspect the relevant scene, prefab, and confi
 
 ## Working conventions
 
+- Do not generate large object hierarchies in runtime code. Prepare cameras, lights, models, and other scene objects in a prefab or scene and assign their references in the Inspector.
 - For localization edits, use the local Unity import queue described below.
 
 - Do not run tests or checks in Unity unless the task requires them or the user explicitly requests them.

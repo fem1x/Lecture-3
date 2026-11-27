@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using UnityEngine.Rendering;
+using UnityEngine.Rendering.Universal;
 using UnityEngine.UI;
 using VContainer;
 
@@ -19,8 +20,27 @@ namespace _Scripts.UI.MainMenu
         [SerializeField, Range(0f, 2f)] private float _cursorParallaxStrength = 1f;
         [SerializeField, Min(0.01f)] private float _dragSensitivity = 0.42f;
         [SerializeField, Min(0.01f)] private float _dragDamping = 9f;
+
+        [Header("Dice Entrance")]
+        [SerializeField, Min(0f)] private float _entranceDelay = 0.16f;
         [SerializeField, Min(0.01f)] private float _entranceDuration = 0.45f;
         [SerializeField, Min(0f)] private float _entranceStagger = 0.09f;
+        [SerializeField] private Ease _entranceEase = Ease.OutBack;
+
+        [Header("Play Roll")]
+        [SerializeField, Min(0f)] private float _rollDelay;
+        [SerializeField, Min(0.01f)] private float _rollDuration = 0.53f;
+        [SerializeField, Min(0f)] private float _rollStagger = 0.07f;
+        [SerializeField] private Ease _rollEase = Ease.InOutSine;
+        [SerializeField] private Vector3 _rollDegrees = new(360f, 260f, 45f);
+        [SerializeField, Min(0f)] private float _rollLift = 0.55f;
+
+        [Header("Lighting")]
+        [SerializeField, Min(0f)] private float _keyIntensity = 42f;
+        [SerializeField, Min(0f)] private float _fillIntensity = 16f;
+        [SerializeField, Min(0f)] private float _rimIntensity = 28f;
+
+        private const uint StudioRenderingLayer = 1u << 7;
 
         private static readonly Vector3[] Positions =
         {
@@ -32,24 +52,24 @@ namespace _Scripts.UI.MainMenu
             new(24f, -34f, 14f), new(-32f, 26f, -16f), new(20f, 42f, -20f)
         };
 
-        private static readonly float[] Sizes = { 1.55f, 0.95f, 0.86f };
-        private static readonly int[] Durability = { 2, 1, 3 };
+        private static readonly float[] Sizes = { 1.55f, 1.02f, 0.83f };
+        private static readonly int[] Durability = { 1, 2, 3 };
         private static readonly Bounds DieBounds = new(Vector3.zero, Vector3.one * 1.04f);
 
         private readonly Transform[] _dice = new Transform[3];
         private readonly ModelRotator[] _rotators = new ModelRotator[3];
         private readonly float[] _appearance = new float[3];
         private readonly float[] _touch = new float[3];
+        private readonly float[] _rollProgress = new float[3];
         private GameObject _studio;
         private Camera _camera;
         private Light _key;
         private RenderTexture _texture;
-        private Tween _roll;
+        private Sequence _roll;
         private Sequence _entrance;
         private ISfxPlayer _sfx;
         private Vector2 _parallax;
         private float _time;
-        private float _rollProgress;
         private float _focus;
         private bool _playHovered;
         private bool _interactionEnabled;
@@ -103,7 +123,7 @@ namespace _Scripts.UI.MainMenu
                 : Vector2.zero;
             _focus = Mathf.Lerp(_focus, _playHovered ? 1f : 0f, smoothing);
             _camera.transform.localPosition = new Vector3(_parallax.x * 0.58f, _parallax.y * 0.46f, -9f);
-            _key.intensity = 15f + _focus * 6f;
+            _key.intensity = _keyIntensity * (1f + _focus * 0.23f);
             var hovered = _pointerOnStage && _interactionEnabled && mouse != null
                 ? PickDie(mouse.position.ReadValue(), null)
                 : -1;
@@ -118,15 +138,18 @@ namespace _Scripts.UI.MainMenu
                 var feedback = i == _heldDie ? -0.04f : i == hovered ? 0.045f : 0f;
                 _touch[i] = Mathf.Lerp(_touch[i], feedback, 1f - Mathf.Exp(-24f * delta));
                 var phase = _time * (1.05f + 0.14f * i) + i * 2.1f;
-                var bounce = i == 0 ? Mathf.Sin(_rollProgress * Mathf.PI) * 1.12f : 0f;
-                var spin = i == 0 ? 360f * _rollProgress : 0f;
+                var progress = _rollProgress[i];
+                var bounce = Mathf.Sin(Mathf.Clamp01(progress) * Mathf.PI) * _rollLift * (Sizes[i] / Sizes[0]);
+                var spin = _rollDegrees * progress;
+                if (i == 1) spin = new Vector3(spin.x, -spin.y, -spin.z);
+                if (i == 2) spin = -spin;
                 var enter = 1f - Mathf.Min(1f, appearance);
                 _dice[i].localScale = Vector3.one * (Sizes[i] * appearance * (1f + _touch[i]));
                 _dice[i].localPosition = Positions[i] + new Vector3(0.09f * Mathf.Cos(phase),
                     0.13f * Mathf.Sin(phase) + bounce - enter * 0.44f, 0f);
-                _dice[i].localRotation = Quaternion.Euler(Angles[i] +
-                    new Vector3(10f * Mathf.Sin(phase * 0.7f) + spin - _focus * 8f,
-                        17f * Mathf.Sin(phase * 0.61f) + spin * 0.65f + enter * 24f + _focus * (i == 1 ? -12f : 12f),
+                _dice[i].localRotation = Quaternion.Euler(Angles[i] + spin +
+                    new Vector3(10f * Mathf.Sin(phase * 0.7f) - _focus * 8f,
+                        17f * Mathf.Sin(phase * 0.61f) + enter * 24f + _focus * (i == 1 ? -12f : 12f),
                         5f * Mathf.Cos(phase)));
             }
         }
@@ -146,7 +169,6 @@ namespace _Scripts.UI.MainMenu
             _roll?.Kill();
             _entrance?.Kill();
             ReleaseDie();
-            _rollProgress = 0f;
             _time = 0f;
             _focus = 0f;
             _playHovered = false;
@@ -156,12 +178,15 @@ namespace _Scripts.UI.MainMenu
             {
                 var index = i;
                 _appearance[i] = 0f;
+                _rollProgress[i] = 0f;
                 _touch[i] = 0f;
                 _rotators[i].ResetVelocity();
                 _rotators[i].transform.localRotation = Quaternion.identity;
-                _entrance.Insert(i * _entranceStagger,
+                var start = _entranceDelay + i * _entranceStagger;
+                _entrance.InsertCallback(start, () => _sfx.Play("DiceAppear"));
+                _entrance.Insert(start,
                     DOTween.To(() => _appearance[index], value => _appearance[index] = value, 1f, _entranceDuration)
-                        .SetEase(Ease.OutBack).SetUpdate(true).SetLink(gameObject));
+                        .SetEase(_entranceEase).SetUpdate(true).SetLink(gameObject));
             }
             UpdateDice(-1, 0f);
         }
@@ -169,8 +194,15 @@ namespace _Scripts.UI.MainMenu
         internal Tween PlayRoll()
         {
             _roll?.Kill();
-            _roll = DOTween.To(() => _rollProgress, value => _rollProgress = value, 1f, 0.48f)
-                .SetEase(Ease.InOutSine).SetUpdate(true).SetLink(gameObject);
+            _roll = DOTween.Sequence().SetUpdate(true).SetLink(gameObject);
+            for (var i = 0; i < _rollProgress.Length; i++)
+            {
+                var index = i;
+                _rollProgress[i] = 0f;
+                _roll.Insert(_rollDelay + i * _rollStagger,
+                    DOTween.To(() => _rollProgress[index], value => _rollProgress[index] = value, 1f, _rollDuration)
+                        .SetEase(_rollEase).SetUpdate(true).SetLink(gameObject));
+            }
             return _roll;
         }
 
@@ -275,9 +307,9 @@ namespace _Scripts.UI.MainMenu
             _camera.cullingMask = 1 << layer;
             _camera.targetTexture = _texture;
 
-            _key = AddLight("Key", layer, new Vector3(-3f, 4f, -4f), new Color(0.91f, 0.85f, 1f), 15f);
-            AddLight("Rim", layer, new Vector3(4f, 1f, 2f), new Color(1f, 0.44f, 0.35f), 10f);
-            AddLight("Fill", layer, new Vector3(2f, -3f, -4f), new Color(0.56f, 0.59f, 1f), 6f);
+            _key = AddLight("Key", layer, new Vector3(-2.8f, 3.3f, -3.6f), new Color(1f, 0.93f, 0.88f), _keyIntensity);
+            AddLight("Rim", layer, new Vector3(3.2f, 1.9f, 1.5f), new Color(0.83f, 0.63f, 1f), _rimIntensity);
+            AddLight("Fill", layer, new Vector3(2.3f, -2.1f, -3.2f), new Color(0.57f, 0.65f, 1f), _fillIntensity);
 
             for (var i = 0; i < _dice.Length; i++)
             {
@@ -309,6 +341,7 @@ namespace _Scripts.UI.MainMenu
             light.transform.localPosition = position;
             light.type = LightType.Point;
             light.cullingMask = 1 << layer;
+            light.GetUniversalAdditionalLightData().renderingLayers = (RenderingLayerMask)StudioRenderingLayer;
             light.color = color;
             light.range = 12f;
             light.intensity = intensity;
@@ -325,6 +358,8 @@ namespace _Scripts.UI.MainMenu
         private static void SetLayer(Transform part, int layer)
         {
             part.gameObject.layer = layer;
+            if (part.TryGetComponent<Renderer>(out var renderer))
+                renderer.renderingLayerMask = StudioRenderingLayer;
             foreach (Transform child in part)
                 SetLayer(child, layer);
         }
@@ -340,6 +375,7 @@ namespace _Scripts.UI.MainMenu
             {
                 copy.AddComponent<MeshFilter>().sharedMesh = part.GetComponent<MeshFilter>().sharedMesh;
                 var renderer = copy.AddComponent<MeshRenderer>();
+                renderer.renderingLayerMask = StudioRenderingLayer;
                 renderer.sharedMaterials = mesh.sharedMaterials;
                 renderer.shadowCastingMode = ShadowCastingMode.Off;
                 renderer.lightProbeUsage = LightProbeUsage.Off;
@@ -349,6 +385,7 @@ namespace _Scripts.UI.MainMenu
             if (part.TryGetComponent<SpriteRenderer>(out var sprite) && sprite.enabled)
             {
                 var renderer = copy.AddComponent<SpriteRenderer>();
+                renderer.renderingLayerMask = StudioRenderingLayer;
                 renderer.sprite = sprite.sprite;
                 renderer.sharedMaterial = sprite.sharedMaterial;
                 renderer.color = sprite.color;
