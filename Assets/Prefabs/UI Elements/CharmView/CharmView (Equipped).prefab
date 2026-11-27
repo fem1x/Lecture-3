@@ -114,6 +114,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 1214982661794929846, guid: 4b61beccc7d12674db762c3c90a46557, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1403491797200215172}
+    - targetCorrespondingSourceObject: {fileID: 1214982661794929846, guid: 4b61beccc7d12674db762c3c90a46557, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1403491797200215173}
   m_SourcePrefab: {fileID: 100100000, guid: 4b61beccc7d12674db762c3c90a46557, type: 3}
 --- !u!114 &2417598920261664070 stripped
 MonoBehaviour:
@@ -163,3 +166,41 @@ MonoBehaviour:
   m_EditorClassIdentifier: Game::_Scripts.UI.Tooltips.CharmTooltipTrigger
   <TargetRect>k__BackingField: {fileID: 6797283708390660849}
   <EquippedView>k__BackingField: {fileID: -3575081561266522832}
+  _tooltipTrigger: {fileID: 1403491797200215173}
+--- !u!114 &1403491797200215173
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6989481398441479156}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 17fa2e9d67bc43fca26d54869b45ce26, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Game::_Scripts.UI.Tooltips.TitledTooltipTrigger
+  _prefab: {fileID: 7818079974194006116, guid: 2c08628b423a4f8583b7ddb34e56f7e2, type: 3}
+  _targetOverride: {fileID: 6797283708390660849}
+  _text:
+    m_TableReference:
+      m_TableCollectionName: 
+    m_TableEntryReference:
+      m_KeyId: 0
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  _title:
+    m_TableReference:
+      m_TableCollectionName: 
+    m_TableEntryReference:
+      m_KeyId: 0
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  _side: 1
+  _gap: 24
+  references:
+    version: 2
+    RefIds: []

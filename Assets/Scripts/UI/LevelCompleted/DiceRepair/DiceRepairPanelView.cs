@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+using System;
+using System.Collections.Generic;
 using System.Threading;
 using _Scripts.Dices;
 using _Scripts.Managers;
@@ -13,6 +14,7 @@ namespace _Scripts.UI
     {
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
         [SerializeField] private List<DiceRepairView> _repairViews = new();
+        [SerializeField] private TextRevealView _allRepairedText;
 
         [Header("Slot Reveal Animation")]
         [SerializeField, Range(0f, 100f)]
@@ -29,6 +31,10 @@ namespace _Scripts.UI
         private DiceTableController _diceTableController;
         private bool _isBound;
         private StaggeredReveal _slotReveal;
+        private Tween _allRepairedTween;
+        private bool _repairModeEnabled;
+        private bool _messageReady;
+        private bool _messageShown;
 
         [Inject]
         public void Construct(
@@ -39,12 +45,30 @@ namespace _Scripts.UI
             _diceTableController = diceTableController;
         }
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
-        private void Awake() => _slotReveal = new StaggeredReveal(_repairViews);
+        private void Awake()
+        {
+            _slotReveal = new StaggeredReveal(_repairViews);
+            _allRepairedText.gameObject.SetActive(false);
+        }
 
-        private void OnDisable() => _slotReveal.Cancel();
+        private void OnDisable()
+        {
+            _slotReveal.Cancel();
+            HideAllRepaired();
+        }
+
+        private void OnDestroy()
+        {
+            if (!_isBound) return;
+            foreach (var dice in _diceTableController.AllDices)
+                dice.Data.OnDataChanged -= RefreshAllRepaired;
+        }
 
         public void SetRepairMode(bool enable)
         {
+            _repairModeEnabled = enable;
+            _messageReady = false;
+
             if (enable && !_isBound)
                 BindDices();
 
@@ -58,10 +82,16 @@ namespace _Scripts.UI
                 _repairViews[i].SetRepairMode(enable);
         }
 
-        internal UniTask RevealSlotsAsync(float slideDuration, CancellationToken ct)
+        internal async UniTask RevealSlotsAsync(float slideDuration, CancellationToken ct)
         {
             var delay = slideDuration * (_revealStartPercent / 100f);
-            return _slotReveal.PlayAsync(delay, _revealDuration, _revealStagger, _revealFadeEase, _revealScaleEase, ct);
+            var slots = _slotReveal.PlayAsync(delay, _revealDuration, _revealStagger, _revealFadeEase, _revealScaleEase, ct);
+            if (delay > 0f)
+                await UniTask.Delay(TimeSpan.FromSeconds(delay), ignoreTimeScale: true, cancellationToken: ct);
+            ct.ThrowIfCancellationRequested();
+            _messageReady = true;
+            RefreshAllRepaired();
+            await slots;
         }
 
         private void BindDices()
@@ -72,7 +102,41 @@ namespace _Scripts.UI
             for (var i = 0; i < count; i++)
                 _repairViews[i].Bind(dices[i].Data);
 
+            foreach (var dice in dices)
+                dice.Data.OnDataChanged += RefreshAllRepaired;
+
             _isBound = true;
+        }
+
+        private void RefreshAllRepaired()
+        {
+            if (!_repairModeEnabled || !_messageReady) return;
+
+            var dices = _diceTableController.AllDices;
+            var allRepaired = dices.Count > 0 && dices.TrueForAll(dice => !dice.Data.NeedsRepair);
+            if (!allRepaired)
+            {
+                HideAllRepaired();
+                return;
+            }
+
+            if (_messageShown) return;
+            _messageShown = true;
+            _allRepairedText.gameObject.SetActive(true);
+            var textTransform = _allRepairedText.transform;
+            textTransform.localScale = Vector3.one * 0.88f;
+            _allRepairedTween = DOTween.Sequence().SetUpdate(true)
+                .Join(_allRepairedText.Show())
+                .Join(textTransform.DOScale(Vector3.one, 0.5f).SetEase(Ease.OutBack));
+        }
+
+        private void HideAllRepaired()
+        {
+            _allRepairedTween?.Kill();
+            _allRepairedTween = null;
+            _allRepairedText.gameObject.SetActive(false);
+            _allRepairedText.transform.localScale = Vector3.one;
+            _messageShown = false;
         }
     }
 }

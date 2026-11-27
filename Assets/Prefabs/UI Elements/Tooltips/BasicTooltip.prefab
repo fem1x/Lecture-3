@@ -174,12 +174,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Game::_Scripts.UI.TextRevealView
   _text: {fileID: 8055616531025026879}
-  _showDuration: 1
+  _showDuration: 1.25
   _showEase: 12
   _hideDuration: 0.2
   _hideEase: 6
   _characterDurationFraction: 0.2
-  _riseInGlyphHeights: 0.35
+  _riseInGlyphHeights: 0.6
   _startScale: 0.25
   _characterEase: 27
 --- !u!1 &4527028972801063995
@@ -375,6 +375,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Game::_Scripts.UI.Tooltips.BasicTooltipView
   _content: {fileID: 8055616531025026879}
+  _title: {fileID: 0}
+  _titleReveal: {fileID: 0}
   _textReveal: {fileID: 7818079974194006118}
   _arrow: {fileID: 6856804226874233607}
   _canvasGroup: {fileID: 7818079974194006117}

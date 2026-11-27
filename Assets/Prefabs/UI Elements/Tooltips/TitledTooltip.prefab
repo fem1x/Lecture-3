@@ -174,12 +174,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Game::_Scripts.UI.TextRevealView
   _text: {fileID: 8055616531025026879}
-  _showDuration: 1
+  _showDuration: 1.25
   _showEase: 12
   _hideDuration: 0.2
   _hideEase: 6
   _characterDurationFraction: 0.2
-  _riseInGlyphHeights: 0.35
+  _riseInGlyphHeights: 0.6
   _startScale: 0.25
   _characterEase: 27
 --- !u!1 &1143692756706698070
@@ -258,8 +258,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4293845218
-  m_fontColor: {r: 0.8848726, g: 0.876691, b: 0.9339623, a: 1}
+    rgba: 4294967295
+  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -356,13 +356,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Game::_Scripts.UI.TextRevealView
   _text: {fileID: 8055616531025026880}
-  _showDuration: 1
-  _showEase: 12
+  _showDuration: 0.94
+  _showEase: 9
   _hideDuration: 0.2
   _hideEase: 6
-  _characterDurationFraction: 0.2
-  _riseInGlyphHeights: 0.35
-  _startScale: 0.25
+  _characterDurationFraction: 0.158
+  _riseInGlyphHeights: 1.02
+  _startScale: 0.185
   _characterEase: 27
 --- !u!1 &4527028972801063995
 GameObject:

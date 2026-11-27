@@ -110,7 +110,7 @@ namespace _Scripts.Managers
             return;
         }
 
-        var canvas = element.GetComponentInParent<Canvas>().rootCanvas;
+        var canvas = element.GetComponentInParent<Canvas>(true).rootCanvas;
         var canvasCamera = canvas.renderMode == RenderMode.ScreenSpaceOverlay ? null : canvas.worldCamera;
         var screenPosition = RectTransformUtility.WorldToScreenPoint(canvasCamera, element.TransformPoint(element.rect.center));
         screenPosition.x = Mathf.Clamp(screenPosition.x, 0f, Screen.width);

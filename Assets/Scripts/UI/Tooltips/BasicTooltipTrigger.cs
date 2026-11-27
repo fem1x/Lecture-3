@@ -7,7 +7,7 @@ namespace _Scripts.UI.Tooltips
 {
     [DisallowMultipleComponent]
     [RequireComponent(typeof(RectTransform))]
-    public sealed class BasicTooltipTrigger : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
+    public class BasicTooltipTrigger : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
     {
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 
@@ -20,6 +20,7 @@ namespace _Scripts.UI.Tooltips
         }
 
         [SerializeField] private BasicTooltipView _prefab;
+        [SerializeField] private RectTransform _targetOverride;
         [SerializeField] private LocalizedString _text = new();
         [SerializeField] private LocalizedString _title = new();
         [SerializeField] private Side _side = Side.Right;
@@ -34,12 +35,13 @@ namespace _Scripts.UI.Tooltips
         private string _currentTitle;
 
         public Func<string, string> TextFormatter { get; set; }
+        public Func<(string title, string text)> ContentProvider { get; set; }
 
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 
-        private void Awake()
+        protected virtual void Awake()
         {
-            _target = (RectTransform)transform;
+            _target = _targetOverride != null ? _targetOverride : (RectTransform)transform;
 
             // Prefab overrides can change the serialized key after its reference type was deserialized.
             var entry = _text.TableEntryReference;
@@ -50,15 +52,15 @@ namespace _Scripts.UI.Tooltips
             _title.TableEntryReference = titleEntry;
         }
 
-        private void LateUpdate()
+        protected virtual void LateUpdate()
         {
             if (_view != null && _view.gameObject.activeSelf)
                 UpdatePosition();
         }
 
-        private void OnDisable() => HideImmediately();
+        protected virtual void OnDisable() => HideImmediately();
 
-        private void OnDestroy()
+        protected virtual void OnDestroy()
         {
             if (_view != null)
             {
@@ -138,8 +140,18 @@ namespace _Scripts.UI.Tooltips
 
         private void StartListening()
         {
-            if (_isListening || _text.IsEmpty) return;
+            if (_isListening) return;
 
+            if (ContentProvider != null)
+            {
+                _isListening = true;
+                var content = ContentProvider();
+                OnTitleChanged(content.title);
+                OnTextChanged(content.text);
+                return;
+            }
+
+            if (_text.IsEmpty) return;
             _isListening = true;
             if (!_title.IsEmpty)
                 _title.StringChanged += OnTitleChanged;
@@ -196,6 +208,8 @@ namespace _Scripts.UI.Tooltips
             if (!_isListening) return;
 
             _isListening = false;
+            if (ContentProvider != null) return;
+
             _text.StringChanged -= OnTextChanged;
             if (!_title.IsEmpty)
                 _title.StringChanged -= OnTitleChanged;
