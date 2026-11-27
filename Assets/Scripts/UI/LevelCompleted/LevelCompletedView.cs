@@ -23,12 +23,14 @@ public class LevelCompletedView : MonoBehaviour
     #region DI
     private LevelFlowController _levelFlowController;
     private MapService _mapService;
+    private ISfxPlayer _sfxPlayer;
 
     [Inject]
-    public void Construct(LevelFlowController levelFlowController, MapService mapService)
+    public void Construct(LevelFlowController levelFlowController, MapService mapService, ISfxPlayer sfxPlayer)
     {
         _levelFlowController = levelFlowController;
         _mapService = mapService;
+        _sfxPlayer = sfxPlayer;
     }
     #endregion
 
@@ -111,7 +113,7 @@ public class LevelCompletedView : MonoBehaviour
 
     private async UniTask MorphIntoWorkshopAsync(CancellationToken ct)
     {
-        await _workshopTransition.PlayAsync(_rewardsView.WorkshopButtonRect, _workshopView.FirstMainSlide, ct);
+        await _workshopTransition.PlayAsync(_rewardsView.WorkshopButtonRect, _workshopView.FirstMainSlide, _sfxPlayer, ct);
         _rewardsView.HideInstant();
         SetPanelInteraction(true);
     }

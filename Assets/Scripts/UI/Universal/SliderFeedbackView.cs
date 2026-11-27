@@ -59,7 +59,7 @@ namespace _Scripts.UI
         {
             _hovered = true;
             if (_slider.IsInteractable())
-                _sfxPlayer.Play(_hoverSfx);
+                _sfxPlayer.PlayUI(_hoverSfx, (RectTransform)_slider.transform);
             PlayFeedback();
         }
 
@@ -74,10 +74,10 @@ namespace _Scripts.UI
             if (eventData.button != PointerEventData.InputButton.Left) return;
             if (!_slider.IsInteractable())
             {
-                _sfxPlayer.Play(_disabledClickSfx);
+                _sfxPlayer.PlayUI(_disabledClickSfx, (RectTransform)_slider.transform);
                 return;
             }
-            _sfxPlayer.Play(_clickSfx);
+            _sfxPlayer.PlayUI(_clickSfx, (RectTransform)_slider.transform);
             _pressed = true;
             PlayFeedback();
         }
@@ -93,7 +93,7 @@ namespace _Scripts.UI
         {
             if (!_slider.IsInteractable() || Time.unscaledTime < _nextSoundTime) return;
             _nextSoundTime = Time.unscaledTime + _soundInterval;
-            _sfxPlayer.Play(_moveSfx);
+            _sfxPlayer.PlayUI(_moveSfx, (RectTransform)_slider.transform);
         }
 
         private void PlayFeedback()

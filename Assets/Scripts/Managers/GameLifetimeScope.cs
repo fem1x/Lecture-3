@@ -1,4 +1,4 @@
-using _Scripts.Charms;
+﻿using _Scripts.Charms;
 using _Scripts.Combinations;
 using _Scripts.Configs;
 using _Scripts.Dices;
@@ -32,6 +32,11 @@ public class GameLifetimeScope : LifetimeScope
     [SerializeField] private DiceUpgradeConfig _diceUpgradeConfig;
     [SerializeField] private DiceAtlasConfig _diceAtlasConfig;
     
+    [Header("Testing")]
+    [Tooltip("Up to five charms equipped automatically when a game starts.")]
+    [SerializeField] private CharmConfigBase[] _initialCharms = new CharmConfigBase[0];
+    public CharmConfigBase[] InitialCharms => _initialCharms;
+
     [Header("Dice Tooltips")]
     [SerializeField] private RectTransform _diceTooltipsHolder;
     [SerializeField] private RectTransform[] _diceTooltipUiObstacles = new RectTransform[0];
@@ -68,6 +73,7 @@ public class GameLifetimeScope : LifetimeScope
     
     private void RegisterConfigs(IContainerBuilder builder)
     {
+        builder.RegisterInstance(this);
         builder.RegisterInstance(_diceRollConfig);
         builder.RegisterInstance(_diceSpawnConfig);
         builder.RegisterInstance(_resourceConfig);

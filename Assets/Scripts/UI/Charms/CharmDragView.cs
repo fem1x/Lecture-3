@@ -37,10 +37,15 @@ namespace _Scripts.UI.Charms
         private int? _dragPointerId;
         private Tween _returnTween;
         private CharmDragState _dragState;
+        private ISfxPlayer _sfxPlayer;
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 
         [Inject]
-        public void Construct(CharmDragState dragState) => _dragState = dragState;
+        public void Construct(CharmDragState dragState, ISfxPlayer sfxPlayer)
+        {
+            _dragState = dragState;
+            _sfxPlayer = sfxPlayer;
+        }
 
         private void OnDisable()
         {
@@ -93,6 +98,8 @@ namespace _Scripts.UI.Charms
         {
             if (!_isDraggable || _isPending || _dragPointerId.HasValue) return;
             if (!_dragState.TryBegin(this)) return;
+
+            _sfxPlayer.PlayUI("CharmGrab", _rectTransform);
 
             _returnTween?.Kill();
             _dragPointerId = eventData.pointerId;

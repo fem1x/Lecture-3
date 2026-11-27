@@ -54,6 +54,7 @@ namespace _Scripts.UI.Charms
 
         private CharmsConveyorService _conveyorService;
         private CharmDragState _dragState;
+        private ISfxPlayer _sfxPlayer;
         private Image _image;
         private Color _restColor;
         private Vector3 _restScale;
@@ -64,10 +65,11 @@ namespace _Scripts.UI.Charms
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 
         [Inject]
-        public void Construct(CharmsConveyorService conveyorService, CharmDragState dragState)
+        public void Construct(CharmsConveyorService conveyorService, CharmDragState dragState, ISfxPlayer sfxPlayer)
         {
             _conveyorService = conveyorService;
             _dragState = dragState;
+            _sfxPlayer = sfxPlayer;
             _dragState.OnDragChanged += HandleDragChanged;
         }
 
@@ -130,6 +132,7 @@ namespace _Scripts.UI.Charms
 
             if (!_conveyorService.TryScrap(dragView.GeneralView.Config)) return;
 
+            _sfxPlayer.PlayUI("CharmScrapPull", (RectTransform)dragView.transform);
             var target = _image.rectTransform.TransformPoint(_image.rectTransform.rect.center);
             dragView.AnimateScrap(
                 target,
@@ -155,6 +158,7 @@ namespace _Scripts.UI.Charms
 
             var flashDuration = _impactDuration * 0.2f;
             _impactTween = DOTween.Sequence()
+                .InsertCallback(_pullDuration, () => _sfxPlayer.PlayUI("CharmShatter", _image.rectTransform))
                 .Insert(_pullDuration, _image.DOColor(WithRestAlpha(_impactTint), flashDuration))
                 .Insert(_pullDuration + flashDuration, _image.DOColor(_restColor, _impactDuration - flashDuration))
                 .Insert(_pullDuration, transform.DOPunchScale(_restScale * _impactScale, _impactDuration, 4, 0.5f))

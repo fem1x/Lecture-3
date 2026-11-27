@@ -63,19 +63,19 @@ namespace _Scripts.UI
         {
             base.OnPointerEnter(eventData);
             if (IsInteractable() && !IsExpanded)
-                _sfxPlayer.Play(_hoverSfx);
+                _sfxPlayer.PlayUI(_hoverSfx, (RectTransform)transform);
         }
 
         public override void OnPointerDown(PointerEventData eventData)
         {
             base.OnPointerDown(eventData);
             if (eventData.button == PointerEventData.InputButton.Left && !IsInteractable())
-                _sfxPlayer.Play(_disabledClickSfx);
+                _sfxPlayer.PlayUI(_disabledClickSfx, (RectTransform)transform);
         }
 
         protected override GameObject CreateBlocker(Canvas rootCanvas)
         {
-            _sfxPlayer.Play(_clickSfx);
+            _sfxPlayer.PlayUI(_clickSfx, (RectTransform)transform);
             TurnArrow(true);
             _popup.localScale = CollapsedScale();
             _popupTween = _popup.DOScale(_expandedScale, alphaFadeSpeed).SetEase(_openEase).SetUpdate(true);

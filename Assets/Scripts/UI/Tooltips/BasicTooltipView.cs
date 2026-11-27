@@ -17,6 +17,8 @@ namespace _Scripts.UI.Tooltips
         private const float HideSlideDistance = 12f;
 
         [SerializeField] private TMP_Text _content;
+        [SerializeField] private TMP_Text _title;
+        [SerializeField] private TextRevealView _titleReveal;
         [SerializeField] private TextRevealView _textReveal;
         [SerializeField] private RectTransform _arrow;
         [SerializeField] private CanvasGroup _canvasGroup;
@@ -38,6 +40,7 @@ namespace _Scripts.UI.Tooltips
         private float _slideOffset;
         private Tween _transition;
         private Tween _textTransition;
+        private Tween _titleTransition;
         private bool _isShowing;
 
         internal event Action DismissRequested;
@@ -69,6 +72,8 @@ namespace _Scripts.UI.Tooltips
             _transition = null;
             _textTransition?.Kill();
             _textTransition = null;
+            _titleTransition?.Kill();
+            _titleTransition = null;
         }
 
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
@@ -94,6 +99,12 @@ namespace _Scripts.UI.Tooltips
             _arrow.localRotation = Quaternion.Euler(0f, 0f, Vector2.SignedAngle(Vector2.up, -direction));
         }
 
+        public void SetTitle(string title)
+        {
+            if (_title != null)
+                _title.text = title;
+        }
+
         public void SetPosition(Vector2 position)
         {
             _anchorPosition = position;
@@ -109,6 +120,11 @@ namespace _Scripts.UI.Tooltips
             _isShowing = true;
             _textTransition?.Kill();
             _textTransition = _textReveal.Show().OnComplete(() => _textTransition = null);
+            if (_titleReveal != null)
+            {
+                _titleTransition?.Kill();
+                _titleTransition = _titleReveal.Show().OnComplete(() => _titleTransition = null);
+            }
 
             if (_showDuration <= 0f)
             {
@@ -147,6 +163,10 @@ namespace _Scripts.UI.Tooltips
             _textTransition?.Kill();
             _textTransition = null;
             _textReveal.Restore();
+            _titleTransition?.Kill();
+            _titleTransition = null;
+            if (_titleReveal != null)
+                _titleReveal.Restore();
             if (_hideDuration <= 0f)
             {
                 HideImmediately();

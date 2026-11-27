@@ -3,11 +3,9 @@ using _Scripts.Dices;
 using _Scripts.Managers;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
-using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
-using UnityEngine.Localization;
 using UnityEngine.UI;
 using VContainer;
 using VContainer.Unity;
@@ -30,11 +28,6 @@ namespace _Scripts.UI
 
         [SerializeField] private PauseSettingsTransition _settingsTransition;
 
-        private readonly LocalizedString _titleLabel = new("String Table", "pause_title");
-        private readonly LocalizedString _resumeLabel = new("String Table", "pause_resume");
-        private readonly LocalizedString _settingsLabel = new("String Table", "pause_settings");
-        private readonly LocalizedString _mainMenuLabel = new("String Table", "pause_main_menu");
-
         private GameStateManager _gameState;
         private SettingsMenuView _settings;
         private TransitionService _transitionService;
@@ -56,22 +49,6 @@ namespace _Scripts.UI
             _transitionService = transitionService;
         }
 
-        private void OnEnable()
-        {
-            _titleLabel.StringChanged += SetTitle;
-            _resumeLabel.StringChanged += SetResumeLabel;
-            _settingsLabel.StringChanged += SetSettingsLabel;
-            _mainMenuLabel.StringChanged += SetMainMenuLabel;
-        }
-
-        private void OnDisable()
-        {
-            _titleLabel.StringChanged -= SetTitle;
-            _resumeLabel.StringChanged -= SetResumeLabel;
-            _settingsLabel.StringChanged -= SetSettingsLabel;
-            _mainMenuLabel.StringChanged -= SetMainMenuLabel;
-        }
-
         private void Start()
         {
             _resumeButton.onClick.AddListener(Resume);
@@ -91,15 +68,10 @@ namespace _Scripts.UI
             ResetPause();
         }
 
-        private void SetTitle(string text) => _title.GetComponent<TMP_Text>().text = text;
-        private void SetResumeLabel(string text) => _resumeButton.GetComponentInChildren<TMP_Text>(true).text = text;
-        private void SetSettingsLabel(string text) => _settingsButton.GetComponentInChildren<TMP_Text>(true).text = text;
-        private void SetMainMenuLabel(string text) => _mainMenuButton.GetComponentInChildren<TMP_Text>(true).text = text;
-
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
         public void HandleEscape()
         {
-            if (_gameState.CurrentState != GameState.Game || _leaving) return;
+            if (_leaving) return;
 
             if (_settingsActive)
             {
@@ -107,9 +79,17 @@ namespace _Scripts.UI
                 return;
             }
 
+            if (_settings.IsOpen)
+            {
+                _settings.Toggle();
+                return;
+            }
+
+            if (_gameState.CurrentState != GameState.Game) return;
+
             if (_paused)
                 Resume();
-            else if (!_settings.IsOpen)
+            else
                 Open();
         }
 

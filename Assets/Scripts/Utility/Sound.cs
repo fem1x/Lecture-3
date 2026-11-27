@@ -36,6 +36,9 @@ public class Sound
     [Tooltip("Уникальный Spatial Blend для этого звука (работает, если отключено поле выше)")]
     [Range(0f, 1f)] public float customSpatialBlend = 1f;
 
+    [Tooltip("Allow overlapping playback for non-looping 2D sounds.")]
+    public bool allowOverlap;
+
     public bool isLooped;
     public AudioMixerGroup audioMixer;
 

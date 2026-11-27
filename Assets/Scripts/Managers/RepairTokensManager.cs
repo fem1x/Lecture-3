@@ -8,6 +8,7 @@ namespace _Scripts.Managers
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
         public event Action<int> OnTokensCountChange;
         
+        private readonly ISfxPlayer _sfxPlayer;
         private int _currentTokens;
         public int CurrentTokens
         {
@@ -20,6 +21,8 @@ namespace _Scripts.Managers
         }
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
         
+        public RepairTokensManager(ISfxPlayer sfxPlayer) => _sfxPlayer = sfxPlayer;
+
         public bool TrySpendTokens(int amount)
         {
             if (amount <= 0)
@@ -31,6 +34,7 @@ namespace _Scripts.Managers
             if (CurrentTokens >= amount)
             {
                 CurrentTokens -= amount;
+                _sfxPlayer.Play("TokensSpend");
                 return true;
             }
 

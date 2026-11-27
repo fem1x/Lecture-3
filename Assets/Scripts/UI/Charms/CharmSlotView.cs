@@ -1,4 +1,5 @@
 ﻿using _Scripts.Charms;
+using _Scripts.Managers;
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -37,18 +38,28 @@ namespace _Scripts.UI.Charms
         private CharmsConveyorService _conveyorService;
         private IObjectResolver _resolver;
         private CharmDragState _dragState;
+        private ISfxPlayer _sfxPlayer;
+        private CharmsService _charmsService;
+        private Bootstrap _bootstrap;
         
         [Inject]
         public void Construct(
             CharmsConveyorService conveyorService, 
             IObjectResolver resolver, 
             CharmReplaceView replaceView,
-            CharmDragState dragState)
+            CharmDragState dragState,
+            ISfxPlayer sfxPlayer,
+            CharmsService charmsService,
+            Bootstrap bootstrap)
         {
             _conveyorService = conveyorService;
             _resolver = resolver;
             _replaceView = replaceView;
             _dragState = dragState;
+            _sfxPlayer = sfxPlayer;
+            _charmsService = charmsService;
+            _bootstrap = bootstrap;
+            _bootstrap.RegisterCharmSlot(this);
             _dragState.OnDragChanged += HandleDragChanged;
             if (isActiveAndEnabled && _dragState.IsDragging)
                 HandleDragChanged(true);
@@ -68,6 +79,8 @@ namespace _Scripts.UI.Charms
         {
             if (_dragState != null)
                 _dragState.OnDragChanged -= HandleDragChanged;
+            if (_bootstrap != null)
+                _bootstrap.UnregisterCharmSlot(this);
             _highlightTween?.Kill();
         }
 
@@ -157,6 +170,22 @@ namespace _Scripts.UI.Charms
 
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 
+        public void ClearForNewGame()
+        {
+            if (_activeCharm == null) return;
+
+            _charmsService.RemoveCharm(_activeCharm);
+            Clear();
+        }
+
+        public void EquipInitialCharm(CharmConfigBase config)
+        {
+            if (_charmsService.TryAddCharm(config, out var charm))
+                Equip(charm, false);
+            else
+                Debug.LogWarning($"Could not equip initial charm {config.name}: all charm slots are full.", this);
+        }
+
         public void OnDrop(PointerEventData eventData)
         {
             if (eventData.pointerDrag == null) return;
@@ -187,7 +216,7 @@ namespace _Scripts.UI.Charms
             dragView.Consume();
         }
 
-        private void Equip(CharmBase charm)
+        private void Equip(CharmBase charm, bool playSound = true)
         {
             ResetHighlight();
             _emptyPlaceholder.SetActive(false);
@@ -198,6 +227,8 @@ namespace _Scripts.UI.Charms
             _currentEquipped.PlayTriggerAnimation();
 
             charm.AttachView(_currentEquipped);
+            if (playSound)
+                _sfxPlayer.PlayUI("CharmEquip", _slotRect);
         }
         
         private void Clear()

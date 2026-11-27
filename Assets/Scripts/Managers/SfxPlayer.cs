@@ -11,9 +11,11 @@ namespace _Scripts.Managers
     {
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== 
         private readonly SfxConfig _config;
-        public SfxPlayer(SfxConfig config)
+        private readonly Camera _camera;
+        public SfxPlayer(SfxConfig config, Camera camera)
         {
             _config = config;
+            _camera = camera;
         }
         
         private readonly Dictionary<string, AudioSource> _2dSources = new();
@@ -93,6 +95,30 @@ namespace _Scripts.Managers
         Play2DLayers(s, finalPitch);
     }
 
+    public void PlayUI(string name, RectTransform element)
+    {
+        if (string.IsNullOrEmpty(name)) return;
+        if (!_soundLookup.TryGetValue(name, out Sound sound))
+        {
+            Debug.LogWarning($"Sound with name '{name}' not found!");
+            return;
+        }
+
+        if (!sound.is3D)
+        {
+            Play(name);
+            return;
+        }
+
+        var canvas = element.GetComponentInParent<Canvas>().rootCanvas;
+        var canvasCamera = canvas.renderMode == RenderMode.ScreenSpaceOverlay ? null : canvas.worldCamera;
+        var screenPosition = RectTransformUtility.WorldToScreenPoint(canvasCamera, element.TransformPoint(element.rect.center));
+        screenPosition.x = Mathf.Clamp(screenPosition.x, 0f, Screen.width);
+        screenPosition.y = Mathf.Clamp(screenPosition.y, 0f, Screen.height);
+        var worldPosition = _camera.ScreenToWorldPoint(new Vector3(screenPosition.x, screenPosition.y, 1f));
+        Play(name, worldPosition);
+    }
+
     //===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 
     #region Play Layers
@@ -119,11 +145,17 @@ namespace _Scripts.Managers
         AudioClip firstClip = GetRandomClip(firstLayer);
         if (firstClip != null)
         {
-            mainSource.clip = firstClip;
-            mainSource.volume = s.volume * firstLayer.volume;
-
-            mainSource.pitch = Mathf.Clamp(baseRandomPitch * firstLayer.pitch, 0.1f, 3f);
-            mainSource.Play();
+            if (s.allowOverlap && !s.isLooped)
+            {
+                PlayPooledLayer(s, firstLayer, firstClip, baseRandomPitch);
+            }
+            else
+            {
+                mainSource.clip = firstClip;
+                mainSource.volume = s.volume * firstLayer.volume;
+                mainSource.pitch = Mathf.Clamp(baseRandomPitch * firstLayer.pitch, 0.1f, 3f);
+                mainSource.Play();
+            }
         }
 
         for (int i = 1; i < s.layers.Length; i++)

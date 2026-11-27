@@ -278,11 +278,11 @@ namespace _Scripts.UI
             _backdrop.interactable = false;
         }
 
-        internal void RevealFromPause()
+        internal void RevealFromPause(PauseSettingsTransition.Timing timing)
         {
             _entranceTween = DOTween.Sequence().SetUpdate(true);
             PlayContentEntrance(0f);
-            PlayPanelDetailsEntrance();
+            PlayPanelDetailsEntrance(timing);
 
             _panel.interactable = true;
             _panel.blocksRaycasts = true;
@@ -549,7 +549,7 @@ namespace _Scripts.UI
             _entranceTween.Insert(delay, item.Rect.DOScale(item.Scale, 0.32f).SetEase(Ease.OutCubic));
         }
 
-        private void PlayPanelDetailsEntrance()
+        private void PlayPanelDetailsEntrance(PauseSettingsTransition.Timing timing)
         {
             var backgroundColor = _contentBackground.color;
             backgroundColor.a = 0f;
@@ -557,13 +557,14 @@ namespace _Scripts.UI
             _entranceTween.Insert(0.08f, _contentBackground.DOFade(_contentBackgroundAlpha, 0.24f)
                 .SetEase(Ease.OutQuad));
 
-            const float slideDelay = 0.24f;
+            var slideDelay = timing.ApplySlideDelay;
             var apply = _applyEntrance.Rect;
             apply.anchoredPosition = _applyRestPosition + Vector2.down * (apply.rect.height + 16f);
             _applyEntrance.Group.alpha = 0f;
-            _entranceTween.Insert(slideDelay, apply.DOAnchorPos(_applyRestPosition, 0.34f).SetEase(Ease.OutCubic));
-            _entranceTween.Insert(slideDelay, _applyEntrance.Group.DOFade(_applyEntrance.Alpha, 0.18f)
-                .SetEase(Ease.OutQuad));
+            _entranceTween.Insert(slideDelay, apply.DOAnchorPos(_applyRestPosition, timing.ApplySlideDuration)
+                .SetEase(timing.ApplySlideEase));
+            _entranceTween.Insert(slideDelay, _applyEntrance.Group.DOFade(_applyEntrance.Alpha, timing.ApplyFadeDuration)
+                .SetEase(timing.ApplyFadeEase));
         }
 
         private void ResetEntrance()
@@ -749,7 +750,6 @@ namespace _Scripts.UI
         {
             _settings.PreviewMuteWhenUnfocused(enabled);
             RefreshApplyButton();
-            _sfxPlayer.Play("ButtonClick");
         }
 
         private void ToggleVSync(bool enabled)
@@ -757,7 +757,6 @@ namespace _Scripts.UI
             _pending.VSync = enabled;
             RefreshFpsLimitAvailability();
             RefreshApplyButton();
-            _sfxPlayer.Play("ButtonClick");
         }
 
         private void RefreshFpsLimitAvailability()

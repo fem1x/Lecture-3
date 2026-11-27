@@ -268,5 +268,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Game::_Scripts.UI.ToggleSfxView
   _toggle: {fileID: 3492181435071639847}
+  _onSfx: CheckboxOn
+  _offSfx: CheckboxOff
   _hoverSfx: ButtonHover
   _disabledClickSfx: ButtonDisabledClick

@@ -21,6 +21,7 @@ namespace _Scripts.UI.Tooltips
 
         [SerializeField] private BasicTooltipView _prefab;
         [SerializeField] private LocalizedString _text = new();
+        [SerializeField] private LocalizedString _title = new();
         [SerializeField] private Side _side = Side.Right;
         [SerializeField, Min(0f)] private float _gap = 24f;
 
@@ -30,6 +31,7 @@ namespace _Scripts.UI.Tooltips
         private bool _isHovered;
         private bool _isPinned;
         private string _pendingFirstShowKey;
+        private string _currentTitle;
 
         public Func<string, string> TextFormatter { get; set; }
 
@@ -43,6 +45,9 @@ namespace _Scripts.UI.Tooltips
             var entry = _text.TableEntryReference;
             entry.OnAfterDeserialize();
             _text.TableEntryReference = entry;
+            var titleEntry = _title.TableEntryReference;
+            titleEntry.OnAfterDeserialize();
+            _title.TableEntryReference = titleEntry;
         }
 
         private void LateUpdate()
@@ -136,6 +141,8 @@ namespace _Scripts.UI.Tooltips
             if (_isListening || _text.IsEmpty) return;
 
             _isListening = true;
+            if (!_title.IsEmpty)
+                _title.StringChanged += OnTitleChanged;
             _text.StringChanged += OnTextChanged;
         }
 
@@ -157,6 +164,7 @@ namespace _Scripts.UI.Tooltips
                 _view.DismissRequested += DismissAutoTooltip;
             }
 
+            _view.SetTitle(_currentTitle);
             _view.SetContent(TextFormatter != null ? TextFormatter(text) : text, GetDirection());
             UpdatePosition();
             _view.Show();
@@ -165,6 +173,13 @@ namespace _Scripts.UI.Tooltips
                 RecordFirstShow();
             else
                 _view.SetDismissible(_isPinned);
+        }
+
+        private void OnTitleChanged(string title)
+        {
+            _currentTitle = title;
+            if (_view != null)
+                _view.SetTitle(title);
         }
 
         private void RecordFirstShow()
@@ -182,6 +197,8 @@ namespace _Scripts.UI.Tooltips
 
             _isListening = false;
             _text.StringChanged -= OnTextChanged;
+            if (!_title.IsEmpty)
+                _title.StringChanged -= OnTitleChanged;
         }
 
         private void UpdatePosition()

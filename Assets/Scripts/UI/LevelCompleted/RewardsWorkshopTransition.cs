@@ -53,7 +53,7 @@ namespace _Scripts.UI
 
         internal float Duration => _duration;
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
-        internal async UniTask PlayAsync(RectTransform rewardsButton, SlidingPanelView firstWorkshopSlide, CancellationToken ct)
+        internal async UniTask PlayAsync(RectTransform rewardsButton, SlidingPanelView firstWorkshopSlide, ISfxPlayer sfxPlayer, CancellationToken ct)
         {
             ct.ThrowIfCancellationRequested();
             Canvas.ForceUpdateCanvases();
@@ -152,6 +152,8 @@ namespace _Scripts.UI
             void LandToken()
             {
                 if (landingFeedback != null) return;
+
+                sfxPlayer.PlayUI("TokensLand", iconRect);
 
                 const float feedbackDuration = 0.26f;
                 const float reboundTime = 0.14f;

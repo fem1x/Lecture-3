@@ -16,6 +16,6 @@ namespace _Scripts.UI
         [Inject]
         public void Construct(ISfxPlayer sfxPlayer) => _sfxPlayer = sfxPlayer;
 
-        public void OnPointerEnter(PointerEventData eventData) => _sfxPlayer.Play(_hoverSfx);
+        public void OnPointerEnter(PointerEventData eventData) => _sfxPlayer.PlayUI(_hoverSfx, (RectTransform)transform);
     }
 }

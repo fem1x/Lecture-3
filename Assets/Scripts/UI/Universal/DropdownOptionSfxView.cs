@@ -25,7 +25,7 @@ namespace _Scripts.UI
         public void OnPointerEnter(PointerEventData eventData)
         {
             if (_toggle.IsInteractable())
-                _sfxPlayer.Play(_hoverSfx);
+                _sfxPlayer.PlayUI(_hoverSfx, (RectTransform)_toggle.transform);
         }
 
         public void OnPointerClick(PointerEventData eventData)
@@ -40,7 +40,7 @@ namespace _Scripts.UI
         {
             // TMP begins closing the list inside Toggle's event, before this handler runs.
             if (_toggle.interactable)
-                _sfxPlayer.Play(_clickSfx);
+                _sfxPlayer.PlayUI(_clickSfx, (RectTransform)_toggle.transform);
         }
     }
 }

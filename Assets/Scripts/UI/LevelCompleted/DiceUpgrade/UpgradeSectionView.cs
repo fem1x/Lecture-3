@@ -35,16 +35,19 @@ namespace _Scripts.UI.Workshop
         private DiceUpgradeService _upgradeService;
         private RepairTokensManager _tokensManager;
         private DiceAtlasConfig _atlasConfig;
+        private ISfxPlayer _sfxPlayer;
 
         [Inject]
         public void Construct(
             DiceUpgradeService upgradeService,
             RepairTokensManager tokensManager,
-            DiceAtlasConfig atlasConfig)
+            DiceAtlasConfig atlasConfig,
+            ISfxPlayer sfxPlayer)
         {
             _upgradeService = upgradeService;
             _tokensManager = tokensManager;
             _atlasConfig = atlasConfig;
+            _sfxPlayer = sfxPlayer;
         }
         #endregion
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
@@ -150,6 +153,7 @@ namespace _Scripts.UI.Workshop
         {
             if (_upgradeService.TryUpgradeFace(_data, faceIndex, out _))
             {
+                _sfxPlayer.PlayUI("DiceFaceUpgrade", (RectTransform)_faceButtons[faceIndex].transform);
                 _scaleTween?.Kill();
                 _scaleTween = _previewSlot.DisplayView.transform.DoScalePop(killExistingTweens: false, scaleMult: 1.5f);
                 Refresh();

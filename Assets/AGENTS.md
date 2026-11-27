@@ -30,6 +30,11 @@ This Unity project is a dice game. Inspect the relevant scene, prefab, and confi
 - Review callers and listeners when changing data mutations or events. In particular, `DiceData` exposes separate notifications for data, lock, and value changes; face bonuses are accounted for separately in scoring.
 - Preserve the ordering of score and charm effects unless the requested change explicitly alters it.
 
+## Adding sound effects
+
+- Put new clips under `Audio/` in the appropriate category. Add a uniquely named entry to `!Configs/SfxConfig.asset` and assign the clips to a layer, along with the volume and the existing SFX mixer group. Each layer picks one of its clips at random.
+- Inject `ISfxPlayer` through VContainer and call it when the action starts. For UI sounds, set `is3D` and `useGlobalSpatialBlend` to false, leave `customSpatialBlend` at zero, and call `Play("SoundName")`. For positional sounds, enable `is3D` and call `Play("SoundName", worldPosition)`.
+
 ## Local localization workflow
 
 - Read existing keys and translations from `Settings/Localization`. For string changes, queue a UTF-8 JSON file named `LocalizationChanges.json` at the Unity project root, next to `Assets`. Let Unity write the string table assets.

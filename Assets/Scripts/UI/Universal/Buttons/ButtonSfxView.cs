@@ -32,15 +32,15 @@ namespace _Scripts.UI
         public void OnPointerEnter(PointerEventData eventData)
         {
             if (!_button.interactable) return;
-            _sfxPlayer.Play(_hoverSfx);
+            _sfxPlayer.PlayUI(_hoverSfx, (RectTransform)_button.transform);
         }
 
         public void OnPointerDown(PointerEventData eventData)
         {
             if (_button.interactable) return;
-            _sfxPlayer.Play(_disabledClickSfx);
+            _sfxPlayer.PlayUI(_disabledClickSfx, (RectTransform)_button.transform);
         }
 
-        private void HandleClick() => _sfxPlayer.Play(_clickSfx);
+        private void HandleClick() => _sfxPlayer.PlayUI(_clickSfx, (RectTransform)_button.transform);
     }
 }

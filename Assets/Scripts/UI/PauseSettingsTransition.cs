@@ -46,6 +46,14 @@ namespace _Scripts.UI
             [Header("Content Reveal")]
             [Range(0f, 1f), Tooltip("When the incoming panel starts its usual staggered reveal, as a fraction of the total transition.")]
             public float ContentRevealStart = 0.55f;
+
+            [Header("Apply Button")]
+            [Min(0f), Tooltip("Seconds after the settings content starts appearing.")]
+            public float ApplySlideDelay = 0.24f;
+            [Min(0f)] public float ApplySlideDuration = 0.34f;
+            public Ease ApplySlideEase = Ease.OutCubic;
+            [Min(0f)] public float ApplyFadeDuration = 0.18f;
+            public Ease ApplyFadeEase = Ease.OutQuad;
         }
 
         internal readonly struct Panel
@@ -103,7 +111,7 @@ namespace _Scripts.UI
                 onReveal();
                 if (opening)
                 {
-                    settings.RevealFromPause();
+                    settings.RevealFromPause(_settingsMorphTiming);
                     return;
                 }
 

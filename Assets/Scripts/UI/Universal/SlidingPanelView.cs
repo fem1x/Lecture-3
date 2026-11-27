@@ -3,6 +3,7 @@ using _Scripts.Utility.Extensions;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using UnityEngine;
+using VContainer;
 
 namespace _Scripts.UI
 {
@@ -28,6 +29,11 @@ namespace _Scripts.UI
         [SerializeField] private float _hideTime = 0.5f;
         [SerializeField] private Ease _hideEase = Ease.OutCubic;
 
+        [Header("SFX Names")]
+        [SerializeField] private string _showSfx = "WindowOpenWhoosh";
+        [SerializeField] private string _hideSfx = "WindowCloseWhoosh";
+
+        private ISfxPlayer _sfxPlayer;
         private Vector2 _shownPos;
         private bool _isInitialized;
 
@@ -35,6 +41,9 @@ namespace _Scripts.UI
         internal CanvasGroup Group => _cg;
         internal float ShowDuration => _showTime;
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
+        [Inject]
+        public void Construct(ISfxPlayer sfxPlayer) => _sfxPlayer = sfxPlayer;
+
         private void Awake()
         {
             EnsureInitialized();
@@ -53,6 +62,9 @@ namespace _Scripts.UI
                 _rect.anchoredPosition = _rect.GetHiddenPosition(_direction, _shownPos, _boundsRect);
 
             _cg.Show();
+
+            if (_showTime > 0f && Vector2.Distance(_rect.anchoredPosition, _shownPos) > 0.01f)
+                _sfxPlayer.PlayUI(_showSfx, _rect);
 
             Tween animation = _rect.DOAnchorPos(_shownPos, _showTime).SetEase(_showEase);
             if (_panelReveal != null && !_panelReveal.IsRevealed)
@@ -76,6 +88,10 @@ namespace _Scripts.UI
             _rect.DOKill();
 
             var hiddenPos = _rect.GetHiddenPosition(_direction, _shownPos, _boundsRect);
+
+            if (_hideTime > 0f && _cg.alpha > 0.01f &&
+                Vector2.Distance(_rect.anchoredPosition, hiddenPos) > 0.01f)
+                _sfxPlayer.PlayUI(_hideSfx, _rect);
 
             await _rect.DOAnchorPos(hiddenPos, _hideTime)
                 .SetEase(_hideEase)

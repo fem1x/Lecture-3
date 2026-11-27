@@ -3,6 +3,8 @@ using _Scripts.Charms;
 using _Scripts.Configs;
 using _Scripts.Dices;
 using _Scripts.UI;
+using _Scripts.UI.Charms;
+using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using VContainer;
@@ -24,6 +26,9 @@ namespace _Scripts.Managers
         private readonly ScoreManager _scoreManager;
         private readonly DiceRoller _diceRoller;
 
+        private readonly CharmConfigBase[] _initialCharms;
+        private readonly List<CharmSlotView> _charmSlots = new();
+
         [Inject]
         public Bootstrap(
             DiceSpawner diceSpawner, 
@@ -35,7 +40,8 @@ namespace _Scripts.Managers
             GameStateManager gameStateManager,
             ResourceManager resourceManager,
             ScoreManager scoreManager,
-            DiceRoller diceRoller)
+            DiceRoller diceRoller,
+            GameLifetimeScope scope)
         {
             _diceSpawner = diceSpawner;
             _diceTableController = diceTableController;
@@ -47,6 +53,7 @@ namespace _Scripts.Managers
             _resourceManager = resourceManager;
             _scoreManager = scoreManager;
             _diceRoller = diceRoller;
+            _initialCharms = scope.InitialCharms;
         }
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
         
@@ -73,7 +80,34 @@ namespace _Scripts.Managers
             
             ResetDicesData(dices);
             ResetDicesState(dices);
+            EquipInitialCharms();
             _levelService.SelectFirstLevel();
+        }
+
+        public void RegisterCharmSlot(CharmSlotView slot) => _charmSlots.Add(slot);
+
+        public void UnregisterCharmSlot(CharmSlotView slot) => _charmSlots.Remove(slot);
+
+        private void EquipInitialCharms()
+        {
+            if (_initialCharms.Length == 0) return;
+
+            foreach (var slot in _charmSlots)
+                slot.ClearForNewGame();
+
+            _charmSlots.Sort((a, b) => a.transform.GetSiblingIndex().CompareTo(b.transform.GetSiblingIndex()));
+            var slotIndex = 0;
+            foreach (var config in _initialCharms)
+            {
+                if (config == null) continue;
+                if (slotIndex >= 5 || slotIndex >= _charmSlots.Count)
+                {
+                    Debug.LogWarning("Not enough slots for all initial charms. Up to five can be equipped.");
+                    break;
+                }
+
+                _charmSlots[slotIndex++].EquipInitialCharm(config);
+            }
         }
 
         private void ResetDicesData(List<Dice> dices)
