@@ -1,5 +1,4 @@
 ﻿using _Scripts.Charms;
-using _Scripts.Managers;
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -40,7 +39,6 @@ namespace _Scripts.UI.Charms
         private CharmDragState _dragState;
         private ISfxPlayer _sfxPlayer;
         private CharmsService _charmsService;
-        private Bootstrap _bootstrap;
         
         [Inject]
         public void Construct(
@@ -49,8 +47,7 @@ namespace _Scripts.UI.Charms
             CharmReplaceView replaceView,
             CharmDragState dragState,
             ISfxPlayer sfxPlayer,
-            CharmsService charmsService,
-            Bootstrap bootstrap)
+            CharmsService charmsService)
         {
             _conveyorService = conveyorService;
             _resolver = resolver;
@@ -58,8 +55,6 @@ namespace _Scripts.UI.Charms
             _dragState = dragState;
             _sfxPlayer = sfxPlayer;
             _charmsService = charmsService;
-            _bootstrap = bootstrap;
-            _bootstrap.RegisterCharmSlot(this);
             _dragState.OnDragChanged += HandleDragChanged;
             if (isActiveAndEnabled && _dragState.IsDragging)
                 HandleDragChanged(true);
@@ -79,8 +74,6 @@ namespace _Scripts.UI.Charms
         {
             if (_dragState != null)
                 _dragState.OnDragChanged -= HandleDragChanged;
-            if (_bootstrap != null)
-                _bootstrap.UnregisterCharmSlot(this);
             _highlightTween?.Kill();
         }
 
