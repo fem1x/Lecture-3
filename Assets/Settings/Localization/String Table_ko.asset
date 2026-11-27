@@ -602,6 +602,10 @@ MonoBehaviour:
     m_Localized: "\uC120\uD0DD\uD558\uC9C0 \uC54A\uC740 \uC8FC\uC0AC\uC704\uB97C \uB2E4\uC2DC \uAD74\uB9BD\uB2C8\uB2E4.\n\uBE44\uC6A9: 1 <color=#FFB18D><sprite name=\"reroll_counter\" tint=1></color>"
     m_Metadata:
       m_Items: []
+  - m_Id: 14076676714520576
+    m_Localized: "\uAD74\uB9AC\uB294 \uC911"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

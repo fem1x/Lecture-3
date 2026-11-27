@@ -583,6 +583,10 @@ MonoBehaviour:
     m_Key: controls_reroll_tooltip
     m_Metadata:
       m_Items: []
+  - m_Id: 14076676714520576
+    m_Key: roll_button_rolling
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
