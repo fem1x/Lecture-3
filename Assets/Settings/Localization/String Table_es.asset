@@ -574,6 +574,10 @@ MonoBehaviour:
     m_Localized: "Men\xFA principal"
     m_Metadata:
       m_Items: []
+  - m_Id: 13894146480660480
+    m_Localized: "\xA1Todos los dados est\xE1n intactos!"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

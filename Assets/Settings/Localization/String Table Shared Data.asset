@@ -555,6 +555,10 @@ MonoBehaviour:
     m_Key: pause_main_menu
     m_Metadata:
       m_Items: []
+  - m_Id: 13894146480660480
+    m_Key: workshop_all_dice_intact
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
