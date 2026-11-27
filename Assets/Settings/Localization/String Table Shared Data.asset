@@ -587,6 +587,22 @@ MonoBehaviour:
     m_Key: roll_button_rolling
     m_Metadata:
       m_Items: []
+  - m_Id: 14096581539127296
+    m_Key: main_menu_play
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14096581614624768
+    m_Key: main_menu_quit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14096581614624769
+    m_Key: main_menu_quit_title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14096581614624770
+    m_Key: main_menu_back
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

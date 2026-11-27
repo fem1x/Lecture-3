@@ -610,6 +610,22 @@ MonoBehaviour:
     m_Localized: ROLLING
     m_Metadata:
       m_Items: []
+  - m_Id: 14096581539127296
+    m_Localized: PLAY
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14096581614624768
+    m_Localized: QUIT
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14096581614624769
+    m_Localized: QUIT THE GAME?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14096581614624770
+    m_Localized: BACK
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:
