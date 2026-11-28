@@ -20,17 +20,11 @@ namespace _Scripts.UI
         [SerializeField, Range(0f, 100f)]
         [Tooltip("Start time as a percentage of the repair panel slide duration. 0 starts with the slide, 100 starts when it ends.")]
         private float _revealStartPercent = 65f;
-        [SerializeField, Min(0.01f), Tooltip("Reveal duration for each slot in seconds.")]
-        private float _revealDuration = 0.26f;
-        [SerializeField, Min(0f), Tooltip("Seconds between the start of each slot's reveal.")]
-        private float _revealStagger = 0.065f;
-        [SerializeField] private Ease _revealFadeEase = Ease.OutQuad;
-        [SerializeField] private Ease _revealScaleEase = Ease.OutCubic;
+        [SerializeField] private StaggeredRevealView _slotReveal;
 
         private RepairTokensManager _repairTokensManager;
         private DiceTableController _diceTableController;
         private bool _isBound;
-        private StaggeredReveal _slotReveal;
         private Tween _allRepairedTween;
         private bool _repairModeEnabled;
         private bool _messageReady;
@@ -47,13 +41,12 @@ namespace _Scripts.UI
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
         private void Awake()
         {
-            _slotReveal = new StaggeredReveal(_repairViews);
             _allRepairedText.gameObject.SetActive(false);
         }
 
         private void OnDisable()
         {
-            _slotReveal.Cancel();
+            _slotReveal.Restore();
             HideAllRepaired();
         }
 
@@ -75,7 +68,7 @@ namespace _Scripts.UI
             if (enable)
                 _slotReveal.Prepare();
             else
-                _slotReveal.Cancel();
+                _slotReveal.Restore();
 
             var count = Mathf.Min(_repairViews.Count, _diceTableController.AllDices.Count);
             for (var i = 0; i < count; i++)
@@ -85,7 +78,8 @@ namespace _Scripts.UI
         internal async UniTask RevealSlotsAsync(float slideDuration, CancellationToken ct)
         {
             var delay = slideDuration * (_revealStartPercent / 100f);
-            var slots = _slotReveal.PlayAsync(delay, _revealDuration, _revealStagger, _revealFadeEase, _revealScaleEase, ct);
+            ct.ThrowIfCancellationRequested();
+            var slots = _slotReveal.Show(delay).ToUniTask(TweenCancelBehaviour.KillAndCancelAwait, ct);
             if (delay > 0f)
                 await UniTask.Delay(TimeSpan.FromSeconds(delay), ignoreTimeScale: true, cancellationToken: ct);
             ct.ThrowIfCancellationRequested();

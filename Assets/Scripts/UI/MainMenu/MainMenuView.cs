@@ -164,7 +164,6 @@ namespace _Scripts.UI.MainMenu
 
         private void OnElementReveal(RectTransform element)
         {
-            _sfx.Play("ElementAppear");
             if (_playButton.transform.IsChildOf(element))
             {
                 _playButton.interactable = true;

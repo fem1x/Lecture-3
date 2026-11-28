@@ -1,6 +1,7 @@
 using System;
 using DG.Tweening;
 using UnityEngine;
+using VContainer;
 
 namespace _Scripts.UI
 {
@@ -13,7 +14,11 @@ namespace _Scripts.UI
         [SerializeField, Min(0f)] private float _revealStagger = 0.065f;
         [SerializeField] private Ease _revealFadeEase = Ease.OutQuad;
         [SerializeField] private Ease _revealScaleEase = Ease.OutExpo;
+        [SerializeField] private float _initialScale = 0.96f;
+        [SerializeField] private bool _blockInteraction;
+        [SerializeField] private string _revealSfx = "ElementAppear";
 
+        private ISfxPlayer _sfxPlayer;
         private CanvasGroup[] _groups;
         private Vector3[] _scales;
         private float[] _alphas;
@@ -21,6 +26,9 @@ namespace _Scripts.UI
         private bool _isInitialized;
 
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
+        [Inject]
+        public void Construct(ISfxPlayer sfxPlayer) => _sfxPlayer = sfxPlayer;
+
         private void Awake() => EnsureInitialized();
 
         private void EnsureInitialized()
@@ -51,16 +59,34 @@ namespace _Scripts.UI
 
         internal Sequence Show(Action<RectTransform> onElementReveal) => Show(_delay, onElementReveal);
 
-        internal Sequence Show(float delay, Action<RectTransform> onElementReveal = null)
+        internal void Prepare()
         {
             Restore();
+            for (var i = 0; i < _elements.Length; i++)
+            {
+                _groups[i].alpha = 0f;
+                _elements[i].localScale = _scales[i] * _initialScale;
+                if (_blockInteraction)
+                {
+                    _groups[i].blocksRaycasts = false;
+                    _groups[i].interactable = false;
+                }
+            }
+        }
+
+        internal Sequence Show(float delay, Action<RectTransform> onElementReveal = null,
+            Action<Sequence, int, float> insertChildReveal = null)
+        {
+            Prepare();
             _sequence = DOTween.Sequence().SetUpdate(true).SetLink(gameObject);
 
             for (var i = 0; i < _elements.Length; i++)
             {
                 var start = delay + i * _revealStagger;
                 _groups[i].alpha = 0f;
-                _elements[i].localScale = _scales[i] * 0.96f;
+                _elements[i].localScale = _scales[i] * _initialScale;
+                if (!string.IsNullOrEmpty(_revealSfx))
+                    _sequence.InsertCallback(start, () => _sfxPlayer?.Play(_revealSfx));
                 if (onElementReveal != null)
                 {
                     var element = _elements[i];
@@ -70,6 +96,16 @@ namespace _Scripts.UI
                     .SetEase(_revealFadeEase).SetUpdate(true).SetLink(gameObject));
                 _sequence.Insert(start, _elements[i].DOScale(_scales[i], _revealDuration)
                     .SetEase(_revealScaleEase).SetUpdate(true).SetLink(gameObject));
+                if (_blockInteraction)
+                {
+                    var group = _groups[i];
+                    _sequence.InsertCallback(start + _revealDuration, () =>
+                    {
+                        group.blocksRaycasts = true;
+                        group.interactable = true;
+                    });
+                }
+                insertChildReveal?.Invoke(_sequence, i, start);
             }
 
             return _sequence;
@@ -84,6 +120,11 @@ namespace _Scripts.UI
             for (var i = 0; i < _elements.Length; i++)
             {
                 _groups[i].alpha = _alphas[i];
+                if (_blockInteraction)
+                {
+                    _groups[i].blocksRaycasts = true;
+                    _groups[i].interactable = true;
+                }
                 _elements[i].localScale = _scales[i];
             }
         }
