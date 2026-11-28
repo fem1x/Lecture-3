@@ -603,6 +603,14 @@ MonoBehaviour:
     m_Key: main_menu_back
     m_Metadata:
       m_Items: []
+  - m_Id: 14428383701098496
+    m_Key: resource_throws_tooltip
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14428383776595968
+    m_Key: resource_rerolls_tooltip
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

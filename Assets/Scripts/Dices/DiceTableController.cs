@@ -134,6 +134,8 @@ namespace _Scripts.Dices
             IsInteractionLocked = isLocked;
             OnSelectionChanged?.Invoke();
         }
+
+        internal void NotifySelectionAvailabilityChanged() => OnSelectionAvailabilityChanged?.Invoke();
         
         public void ClearSelection()
         {

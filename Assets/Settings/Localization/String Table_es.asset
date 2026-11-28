@@ -626,6 +626,18 @@ MonoBehaviour:
     m_Localized: Volver
     m_Metadata:
       m_Items: []
+  - m_Id: 14428383701098496
+    m_Localized: 'Se usa para lanzar dados a la mesa.
+
+      Se repone al comienzo de cada nivel.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14428383776595968
+    m_Localized: 'Se usa para volver a tirar los dados de la mesa.
+
+      Se repone al comienzo de cada nivel.'
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

@@ -626,6 +626,18 @@ MonoBehaviour:
     m_Localized: Back
     m_Metadata:
       m_Items: []
+  - m_Id: 14428383701098496
+    m_Localized: 'Used for throwing dice onto the table.
+
+      Restocked at the start of each level.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14428383776595968
+    m_Localized: 'Used for rerolling dice on the table.
+
+      Restocked at the start of each level.'
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

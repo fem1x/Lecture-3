@@ -259,7 +259,7 @@ namespace _Scripts.UI.MainMenu
             _lastDragTime = Time.unscaledTime;
             _dice[_heldDie].Rotator.BeginDrag();
             AnimateTouch(_heldDie, 0.96f);
-            _sfx.PlayUI("ButtonClick", _output.rectTransform);
+            _sfx.PlayUI("DiceModelGrab", _output.rectTransform);
         }
 
         public void OnDrag(PointerEventData eventData)

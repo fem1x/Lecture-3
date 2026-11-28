@@ -116,12 +116,17 @@ namespace _Scripts.Dices
         public void BeginRoll()
         {
             _isRolling = true;
+            _tableController.NotifySelectionAvailabilityChanged();
             View.SetHovered(false);
             _tooltip.SetVisible(false);
             _damageIndicator.SetVisible(false);
         }
 
-        internal void EndRoll() => _isRolling = false;
+        internal void EndRoll()
+        {
+            _isRolling = false;
+            _tableController.NotifySelectionAvailabilityChanged();
+        }
 
         public void OnPointerEnter(PointerEventData eventData) => _isPointerOver = true;
 
@@ -139,10 +144,7 @@ namespace _Scripts.Dices
         #region Locking
         public void OnPointerClick(PointerEventData eventData)
         {
-            if (!TryToggleLock()) return;
-
-            if (Data.IsLocked)
-                _sfxPlayer.Play(_lockSfx, transform.position);
+            TryToggleLock();
         }
 
         public void SetLock(bool isLocked)
@@ -155,6 +157,10 @@ namespace _Scripts.Dices
         {
             if (!CanBeSelected) return false;
             Data.ToggleLock();
+
+            if (Data.IsLocked)
+                _sfxPlayer.Play(_lockSfx, transform.position);
+
             return true;
         }
         #endregion

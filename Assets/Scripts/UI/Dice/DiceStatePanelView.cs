@@ -9,22 +9,16 @@ namespace _Scripts.UI
     {
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
         [SerializeField] private List<DiceStateView> _diceStateViews = new();
+        private DiceTableController _tableController;
 
-        private DiceInspectorView _inspectorView;
-
-        [Inject]
-        public void Construct(DiceInspectorView inspectorView) => _inspectorView = inspectorView;
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
-        private void Awake()
-        {
-            foreach (var view in _diceStateViews)
-                view.OnInspectRequested += data => _inspectorView.Open(data);
-        }
+        [Inject]
+        public void Construct(DiceTableController tableController) => _tableController = tableController;
 
         public void InitDiceStateViews(List<Dice> dices)
         {
             for (var i = 0; i < dices.Count; i++)
-                _diceStateViews[i].Bind(dices[i].Data);
+                _diceStateViews[i].Bind(dices[i], _tableController);
         }
     }
 }

@@ -392,6 +392,7 @@ GameObject:
   - component: {fileID: 4442188794801548430}
   - component: {fileID: 1777604423668417000}
   - component: {fileID: 4245702733014173903}
+  - component: {fileID: 8462215701938472651}
   - component: {fileID: 5089167012538465161}
   - component: {fileID: 1607742502310377636}
   - component: {fileID: 2568204093990131842}
@@ -534,6 +535,27 @@ MonoBehaviour:
   _border: {fileID: 1777604423668417000}
   _selectedBorderColor: {r: 0.50980395, g: 0.10980393, b: 0.20784315, a: 0.6}
   _inspectButton: {fileID: 4442188794801548430}
+  _clickAccentScale: 0.12
+  _clickAccentDuration: 0.22
+--- !u!114 &8462215701938472651
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9013700237388054691}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be3922dca17f4344a82273ed6c24081c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Game::_Scripts.UI.ButtonDisabledView
+  _button: {fileID: 4442188794801548430}
+  _insideLayoutGroup: 1
+  _shakePosX: 4
+  _shakeVibratoX: 22
+  _shakeAngleZ: 0.5
+  _shakeVibratoZ: 22
+  _duration: 0.16
 --- !u!114 &5089167012538465161
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -583,6 +605,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Game::_Scripts.UI.ButtonScaleView
   _button: {fileID: 4442188794801548430}
+  _selectable: {fileID: 0}
   _insideLayoutGroup: 1
   _hoverScale: 1.08
   _pressedScale: 0.92
@@ -610,5 +633,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: Game::_Scripts.UI.ButtonSfxView
   _button: {fileID: 4442188794801548430}
   _hoverSfx: ButtonHover
-  _clickSfx: ButtonClick
+  _clickSfx: DicePanelClick
   _disabledClickSfx: ButtonDisabledClick
