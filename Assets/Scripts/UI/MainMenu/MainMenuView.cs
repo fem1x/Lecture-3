@@ -142,9 +142,12 @@ namespace _Scripts.UI.MainMenu
             _cg.interactable = true;
             _cg.blocksRaycasts = true;
             SetActionsEnabled(true);
+            _playButton.interactable = false;
+            _settingsButton.interactable = false;
+            _exitButton.interactable = false;
             _musicPlayer.FadeOutGameplay(_screenFade.FadeInDuration);
             PrepareEntrance();
-            Select(_playButton);
+            Select(null);
         }
 
         private void PrepareEntrance()
@@ -154,9 +157,24 @@ namespace _Scripts.UI.MainMenu
             _menuEntrance = DOTween.Sequence().SetUpdate(true).SetLink(gameObject)
                 .SetAutoKill(false).Pause().OnKill(() => _menuEntrance = null);
             _menuEntrance.Join(_showcase.Show());
-            _menuEntrance.Join(_entrance.Show(() => _sfx.Play("ElementAppear")));
+            _menuEntrance.Join(_entrance.Show(OnElementReveal));
             _menuScreenFade = _screenFade.CreateFadeOutTween().SetAutoKill(false).Pause()
                 .OnKill(() => _menuScreenFade = null);
+        }
+
+        private void OnElementReveal(RectTransform element)
+        {
+            _sfx.Play("ElementAppear");
+            if (_playButton.transform.IsChildOf(element))
+            {
+                _playButton.interactable = true;
+                if (_actions.interactable)
+                    Select(_playButton);
+            }
+            else if (_settingsButton.transform.IsChildOf(element))
+                _settingsButton.interactable = true;
+            else if (_exitButton.transform.IsChildOf(element))
+                _exitButton.interactable = true;
         }
 
         private void UpdateEntrance()

@@ -50,6 +50,14 @@ namespace _Scripts.UI.MainMenu
         [SerializeField] private Vector3 _rollDegrees = new(360f, 260f, 45f);
         [SerializeField, Min(0f)] private float _rollLift = 0.55f;
 
+        [Header("Play Hover Accent")]
+        [SerializeField, Min(0f)] private float _focusDuration = 0.2f;
+        [SerializeField] private Ease _focusEase = Ease.OutQuad;
+        [SerializeField, Min(0f)] private float _focusScale = 1.1f;
+        [SerializeField] private float _focusLift = 0.12f;
+        [SerializeField] private Vector3 _focusRotation = new(-17f, 24f, 0f);
+        [SerializeField, Min(0f)] private float _focusLightMultiplier = 1.35f;
+
         [Header("Exit Hover Shake")]
         [SerializeField, Min(0f)] private float _shakeFrequency = 26f;
         [SerializeField, Min(0f)] private float _shakeStrength = 1f;
@@ -129,13 +137,17 @@ namespace _Scripts.UI.MainMenu
                 for (var i = 0; i < _dice.Length; i++)
                 {
                     var focus = _dice[i].Focus;
-                    var rotation = playHovered ? new Vector3(-17f, i == 1 ? -24f : 24f, 0f) : Vector3.zero;
-                    _focusTween.Join(focus.DOScale(playHovered ? 1.1f : 1f, 0.2f).SetUpdate(true).SetLink(gameObject));
-                    _focusTween.Join(focus.DOLocalMoveY(playHovered ? 0.12f : 0f, 0.2f).SetUpdate(true).SetLink(gameObject));
-                    _focusTween.Join(focus.DOLocalRotate(rotation, 0.2f).SetUpdate(true).SetLink(gameObject));
+                    var rotation = playHovered ? _focusRotation : Vector3.zero;
+                    if (i == 1) rotation.y = -rotation.y;
+                    _focusTween.Join(focus.DOScale(playHovered ? _focusScale : 1f, _focusDuration)
+                        .SetEase(_focusEase).SetUpdate(true).SetLink(gameObject));
+                    _focusTween.Join(focus.DOLocalMoveY(playHovered ? _focusLift : 0f, _focusDuration)
+                        .SetEase(_focusEase).SetUpdate(true).SetLink(gameObject));
+                    _focusTween.Join(focus.DOLocalRotate(rotation, _focusDuration)
+                        .SetEase(_focusEase).SetUpdate(true).SetLink(gameObject));
                 }
-                _focusTween.Join(_key.DOIntensity(_keyIntensity * (playHovered ? 1.35f : 1f), 0.2f)
-                    .SetUpdate(true).SetLink(gameObject));
+                _focusTween.Join(_key.DOIntensity(_keyIntensity * (playHovered ? _focusLightMultiplier : 1f), _focusDuration)
+                    .SetEase(_focusEase).SetUpdate(true).SetLink(gameObject));
             }
 
             if (_exitHovered == exitHovered) return;

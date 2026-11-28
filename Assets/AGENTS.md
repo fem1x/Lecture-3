@@ -1,41 +1,52 @@
 # Project guidance
 
-This Unity project is a dice game. Inspect the relevant scene, prefab, and configuration assets as well as scripts before changing behavior that depends on Inspector assignments. Preserve existing serialized fields and Unity `.meta` files unless a change requires otherwise.
+This Unity project is a dice game. Before changing behavior that depends on Inspector assignments, inspect the relevant scripts, scenes, prefabs, and configuration assets. Preserve serialized fields, asset GUIDs, references, and Unity `.meta` files unless a change requires otherwise.
 
 ## Code map
 
-- `Scripts/Managers/GameLifetimeScope.cs` registers configuration assets, scene components, services, and the `Bootstrap` entry point with VContainer. Register new injected dependencies here when appropriate; scene references also require Inspector setup.
-- `Scripts/Managers/TurnFlowController.cs` coordinates throwing, rerolls, scoring, code-lock attempts, and end-of-turn sequences. Async flows use UniTask; preserve interaction locks and lifecycle cancellation when changing them.
+- `Scripts/Managers/GameLifetimeScope.cs` registers configuration assets, scene components, services, and the `Bootstrap` entry point with VContainer. Register new injected dependencies here when appropriate; assign scene references in the Inspector.
+- `Scripts/Managers/TurnFlowController.cs` coordinates throws, rerolls, scoring, code-lock attempts, and end-of-turn sequences. Preserve interaction locks and lifecycle cancellation in UniTask flows.
 - `Scripts/Managers/LevelFlowController.cs` starts levels, checks defeat, and advances or ends the game after a win.
-- `Scripts/Dices/DiceData.cs` holds per-die state, face upgrades, durability, damage, and change events. `Dice.cs` connects that data to physics, input, and `DiceView`; `DiceTableController` manages dice on the table. Face indices assume six faces.
-- `Scripts/Managers/ScoreCalculator.cs` builds a `ScoreSequencePlan` from the selected dice, combination, face bonuses, and charm triggers. `ScoreSequenceController` plays the resulting sequence. Keep the calculation and presentation steps consistent.
-- `Scripts/Combinations/CombinationEvaluator.cs` returns the first matching active combination, so ordering matters. Combination configuration and rules live under `Scripts/Combinations`.
-- `Scripts/Charms/Instances/CharmBase.cs` defines hooks for rolls, scoring, damage, and degradation; concrete charms and their configs live under `Scripts/Charms`.
-- `Scripts/Configs` contains gameplay configuration assets; `Scripts/UI` contains views and UI sequences. Editor-only tooling lives in `Scripts/Editor`.
+- `Scripts/Dices/DiceData.cs` holds die state, face upgrades, durability, damage, and change events. `Dice.cs` connects it to physics, input, and `DiceView`; `DiceTableController` manages table dice. Face indices assume six faces.
+- `Scripts/Managers/ScoreCalculator.cs` builds a `ScoreSequencePlan` from selected dice, combination, face bonuses, and charm triggers; `ScoreSequenceController` plays it. Keep calculation and presentation consistent.
+- `Scripts/Combinations/CombinationEvaluator.cs` returns the first matching active combination, so ordering matters. Configuration and rules are under `Scripts/Combinations`.
+- `Scripts/Charms/Instances/CharmBase.cs` defines roll, scoring, damage, and degradation hooks; concrete charms and configs are under `Scripts/Charms`.
+- `Scripts/Configs` contains gameplay configurations, `Scripts/UI` contains views and sequences, and `Scripts/Editor` contains editor-only tooling.
 
 ## Working conventions
 
-- Do not generate large object hierarchies in runtime code. Prepare cameras, lights, models, and other scene objects in a prefab or scene and assign their references in the Inspector.
-- For localization edits, use the local Unity import queue described below.
+- Reuse existing architecture, components, and utilities. Keep changes focused; avoid unrelated refactoring and unnecessary abstractions.
+- Skip generated directories such as `Library`, `Temp`, `Logs`, `obj`, and build outputs unless the task requires them.
+- Prefer targeted validation when sufficient. Follow the existing restriction on running checks in Unity.
+- Do not generate large object hierarchies at runtime. Prepare cameras, lights, models, and other scene objects in a prefab or scene and assign references in the Inspector.
 
 - Do not run tests or checks in Unity unless the task requires them or the user explicitly requests them.
 - Do not use Auto Size for text components. Set font sizes explicitly.
-- Use `Scripts/UI/Universal/TextRevealView.cs` for reusable character-by-character text reveal and erase animations.
-- Use `Scripts/UI/Universal/StaggeredRevealView.cs` for staggered fade and scale reveals of lists of UI elements. Configure the elements, delay, duration, stagger, and easing in the Inspector.
-- Use `Scripts/UI/Universal/PanelRevealView.cs` for panels that reveal their contents downward from a header. Put the header, background, and body under the panel's dedicated `RectMask2D`. Configure the delay, duration, and easing in the Inspector. Assign the component to `SlidingPanelView` when the panel also slides, or call `HideInstant` before playing `Show` on its own.
+- Build repeated UI elements with the same design, such as buttons, as instances of a shared prefab so their common appearance and behavior can be updated centrally. Use prefab variants or instance overrides for intentional differences.
+- Use `Scripts/UI/Universal/TextRevealView.cs` for reusable character-by-character reveal and erase animations.
+- Use `Scripts/UI/Universal/StaggeredRevealView.cs` for staggered fade and scale reveals of UI lists. Configure elements, delay, duration, stagger, and easing in the Inspector.
+- Use `Scripts/UI/Universal/PanelRevealView.cs` for panels revealing downward from a header. Put the header, background, and body under its dedicated `RectMask2D`; configure delay, duration, and easing in the Inspector. Assign it to `SlidingPanelView` for sliding panels, or call `HideInstant` before `Show` when used alone.
 
-- Use the section divider `// ===== ===== ===== ===== ===== ===== ===== ===== ===== =====` in scripts to mark meaningful boundaries between member groups. Put one after the class opening before the first group of fields/properties, and another after that group before the next logical section (for example, fields before lifecycle methods, injected dependencies before public behavior, or events before related state). Add further dividers only when they make a substantial section change easier to scan; do not put one between every method or small related group. Keep the divider on its own line and match the surrounding indentation.
-- Do not add unnecessary null checks for required references or dependencies. Let configuration and programming errors surface as exceptions; use null checks only when absence is a valid state or required by object lifecycle.
+- Use `// ===== ===== ===== ===== ===== ===== ===== ===== ===== =====` on its own line with matching indentation as a section divider. Place one after the class opening before fields/properties and another after that group. Add more only at substantial boundaries between member groups, not between every method or small related group.
+- Do not add null checks for required references or dependencies; let configuration and programming errors surface as exceptions. Check for null only when absence is valid or required by lifecycle.
 
-- Follow existing C# naming, namespaces, event patterns, and dependency injection conventions in the code being changed. Subscribe and unsubscribe to events and input actions with matching lifetimes.
-- Review callers and listeners when changing data mutations or events. In particular, `DiceData` exposes separate notifications for data, lock, and value changes; face bonuses are accounted for separately in scoring.
+- Follow existing C# naming, namespaces, event patterns, and dependency injection conventions. Match event and input-action subscriptions with unsubscriptions over the same lifetime.
+- Review callers and listeners when changing mutations or events. `DiceData` has separate data, lock, and value notifications; face bonuses are scored separately.
 - Preserve the ordering of score and charm effects unless the requested change explicitly alters it.
+
+## Performance and references
+
+- In frequently called code, avoid unnecessary allocations, expensive lookups, and redundant work. Cache results when their lifetime and invalidation are clear.
+- Do not use Unity's `Find...` APIs to locate objects in gameplay code. Use Inspector references or VContainer injection instead. This restriction does not apply to editor-only tooling.
+- Use `GetComponent` in gameplay code only when clearly justified; prefer Inspector references or VContainer injection. Cache the result when reused, especially in frequently called code.
+- Use `AddComponent` in gameplay code only when runtime creation is clearly justified. Otherwise, prepare components in the scene or prefab.
+- Keep code readable; pursue broader optimizations when profiling or other evidence identifies a bottleneck. Preserve gameplay behavior and effect ordering.
 
 ## DOTween Rules
 
 - **Safety:** Always append `.SetLink(gameObject)` to every Tween and Sequence to prevent `MissingReferenceException` on object destruction.
-- **No Leaks:** Never create tweens inside `Update()`, `FixedUpdate()`, or `LateUpdate()`. Kill previous tweens before starting a new one on the same target (e.g., `target.DOKill()` or `tween?.Kill()`).
-- **UI & Time:** For UI and pause menus, explicitly append `.SetUpdate(true)` so animations ignore `Time.timeScale = 0`.
+- **No Leaks:** Never create tweens inside `Update()`, `FixedUpdate()`, or `LateUpdate()`. Before starting a tween, kill any previous tween that would conflict with it. Prefer a stored tween reference (e.g., `tween?.Kill()`) so unrelated animations on the same target continue.
+- **UI & Time:** For UI animations that should continue while the game is paused, explicitly append `.SetUpdate(true)` so they ignore `Time.timeScale = 0`. Let other UI animations follow game time when appropriate.
 
 ## Adding sound effects
 
@@ -47,4 +58,4 @@ This Unity project is a dice game. Inspect the relevant scene, prefab, and confi
 - Read existing keys and translations from `Settings/Localization`. For string changes, queue a UTF-8 JSON file named `LocalizationChanges.json` at the Unity project root, next to `Assets`. Let Unity write the string table assets.
 - The file has the shape `{"entries":[{"key":"example_key","en":"…","ru":"…","es":"…","ja":"…","ko":"…","zhHans":"…"}]}`. Include only new or changed keys, with all six texts for each row. Preserve placeholders, rich-text tags, and sprite names where applicable. Add `"smart":true` for new Smart String entries.
 - Publish the patch by writing a temporary sibling file and renaming it into place when complete. Check for a pending file first and preserve its edits. The editor merges the patch automatically in Edit Mode. `Tools → Localization → Apply Local Changes` retries a failed patch on demand.
-- A successful import moves the patch to `Library/AppliedLocalization` and logs a receipt. Check the receipt and the diff of the Unity assets. If Unity is closed or still in Play Mode, report that the patch is pending. Commit the resulting Unity table assets.
+- A successful import moves the patch to `Library/AppliedLocalization` and logs a receipt. Check the receipt and the diff of the Unity assets. If Unity is closed or still in Play Mode, report that the patch is pending. Include the resulting Unity table assets in the changes; commit them only when a commit is requested.

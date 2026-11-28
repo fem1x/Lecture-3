@@ -1,3 +1,4 @@
+using System;
 using DG.Tweening;
 using UnityEngine;
 
@@ -48,9 +49,9 @@ namespace _Scripts.UI
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
         public void Show() => Show(_delay);
 
-        internal Sequence Show(TweenCallback onElementReveal) => Show(_delay, onElementReveal);
+        internal Sequence Show(Action<RectTransform> onElementReveal) => Show(_delay, onElementReveal);
 
-        internal Sequence Show(float delay, TweenCallback onElementReveal = null)
+        internal Sequence Show(float delay, Action<RectTransform> onElementReveal = null)
         {
             Restore();
             _sequence = DOTween.Sequence().SetUpdate(true).SetLink(gameObject);
@@ -61,7 +62,10 @@ namespace _Scripts.UI
                 _groups[i].alpha = 0f;
                 _elements[i].localScale = _scales[i] * 0.96f;
                 if (onElementReveal != null)
-                    _sequence.InsertCallback(start, onElementReveal);
+                {
+                    var element = _elements[i];
+                    _sequence.InsertCallback(start, () => onElementReveal(element));
+                }
                 _sequence.Insert(start, _groups[i].DOFade(_alphas[i], _revealDuration)
                     .SetEase(_revealFadeEase).SetUpdate(true).SetLink(gameObject));
                 _sequence.Insert(start, _elements[i].DOScale(_scales[i], _revealDuration)

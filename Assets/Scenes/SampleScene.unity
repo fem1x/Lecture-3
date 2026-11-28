@@ -36473,6 +36473,12 @@ MonoBehaviour:
   _rollEase: 12
   _rollDegrees: {x: 360, y: 260, z: 45}
   _rollLift: 0.7
+  _focusDuration: 0.88
+  _focusEase: 18
+  _focusScale: 1.1
+  _focusLift: 0.27
+  _focusRotation: {x: -17, y: 24, z: 0}
+  _focusLightMultiplier: 2
   _shakeFrequency: 30
   _shakeStrength: 0.25
   _keyIntensity: 0
