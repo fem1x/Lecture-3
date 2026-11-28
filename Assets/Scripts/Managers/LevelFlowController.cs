@@ -23,6 +23,7 @@ namespace _Scripts.Managers
         private readonly CodeLockService _codeLockService;
         private readonly DiceRoller _diceRoller;
         private readonly GameStateManager _gameStateManager;
+        private readonly MusicPlayer _musicPlayer;
         
         #region DI
         [Inject]
@@ -36,7 +37,8 @@ namespace _Scripts.Managers
             RepairTokensManager repairTokensManager,
             CodeLockService codeLockService,
             DiceRoller diceRoller,
-            GameStateManager gameStateManager)
+            GameStateManager gameStateManager,
+            MusicPlayer musicPlayer)
         {
             _levelService = levelService;
             _scoreManager = scoreManager;
@@ -48,6 +50,7 @@ namespace _Scripts.Managers
             _codeLockService = codeLockService;
             _diceRoller = diceRoller;
             _gameStateManager = gameStateManager;
+            _musicPlayer = musicPlayer;
         }
         #endregion
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
@@ -55,6 +58,8 @@ namespace _Scripts.Managers
 
         public void StartLevel()
         {
+            if (_gameStateManager.CurrentState != GameState.Game) return;
+
             _currentLevel = _levelService.CurrentLevel;
             
             _scoreManager.ResetScore();
@@ -71,6 +76,7 @@ namespace _Scripts.Managers
             _codeLockService.SetLock(_currentLevel);
             
             _diceRoller.SetCanRoll(true);
+            _musicPlayer.PlayGameplay();
         }
         
         public void CheckDefeatCondition()

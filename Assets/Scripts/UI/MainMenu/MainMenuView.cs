@@ -40,7 +40,11 @@ namespace _Scripts.UI.MainMenu
         private SettingsMenuView _settings;
         private ScreenFadeView _screenFade;
         private ISfxPlayer _sfx;
+        private MusicPlayer _musicPlayer;
         private Sequence _dialogTween;
+        private Sequence _menuEntrance;
+        private Tween _menuScreenFade;
+        private double? _menuStartTime;
         private Vector2 _quitCardPosition;
         private bool _starting;
         private bool _settingsActive;
@@ -48,13 +52,14 @@ namespace _Scripts.UI.MainMenu
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
         [Inject]
         public void Construct(GameStateManager gameStateManager, Bootstrap bootstrap,
-            SettingsMenuView settings, ScreenFadeView screenFade, ISfxPlayer sfx)
+            SettingsMenuView settings, ScreenFadeView screenFade, ISfxPlayer sfx, MusicPlayer musicPlayer)
         {
             _gameStateManager = gameStateManager;
             _bootstrap = bootstrap;
             _settings = settings;
             _screenFade = screenFade;
             _sfx = sfx;
+            _musicPlayer = musicPlayer;
             _gameStateManager.StateChanged += OnStateChanged;
             _playButton.onClick.AddListener(Play);
             _settingsButton.onClick.AddListener(OpenSettings);
@@ -65,7 +70,12 @@ namespace _Scripts.UI.MainMenu
 
         private void Awake() => _quitCardPosition = _quitCard.anchoredPosition;
 
-        private void OnDisable() => _dialogTween?.Kill();
+        private void OnDisable()
+        {
+            _dialogTween?.Kill();
+            _menuEntrance?.Kill();
+            _menuScreenFade?.Kill();
+        }
 
         private void OnDestroy()
         {
@@ -80,6 +90,8 @@ namespace _Scripts.UI.MainMenu
 
         private void Update()
         {
+            UpdateEntrance();
+
             if (_settingsActive && !SettingsMenuView.BlocksGameplayInput)
             {
                 _settingsActive = false;
@@ -91,10 +103,19 @@ namespace _Scripts.UI.MainMenu
                 Keyboard.current != null && Keyboard.current.escapeKey.wasPressedThisFrame)
                 CloseQuit();
 
-            _showcase.SetPlayHovered(_actions.interactable && Mouse.current != null &&
-                RectTransformUtility.RectangleContainsScreenPoint((RectTransform)_playButton.transform,
-                    Mouse.current.position.ReadValue()));
+            if (!_actions.interactable || Mouse.current == null)
+            {
+                _showcase.SetButtonHover(false, false);
+                return;
+            }
+
+            var pointer = Mouse.current.position.ReadValue();
+            _showcase.SetButtonHover(IsHovered(_playButton, pointer), IsHovered(_exitButton, pointer));
         }
+
+        private static bool IsHovered(Button button, Vector2 pointer) =>
+            button.isActiveAndEnabled && button.IsInteractable() &&
+            RectTransformUtility.RectangleContainsScreenPoint((RectTransform)button.transform, pointer);
 
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
         private void OnStateChanged(GameState state)
@@ -102,6 +123,13 @@ namespace _Scripts.UI.MainMenu
             var visible = state == GameState.MainMenu;
             if (!visible)
             {
+                if (gameObject.activeSelf && !_starting)
+                {
+                    _musicPlayer.FadeOutMenu(_inTime);
+                    if (_menuScreenFade != null)
+                        _screenFade.FadeOutAsync().Forget();
+                }
+
                 gameObject.SetActive(false);
                 return;
             }
@@ -114,15 +142,50 @@ namespace _Scripts.UI.MainMenu
             _cg.interactable = true;
             _cg.blocksRaycasts = true;
             SetActionsEnabled(true);
-            _showcase.Show();
-            _entrance.Show(() => _sfx.Play("ElementAppear"));
+            _musicPlayer.FadeOutGameplay(_screenFade.FadeInDuration);
+            PrepareEntrance();
             Select(_playButton);
+        }
+
+        private void PrepareEntrance()
+        {
+            _menuEntrance?.Kill();
+            _menuStartTime = null;
+            _menuEntrance = DOTween.Sequence().SetUpdate(true).SetLink(gameObject)
+                .SetAutoKill(false).Pause().OnKill(() => _menuEntrance = null);
+            _menuEntrance.Join(_showcase.Show());
+            _menuEntrance.Join(_entrance.Show(() => _sfx.Play("ElementAppear")));
+            _menuScreenFade = _screenFade.CreateFadeOutTween().SetAutoKill(false).Pause()
+                .OnKill(() => _menuScreenFade = null);
+        }
+
+        private void UpdateEntrance()
+        {
+            if (_menuEntrance == null && _menuScreenFade == null) return;
+
+            // Schedule on the first update so scene initialization cannot consume the music intro.
+            _menuStartTime ??= _starting ? AudioSettings.dspTime : _musicPlayer.ScheduleMenu();
+            var elapsed = (float)(AudioSettings.dspTime - _menuStartTime.Value);
+            if (elapsed <= 0f) return;
+
+            SeekEntrance(_menuEntrance, elapsed);
+            SeekEntrance(_menuScreenFade, elapsed);
+        }
+
+        private static void SeekEntrance(Tween tween, float elapsed)
+        {
+            if (tween == null) return;
+
+            tween.GotoWithCallbacks(elapsed);
+            if (tween.IsComplete())
+                tween.Kill();
         }
 
         private void Play()
         {
             if (!_actions.interactable || _starting) return;
             _starting = true;
+            _musicPlayer.FadeOutMenu(_inTime);
             SetActionsEnabled(false);
             Select(null);
             PlayAsync().Forget();

@@ -12,11 +12,11 @@ namespace _Scripts.UI
         [SerializeField] private float _timeOut = 1f;
         [SerializeField] private Ease _easeIn = Ease.OutQuad;
         [SerializeField] private Ease _easeOut = Ease.OutQuad;
+
+        internal float FadeInDuration => _timeIn;
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
 
         private void Awake() => _cg.alpha = 1f;
-
-        private void Start() => FadeOutAsync(time: _timeOut).Forget();
 
         public async UniTask FadeInAsync(float? time = null, Ease? ease = null)
         {
@@ -34,21 +34,22 @@ namespace _Scripts.UI
 
         public async UniTask FadeOutAsync(float? time = null, Ease? ease = null)
         {
+            await CreateFadeOutTween(time, ease);
+        }
+
+        internal Tween CreateFadeOutTween(float? time = null, Ease? ease = null)
+        {
             _cg.DOKill();
-            
-            var appliedEase = ease ?? _easeOut;
-            await _cg.DOFade(0f, time ?? _timeOut)
-                .SetEase(appliedEase)
+
+            return _cg.DOFade(0f, time ?? _timeOut)
+                .SetEase(ease ?? _easeOut)
                 .SetUpdate(true)
-                .SetLink(gameObject);
-            
-            if (this == null || _cg == null) return;
-            
-            if (Mathf.Approximately(_cg.alpha, 0f))
-            {
-                _cg.blocksRaycasts = false;
-                _cg.gameObject.SetActive(false);
-            }
+                .SetLink(gameObject)
+                .OnComplete(() =>
+                {
+                    _cg.blocksRaycasts = false;
+                    _cg.gameObject.SetActive(false);
+                });
         }
     }
 }

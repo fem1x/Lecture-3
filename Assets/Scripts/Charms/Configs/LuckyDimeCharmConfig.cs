@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 
 namespace _Scripts.Charms
 {
@@ -8,6 +8,7 @@ namespace _Scripts.Charms
     {
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
         [field: SerializeField] public int ImmuneValue { get; private set; } = 1;
+        [field: SerializeField] public int BonusPoints { get; private set; } = 10;
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
         
         public override CharmBase CreateCharmInstance() => new LuckyDimeCharm(this);

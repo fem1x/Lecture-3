@@ -57,6 +57,7 @@ public class GameLifetimeScope : LifetimeScope
     [SerializeField] private EndTurnSequenceController _endTurnSequenceController;
     [SerializeField] private SettingsMenuView _settingsMenuView;
     [SerializeField] private PauseMenuView _pauseMenuView;
+    [SerializeField] private MusicPlayer _musicPlayer;
     // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
     
     protected override void Configure(IContainerBuilder builder)
@@ -104,6 +105,7 @@ public class GameLifetimeScope : LifetimeScope
         builder.RegisterComponent(_returnSequenceController);
         builder.RegisterComponent(_settingsMenuView);
         builder.RegisterComponent(_pauseMenuView);
+        builder.RegisterComponent(_musicPlayer);
     }
     
     private void RegisterServices(IContainerBuilder builder)

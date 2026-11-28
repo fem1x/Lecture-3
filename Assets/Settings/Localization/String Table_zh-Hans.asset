@@ -224,7 +224,7 @@ MonoBehaviour:
       m_Items:
       - rid: 420518586740899945
   - m_Id: 418204264288264
-    m_Localized: "\u70B9\u6570\u4E3A<style=die>{immuneValue}</style>\u7684\u9AB0\u5B50\u6C38\u8FDC\u4E0D\u4F1A\u4EA7\u751F<style=cracks>\u88C2\u7EB9</style>"
+    m_Localized: "\u70B9\u6570\u4E3A<style=die>{immuneValue}</style>\u7684\u9AB0\u5B50\u4E0D\u4F1A\u4EA7\u751F<style=cracks>\u88C2\u7EB9</style>\uFF0C\u6253\u51FA\u65F6\u6BCF\u4E2A\u7ED9\u4E88<style=points>+{bonusPoints}\u5206</style>"
     m_Metadata:
       m_Items:
       - rid: 420518586740899945

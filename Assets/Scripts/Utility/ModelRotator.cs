@@ -57,9 +57,9 @@ namespace _Scripts.Utility
 
             if (_directPointerDrag)
             {
+                if (_angularVelocity.sqrMagnitude <= 0.01f) return;
                 var decay = 1f - Mathf.Exp(-_damping * Time.unscaledDeltaTime);
-                if (_angularVelocity.sqrMagnitude > 0.01f)
-                    ApplyRotation(_angularVelocity * (decay / _damping));
+                ApplyRotation(_angularVelocity * (decay / _damping));
                 _angularVelocity *= 1f - decay;
                 return;
             }

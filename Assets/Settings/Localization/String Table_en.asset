@@ -224,7 +224,7 @@ MonoBehaviour:
       m_Items:
       - rid: 420518586740899945
   - m_Id: 418204264288264
-    m_Localized: Dice with value <style=die>{immuneValue}</style> never gain <style=cracks>Cracks</style>
+    m_Localized: Dice showing <style=die>{immuneValue}</style> never gain <style=cracks>Cracks</style> and give <style=points>+{bonusPoints} Points</style> each when played
     m_Metadata:
       m_Items:
       - rid: 420518586740899945

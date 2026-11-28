@@ -32,6 +32,7 @@ MonoBehaviour:
     m_LocalVariables: []
   <Icon>k__BackingField: {fileID: 21300000, guid: ac48d799257359d44a932d1c36576cf5, type: 3}
   <ImmuneValue>k__BackingField: 1
+  <BonusPoints>k__BackingField: 10
   references:
     version: 2
     RefIds: []

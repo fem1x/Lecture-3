@@ -48,9 +48,9 @@ namespace _Scripts.UI
         // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
         public void Show() => Show(_delay);
 
-        internal void Show(TweenCallback onElementReveal) => Show(_delay, onElementReveal);
+        internal Sequence Show(TweenCallback onElementReveal) => Show(_delay, onElementReveal);
 
-        internal void Show(float delay, TweenCallback onElementReveal = null)
+        internal Sequence Show(float delay, TweenCallback onElementReveal = null)
         {
             Restore();
             _sequence = DOTween.Sequence().SetUpdate(true).SetLink(gameObject);
@@ -67,6 +67,8 @@ namespace _Scripts.UI
                 _sequence.Insert(start, _elements[i].DOScale(_scales[i], _revealDuration)
                     .SetEase(_revealScaleEase).SetUpdate(true).SetLink(gameObject));
             }
+
+            return _sequence;
         }
 
         public void Restore()

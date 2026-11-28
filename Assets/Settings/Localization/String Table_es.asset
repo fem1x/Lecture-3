@@ -224,7 +224,7 @@ MonoBehaviour:
       m_Items:
       - rid: 420518586740899946
   - m_Id: 418204264288264
-    m_Localized: Los dados con valor <style=die>{immuneValue}</style> nunca reciben <style=cracks>Grietas</style>
+    m_Localized: Los dados con valor <style=die>{immuneValue}</style> nunca reciben <style=cracks>Grietas</style> y otorgan <style=points>+{bonusPoints} puntos</style> cada uno al jugarse
     m_Metadata:
       m_Items:
       - rid: 420518586740899946

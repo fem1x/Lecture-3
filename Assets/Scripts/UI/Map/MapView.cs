@@ -44,6 +44,7 @@ namespace _Scripts.UI
         private LevelFlowController _levelFlowController;
         private GameStateManager _gameStateManager;
         private MapLevelPointerView _pointerView;
+        private MusicPlayer _musicPlayer;
 
         [Inject]
         public void Construct(
@@ -51,13 +52,15 @@ namespace _Scripts.UI
             IObjectResolver resolver, 
             LevelFlowController levelFlowController, 
             GameStateManager gameStateManager,
-            MapLevelPointerView pointerView)
+            MapLevelPointerView pointerView,
+            MusicPlayer musicPlayer)
         {
             _mapService = mapService;
             _resolver = resolver;
             _levelFlowController = levelFlowController;
             _gameStateManager = gameStateManager;
             _pointerView = pointerView;
+            _musicPlayer = musicPlayer;
             
             _mapService.OnMapInitialized += Initialize;
             _mapService.OnSectionChanged += MoveToSection;
@@ -168,6 +171,7 @@ namespace _Scripts.UI
 
         private void HandleStartButtonPressed()
         {
+            _musicPlayer.PlayGameplay();
             DoStartAsync().Forget();
         }
 

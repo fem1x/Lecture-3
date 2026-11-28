@@ -8,14 +8,16 @@ public class TransitionService
     // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
     private readonly GameStateManager _gameStateManager;
     private readonly ScreenFadeView _screenFadeView;
+    private readonly MusicPlayer _musicPlayer;
     
     private int _transitionId;
     // ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
     
-    public TransitionService(GameStateManager gameStateManager, ScreenFadeView screenFadeView)
+    public TransitionService(GameStateManager gameStateManager, ScreenFadeView screenFadeView, MusicPlayer musicPlayer)
     {
         _gameStateManager = gameStateManager;
         _screenFadeView = screenFadeView;
+        _musicPlayer = musicPlayer;
     }
     
     public async UniTaskVoid TransitionToStateAsync(GameState newState)
@@ -25,12 +27,16 @@ public class TransitionService
         _transitionId++;
         var currentId = _transitionId;
 
+        if (newState == GameState.MainMenu)
+            _musicPlayer.FadeOutGameplay(_screenFadeView.FadeInDuration);
+
         await _screenFadeView.FadeInAsync();
         
         if (_transitionId != currentId) return;
 
         _gameStateManager.ChangeState(newState);
         
-        await _screenFadeView.FadeOutAsync();
+        if (newState != GameState.MainMenu)
+            await _screenFadeView.FadeOutAsync();
     }
 }
